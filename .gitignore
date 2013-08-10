@@ -1,10 +1,6 @@
 [Oo]bj/
 [Bb]in/
-Depends/*/*
 Packages
-IntegrationTests/Depends/*/*
-Deploy/Wxs/*
-Export/*/*
 
 _ReSharper.*
 *crunch*
@@ -13,8 +9,3 @@ _ReSharper.*
 *.suo
 *.cache
 *.dotCover
-
-!*.proj
-!Master.wxs
-
-.nuget

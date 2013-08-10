@@ -29,13 +29,13 @@ namespace Kekiri
         {
             _scenario = ScenarioMapper.Map(this);
 
-            ProcessGivens(_scenario.GivenMethods);
-            ProcessWhens(_scenario.WhenMethods);
-
             if (!_scenario.IsOutputSuppressed)
             {
                 _reportTarget.Report(ReportType.EntireScenario, _scenario.CreateReportForEntireScenario());
             }
+
+            ProcessGivens(_scenario.GivenMethods);
+            ProcessWhens(_scenario.WhenMethods);
         }
 
         [SetUp]
