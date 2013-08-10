@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>Kekiri</id>
+    <id>$id$</id>
     <title>Kekiri</title>
     <version>1.0</version>
     <authors>Chris Peterson</authors>
 	<summary>A low-friction BDD framework</summary>
-    <description>A .NET framework that supports writing low-ceremony BDD tests using Gherkin language</description>
+    <description>$description$</description>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
     <tags>bdd tdd nunit scenario test gherkin cucumber specflow</tags>
@@ -14,11 +14,5 @@
 	<releaseNotes>
 	   Initial release
 	</releaseNotes>
-	<dependencies>
-		<dependency id="NUnit" version="2.6.0.12054" />
-	</dependencies>
   </metadata>
-  <files>
-      <file src="..\src\Library\bin\$configuration$\Kekiri.*" target="build" />
-  </files>
 </package>

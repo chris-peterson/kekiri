@@ -11,7 +11,7 @@
         <MakeDir Directories="deploy\bin\$(Configuration)">
             <Output TaskParameter="DirectoriesCreated" ItemName="OutputDirectory"/>
         </MakeDir>
-        <Exec Command=".nuget\nuget.exe pack deploy\kekiri.nuspec -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
+        <Exec Command=".nuget\nuget.exe pack src\library\library.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
     </Target>
 
     <Target Name="Deploy" DependsOnTargets="Package">
