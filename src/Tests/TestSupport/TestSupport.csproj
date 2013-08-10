@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reporting\Targets\CountingReportTarget.cs" />
+    <Compile Include="Scenarios\Examples.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_has_no_whens_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_step_given_throws_exception_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_step_when_throws_exception_scenario.cs" />
