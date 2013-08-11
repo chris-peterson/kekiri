@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace Kekiri.TestSupport.Scenarios
 {
@@ -12,6 +13,11 @@ namespace Kekiri.TestSupport.Scenarios
         public void Add()
         {
             Result = Operand1 + Operand2;
+        }
+
+        public void Divide()
+        {
+            Result = Operand1/Operand2;
         }
     }
 
@@ -48,6 +54,23 @@ namespace Kekiri.TestSupport.Scenarios
         public void The_screen_should_display_result_of_120()
         {
             Assert.AreEqual(120, _calculator.Result);
+        }
+    }
+
+    class When_dividing_by_zero : ScenarioTest
+    {
+        readonly Calculator _calculator = new Calculator();
+
+        [When, Throws]
+        public void When()
+        {
+            _calculator.Divide();
+        }
+
+        [Then]
+        public void It_should_throw_an_exception()
+        {
+            Catch<DivideByZeroException>();
         }
     }
 }

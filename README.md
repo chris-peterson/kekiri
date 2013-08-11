@@ -99,6 +99,43 @@ When running the failing test, we get a scenario report:
 </code></pre>
 
 ### That's it!
+Now, let's add a test for an expected exception.
+
+<pre lang="c#"><code>
+    class When_dividing_by_zero : ScenarioTest
+    {
+        readonly Calculator _calculator = new Calculator();
+
+        [When, Throws]
+        public void When()
+        {
+            _calculator.Divide();
+        }
+
+        [Then]
+        public void It_should_throw_an_exception()
+        {
+            Catch<DivideByZeroException>();
+        }
+    }
+</code></pre>
+
+Notice, here we've used the `[Throws]` attribute to inform the **ScenarioTest** that throwing an 
+exception is the expected behavior.  In 1 or more `[Then]`s, the thrown type of exception must 
+be caught (using the templated method `Catch<>`).  
+
+Also, notice that this test is more terse than the previous example.  This is a stylistic choice.
+By not using the `[Scenario]` attribute, and naming the class after the **When**, the test 
+output is also more terse:
+
+        When dividing by zero  
+        Then it should throw an exception
+
+### Supported Naming Conventions
+Kekiri supports both Pascal case conventions (e.g. `WhenDoingTheThing`) just as it does 
+underscore convention (e.g. `When_doing_the_thing`).
+
+### Configuration Options
 If you want to generate a .feature file as you run your unit tests, add to your test project's **App.config**, e.g.
 
 ```xml
@@ -107,14 +144,14 @@ If you want to generate a .feature file as you run your unit tests, add to your 
       <trace autoflush="true" indentsize="4">  
         <listeners>  
           <add name="fileListener" type="System.Diagnostics.TextWriterTraceListener"  
-             initializeData="Calculator.feature" />  
+             initializeData="YOUR_FEATURE_NAME.feature" />  
         </listeners>  
       </trace>  
     </system.diagnostics>  
   </configuration>  
 ```
 
-Replacing **Calculator** with your feature's name.
+Replacing **YOUR_FEATURE_NAME** with your feature's name.
 
 ## Contributing
 

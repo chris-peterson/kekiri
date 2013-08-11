@@ -3,7 +3,7 @@
   <metadata>
     <id>$id$</id>
     <title>Kekiri</title>
-    <version>1.1</version>
+    <version>1.2.0</version>
     <authors>Chris Peterson</authors>
 	<summary>A low-friction BDD framework</summary>
     <description>$description$</description>
@@ -12,9 +12,7 @@
     <tags>bdd tdd nunit scenario test gherkin cucumber specflow</tags>
 	<copyright>2012-2013</copyright>
 	<releaseNotes>
-	   Minor bug fixes: 
-	     - output report even if scenario setup fails
-		 - fix a few tests
+	   Package scenario test generator, update examples.
 	</releaseNotes>
   </metadata>
 </package>
