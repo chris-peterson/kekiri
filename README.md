@@ -4,7 +4,9 @@ A .NET framework that supports writing low-ceremony BDD tests using Gherkin lang
 Kekiri honors the conventions of the [cucumber language] (https://github.com/cucumber/cucumber/wiki/Feature-Introduction)
 
 ## Setup
-`PM> Install-Package Kekiri`
+`PM> Install-Package Kekiri`  
+`C:\> cinst Kekiri.Tools`
+
 
 ## Why Kekiri?
 Unlike other BDD frameworks that impose process overhead (management of feature files & shared steps, etc) 
