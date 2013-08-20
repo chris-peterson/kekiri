@@ -16,6 +16,6 @@
 	</releaseNotes>
   </metadata>
   <files>
-      <file src="ScenarioTestGenerator\bin\$configuration$\*.*" target="tools" />
+      <file src="TestGen\bin\$configuration$\*.*" target="tools" />
   </files>
 </package>

@@ -1,7 +1,7 @@
-﻿<Window x:Class="Kekiri.ScenarioTestGenerator.MainWindow"
+﻿<Window x:Class="Kekiri.TestGen.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Scenario Test Generator" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+        Title="Kekiri ScenarioTest Generator" Height="350" Width="525" WindowStartupLocation="CenterScreen">
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
             <Button Click="OnGenerateClick">

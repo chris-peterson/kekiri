@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43E5189D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSupport", "src\Tests\TestSupport\TestSupport.csproj", "{E0470571-E10C-46D0-B86F-C32DAF8E6FE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScenarioTestGenerator", "src\Tools\ScenarioTestGenerator\ScenarioTestGenerator.csproj", "{AC577237-AF11-40A8-B29E-56F10B38A892}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{31DFD7A2-7178-414F-B92A-F3A7097E954B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9855DC8A-AF8B-4571-9415-4467C5229CD5}"
@@ -24,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGen", "src\Tools\TestGen\TestGen.csproj", "{AC577237-AF11-40A8-B29E-56F10B38A892}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

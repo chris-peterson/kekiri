@@ -1,4 +1,4 @@
-﻿namespace Kekiri.ScenarioTestGenerator
+﻿namespace Kekiri.TestGen
 {
     public partial class App
     {

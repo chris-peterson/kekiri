@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 
-namespace Kekiri.ScenarioTestGenerator
+namespace Kekiri.TestGen
 {
     public partial class MainWindow
     {
