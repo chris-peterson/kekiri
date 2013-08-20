@@ -3,7 +3,7 @@
   <metadata>
     <id>Kekiri.Tools</id>
     <title>Kekiri.Tools</title>
-    <version>1.2.0</version>
+    <version>1.0.0</version>
     <authors>Chris Peterson</authors>
 	<summary>A low-friction BDD framework</summary>
     <description>Tools package for Kekiri</description>
