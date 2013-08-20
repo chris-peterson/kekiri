@@ -12,10 +12,11 @@
             <Output TaskParameter="DirectoriesCreated" ItemName="OutputDirectory"/>
         </MakeDir>
         <Exec Command=".nuget\nuget.exe pack src\library\library.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
+        <Exec Command=".nuget\nuget.exe pack src\tools\tools.nuspec -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
     </Target>
 
     <Target Name="Deploy" DependsOnTargets="Package">
-        <Exec Command="chocolatey uninstall kekiri" ContinueOnError="true" />
-        <Exec Command="chocolatey install kekiri -source $(MSBuildProjectDirectory)\deploy\bin\$(Configuration) -pre" />
+        <Exec Command="chocolatey uninstall kekiri.tools" ContinueOnError="true" />
+        <Exec Command="chocolatey install kekiri.tools -source $(MSBuildProjectDirectory)\deploy\bin\$(Configuration) -pre" />
     </Target>
 </Project>
