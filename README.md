@@ -117,7 +117,7 @@ Now, let's add a test for an expected exception.
         [Then]
         public void It_should_throw_an_exception()
         {
-            Catch<DivideByZeroException>();
+            Catch&lt;DivideByZeroException&gt;();
         }
     }
 </code></pre>
