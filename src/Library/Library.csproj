@@ -45,6 +45,8 @@
     <Compile Include="Config\IGherkinTestFrameworkSettingsFacade.cs" />
     <Compile Include="Config\SeperatorType.cs" />
     <Compile Include="Config\TokenType.cs" />
+    <Compile Include="IoC\DependencyInjectionScenarioTest.cs" />
+    <Compile Include="IoC\DepenencyInjectionContainer.cs" />
     <Compile Include="TagAttribute.cs" />
     <Compile Include="Reporting\ReportType.cs" />
     <Compile Include="Reporting\ScenarioReportingContext.cs" />

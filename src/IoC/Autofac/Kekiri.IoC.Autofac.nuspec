@@ -1,21 +1,22 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>Kekiri.Tools</id>
-    <title>Kekiri.Tools</title>
-    <version>1.0.0</version>
-    <authors>Chris Peterson</authors>
-    <description>Tools package for Kekiri</description>
+    <id>$id$</id>
+    <title>$id$</title>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <summary>Autofac extensions for Kekiri</summary>
+    <description>$description$</description>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
     <tags>bdd tdd nunit scenario test gherkin cucumber specflow</tags>
-    <copyright>2012-2013</copyright>
+    <copyright>2013</copyright>
     <releaseNotes>
-      Package scenario test generator, update examples.
+      Initial release
     </releaseNotes>
+    <dependencies>
+      <dependency id="Kekiri" version="1.3.0" />
+    </dependencies>
   </metadata>
-  <files>
-    <file src="TestGen\bin\$configuration$\*.*" target="tools" />
-  </files>
 </package>
