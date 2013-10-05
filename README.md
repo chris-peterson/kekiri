@@ -155,6 +155,9 @@ If you want to generate a .feature file as you run your unit tests, add to your 
 
 Replacing **YOUR_FEATURE_NAME** with your feature's name.
 
+### IoC Extensions
+`PM> Install-Package Kekiri.IoC.Autofac`
+
 ## Contributing
 
 1. Fork it
@@ -162,3 +165,10 @@ Replacing **YOUR_FEATURE_NAME** with your feature's name.
 3. Commit your changes `git commit -am 'Added some feature'`
 4. Push to the branch `git push origin my-new-feature`
 5. Create new Pull Request
+
+
+## Acknowledgements
+Kekiri uses and is influenced by the following open source projects:
+* http://nunit.org/
+* https://code.google.com/p/autofac/ and https://code.google.com/p/whitebox/
+* https://code.google.com/p/moq/
