@@ -166,7 +166,8 @@ Consider this collection of classes:
             public Executor Executor { get; private set; }
             public IDataComponent DataComponent { get; private set; }
 
-            public Orchestrator(Validator validator, Executor executor, IDataComponent dataComponent) {
+            public Orchestrator(
+               Validator validator, Executor executor, IDataComponent dataComponent) {
                 Validator = validator;
                 Executor = executor;
                 DataComponent = dataComponent;
@@ -244,7 +245,7 @@ Here's our test fixture:
 
         [When]
         public void When_resolving_an_instance() {
-            _orchestrator = Container.Resolve<Orchestrator>();
+            _orchestrator = Container.Resolve&lt;Orchestrator&gt;();
         }
 
         [Then]
