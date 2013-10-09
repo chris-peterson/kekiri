@@ -3,18 +3,11 @@ using System.Configuration;
 
 namespace Kekiri.Config
 {
-    public interface IGherkinTestFrameworkSettingsFacade
-    {
-        string GetStep(StepType stepType);
-        string GetSeperator(SeperatorType seperatorType);
-        string GetToken(TokenType tokenType);
-    }
-
-    public class GherkinTestFrameworkSettingsFacade : IGherkinTestFrameworkSettingsFacade
+    public class GherkinTestFrameworkSettingsFacade
     {
         private readonly GherkinTestFrameworkSettings _settings;
 
-        public static IGherkinTestFrameworkSettingsFacade GetInstance()
+        public static GherkinTestFrameworkSettingsFacade GetInstance()
         {
             var settings =
                 ConfigurationManager.GetSection("gherkinTestFrameworkSettings") as GherkinTestFrameworkSettings ??

@@ -8,7 +8,7 @@ namespace Kekiri.UnitTests.Reporting
     public abstract class ReportingScenarioTest : ScenarioTest
     {
         protected ReportingScenarioMetaTest Scenario { private get; set; }
-        protected IGherkinTestFrameworkSettingsFacade Settings { get; private set; }
+        protected GherkinTestFrameworkSettingsFacade Settings { get; private set; }
 
         protected ReportingScenarioTest()
         {

@@ -21,7 +21,7 @@ namespace Kekiri.Impl
             public string PrettyPrintedName { get; set; }
         }
 
-        private IGherkinTestFrameworkSettingsFacade Settings { get; set; }
+        private GherkinTestFrameworkSettingsFacade Settings { get; set; }
 
         private readonly IDictionary<StepType, IList<StepInfo>> _steps = new Dictionary<StepType, IList<StepInfo>>();
 
@@ -67,12 +67,12 @@ namespace Kekiri.Impl
 
         public bool IsOutputSuppressed { get; private set; }
 
-        public IScenarioReportingContext CreateReportForEntireScenario()
+        public ScenarioReportingContext CreateReportForEntireScenario()
         {
             return CreateReport(ReportType.EntireScenario);
         }
 
-        public IScenarioReportingContext CreateReportForCurrentTest()
+        public ScenarioReportingContext CreateReportForCurrentTest()
         {
             return CreateReport(ReportType.CurrentTest);
         }
@@ -191,7 +191,7 @@ namespace Kekiri.Impl
             return stepName;
         }
 
-        private IScenarioReportingContext CreateReport(ReportType reportType)
+        private ScenarioReportingContext CreateReport(ReportType reportType)
         {
             var featureReport = new List<string>();
             var scenarioReport = new List<string>();

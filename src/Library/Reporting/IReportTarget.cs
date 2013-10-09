@@ -7,7 +7,7 @@ namespace Kekiri.Reporting
 {
     public interface IReportTarget
     {
-        void Report(ReportType reportType, IScenarioReportingContext reportingContext);
+        void Report(ReportType reportType, ScenarioReportingContext reportingContext);
     }
 
     public class TraceReportTarget : IReportTarget
@@ -25,7 +25,7 @@ namespace Kekiri.Reporting
 
         private string _previousFeatureKey;
 
-        public void Report(ReportType reportType, IScenarioReportingContext reportingContext)
+        public void Report(ReportType reportType, ScenarioReportingContext reportingContext)
         {
             // only output current test info if running in R# -- it's not useful in command line builds
             if (reportType == ReportType.CurrentTest)

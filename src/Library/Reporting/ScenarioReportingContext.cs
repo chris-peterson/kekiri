@@ -5,28 +5,19 @@ using Kekiri.Config;
 
 namespace Kekiri.Reporting
 {
-    public interface IScenarioReportingContext
-    {
-        IList<string> FeatureReport { get; }
-        IList<string> ScenarioReport { get; }
-        IList<string> StepReport { get; }
-
-        string CreateReportWithStandardSpacing(int indentationLevel);
-    }
-
-    public class ScenarioReportingContext : IScenarioReportingContext
+    public class ScenarioReportingContext
     {
         public IList<string> FeatureReport { get; private set; }
         public IList<string> ScenarioReport { get; private set; }
         public IList<string> StepReport { get; private set; }
 
-        public IGherkinTestFrameworkSettingsFacade Settings { get; set; }
+        public GherkinTestFrameworkSettingsFacade Settings { get; set; }
 
         public ScenarioReportingContext(
             IList<string> featureReport,
             IList<string> scenarioReport,
             IList<string> stepReport,
-            IGherkinTestFrameworkSettingsFacade settings)
+            GherkinTestFrameworkSettingsFacade settings)
         {
             FeatureReport = featureReport;
             ScenarioReport = scenarioReport;

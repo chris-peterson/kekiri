@@ -6,7 +6,7 @@ using Kekiri.IoC.Autofac;
 namespace Kekiri.UnitTests.IoC.Autofac
 {
     [Scenario]
-    public class Using_fakes_with_autofac : AutofacScenarioTest
+    public class Using_fakes : AutofacScenarioTest
     {
         private Orchestrator _orchestrator;
 
@@ -113,13 +113,18 @@ namespace Kekiri.UnitTests.IoC.Autofac
             _orchestrator.Validator.Should().BeOfType<Validator>();
             _orchestrator.Executor.Should().BeOfType<Executor>();
             _orchestrator.Executor.WordCounter.Should().BeOfType<WordCounter>();
-            _orchestrator.Process().Should().Be(7);
         }
 
         [Then]
         public void But_explicitly_faked_objects()
         {
             _orchestrator.DataComponent.Should().BeOfType<FakeDataComponent>();
+        }
+
+        [Then]
+        public void And_it_computes_the_right_result()
+        {
+            _orchestrator.Process().Should().Be(7);
         }
     }
 }

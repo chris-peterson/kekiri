@@ -5,7 +5,7 @@ namespace Kekiri.UnitTests.Config
 {
     class When_using_custom_config_file : ConfigScenarioTest
     {
-        private IGherkinTestFrameworkSettingsFacade _settings;
+        private GherkinTestFrameworkSettingsFacade _settings;
 
         [When]
         public void When()

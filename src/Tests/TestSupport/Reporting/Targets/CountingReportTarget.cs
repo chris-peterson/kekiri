@@ -6,7 +6,7 @@ namespace Kekiri.TestSupport.Reporting.Targets
     {
         public int WriteCount { get; set; }
 
-        public void Report(ReportType reportType, IScenarioReportingContext reportingContext)
+        public void Report(ReportType reportType, ScenarioReportingContext reportingContext)
         {
             WriteCount++;
         }

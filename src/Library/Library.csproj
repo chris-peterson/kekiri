@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\GherkinTestFrameworkSettings.cs" />
-    <Compile Include="Config\IGherkinTestFrameworkSettingsFacade.cs" />
+    <Compile Include="Config\GherkinTestFrameworkSettingsFacade.cs" />
     <Compile Include="Config\SeperatorType.cs" />
     <Compile Include="Config\TokenType.cs" />
     <Compile Include="IoC\DependencyInjectionScenarioTest.cs" />
