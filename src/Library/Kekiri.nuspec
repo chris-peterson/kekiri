@@ -13,7 +13,9 @@
     <tags>bdd tdd nunit scenario test gherkin cucumber specflow</tags>
     <copyright>2012-2013</copyright>
     <releaseNotes>
-      Support for IoC extensions.
+      Updated to Autofac 3.1.1
+	  Renamed some IoC support classes and methods
+	  Some internal cleanup
     </releaseNotes>
   </metadata>
 </package>

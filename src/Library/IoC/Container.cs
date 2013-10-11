@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Kekiri.IoC
 {
-    public abstract class Container
+    public abstract class Container : IHideObjectMembers
     {
         private readonly List<object> _fakes = new List<object>();
         private bool _registrationClosed;
@@ -60,5 +61,21 @@ namespace Kekiri.IoC
 
             return OnResolve<T>();
         }
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public interface IHideObjectMembers
+    {
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Type GetType();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        int GetHashCode();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        string ToString();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        bool Equals(object other);
     }
 }
