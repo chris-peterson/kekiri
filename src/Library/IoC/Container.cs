@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Kekiri.IoC
 {
-    public abstract class DepenencyInjectionContainer
+    public abstract class Container
     {
         private readonly List<object> _fakes = new List<object>();
         private bool _registrationClosed;
@@ -13,20 +13,20 @@ namespace Kekiri.IoC
             get { return _fakes; }
         }
 
-        public virtual void WithFake(object fake)
+        public void Register(object instance)
         {
             if (_registrationClosed)
             {
-                throw new Exception("Cannot call WithFake after Resolve");
+                throw new Exception("Cannot call Register after Resolve");
             }
 
-            if (ReferenceEquals(fake, null))
+            if (ReferenceEquals(instance, null))
             {
-                throw new ArgumentNullException("fake");
+                throw new ArgumentNullException("instance");
             }
 
             // check for Moq -- we don't want to take on a dependency so we use reflection
-            var type = fake.GetType();
+            var type = instance.GetType();
             while (type != null)
             {
                 if (type.Name == "Mock")
@@ -34,31 +34,31 @@ namespace Kekiri.IoC
                     var objectProperty = type.GetProperty("Object");
                     if (objectProperty != null)
                     {
-                        fake = objectProperty.GetValue(fake, null);
+                        instance = objectProperty.GetValue(instance, null);
                         break;
                     }
                 }
                 type = type.BaseType;
             }
 
-            _fakes.Add(fake);
+            _fakes.Add(instance);
         }
 
-        public void WithFakes(params object[] fakes)
+        public void Register(params object[] instances)
         {
-            foreach (var fake in fakes)
+            foreach (var instance in instances)
             {
-                WithFake(fake);
+                Register(instance);
             }
         }
 
-        protected abstract T ResolveImpl<T>();
+        protected abstract T OnResolve<T>();
 
-        public virtual T Resolve<T>()
+        public T Resolve<T>()
         {
             _registrationClosed = true;
 
-            return ResolveImpl<T>();
+            return OnResolve<T>();
         }
     }
 }

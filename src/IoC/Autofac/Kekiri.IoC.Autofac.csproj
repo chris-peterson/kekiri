@@ -41,8 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutofacScenarioTest.cs" />
-    <Compile Include="AutofacTestingContext.cs" />
-    <Compile Include="CustomRegistration.cs" />
+    <Compile Include="CustomBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,9 +49,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Library\Library.csproj">
+    <ProjectReference Include="..\..\Library\Kekiri.csproj">
       <Project>{5827c04b-91a2-42ac-8a99-e23bbb27cd94}</Project>
-      <Name>Library</Name>
+      <Name>Kekiri</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

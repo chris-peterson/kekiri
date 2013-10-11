@@ -98,7 +98,7 @@ namespace Kekiri.UnitTests.IoC.Autofac
         [Given]
         public void Given()
         {
-            Container.WithFake(new FakeDataComponent());
+            Container.Register(new FakeDataComponent());
         }
 
         [When]

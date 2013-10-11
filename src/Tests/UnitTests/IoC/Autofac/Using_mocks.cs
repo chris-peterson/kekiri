@@ -34,7 +34,7 @@ namespace Kekiri.UnitTests.IoC.Autofac
         {
             var mock = new Mock<ISimpleFeature>();
             mock.Setup(x => x.TellMeASecret()).Returns("I did it!");
-            Container.WithFake(mock);
+            Container.Register(mock);
         }
 
         [When]

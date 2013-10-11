@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "src\Library\Library.csproj", "{5827C04B-91A2-42AC-8A99-E23BBB27CD94}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "src\Tests\UnitTests\UnitTests.csproj", "{D0E50F59-142F-4B33-8436-56D7BFB99CC5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43E5189D-BB90-4EBE-921A-01457419C7BB}"
@@ -29,16 +27,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC", "IoC", "{DF16D56E-1B8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.IoC.Autofac", "src\IoC\Autofac\Kekiri.IoC.Autofac.csproj", "{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri", "src\Library\Kekiri.csproj", "{5827C04B-91A2-42AC-8A99-E23BBB27CD94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D0E50F59-142F-4B33-8436-56D7BFB99CC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D0E50F59-142F-4B33-8436-56D7BFB99CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0E50F59-142F-4B33-8436-56D7BFB99CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,6 +51,10 @@ Global
 		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

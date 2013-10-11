@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Autofac.3.1.1\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\FluentAssertions.2.1.0.0\lib\net40\FluentAssertions.dll</HintPath>
@@ -49,6 +53,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Whitebox">
+      <HintPath>..\..\..\..\..\..\..\hg\whitebox\Whitebox.Containers.Autofac\bin\Debug\Whitebox.dll</HintPath>
+    </Reference>
+    <Reference Include="Whitebox.Containers.Autofac">
+      <HintPath>..\..\..\..\..\..\..\hg\whitebox\Whitebox.Containers.Autofac\bin\Debug\Whitebox.Containers.Autofac.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigScenarioTest.cs" />
@@ -63,6 +73,7 @@
     <Compile Include="Exceptions\When_test_throws_an_exception_that_is_not_caught.cs" />
     <Compile Include="Exceptions\When_test_throws_expected_exception.cs" />
     <Compile Include="Exceptions\When_test_throws_no_exception_when_expected_to_throw.cs" />
+    <Compile Include="IoC\Autofac\SetupTests.cs" />
     <Compile Include="IoC\Autofac\Using_mocks.cs" />
     <Compile Include="IoC\Autofac\Using_fakes.cs" />
     <Compile Include="Reporting\Fixture_has_multiple_tags_scenario.cs" />
@@ -101,9 +112,9 @@
       <Project>{3501637a-abf5-4f80-bc0e-7b4a8acd3cc4}</Project>
       <Name>Kekiri.IoC.Autofac</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Library\Library.csproj">
-      <Project>{5827C04B-91A2-42AC-8A99-E23BBB27CD94}</Project>
-      <Name>Library</Name>
+    <ProjectReference Include="..\..\Library\Kekiri.csproj">
+      <Project>{5827c04b-91a2-42ac-8a99-e23bbb27cd94}</Project>
+      <Name>Kekiri</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestSupport\TestSupport.csproj">
       <Project>{E0470571-E10C-46D0-B86F-C32DAF8E6FE1}</Project>

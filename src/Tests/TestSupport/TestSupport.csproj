@@ -82,13 +82,13 @@
     <Compile Include="SuppressedOutputScenarioTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Library\Library.csproj">
-      <Project>{5827C04B-91A2-42AC-8A99-E23BBB27CD94}</Project>
-      <Name>Library</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\Library\Kekiri.csproj">
+      <Project>{5827c04b-91a2-42ac-8a99-e23bbb27cd94}</Project>
+      <Name>Kekiri</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

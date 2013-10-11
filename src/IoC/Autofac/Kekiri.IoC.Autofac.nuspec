@@ -16,7 +16,7 @@
       Initial release
     </releaseNotes>
     <dependencies>
-      <dependency id="Kekiri" version="1.3.0" />
+      <dependency id="Kekiri" version="1.4.0" />
     </dependencies>
   </metadata>
 </package>
