@@ -12,9 +12,7 @@
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
     <tags>bdd tdd nunit scenario test gherkin cucumber specflow</tags>
     <copyright>2013</copyright>
-    <releaseNotes>
-      Initial release
-    </releaseNotes>
+    <releaseNotes>Update Autofac to 3.1.1, Update Kekiri to 1.4.0</releaseNotes>
     <dependencies>
       <dependency id="Kekiri" version="1.4.0" />
     </dependencies>
