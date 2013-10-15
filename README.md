@@ -240,7 +240,7 @@ Here's our test fixture:
 
         [Given]
         public void Given() {
-            Container.WithFake(new FakeDataComponent());
+            Container.Register(new FakeDataComponent());
         }
 
         [When]
