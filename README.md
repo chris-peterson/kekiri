@@ -267,7 +267,7 @@ Here's our test fixture:
     }
 </code></pre>
 
-When calling **Resolve**, a full object graph is created for **_orchestrator**.  Unless explicitly injected into the IoC container (**Container**) by calling **WithFake**, real objects are used!
+When calling **Resolve**, a full object graph is created for **_orchestrator**.  Unless explicitly injected into the IoC container (**Container**), real objects are used!
 
 ## Contributing
 
