@@ -10,7 +10,7 @@
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
-    <tags>bdd tdd nunit scenario test gherkin cucumber specflow</tags>
+    <tags>bdd tdd nunit scenario test gherkin cucumber specflow ioc di autofac</tags>
     <copyright>2013</copyright>
     <releaseNotes>Update Autofac to 3.1.1, Update Kekiri to 1.4.1</releaseNotes>
     <dependencies>
