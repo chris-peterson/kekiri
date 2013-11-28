@@ -24,6 +24,7 @@ namespace Kekiri.Impl
         private GherkinTestFrameworkSettingsFacade Settings { get; set; }
 
         private readonly IDictionary<StepType, IList<StepInfo>> _steps = new Dictionary<StepType, IList<StepInfo>>();
+        private readonly IDictionary<string, string> _parameters = new Dictionary<string, string>();
 
         public ScenarioTestMetadata(Type scenarioTestType)
         {
@@ -65,6 +66,11 @@ namespace Kekiri.Impl
             set { SetStepInfos<ThenAttribute>(StepType.Then, value); }
         }
 
+        public IDictionary<string, string> Parameters
+        {
+            get { return _parameters; }
+        }
+
         public bool IsOutputSuppressed { get; private set; }
 
         public ScenarioReportingContext CreateReportForEntireScenario()
@@ -92,7 +98,20 @@ namespace Kekiri.Impl
                 return string.Empty;
             }
 
-            return stepNameSansStepType.WithSpaces().WithFirstLetterLowercase();
+            var prettyPrinted = stepNameSansStepType.WithSpaces().WithFirstLetterLowercase();
+
+            foreach (var parameter in _parameters)
+            {
+                foreach (var word in prettyPrinted.Split(' '))
+                {
+                    if (word == parameter.Key)
+                    {
+                        prettyPrinted = prettyPrinted.Replace(word, parameter.Value);
+                    }
+                }
+            }
+
+            return prettyPrinted;
         }
 
         private IEnumerable<MethodBase> GetMethodBases(StepType stepType)
@@ -151,10 +170,12 @@ namespace Kekiri.Impl
         private string GetScenarioDescriptionOrDefaultValue(ScenarioAttribute scenarioAttribute, Type declaringType)
         {
             return string.Format("{0}{1}",
-                                 Settings.GetToken(TokenType.Scenario),
-                                 string.IsNullOrWhiteSpace(scenarioAttribute.Description)
-                                     ? declaringType.Name.WithSpaces()
-                                     : scenarioAttribute.Description);
+                scenarioAttribute is ScenarioOutlineAttribute
+                    ? Settings.GetToken(TokenType.ScenarioOutline)
+                    : Settings.GetToken(TokenType.Scenario),
+                string.IsNullOrWhiteSpace(scenarioAttribute.Description)
+                    ? declaringType.Name.WithSpaces()
+                    : scenarioAttribute.Description);
         }
 
         private string GetStepNameWithTokenizedStepType(StepInfo stepInfo)

@@ -61,6 +61,8 @@ namespace Kekiri.Config
                     return _settings.Feature;
                 case TokenType.Scenario:
                     return _settings.Scenario;
+                case TokenType.ScenarioOutline:
+                    return _settings.ScenarioOutline;
                 default:
                     throw new NotSupportedException(string.Format("Unknown token type: {0}", tokenType));
             }

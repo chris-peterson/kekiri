@@ -5,6 +5,7 @@
         And,
         But,
         Feature,
-        Scenario
+        Scenario,
+        ScenarioOutline
     }
 }

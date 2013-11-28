@@ -86,5 +86,12 @@ namespace Kekiri.Config
             get { return (string)this["scenario"]; }
             set { this["scenario"] = value; }
         }
+
+        [ConfigurationProperty("scenarioOutline", DefaultValue = "Scenario Outline: ", IsRequired = false)]
+        public string ScenarioOutline
+        {
+            get { return (string)this["scenarioOutline"]; }
+            set { this["scenarioOutline"] = value; }
+        }
     }
 }

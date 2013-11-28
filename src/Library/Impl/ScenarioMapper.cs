@@ -20,6 +20,32 @@ namespace Kekiri.Impl
 
             var scenario = new ScenarioTestMetadata(type);
 
+            var ctor = type.GetConstructors().SingleOrDefault();
+            if (ctor != null)
+            {
+                foreach (var parameter in ctor.GetParameters())
+                {
+                    var backedField = type
+                        .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                        .SingleOrDefault(
+                            p => string.Compare(p.Name.TrimStart('_'), parameter.Name,
+                                StringComparison.InvariantCultureIgnoreCase) == 0);
+                    if (backedField != null)
+                    {
+                        string value;
+                        try
+                        {
+                            value = backedField.GetValue(_test).ToString();
+                        }
+                        catch
+                        {
+                            value = "UNKNOWN!";
+                        }
+                        scenario.Parameters.Add(parameter.Name.ToUpper(), value);
+                    }
+                }
+            }
+
             var methods = GetPotentialStepMethods(type);
 
             scenario.GivenMethods = ValidateAndBuildGivenMethods(methods);
