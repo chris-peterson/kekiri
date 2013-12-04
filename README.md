@@ -12,13 +12,15 @@ Kekiri honors the conventions of the [cucumber language] (https://github.com/cuc
 Unlike other BDD frameworks that impose process overhead (management of feature files & shared steps, etc) 
 Kekiri allows developers to write BDD tests just as quickly and easily as they would technical tests.
 
+The resulting tests are concise and highly portable.
+
 ## Example
 For this **ScenarioTest**, we will be implementing a basic calculator. 
 
 ### Start with the test
 Just like in TDD, when employing BDD, we write the test first:
 
-<pre lang="c#"><code>
+```c#
     [Scenario]
     class Adding_two_numbers : ScenarioTest
     {
@@ -37,9 +39,9 @@ Just like in TDD, when employing BDD, we write the test first:
         [Then]
         public void The_screen_should_display_result_of_120() {}
     }
-</code></pre>
+```
 
-When running the failing test, we get a scenario report:
+If we were to run this test (even though it fails) we get a nice Cucumber-style feature output:
 
         Scenario: Adding two numbers  
         Given a calculator  
@@ -48,8 +50,8 @@ When running the failing test, we get a scenario report:
         When the user presses add  
         Then the screen should display result of 120
 
-### Next, we add the implementation
-<pre lang="c#"><code>
+### Add the implementation
+```c#
     [Scenario]
     class Adding_two_numbers : ScenarioTest
     {
@@ -98,12 +100,23 @@ When running the failing test, we get a scenario report:
             Result = Operand1 + Operand2;
         }
     }
-</code></pre>
+```
 
-### That's it!
-Now, let's add a test for an expected exception.
+### You're done!  
+Wasn't that painless?
 
-<pre lang="c#"><code>
+---
+
+## Supported Naming Conventions
+Kekiri supports both Pascal case conventions (e.g. `WhenDoingTheThing`) just as it does 
+underscore convention (e.g. `When_doing_the_thing`).
+
+---
+
+## Other common use cases
+
+### Expected Exceptions
+```c#
     class When_dividing_by_zero : ScenarioTest
     {
         readonly Calculator _calculator = new Calculator();
@@ -120,7 +133,7 @@ Now, let's add a test for an expected exception.
             Catch&lt;DivideByZeroException&gt;();
         }
     }
-</code></pre>
+```
 
 Notice, here we've used the `[Throws]` attribute to inform the **ScenarioTest** that throwing an 
 exception is the expected behavior.  In 1 or more `[Then]`s, the thrown type of exception must 
@@ -133,34 +146,56 @@ output is also more terse:
         When dividing by zero  
         Then it should throw an exception
 
-### Supported Naming Conventions
-Kekiri supports both Pascal case conventions (e.g. `WhenDoingTheThing`) just as it does 
-underscore convention (e.g. `When_doing_the_thing`).
+### Data-driven
+```c#
+    [ScenarioOutline("eating")]
+    [Example(12, 5, 7)]
+    [Example(20, 5, 15)]
+    public class Eating_cucumbers : ScenarioTest
+    {
+        private readonly int _start;
+        private readonly int _eat;
+        private readonly int _left;
+        private int _cucumbers;
 
-### Configuration Options
-If you want to generate a .feature file as you run your unit tests, add to your test project's **App.config**, e.g.
+        public Eating_cucumbers(int start, int eat, int left)
+        {
+            _start = start;
+            _eat = eat;
+            _left = left;
+        }
 
-```xml
-  <configuration>  
-    <system.diagnostics>  
-      <trace autoflush="true" indentsize="4">  
-        <listeners>  
-          <add name="fileListener" type="System.Diagnostics.TextWriterTraceListener"  
-             initializeData="YOUR_FEATURE_NAME.feature" />  
-        </listeners>  
-      </trace>  
-    </system.diagnostics>  
-  </configuration>  
+        [Given]
+        public void Given_there_are_START_cucumbers()
+        {
+            _cucumbers = _start;
+        }
+
+        [When]
+        public void When_I_eat_EAT_cucumbers()
+        {
+            _cucumbers -= _eat;
+        }
+
+        [Then]
+        public void I_should_have_LEFT_cucumbers()
+        {
+            Assert.AreEqual(_left, _cucumbers);
+        }
+    }   
 ```
 
-Replacing **YOUR_FEATURE_NAME** with your feature's name.
+        Scenario Outline: eating  
+        Given there are 12 cucumbers  
+        When i eat 5 cucumbers  
+        Then i should have 7 cucumbers
 
-### IoC Extensions
+### IoC Tests
 `PM> Install-Package Kekiri.IoC.Autofac`
 
 #### Example
 Consider this collection of classes:
-<pre lang="c#"><code>
+```c#
         public class Orchestrator {
             public Validator Validator { get; private set; }
             public Executor Executor { get; private set; }
@@ -230,9 +265,9 @@ Consider this collection of classes:
                 return "all your base are belong to us";
             }
         }
-</code></pre>
+```
 Here's our test fixture:
-<pre lang="c#"><code>
+```c#
     [Scenario]
     public class Using_fakes_with_autofac : AutofacScenarioTest
     {
@@ -265,9 +300,27 @@ Here's our test fixture:
             _orchestrator.Process().Should().Be(7);
         }
     }
-</code></pre>
+```
 
 When calling **Resolve**, a full object graph is created for **_orchestrator**.  Unless explicitly injected into the IoC container (**Container**), real objects are used!
+
+## Configuration Options
+If you want to generate a .feature file as you run your unit tests, add to your test project's **App.config**, e.g.
+
+```xml
+  <configuration>  
+    <system.diagnostics>  
+      <trace autoflush="true" indentsize="4">  
+        <listeners>  
+          <add name="fileListener" type="System.Diagnostics.TextWriterTraceListener"  
+             initializeData="YOUR_FEATURE_NAME.feature" />  
+        </listeners>  
+      </trace>  
+    </system.diagnostics>  
+  </configuration>  
+```
+
+Replacing **YOUR_FEATURE_NAME** with your feature's name.
 
 ## Contributing
 
