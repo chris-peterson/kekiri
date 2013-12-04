@@ -54,10 +54,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Whitebox">
-      <HintPath>..\..\..\..\..\..\..\hg\whitebox\Whitebox.Containers.Autofac\bin\Debug\Whitebox.dll</HintPath>
+      <HintPath>..\..\..\packages\Whitebox.0.2.0.0\lib\net40\Whitebox.dll</HintPath>
     </Reference>
     <Reference Include="Whitebox.Containers.Autofac">
-      <HintPath>..\..\..\..\..\..\..\hg\whitebox\Whitebox.Containers.Autofac\bin\Debug\Whitebox.Containers.Autofac.dll</HintPath>
+      <HintPath>..\..\..\packages\Whitebox.Autofac.0.2.0.0\lib\net40\Whitebox.Containers.Autofac.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
