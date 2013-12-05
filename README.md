@@ -22,8 +22,7 @@ Just like in TDD, when employing BDD, we write the test first:
 
 ```c#
     [Scenario]
-    class Adding_two_numbers : ScenarioTest
-    {
+    class Adding_two_numbers : ScenarioTest {
         [Given]
         public void Given_a_calculator() {}
 
@@ -53,50 +52,42 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
 ### Add the implementation
 ```c#
     [Scenario]
-    class Adding_two_numbers : ScenarioTest
-    {
+    class Adding_two_numbers : ScenarioTest {
         private Calculator _calculator;
 
         [Given]
-        public void Given_a_calculator()
-        {
+        public void Given_a_calculator() {
             _calculator = new Calculator();
         }
 
         [Given]
-        public void The_user_enters_50()
-        {
+        public void The_user_enters_50() {
             _calculator.Operand1 = 50;
         }
 
         [Given]
-        public void Next_the_user_enters_70()
-        {
+        public void Next_the_user_enters_70() {
             _calculator.Operand2 = 70;
         }
 
         [When]
-        public void When_the_user_presses_add()
-        {
+        public void When_the_user_presses_add() {
             _calculator.Add();
         }
 
         [Then]
-        public void The_screen_should_display_result_of_120()
-        {
+        public void The_screen_should_display_result_of_120() {
             Assert.AreEqual(120, _calculator.Result);
         }
     }
     
-    public class Calculator
-    {
+    class Calculator {
         public decimal Operand1 { get; set; }
         public decimal Operand2 { get; set; }
 
         public decimal Result { get; set; }
 
-        public void Add()
-        {
+        public void Add() {
             Result = Operand1 + Operand2;
         }
     }
@@ -117,19 +108,16 @@ underscore convention (e.g. `When_doing_the_thing`).
 
 ### Expected Exceptions
 ```c#
-    class When_dividing_by_zero : ScenarioTest
-    {
+    class When_dividing_by_zero : ScenarioTest {
         readonly Calculator _calculator = new Calculator();
 
         [When, Throws]
-        public void When()
-        {
+        public void When() {
             _calculator.Divide();
         }
 
         [Then]
-        public void It_should_throw_an_exception()
-        {
+        public void It_should_throw_an_exception() {
             Catch<DivideByZeroException>();
         }
     }
@@ -151,35 +139,30 @@ output is also more terse:
     [ScenarioOutline("eating")]
     [Example(12, 5, 7)]
     [Example(20, 5, 15)]
-    public class Eating_cucumbers : ScenarioTest
-    {
+    public class Eating_cucumbers : ScenarioTest {
         private readonly int _start;
         private readonly int _eat;
         private readonly int _left;
         private int _cucumbers;
 
-        public Eating_cucumbers(int start, int eat, int left)
-        {
+        public Eating_cucumbers(int start, int eat, int left) {
             _start = start;
             _eat = eat;
             _left = left;
         }
 
         [Given]
-        public void Given_there_are_START_cucumbers()
-        {
+        public void Given_there_are_START_cucumbers() {
             _cucumbers = _start;
         }
 
         [When]
-        public void When_I_eat_EAT_cucumbers()
-        {
+        public void When_I_eat_EAT_cucumbers() {
             _cucumbers -= _eat;
         }
 
         [Then]
-        public void I_should_have_LEFT_cucumbers()
-        {
+        public void I_should_have_LEFT_cucumbers() {
             Assert.AreEqual(_left, _cucumbers);
         }
     }   
@@ -196,7 +179,7 @@ output is also more terse:
 #### Example
 Consider this collection of classes:
 ```c#
-        public class Orchestrator {
+        class Orchestrator {
             public Validator Validator { get; private set; }
             public Executor Executor { get; private set; }
             public IDataComponent DataComponent { get; private set; }
@@ -216,7 +199,7 @@ Consider this collection of classes:
             }
         }
 
-        public class Validator {
+        class Validator {
             public void Validate(string input) {
                 if (string.IsNullOrEmpty(input)) {
                     throw new ArgumentException("Must have a value", "input");
@@ -224,7 +207,7 @@ Consider this collection of classes:
             }
         }
 
-        public class Executor {
+        class Executor {
             public WordCounter WordCounter { get; set; }
 
             public Executor(WordCounter wordCounter) {
@@ -236,17 +219,17 @@ Consider this collection of classes:
             }
         }
 
-        public class WordCounter {
+        class WordCounter {
             public int CountWords(string sentence) {
                 return sentence.Split(' ').Length;
             }
         }
 
-        public interface IDataComponent {
+        interface IDataComponent {
             string GetData();
         }
 
-        public class RealDataComponent : IDataComponent
+        class RealDataComponent : IDataComponent
         {
             public string GetData() {
                 using (var connection = new SqlConnection("[YourDatabase]")) {
@@ -259,7 +242,7 @@ Consider this collection of classes:
             }
         }
 
-        public class FakeDataComponent : IDataComponent
+        class FakeDataComponent : IDataComponent
         {
             public string GetData() {
                 return "all your base are belong to us";
@@ -269,7 +252,7 @@ Consider this collection of classes:
 Here's our test fixture:
 ```c#
     [Scenario]
-    public class Using_fakes_with_autofac : AutofacScenarioTest
+    class Using_fakes_with_autofac : AutofacScenarioTest
     {
         private Orchestrator _orchestrator;
 
