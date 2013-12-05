@@ -130,7 +130,7 @@ underscore convention (e.g. `When_doing_the_thing`).
         [Then]
         public void It_should_throw_an_exception()
         {
-            Catch&lt;DivideByZeroException&gt;();
+            Catch<DivideByZeroException>();
         }
     }
 ```
@@ -280,7 +280,7 @@ Here's our test fixture:
 
         [When]
         public void When_resolving_an_instance() {
-            _orchestrator = Container.Resolve&lt;Orchestrator&gt;();
+            _orchestrator = Container.Resolve<Orchestrator>();
         }
 
         [Then]
