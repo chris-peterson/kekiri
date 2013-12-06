@@ -94,6 +94,7 @@
     <Compile Include="Exceptions\When_fixture_doesnt_start_with_when.cs" />
     <Compile Include="Exceptions\When_fixture_has_private_given.cs" />
     <Compile Include="Exceptions\When_fixture_has_test_instead_of_then.cs" />
+    <Compile Include="Reporting\When_generating_report_for_an_outlined_scenario.cs" />
     <Compile Include="When_initializing_valid_fixture.cs" />
     <Compile Include="When_overriding_fixture_setup_methods.cs" />
     <Compile Include="DepthTest\When_test_has_givens_at_multiple_inheritence_levels.cs" />

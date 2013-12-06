@@ -3,7 +3,7 @@ using Kekiri.TestSupport.Reporting.Targets;
 
 namespace Kekiri.TestSupport.Scenarios.Reporting
 {
-    public class ReportingScenarioMetaTest : SupportScenarioTest
+    public class ReportingScenarioMetaTest : ScenarioTest
     {
         private readonly StringReportTarget _target = new StringReportTarget();
 

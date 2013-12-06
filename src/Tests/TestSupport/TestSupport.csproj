@@ -79,7 +79,6 @@
     <Compile Include="Scenarios\Exceptions\When_fixture_with_no_thens_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_has_private_then_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_has_private_when_scenario.cs" />
-    <Compile Include="SupportScenarioTest.cs" />
     <Compile Include="SuppressedOutputScenarioTest.cs" />
   </ItemGroup>
   <ItemGroup>

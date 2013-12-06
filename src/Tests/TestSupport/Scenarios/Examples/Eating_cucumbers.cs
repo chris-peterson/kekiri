@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Kekiri.TestSupport.Scenarios.Reporting;
+using NUnit.Framework;
 
 namespace Kekiri.TestSupport.Scenarios.Examples
 {
@@ -6,7 +7,7 @@ namespace Kekiri.TestSupport.Scenarios.Examples
     [ScenarioOutline("eating")]
     [Example(12, 5, 7)]
     [Example(20, 5, 15)]
-    public class Eating_cucumbers : ScenarioTest
+    public class Eating_cucumbers : ReportingScenarioMetaTest
     {
         private readonly int _start;
         private readonly int _eat;

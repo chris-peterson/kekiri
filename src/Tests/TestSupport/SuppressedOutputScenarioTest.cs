@@ -3,7 +3,7 @@
 namespace Kekiri.TestSupport
 {
     [SuppressOutput]
-    public class SuppressedOutputScenarioTest : SupportScenarioTest
+    public class SuppressedOutputScenarioTest : ScenarioTest
     {
     }
 }
