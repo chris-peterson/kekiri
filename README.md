@@ -9,13 +9,13 @@ Kekiri honors the conventions of the [cucumber language] (https://github.com/cuc
 
 
 ## Why Kekiri?
-Unlike other BDD frameworks that impose process overhead (management of feature files & shared steps, etc) 
+Unlike other BDD frameworks that impose process overhead (management of feature files & shared steps, etc)
 Kekiri allows developers to write BDD tests just as quickly and easily as they would technical tests.
 
 The resulting tests are concise and highly portable.
 
 ## Example
-For this **ScenarioTest**, we will be implementing a basic calculator. 
+For this **ScenarioTest**, we will be implementing a basic calculator.
 
 ### Start with the test
 Just like in TDD, when employing BDD, we write the test first:
@@ -42,11 +42,11 @@ Just like in TDD, when employing BDD, we write the test first:
 
 If we were to run this test (even though it fails) we get a nice Cucumber-style feature output:
 
-        Scenario: Adding two numbers  
-        Given a calculator  
-            And the user enters 50  
-            And next the user enters 70  
-        When the user presses add  
+        Scenario: Adding two numbers
+        Given a calculator
+            And the user enters 50
+            And next the user enters 70
+        When the user presses add
         Then the screen should display result of 120
 
 ### Add the implementation
@@ -80,7 +80,7 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
             Assert.AreEqual(120, _calculator.Result);
         }
     }
-    
+
     class Calculator {
         public decimal Operand1 { get; set; }
         public decimal Operand2 { get; set; }
@@ -93,13 +93,13 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
     }
 ```
 
-### You're done!  
+### You're done!
 Wasn't that painless?
 
 ---
 
 ## Supported Naming Conventions
-Kekiri supports both Pascal case conventions (e.g. `WhenDoingTheThing`) just as it does 
+Kekiri supports both Pascal case conventions (e.g. `WhenDoingTheThing`) just as it does
 underscore convention (e.g. `When_doing_the_thing`).
 
 ---
@@ -123,15 +123,15 @@ underscore convention (e.g. `When_doing_the_thing`).
     }
 ```
 
-Notice, here we've used the `[Throws]` attribute to inform the **ScenarioTest** that throwing an 
-exception is the expected behavior.  In 1 or more `[Then]`s, the thrown type of exception must 
-be caught (using the templated method `Catch<>`).  
+Notice, here we've used the `[Throws]` attribute to inform the **ScenarioTest** that throwing an
+exception is the expected behavior.  In 1 or more `[Then]`s, the thrown type of exception must
+be caught (using the templated method `Catch<>`).
 
 Also, notice that this test is more terse than the previous example.  This is a stylistic choice.
-By not using the `[Scenario]` attribute, and naming the class after the **When**, the test 
+By not using the `[Scenario]` attribute, and naming the class after the **When**, the test
 output is also more terse:
 
-        When dividing by zero  
+        When dividing by zero
         Then it should throw an exception
 
 ### Data-driven
@@ -165,13 +165,115 @@ output is also more terse:
         public void I_should_have_LEFT_cucumbers() {
             Assert.AreEqual(_left, _cucumbers);
         }
-    }   
+    }
 ```
 
-        Scenario Outline: eating  
-        Given there are 12 cucumbers  
-        When i eat 5 cucumbers  
+        Scenario Outline: eating
+        Given there are 12 cucumbers
+        When i eat 5 cucumbers
         Then i should have 7 cucumbers
+
+#### Using Complex Types
+Here's a more complicated example that uses an approach to data driven tests with complex types. NOTE: Kekiri's `ExampleAttribute` doesn't support the same kind of string substiution with complex types as it does with the primitive types like the example above.
+
+```c#
+[Example(ShowdownScenarios.between_two_players_with_different_highcards)]
+[Example(ShowdownScenarios.between_two_players_with_straight_and_flush)]
+public class When_determining_the_outcome_of_a_showdown
+{
+    private readonly PokerShowdown Scenario;
+    private int ActualWinner;
+
+    public When_determining_the_outcome_of_a_showdown(ShowdownScenarios showdown)
+    {
+        Scenario = ShowdownScenarioFactory.Create[showdown].Invoke();
+    }
+
+    [When]
+    public void When()
+    {
+        ActualWinner = Scenario.Game.Showdown(Scenario.Players);
+    }
+
+    [Then]
+    public void Then_the_correct_player_wins()
+    {
+        Assert.AreEqual(Scenario.Winner, ActualWinner);
+    }
+}
+
+public enum ShowdownScenarios
+{
+    between_two_players_with_different_highcards,
+    between_two_players_with_straight_and_flush
+}
+
+static class ShowdownScenarioFactory
+{
+    public static readonly IDictionary<ShowdownScenarios, Func<PokerShowdown>> Create = new Dictionary<ShowdownScenarios, Func<PokerShowdown>>
+    {
+        {ShowdownScenarios.between_two_players_with_different_highcards, () => new BetweenTwoPlayersWithDifferentHighCards()},
+        {ShowdownScenarios.between_two_players_with_straight_and_flush, () => new BetweenTwoPlayersWithStraightAndFlush()}
+    };
+
+}
+
+sealed class BetweenTwoPlayersWithStraightAndFlush : PokerShowdown
+{
+    PokerGame PokerShowdown.Game
+    {
+        get { throw new NotImplementedException(); }
+    }
+
+    IEnumerable<PokerPlayer> PokerShowdown.Players
+    {
+        get { throw new NotImplementedException(); }
+    }
+
+    int PokerShowdown.Winner
+    {
+        get { throw new NotImplementedException(); }
+    }
+}
+
+sealed class BetweenTwoPlayersWithDifferentHighCards : PokerShowdown
+{
+    PokerGame PokerShowdown.Game
+    {
+        get { throw new NotImplementedException(); }
+    }
+
+    IEnumerable<PokerPlayer> PokerShowdown.Players
+    {
+        get { throw new NotImplementedException(); }
+    }
+
+    int PokerShowdown.Winner
+    {
+        get { throw new NotImplementedException(); }
+    }
+}
+
+interface PokerShowdown
+{
+    PokerGame Game { get; }
+    IEnumerable<PokerPlayer> Players { get; }
+    int Winner { get; }
+}
+
+sealed class PokerGame
+{
+    public int Showdown(IEnumerable<PokerPlayer> players)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+sealed class PokerPlayer
+{
+    public int Id { get; private set; }
+}
+```
 
 ### IoC Tests
 `PM> Install-Package Kekiri.IoC.Autofac`
@@ -277,7 +379,7 @@ Here's our test fixture:
         public void But_explicitly_faked_objects() {
             _orchestrator.DataComponent.Should().BeOfType<FakeDataComponent>();
         }
-        
+
         [Then]
         public void And_it_computes_the_right_result() {
             _orchestrator.Process().Should().Be(7);
@@ -291,16 +393,16 @@ When calling **Resolve**, a full object graph is created for **_orchestrator**. 
 If you want to generate a .feature file as you run your unit tests, add to your test project's **App.config**, e.g.
 
 ```xml
-  <configuration>  
-    <system.diagnostics>  
-      <trace autoflush="true" indentsize="4">  
-        <listeners>  
-          <add name="fileListener" type="System.Diagnostics.TextWriterTraceListener"  
-             initializeData="YOUR_FEATURE_NAME.feature" />  
-        </listeners>  
-      </trace>  
-    </system.diagnostics>  
-  </configuration>  
+  <configuration>
+    <system.diagnostics>
+      <trace autoflush="true" indentsize="4">
+        <listeners>
+          <add name="fileListener" type="System.Diagnostics.TextWriterTraceListener"
+             initializeData="YOUR_FEATURE_NAME.feature" />
+        </listeners>
+      </trace>
+    </system.diagnostics>
+  </configuration>
 ```
 
 Replacing **YOUR_FEATURE_NAME** with your feature's name.
