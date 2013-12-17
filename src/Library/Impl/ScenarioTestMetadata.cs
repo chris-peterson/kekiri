@@ -98,7 +98,7 @@ namespace Kekiri.Impl
                 return string.Empty;
             }
 
-            var prettyPrinted = stepNameSansStepType.WithSpaces().WithFirstLetterLowercase();
+            var prettyPrinted = stepNameSansStepType.WithSpaces();
 
             foreach (var parameter in _parameters)
             {
@@ -111,7 +111,7 @@ namespace Kekiri.Impl
                 }
             }
 
-            return prettyPrinted;
+            return prettyPrinted.WithFirstLetterLowercase();
         }
 
         private IEnumerable<MethodBase> GetMethodBases(StepType stepType)

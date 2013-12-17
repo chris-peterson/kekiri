@@ -12,6 +12,6 @@
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
     <tags>bdd tdd nunit scenario test gherkin cucumber specflow</tags>
     <copyright>2012-2013</copyright>
-    <releaseNotes>Rename some IoC support classes and methods</releaseNotes>
+    <releaseNotes>Support for tabular tests (ScenarioOutline/Example)</releaseNotes>
   </metadata>
 </package>

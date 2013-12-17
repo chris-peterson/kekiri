@@ -6,7 +6,6 @@ namespace Kekiri
     {
         public ExampleAttribute(params object [] values) : base(values)
         {
-
         }
     }
 }
