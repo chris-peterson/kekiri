@@ -61,6 +61,11 @@ namespace Kekiri.TestGen
                 return;
             }
 
+            if (line.StartsWith("-> done: "))
+            {
+                return;
+            }
+
             var methodName = ProcessStepLine(line, stepType);
 
             builder.AppendLine(string.Format("      [{0}]", stepType));
@@ -105,6 +110,7 @@ namespace Kekiri.TestGen
             return str
                 .Trim()
                 .Replace(" ", "_")
+                .Replace("-", "_")
                 .Replace("\"", "")
                 .Replace("’", "")
                 .Replace("'", "")
