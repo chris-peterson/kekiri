@@ -8,7 +8,7 @@
     </Target>
 
     <Target Name="Package" DependsOnTargets="Build">
-        <MakeDir Directories="deploy\bin\$(Configuration)">
+        <MakeDir Directories="packages\bin\$(Configuration)">
             <Output TaskParameter="DirectoriesCreated" ItemName="OutputDirectory"/>
         </MakeDir>
         <Exec Command=".nuget\nuget.exe pack src\library\Kekiri.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
@@ -18,6 +18,6 @@
 
     <Target Name="Deploy" DependsOnTargets="Package">
         <Exec Command="chocolatey uninstall kekiri.tools" ContinueOnError="true" />
-        <Exec Command="chocolatey install kekiri.tools -source $(MSBuildProjectDirectory)\deploy\bin\$(Configuration) -pre" />
+        <Exec Command="chocolatey install kekiri.tools -source $(MSBuildProjectDirectory)\packages\bin\$(Configuration) -pre" />
     </Target>
 </Project>
