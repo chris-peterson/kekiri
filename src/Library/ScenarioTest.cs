@@ -81,9 +81,14 @@ namespace Kekiri
         }
 
         private object _context;
-        public dynamic Context
+        protected internal dynamic Context
         {
-            get { return _context ?? (_context = new ExpandoObject()); }
+            get { return _context ?? (_context = CreateContextObject()); }
+        }
+
+        protected virtual object CreateContextObject()
+        {
+            return new ExpandoObject();
         }
 
         protected virtual IReportTarget CreateReportTarget()
@@ -126,6 +131,19 @@ namespace Kekiri
                     throw new WhenFailed(this, when.Name, ex.InnerException);
                 }
             }
+        }
+    }
+
+    public class ScenarioTest<TContext> : ScenarioTest where TContext : new()
+    {
+        protected override object CreateContextObject()
+        {
+            return new TContext();
+        }
+
+        protected internal new TContext Context
+        {
+            get { return base.Context; }
         }
     }
 }

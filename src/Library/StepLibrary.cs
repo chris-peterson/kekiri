@@ -31,5 +31,11 @@ namespace Kekiri
         }
     }
 
-
+    public class StepLibrary<TContext> : StepLibrary
+    {
+        protected new TContext Context
+        {
+            get { return (TContext)base.Context; }
+        }
+    }
 }
