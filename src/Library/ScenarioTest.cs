@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using Kekiri.Exceptions;
@@ -56,9 +57,7 @@ namespace Kekiri
             }
 
             var when = _scenario.WhenMethods.Single();
-            var throwsAttribute =
-                when.GetCustomAttributes(typeof(ThrowsAttribute), false).SingleOrDefault() as ThrowsAttribute;
-            if (throwsAttribute != null && _exception == null)
+            if (when.ExceptionExpected && _exception == null)
             {
                 throw new NoExceptionThrown(this);
             }
@@ -81,51 +80,52 @@ namespace Kekiri
             return exception;
         }
 
+        private object _context;
+        public dynamic Context
+        {
+            get { return _context ?? (_context = new ExpandoObject()); }
+        }
+
         protected virtual IReportTarget CreateReportTarget()
         {
             return TraceReportTarget.GetInstance();
         }
 
-        private void ProcessGivens(IEnumerable<MethodBase> givens)
+        private void ProcessGivens(IEnumerable<IStep> givens)
         {
             foreach (var given in givens)
             {
                 try
                 {
-                    InvokeStepMethod(given);
+                    given.Invoke(this);
                 }
                 catch (TargetInvocationException ex)
                 {
-                    throw new GivenFailed(this, given, ex.InnerException);
+                    throw new GivenFailed(this, given.Name, ex.InnerException);
                 }
             }
         }
 
-        private void ProcessWhens(IEnumerable<MethodBase> whenMethods)
+        private void ProcessWhens(IEnumerable<IStep> whenMethods)
         {
             var when = whenMethods.Single();
 
             try
             {
-                InvokeStepMethod(when);
+                when.Invoke(this);
             }
             catch (TargetInvocationException ex)
             {
-                var exceptionWasExpected = when.GetCustomAttributes(typeof(ThrowsAttribute), false).SingleOrDefault() != null;
+                var exceptionWasExpected = when.ExceptionExpected;
                 if (exceptionWasExpected)
                 {
                     _exception = ex.InnerException;
                 }
                 else
                 {
-                    throw new WhenFailed(this, when, ex.InnerException);
+                    throw new WhenFailed(this, when.Name, ex.InnerException);
                 }
             }
-        }
-
-        private void InvokeStepMethod(MethodBase stepMethod)
-        {
-            stepMethod.Invoke(stepMethod.IsStatic ? null : this, null);
         }
     }
 }

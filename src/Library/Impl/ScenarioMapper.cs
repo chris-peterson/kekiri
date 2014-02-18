@@ -10,13 +10,9 @@ namespace Kekiri.Impl
 {
     internal static class ScenarioMapper
     {
-        private static ScenarioTest _test;
-
         public static ScenarioTestMetadata Map(ScenarioTest test)
         {
-            _test = test;
-
-            var type = _test.GetType();
+            var type = test.GetType();
 
             var scenario = new ScenarioTestMetadata(type);
 
@@ -35,7 +31,7 @@ namespace Kekiri.Impl
                         string value;
                         try
                         {
-                            value = backedField.GetValue(_test).ToString();
+                            value = backedField.GetValue(test).ToString();
                         }
                         catch
                         {
@@ -46,116 +42,74 @@ namespace Kekiri.Impl
                 }
             }
 
-            var methods = GetPotentialStepMethods(type);
+            var steps = GetSteps(type);
 
-            scenario.GivenMethods = ValidateAndBuildGivenMethods(methods);
-            scenario.WhenMethods = ValidateAndBuildWhenMethod(methods);
-            scenario.ThenMethods = ValidateAndBuildThenMethods(methods);
+            scenario.GivenMethods = steps.Where(s => s.Type == StepType.Given).ToList();
+            scenario.WhenMethods = ValidateAndBuildWhenSteps(test, steps);
+            scenario.ThenMethods = ValidateAndBuildThenSteps(test, steps);
 
+          
             return scenario;
         }
-
-        private static IEnumerable<MethodBase> ValidateAndBuildGivenMethods(IEnumerable<MethodBase> methods)
+        private static IEnumerable<IStep> ValidateAndBuildWhenSteps(ScenarioTest test, IEnumerable<IStep> steps)
         {
-            var givenMethods = GetStepMethods<GivenAttribute>(methods);
-
-            var nonPublicGiven = givenMethods.FirstOrDefault(g => g.IsPrivate);
-            if (nonPublicGiven != null)
-            {
-                throw new GivensShouldBePublic(_test, nonPublicGiven);
-            }
-
-            return givenMethods; 
-        }
-
-        private static IEnumerable<MethodBase> ValidateAndBuildWhenMethod(IEnumerable<MethodBase> methods)
-        {
-            var whens = GetStepMethods<WhenAttribute>(methods);
+            var whens = steps.Where(s => s.Type == StepType.When)
+                .Reverse()
+                .Distinct(new StepNameComparer())
+                .ToList();
 
             if (whens.Count == 0)
             {
-                throw new FixtureShouldHaveWhens(_test);
+                throw new FixtureShouldHaveWhens(test);
             }
-
-            var dictionary = new Dictionary<string, MethodBase>();
-
-            foreach (var when in whens.Reverse())
-            {
-                if (!dictionary.ContainsKey(when.Name))
-                {
-                    dictionary.Add(when.Name, when);
-                }
-            }
-            whens = dictionary.Values.ToList();
-
             if (whens.Count > 1)
             {
                 throw new NotSupportedException(string.Format(
                     "Currently, only a single 'When' is supported, found: {0}", whens.Count)); 
             }
 
-            var nonPublicWhen = whens.FirstOrDefault(g => g.IsPrivate);
-            if (nonPublicWhen != null)
-            {
-                throw new WhensShouldBePublic(_test, nonPublicWhen);
-            }
-
-            return whens; 
+            return whens;
         }
 
-        private static IEnumerable<MethodBase> ValidateAndBuildThenMethods(IEnumerable<MethodBase> methods)
+        private class StepNameComparer : IEqualityComparer<IStep>
         {
-            var methodBases = methods as MethodBase[] ?? methods.ToArray();
-            
-            var thenMethods = GetStepMethods<ThenAttribute>(methodBases);
-
-            if ((thenMethods == null) || (thenMethods.Count == 0))
+            public bool Equals(IStep x, IStep y)
             {
-                throw new FixtureShouldHaveThens(_test); 
+                return x.Name.Equals(y.Name);
             }
 
-            var nonPublicThen = thenMethods.FirstOrDefault(g => g.IsPrivate);
-            if (nonPublicThen != null)
+            public int GetHashCode(IStep obj)
             {
-                throw new ThensShouldBePublic(_test, nonPublicThen);
+                return obj.Name.GetHashCode();
             }
-
-            var testMethods = GetStepMethods<TestAttribute>(methodBases);
-            foreach (var testMethod in testMethods.Where(testMethod => !thenMethods.Contains(testMethod)))
-            {
-                throw new FixtureShouldNotUseTestAttribute(_test, testMethod);
-            }
-
-            return thenMethods; 
         }
 
-        private static IList<MethodBase> GetStepMethods<TAttribute>(IEnumerable<MethodBase> methods)
+        private static IEnumerable<IStep> ValidateAndBuildThenSteps(ScenarioTest test, IEnumerable<IStep> steps)
         {
-            var stepMethods = methods.Where(
-                m => m.GetCustomAttributes(typeof(TAttribute), false).Any()).ToList();
+            var thenMethods = steps.Where(s => s.Type == StepType.Then).ToList();
 
-            ValidateMethodSignatures(stepMethods);
-
-            return stepMethods;
-        }
-
-        private static void ValidateMethodSignatures(IEnumerable<MethodBase> methods)
-        {
-            var methodsWithParameters = methods.Where(m => m.GetParameters().Length > 0).ToList();
-            if (methodsWithParameters.Any())
+            if (thenMethods.Count == 0)
             {
-                var message = new StringBuilder();
-                message.AppendLine("The following method(s) are steps in a ScenarioTest and may not contain any parameters.");
-                foreach (MethodBase method in methodsWithParameters)
-                {
-                    message.AppendLine(method.Name);
-                }
-
-                throw new ScenarioStepMethodsShouldNotHaveParameters(_test, message.ToString());
+                throw new FixtureShouldHaveThens(test); 
             }
+
+            return thenMethods;
         }
 
-        private static IList<MethodBase> GetPotentialStepMethods(Type type)
+        private static IStep GetStepFromMember(MemberInfo member)
+        {
+            if (member is FieldInfo)
+            {
+                return new ReferencedLibraryStep((FieldInfo)member);
+            }
+            if (member is MethodInfo)
+            {
+                return new UnsharedMethodStep((MethodInfo)member);
+            }
+            throw new Exception("Unexpected member type");
+        }
+
+        private static IList<IStep> GetSteps(Type type)
         {
             // Walk the type hierarchy from ScenarioTest downward so that base class givens are invoked before derived ones
             var derivedScenarioTestTypes = new Stack<Type>(new[] {type});
@@ -165,16 +119,27 @@ namespace Kekiri.Impl
                 derivedScenarioTestTypes.Push(type);
             }
 
-            var potentialStepMethods = new List<MethodBase>();
-            foreach (var t in derivedScenarioTestTypes)
-            {
-                potentialStepMethods.AddRange(t.GetMethods(
-                    BindingFlags.Public | BindingFlags.NonPublic |
-                    BindingFlags.DeclaredOnly |
-                    BindingFlags.Static | BindingFlags.Instance));
-            }
+            return derivedScenarioTestTypes
+                .SelectMany(t => t.GetMembers(BindingFlags.Public | BindingFlags.NonPublic |
+                                          BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
+                .Where(m => IsLibraryStepReference(m) || IsUnsharedMethodStep(m))
+                .Select(GetStepFromMember)
+                .ToList();
+        }
 
-            return potentialStepMethods;
+        private static bool IsLibraryStepReference(MemberInfo member)
+        {
+            return member is FieldInfo &&
+                   ((FieldInfo)member).FieldType.HasAttribute<IStepAttribute>();
+        }
+
+        private static bool IsUnsharedMethodStep(MemberInfo member)
+        {
+            if(member.GetCustomAttributes(true).Any(a => a.GetType() == typeof(TestAttribute)))
+                throw new FixtureShouldNotUseTestAttribute(member);
+            
+            return member is MethodInfo &&
+                   member.HasAttribute<IStepAttribute>();
         }
     }
 }

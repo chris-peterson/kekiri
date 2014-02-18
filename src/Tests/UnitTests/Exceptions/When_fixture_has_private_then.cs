@@ -14,7 +14,7 @@ namespace Kekiri.UnitTests.Exceptions
         [Then]
         public void It_should_throw_proper_exception()
         {
-            Catch<ThensShouldBePublic>();
+            Catch<StepMethodShouldBePublic>();
         }
     }
 }

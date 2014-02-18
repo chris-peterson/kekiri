@@ -15,9 +15,7 @@ namespace Kekiri.Impl
 
         private class StepInfo
         {
-            public MethodBase MethodBase { get; set; }
-            public IStepAttribute StepAttribute { get; set; }
-            public SuppressOutputAttribute SuppressOutputAttribute { get; set; }
+            public IStep Step { get; set; }
             public string PrettyPrintedName { get; set; }
         }
 
@@ -39,15 +37,15 @@ namespace Kekiri.Impl
             IsOutputSuppressed = ExtractSuppressOutputAttribute(_scenarioTestType) != null;
         }
 
-        public IEnumerable<MethodBase> GivenMethods
+        public IEnumerable<IStep> GivenMethods
         {
-            get { return GetMethodBases(StepType.Given); }
+            get { return GetSteps(StepType.Given); }
             set { SetStepInfos<GivenAttribute>(StepType.Given, value); }
         }
 
-        public IEnumerable<MethodBase> WhenMethods
+        public IEnumerable<IStep> WhenMethods
         {
-            get { return GetMethodBases(StepType.When); }
+            get { return GetSteps(StepType.When); }
             set 
             {
                 SetStepInfos<WhenAttribute>(StepType.When, value);
@@ -55,14 +53,14 @@ namespace Kekiri.Impl
                 var whenInfos = _steps[StepType.When];
                 if ((whenInfos.Count == 1) && string.IsNullOrEmpty(whenInfos[0].PrettyPrintedName))
                 {
-                    whenInfos[0].PrettyPrintedName = PrettyPrintStepName(StepType.When, _scenarioTestType.Name, whenInfos[0].SuppressOutputAttribute != null);
+                    whenInfos[0].PrettyPrintedName = PrettyPrintStepName(StepType.When, _scenarioTestType.Name, whenInfos[0].Step.SuppressOutput);
                 }
             }
         }
 
-        public IEnumerable<MethodBase> ThenMethods
+        public IEnumerable<IStep> ThenMethods
         {
-            get { return GetMethodBases(StepType.Then); }
+            get { return GetSteps(StepType.Then); }
             set { SetStepInfos<ThenAttribute>(StepType.Then, value); }
         }
 
@@ -114,23 +112,20 @@ namespace Kekiri.Impl
             return prettyPrinted.WithFirstLetterLowercase();
         }
 
-        private IEnumerable<MethodBase> GetMethodBases(StepType stepType)
+        private IEnumerable<IStep> GetSteps(StepType stepType)
         {
-            return _steps[stepType].Select(s => s.MethodBase);
+            return _steps[stepType].Select(s => s.Step);
         }
 
-        private void SetStepInfos<TAttribute>(StepType stepType, IEnumerable<MethodBase> methodBases)
+        private void SetStepInfos<TAttribute>(StepType stepType, IEnumerable<IStep> steps)
             where TAttribute : class, IStepAttribute
         {
-            _steps[stepType] = methodBases.Select(methodBase =>
+            _steps[stepType] = steps.Select(step =>
                 {
-                    var suppressOutputAttribute = ExtractSuppressOutputAttribute(methodBase);
                     return new StepInfo
                         {
-                            MethodBase = methodBase,
-                            StepAttribute = methodBase.GetCustomAttributes(typeof (TAttribute), false).SingleOrDefault() as TAttribute,
-                            SuppressOutputAttribute = suppressOutputAttribute,
-                            PrettyPrintedName = PrettyPrintStepName(stepType, methodBase.Name, suppressOutputAttribute != null)
+                            Step = step,
+                            PrettyPrintedName = PrettyPrintStepName(stepType, step.Name, step.SuppressOutput)
                         };
                 }).ToList();
         }
@@ -181,14 +176,14 @@ namespace Kekiri.Impl
         private string GetStepNameWithTokenizedStepType(StepInfo stepInfo)
         {
             return string.Format("{0} {1}",
-                                 Settings.GetStep(stepInfo.StepAttribute.StepType),
+                                 Settings.GetStep(stepInfo.Step.Type),
                                  stepInfo.PrettyPrintedName);
         }
 
         private string GetStepNameWithTokenizedSeperators(StepInfo step)
         {
             return string.Format("{0} {1}",
-                                 GetPrefixTokenForStep(step.MethodBase.Name),
+                                 GetPrefixTokenForStep(step.Step.Name),
                                  step.PrettyPrintedName);
         }
 
@@ -302,7 +297,7 @@ namespace Kekiri.Impl
             var currentTestNameSplit = testName.Split('.');
             string currentTestName = currentTestNameSplit.Last();
 
-            var step = _steps[StepType.Then].FirstOrDefault(s => s.MethodBase.Name == currentTestName);
+            var step = _steps[StepType.Then].FirstOrDefault(s => s.Step.Name == currentTestName);
             if (step == null)
             {
                 return string.Format("!!! Unknown Test '{0}' !!!", currentTestName);

@@ -41,6 +41,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\FluentAssertions.2.1.0.0\lib\net40\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq">
       <HintPath>..\..\..\packages\Moq.4.1.1309.1617\lib\net40\Moq.dll</HintPath>
     </Reference>
@@ -95,6 +96,7 @@
     <Compile Include="Exceptions\When_fixture_has_private_given.cs" />
     <Compile Include="Exceptions\When_fixture_has_test_instead_of_then.cs" />
     <Compile Include="Reporting\When_generating_report_for_an_outlined_scenario.cs" />
+    <Compile Include="SharedSteps\Can_use_steps_from_step_library.cs" />
     <Compile Include="When_initializing_valid_fixture.cs" />
     <Compile Include="When_overriding_fixture_setup_methods.cs" />
     <Compile Include="DepthTest\When_test_has_givens_at_multiple_inheritence_levels.cs" />
