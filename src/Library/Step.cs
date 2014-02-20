@@ -1,4 +1,5 @@
 ﻿using System;
+using Kekiri.IoC;
 
 namespace Kekiri
 {
@@ -17,6 +18,17 @@ namespace Kekiri
         protected dynamic Context
         {
             get { return _scenario.Context; }
+        }
+
+        protected Container Container
+        {
+            get
+            {
+                var iocScenario = _scenario as IoCScenarioTest;
+                if(iocScenario == null)
+                    throw new InvalidOperationException("The Container property requires your scenario to inherit from an IoCScenarioTest");
+                return iocScenario.Container;
+            }
         }
 
         private void SetScenario(ScenarioTest test)

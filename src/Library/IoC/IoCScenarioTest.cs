@@ -5,7 +5,7 @@
     /// </summary>
     public abstract class IoCScenarioTest : ScenarioTest
     {
-        protected Container Container;
+        protected internal Container Container;
 
         protected IoCScenarioTest(Container container)
         {
