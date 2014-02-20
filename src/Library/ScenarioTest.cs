@@ -96,7 +96,7 @@ namespace Kekiri
             return TraceReportTarget.GetInstance();
         }
 
-        private void ProcessGivens(IEnumerable<IStep> givens)
+        private void ProcessGivens(IEnumerable<IStepInvoker> givens)
         {
             foreach (var given in givens)
             {
@@ -106,12 +106,12 @@ namespace Kekiri
                 }
                 catch (TargetInvocationException ex)
                 {
-                    throw new GivenFailed(this, given.Name, ex.InnerException);
+                    throw new GivenFailed(this, given.Name.PrettyName, ex.InnerException);
                 }
             }
         }
 
-        private void ProcessWhens(IEnumerable<IStep> whenMethods)
+        private void ProcessWhens(IEnumerable<IStepInvoker> whenMethods)
         {
             var when = whenMethods.Single();
 
@@ -128,7 +128,7 @@ namespace Kekiri
                 }
                 else
                 {
-                    throw new WhenFailed(this, when.Name, ex.InnerException);
+                    throw new WhenFailed(this, when.Name.PrettyName, ex.InnerException);
                 }
             }
         }

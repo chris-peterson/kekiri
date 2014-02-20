@@ -15,7 +15,7 @@ namespace Kekiri.Impl
 
         private class StepInfo
         {
-            public IStep Step { get; set; }
+            public IStepInvoker StepInvoker { get; set; }
             public string PrettyPrintedName { get; set; }
         }
 
@@ -37,13 +37,13 @@ namespace Kekiri.Impl
             IsOutputSuppressed = ExtractSuppressOutputAttribute(_scenarioTestType) != null;
         }
 
-        public IEnumerable<IStep> GivenMethods
+        public IEnumerable<IStepInvoker> GivenMethods
         {
             get { return GetSteps(StepType.Given); }
             set { SetStepInfos<GivenAttribute>(StepType.Given, value); }
         }
 
-        public IEnumerable<IStep> WhenMethods
+        public IEnumerable<IStepInvoker> WhenMethods
         {
             get { return GetSteps(StepType.When); }
             set 
@@ -51,14 +51,14 @@ namespace Kekiri.Impl
                 SetStepInfos<WhenAttribute>(StepType.When, value);
 
                 var whenInfos = _steps[StepType.When];
-                if ((whenInfos.Count == 1) && string.IsNullOrEmpty(whenInfos[0].PrettyPrintedName))
+                if ((whenInfos.Count == 1) && string.IsNullOrEmpty(whenInfos[0].PrettyPrintedName) && !whenInfos[0].StepInvoker.SuppressOutput)
                 {
-                    whenInfos[0].PrettyPrintedName = PrettyPrintStepName(StepType.When, _scenarioTestType.Name, whenInfos[0].Step.SuppressOutput);
+                    whenInfos[0].PrettyPrintedName = new StepName(StepType.When, _scenarioTestType.Name).PrettyName;
                 }
             }
         }
 
-        public IEnumerable<IStep> ThenMethods
+        public IEnumerable<IStepInvoker> ThenMethods
         {
             get { return GetSteps(StepType.Then); }
             set { SetStepInfos<ThenAttribute>(StepType.Then, value); }
@@ -81,67 +81,32 @@ namespace Kekiri.Impl
             return CreateReport(ReportType.CurrentTest);
         }
 
-        private string PrettyPrintStepName(StepType stepType, string stepName, bool suppressOutput)
+        private string SubstituteParameters(string stepName, bool suppressOutput)
         {
             if (suppressOutput)
             {
                 return string.Empty;
             }
             
-            var stepNameSansStepType = GetStepNameWithoutTypeNorSeperators(stepType, stepName);
-
-            if (string.IsNullOrWhiteSpace(stepNameSansStepType))
-            {
-                // no conversion to _ or PascalCase necessary -- bail
-                return string.Empty;
-            }
-
-            var prettyPrinted = stepNameSansStepType.WithSpaces();
-
-            foreach (var parameter in _parameters)
-            {
-                foreach (var word in prettyPrinted.Split(' '))
-                {
-                    if (word == parameter.Key)
-                    {
-                        prettyPrinted = prettyPrinted.Replace(word, parameter.Value);
-                    }
-                }
-            }
-
-            return prettyPrinted.WithFirstLetterLowercase();
+            return StepNameFormatter.SubstituteParameters(stepName, _parameters);
         }
 
-        private IEnumerable<IStep> GetSteps(StepType stepType)
+        private IEnumerable<IStepInvoker> GetSteps(StepType stepType)
         {
-            return _steps[stepType].Select(s => s.Step);
+            return _steps[stepType].Select(s => s.StepInvoker);
         }
 
-        private void SetStepInfos<TAttribute>(StepType stepType, IEnumerable<IStep> steps)
+        private void SetStepInfos<TAttribute>(StepType stepType, IEnumerable<IStepInvoker> steps)
             where TAttribute : class, IStepAttribute
         {
             _steps[stepType] = steps.Select(step =>
                 {
                     return new StepInfo
                         {
-                            Step = step,
-                            PrettyPrintedName = PrettyPrintStepName(stepType, step.Name, step.SuppressOutput)
+                            StepInvoker = step,
+                            PrettyPrintedName = SubstituteParameters(step.Name.PrettyName, step.SuppressOutput)
                         };
                 }).ToList();
-        }
-
-        private SuppressOutputAttribute ExtractSuppressOutputAttribute(MethodBase methodBase)
-        {
-            var attributeOnMethod = methodBase
-                                        .GetCustomAttributes(typeof (SuppressOutputAttribute), false)
-                                        .SingleOrDefault() as SuppressOutputAttribute;
-
-            if (attributeOnMethod == null)
-            {
-                return ExtractSuppressOutputAttribute(methodBase.DeclaringType);
-            }
-
-            return attributeOnMethod;
         }
 
         private SuppressOutputAttribute ExtractSuppressOutputAttribute(Type declaringType)
@@ -176,37 +141,17 @@ namespace Kekiri.Impl
         private string GetStepNameWithTokenizedStepType(StepInfo stepInfo)
         {
             return string.Format("{0} {1}",
-                                 Settings.GetStep(stepInfo.Step.Type),
+                                 Settings.GetStep(stepInfo.StepInvoker.Type),
                                  stepInfo.PrettyPrintedName);
         }
 
         private string GetStepNameWithTokenizedSeperators(StepInfo step)
         {
             return string.Format("{0} {1}",
-                                 GetPrefixTokenForStep(step.Step.Name),
+                                 step.StepInvoker.Name.SeparatorToken,
                                  step.PrettyPrintedName);
         }
-
-        private string GetPrefixTokenForStep(string methodName)
-        {
-            var but = Settings.GetToken(TokenType.But);
-            if (methodName.StartsWith(but, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return but;
-            }
-
-            return Settings.GetToken(TokenType.And);
-        }
-
-        private string GetStepNameWithoutTypeNorSeperators(StepType stepType, string stepName)
-        {
-            stepName = stepName.RemovePrefix(Settings.GetStep(stepType));
-            stepName = stepName.RemovePrefix(Settings.GetToken(TokenType.And));
-            stepName = stepName.RemovePrefix(Settings.GetToken(TokenType.But));
-
-            return stepName;
-        }
-
+        
         private ScenarioReportingContext CreateReport(ReportType reportType)
         {
             var featureReport = new List<string>();
@@ -297,7 +242,7 @@ namespace Kekiri.Impl
             var currentTestNameSplit = testName.Split('.');
             string currentTestName = currentTestNameSplit.Last();
 
-            var step = _steps[StepType.Then].FirstOrDefault(s => s.Step.Name == currentTestName);
+            var step = _steps[StepType.Then].FirstOrDefault(s => s.StepInvoker.SourceDescription.Split('.').Last() == currentTestName);
             if (step == null)
             {
                 return string.Format("!!! Unknown Test '{0}' !!!", currentTestName);

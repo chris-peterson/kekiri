@@ -10,7 +10,7 @@ namespace Kekiri.UnitTests.SharedSteps
             //no-op
         }
 
-        When a_step_is_referenced_that_uses_strongly_typed_context;
+        When_a_step_is_referenced_that_uses_strongly_typed_context _;
 
         [Then]
         public void the_matching_step_is_executed_from_the_step_library()
@@ -19,15 +19,14 @@ namespace Kekiri.UnitTests.SharedSteps
         }
     }
 
-    internal class SomeSharedStepsWithStronglyTypedContext : StepLibrary<StronglyTypedContext>
+    internal class When_a_step_is_referenced_that_uses_strongly_typed_context : Step<StronglyTypedContext>
     {
-        [When]
-        public void a_step_is_referenced_that_uses_strongly_typed_context()
+        public override void Execute()
         {
             Context.IsReferencedStepExecuted = true;
         }
     }
-    
+
     public class StronglyTypedContext
     {
         public bool IsReferencedStepExecuted { get; set; }

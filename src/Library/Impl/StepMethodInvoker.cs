@@ -3,25 +3,21 @@ using Kekiri.Exceptions;
 
 namespace Kekiri.Impl
 {
-    internal abstract class MethodStep : IStep
+    internal class StepMethodInvoker : IStepInvoker
     {
         protected MethodBase Method { get; private set; }
 
         public bool ExceptionExpected { get; private set; }
 
-        public string Name
-        {
-            get { return Method.Name; }
-        }
+        public StepName Name { get; private set; }
 
         public StepType Type { get; private set; }
 
         public string SourceDescription { get; private set; }
 
         public bool SuppressOutput { get; private set; }
-
-
-        protected MethodStep(MethodBase method)
+        
+        public StepMethodInvoker(MethodBase method)
         {
             if(method.IsPrivate)
                 throw new StepMethodShouldBePublic(method.DeclaringType, method);
@@ -30,11 +26,15 @@ namespace Kekiri.Impl
 
             Method = method;
             Type = method.AttributeOrDefault<IStepAttribute>().StepType;
+            Name = new StepName(Type, method.Name);
             SuppressOutput = method.SuppressOutputAttribute() != null;
             ExceptionExpected = method.AttributeOrDefault<ThrowsAttribute>() != null;
             SourceDescription = string.Format("{0}.{1}", method.DeclaringType.FullName, method.Name);
         }
 
-        public abstract void Invoke(ScenarioTest test);
+        public virtual void Invoke(ScenarioTest test)
+        {
+            Method.Invoke(Method.IsStatic ? null : test, null);
+        }
     }
 }

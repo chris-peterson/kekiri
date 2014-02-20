@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Kekiri.Exceptions;
 using NUnit.Framework;
 
@@ -42,7 +41,7 @@ namespace Kekiri.Impl
                 }
             }
 
-            var steps = GetSteps(type);
+            var steps = GetStepInvokers(type);
 
             scenario.GivenMethods = steps.Where(s => s.Type == StepType.Given).ToList();
             scenario.WhenMethods = ValidateAndBuildWhenSteps(test, steps);
@@ -51,7 +50,7 @@ namespace Kekiri.Impl
           
             return scenario;
         }
-        private static IEnumerable<IStep> ValidateAndBuildWhenSteps(ScenarioTest test, IEnumerable<IStep> steps)
+        private static IEnumerable<IStepInvoker> ValidateAndBuildWhenSteps(ScenarioTest test, IEnumerable<IStepInvoker> steps)
         {
             var whens = steps.Where(s => s.Type == StepType.When)
                 .Reverse()
@@ -71,20 +70,20 @@ namespace Kekiri.Impl
             return whens;
         }
 
-        private class StepNameComparer : IEqualityComparer<IStep>
+        private class StepNameComparer : IEqualityComparer<IStepInvoker>
         {
-            public bool Equals(IStep x, IStep y)
+            public bool Equals(IStepInvoker x, IStepInvoker y)
             {
                 return x.Name.Equals(y.Name);
             }
 
-            public int GetHashCode(IStep obj)
+            public int GetHashCode(IStepInvoker obj)
             {
                 return obj.Name.GetHashCode();
             }
         }
 
-        private static IEnumerable<IStep> ValidateAndBuildThenSteps(ScenarioTest test, IEnumerable<IStep> steps)
+        private static IEnumerable<IStepInvoker> ValidateAndBuildThenSteps(ScenarioTest test, IEnumerable<IStepInvoker> steps)
         {
             var thenMethods = steps.Where(s => s.Type == StepType.Then).ToList();
 
@@ -96,20 +95,20 @@ namespace Kekiri.Impl
             return thenMethods;
         }
 
-        private static IStep GetStepFromMember(MemberInfo member)
+        private static IStepInvoker GetStepFromMember(MemberInfo member)
         {
             if (member is FieldInfo)
             {
-                return new ReferencedLibraryStep((FieldInfo)member);
+                return new StepClassInvoker(((FieldInfo)member).FieldType);
             }
             if (member is MethodInfo)
             {
-                return new UnsharedMethodStep((MethodInfo)member);
+                return new StepMethodInvoker((MethodInfo)member);
             }
             throw new Exception("Unexpected member type");
         }
 
-        private static IList<IStep> GetSteps(Type type)
+        private static IList<IStepInvoker> GetStepInvokers(Type type)
         {
             // Walk the type hierarchy from ScenarioTest downward so that base class givens are invoked before derived ones
             var derivedScenarioTestTypes = new Stack<Type>(new[] {type});
@@ -122,18 +121,18 @@ namespace Kekiri.Impl
             return derivedScenarioTestTypes
                 .SelectMany(t => t.GetMembers(BindingFlags.Public | BindingFlags.NonPublic |
                                           BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
-                .Where(m => IsLibraryStepReference(m) || IsUnsharedMethodStep(m))
+                .Where(m => IsStepMethod(m) || IsStepClass(m))
                 .Select(GetStepFromMember)
                 .ToList();
         }
 
-        private static bool IsLibraryStepReference(MemberInfo member)
+        private static bool IsStepClass(MemberInfo member)
         {
             return member is FieldInfo &&
-                   ((FieldInfo)member).FieldType.HasAttribute<IStepAttribute>();
+                   typeof (Step).IsAssignableFrom(((FieldInfo) member).FieldType);
         }
 
-        private static bool IsUnsharedMethodStep(MemberInfo member)
+        private static bool IsStepMethod(MemberInfo member)
         {
             if(member.GetCustomAttributes(true).Any(a => a.GetType() == typeof(TestAttribute)))
                 throw new FixtureShouldNotUseTestAttribute(member);

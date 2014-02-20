@@ -1,6 +1,6 @@
 namespace Kekiri.Impl
 {
-    internal interface IStep
+    internal interface IStepInvoker
     {
         void Invoke(ScenarioTest test);
 
@@ -8,7 +8,7 @@ namespace Kekiri.Impl
 
         bool ExceptionExpected { get; }
 
-        string Name { get; }
+        StepName Name { get; }
 
         StepType Type { get; }
 
