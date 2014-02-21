@@ -41,6 +41,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutofacContainer.cs" />
+    <Compile Include="AutofacFluentScenario.cs" />
     <Compile Include="AutofacScenarioTest.cs" />
     <Compile Include="CustomBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

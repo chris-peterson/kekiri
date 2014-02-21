@@ -1,13 +1,10 @@
 ﻿namespace Kekiri.IoC
 {
-    /// <summary>
-    /// Base class for an IoC capable <c>ScenarioTest</c>.
-    /// </summary>
-    public abstract class IoCScenarioTest : ScenarioTest, IContainerAccessor
+    public abstract class IoCFluentScenario : FluentScenario, IContainerAccessor
     {
         protected internal Container Container;
 
-        protected IoCScenarioTest(Container container)
+        protected IoCFluentScenario(Container container)
         {
             Container = container;
         }

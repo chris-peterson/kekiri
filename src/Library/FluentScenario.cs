@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Kekiri
 {
     [TestFixture]
-    public abstract class FluentScenario : IContextContainer
+    public abstract class FluentScenario : IContextAccessor
     {
         private readonly ScenarioRunner _scenarioRunner;
         private StepType _stepType = StepType.Given;
@@ -111,7 +111,7 @@ namespace Kekiri
             get { return _context ?? (_context = CreateContextObject()); }
         }
 
-        dynamic IContextContainer.Context
+        dynamic IContextAccessor.Context
         {
             get { return Context; }
         }

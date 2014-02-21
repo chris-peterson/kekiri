@@ -1,11 +1,12 @@
 ﻿using System;
+using Kekiri.Impl;
 using Kekiri.IoC;
 
 namespace Kekiri
 {
     public abstract class Step
     {
-        public static Step InstanceFor(IContextContainer test, Type stepClass)
+        public static Step InstanceFor(IContextAccessor test, Type stepClass)
         {
             var instance = (Step)Activator.CreateInstance(stepClass);
             instance.SetScenario(test);
@@ -13,7 +14,7 @@ namespace Kekiri
             return instance;
         }
         
-        private IContextContainer _scenario;
+        private IContextAccessor _scenario;
 
         protected dynamic Context
         {
@@ -24,14 +25,14 @@ namespace Kekiri
         {
             get
             {
-                var iocScenario = _scenario as IoCScenarioTest;
+                var iocScenario = _scenario as IContainerAccessor;
                 if(iocScenario == null)
                     throw new InvalidOperationException("The Container property requires your scenario to inherit from an IoCScenarioTest");
                 return iocScenario.Container;
             }
         }
 
-        private void SetScenario(IContextContainer test)
+        private void SetScenario(IContextAccessor test)
         {
             _scenario = test;
         }

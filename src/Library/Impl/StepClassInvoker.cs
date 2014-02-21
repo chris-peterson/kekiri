@@ -39,7 +39,7 @@ namespace Kekiri.Impl
 
         public void Invoke(object test)
         {
-            var contextContainer = test as IContextContainer;
+            var contextContainer = test as IContextAccessor;
             if(contextContainer == null)
                 throw new InvalidOperationException("The test must implement IContextContainer");
             Step.InstanceFor(contextContainer, _stepClass).Execute();
