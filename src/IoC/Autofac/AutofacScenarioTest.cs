@@ -64,17 +64,4 @@ namespace Kekiri.IoC.Autofac
         {
         }
     }
-
-    public class AutofacScenarioTest<TContext> : AutofacScenarioTest where TContext : new()
-    {
-        protected new TContext Context
-        {
-            get { return (TContext) base.Context; }
-        }
-
-        protected override object CreateContextObject()
-        {
-            return new TContext();
-        }
-    }
 }

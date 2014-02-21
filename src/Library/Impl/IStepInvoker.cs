@@ -2,7 +2,7 @@ namespace Kekiri.Impl
 {
     internal interface IStepInvoker
     {
-        void Invoke(ScenarioTest test);
+        void Invoke(object test);
 
         bool SuppressOutput { get; }
 

@@ -5,7 +5,7 @@ namespace Kekiri
 {
     public abstract class Step
     {
-        public static Step InstanceFor(ScenarioTest test, Type stepClass)
+        public static Step InstanceFor(IContextContainer test, Type stepClass)
         {
             var instance = (Step)Activator.CreateInstance(stepClass);
             instance.SetScenario(test);
@@ -13,7 +13,7 @@ namespace Kekiri
             return instance;
         }
         
-        private ScenarioTest _scenario;
+        private IContextContainer _scenario;
 
         protected dynamic Context
         {
@@ -31,7 +31,7 @@ namespace Kekiri
             }
         }
 
-        private void SetScenario(ScenarioTest test)
+        private void SetScenario(IContextContainer test)
         {
             _scenario = test;
         }

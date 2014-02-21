@@ -7,12 +7,14 @@ namespace Kekiri.Impl
     {
         private readonly Type _stepClass;
 
-        public StepClassInvoker(Type stepClass)
+        public StepClassInvoker(Type stepClass) : this(GetStepType(stepClass), stepClass) { }
+
+        public StepClassInvoker(StepType stepType, Type stepClass)
         {
-            if(!typeof(Step).IsAssignableFrom(stepClass))
+            if (!typeof(Step).IsAssignableFrom(stepClass))
                 throw new ArgumentException("The stepClass must inherit from Step", "stepClass");
             _stepClass = stepClass;
-            Type = GetStepType();
+            Type = stepType;
             Name = new StepName(Type, _stepClass.Name);
         }
 
@@ -35,15 +37,18 @@ namespace Kekiri.Impl
             get { return _stepClass.FullName; }
         }
 
-        public void Invoke(ScenarioTest test)
+        public void Invoke(object test)
         {
-            Step.InstanceFor(test, _stepClass).Execute();
+            var contextContainer = test as IContextContainer;
+            if(contextContainer == null)
+                throw new InvalidOperationException("The test must implement IContextContainer");
+            Step.InstanceFor(contextContainer, _stepClass).Execute();
         }
 
-        private StepType GetStepType()
+        private static StepType GetStepType(Type stepClass)
         {
             var stepName = Enum.GetNames(typeof (StepType))
-                .FirstOrDefault(name => _stepClass.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(name => stepClass.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase));
             if(stepName == null)
                 throw new InvalidOperationException("The step class name should begin with one of " + String.Join(",", Enum.GetNames(typeof(StepType))));
             return (StepType)Enum.Parse(typeof (StepType), stepName, ignoreCase: true);

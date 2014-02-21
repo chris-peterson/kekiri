@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Reflection;
-using Kekiri.Exceptions;
 using Kekiri.Impl;
 using Kekiri.Reporting;
 using NUnit.Framework;
@@ -19,131 +14,42 @@ namespace Kekiri
 // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
-        private ScenarioTestMetadata _scenario;
+        private ScenarioRunner _scenarioRunner;
         private readonly IReportTarget _reportTarget;
-
-        private Exception _exception;
-        private bool _exceptionCaught;
 
         [TestFixtureSetUp]
         public virtual void SetupScenario()
         {
-            _scenario = ScenarioMapper.Map(this);
-
-            if (!_scenario.IsOutputSuppressed)
+            _scenarioRunner = new ScenarioRunner(this, _reportTarget);
+            foreach (var step in ScenarioMapper.GetStepInvokers(GetType()))
             {
-                _reportTarget.Report(ReportType.EntireScenario, _scenario.CreateReportForEntireScenario());
+                _scenarioRunner.AddStep(step);
             }
-
-            ProcessGivens(_scenario.GivenMethods);
-            ProcessWhens(_scenario.WhenMethods);
+            _scenarioRunner.ReportScenario();
+            _scenarioRunner.RunGivensAndWhen();
+            _scenarioRunner.EnsureAtLeastOneThenExists();
         }
 
         [SetUp]
         public virtual void SetupTest()
         {
-            if (!_scenario.IsOutputSuppressed)
-            {
-                 _reportTarget.Report(ReportType.CurrentTest, _scenario.CreateReportForCurrentTest());
-            }
+            _scenarioRunner.ReportCurrentTest();
         }
 
         [TestFixtureTearDown]
         public virtual void CleanupScenario()
         {
-            if (_exception != null && !_exceptionCaught)
-            {
-                throw new ExpectedExceptionNotCaught(this, _exception);
-            }
-
-            var when = _scenario.WhenMethods.Single();
-            if (when.ExceptionExpected && _exception == null)
-            {
-                throw new NoExceptionThrown(this);
-            }
+            _scenarioRunner.AssertExceptionState();
         }
 
         protected TException Catch<TException>() where TException : Exception
         {
-            if (_exception == null)
-            {
-                throw new NoExceptionThrown(this, typeof(TException));
-            }
-
-            var exception = _exception as TException;
-            if (exception == null)
-            {
-                throw new WrongExceptionType(this, typeof(TException), _exception);
-            }
-
-            _exceptionCaught = true;
-            return exception;
+            return _scenarioRunner.Catch<TException>();
         }
-
-        private object _context;
-        protected internal dynamic Context
-        {
-            get { return _context ?? (_context = CreateContextObject()); }
-        }
-
-        protected virtual object CreateContextObject()
-        {
-            return new ExpandoObject();
-        }
-
+        
         protected virtual IReportTarget CreateReportTarget()
         {
             return TraceReportTarget.GetInstance();
-        }
-
-        private void ProcessGivens(IEnumerable<IStepInvoker> givens)
-        {
-            foreach (var given in givens)
-            {
-                try
-                {
-                    given.Invoke(this);
-                }
-                catch (TargetInvocationException ex)
-                {
-                    throw new GivenFailed(this, given.Name.PrettyName, ex.InnerException);
-                }
-            }
-        }
-
-        private void ProcessWhens(IEnumerable<IStepInvoker> whenMethods)
-        {
-            var when = whenMethods.Single();
-
-            try
-            {
-                when.Invoke(this);
-            }
-            catch (TargetInvocationException ex)
-            {
-                var exceptionWasExpected = when.ExceptionExpected;
-                if (exceptionWasExpected)
-                {
-                    _exception = ex.InnerException;
-                }
-                else
-                {
-                    throw new WhenFailed(this, when.Name.PrettyName, ex.InnerException);
-                }
-            }
-        }
-    }
-
-    public class ScenarioTest<TContext> : ScenarioTest where TContext : new()
-    {
-        protected override object CreateContextObject()
-        {
-            return new TContext();
-        }
-
-        protected internal new TContext Context
-        {
-            get { return base.Context; }
         }
     }
 }

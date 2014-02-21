@@ -16,23 +16,20 @@ namespace Kekiri.Impl
         public string SourceDescription { get; private set; }
 
         public bool SuppressOutput { get; private set; }
-        
-        public StepMethodInvoker(MethodBase method)
-        {
-            if(method.IsPrivate)
-                throw new StepMethodShouldBePublic(method.DeclaringType, method);
-            if(method.GetParameters().Length > 0)
-                throw new ScenarioStepMethodsShouldNotHaveParameters(method.DeclaringType, "The method '" + method.Name + "' is in a ScenarioTest and cannot have parameters");
 
+        public StepMethodInvoker(MethodBase method) : this(method.AttributeOrDefault<IStepAttribute>().StepType, method) { }
+
+        public StepMethodInvoker(StepType stepType, MethodBase method)
+        {
             Method = method;
-            Type = method.AttributeOrDefault<IStepAttribute>().StepType;
+            Type = stepType;
             Name = new StepName(Type, method.Name);
             SuppressOutput = method.SuppressOutputAttribute() != null;
             ExceptionExpected = method.AttributeOrDefault<ThrowsAttribute>() != null;
             SourceDescription = string.Format("{0}.{1}", method.DeclaringType.FullName, method.Name);
         }
 
-        public virtual void Invoke(ScenarioTest test)
+        public virtual void Invoke(object test)
         {
             Method.Invoke(Method.IsStatic ? null : test, null);
         }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using Kekiri.Config;
 using Kekiri.Reporting;
@@ -37,31 +36,40 @@ namespace Kekiri.Impl
             IsOutputSuppressed = ExtractSuppressOutputAttribute(_scenarioTestType) != null;
         }
 
+        public void AddStep(IStepInvoker step)
+        {
+            if (step.Type == StepType.When && _steps[StepType.When].Count == 1)
+            {
+                throw new NotSupportedException(string.Format(
+                    "Currently, only a single 'When' is supported, found: {0} and {1}", _steps[StepType.When].First().StepInvoker.SourceDescription, step.SourceDescription));
+            }
+
+            var stepInfo = new StepInfo
+            {
+                StepInvoker = step,
+                PrettyPrintedName = SubstituteParameters(step.Name.PrettyName, step.SuppressOutput)
+            };
+            if (step.Type == StepType.When && string.IsNullOrEmpty(stepInfo.PrettyPrintedName) && !step.SuppressOutput)
+            {
+                stepInfo.PrettyPrintedName = new StepName(StepType.When, _scenarioTestType.Name).PrettyName;
+            }
+            
+            _steps[step.Type].Add(stepInfo);   
+        }
+
         public IEnumerable<IStepInvoker> GivenMethods
         {
             get { return GetSteps(StepType.Given); }
-            set { SetStepInfos<GivenAttribute>(StepType.Given, value); }
         }
 
-        public IEnumerable<IStepInvoker> WhenMethods
+        public IStepInvoker WhenMethod
         {
-            get { return GetSteps(StepType.When); }
-            set 
-            {
-                SetStepInfos<WhenAttribute>(StepType.When, value);
-
-                var whenInfos = _steps[StepType.When];
-                if ((whenInfos.Count == 1) && string.IsNullOrEmpty(whenInfos[0].PrettyPrintedName) && !whenInfos[0].StepInvoker.SuppressOutput)
-                {
-                    whenInfos[0].PrettyPrintedName = new StepName(StepType.When, _scenarioTestType.Name).PrettyName;
-                }
-            }
+            get { return GetSteps(StepType.When).SingleOrDefault(); }
         }
 
         public IEnumerable<IStepInvoker> ThenMethods
         {
             get { return GetSteps(StepType.Then); }
-            set { SetStepInfos<ThenAttribute>(StepType.Then, value); }
         }
 
         public IDictionary<string, string> Parameters
@@ -94,19 +102,6 @@ namespace Kekiri.Impl
         private IEnumerable<IStepInvoker> GetSteps(StepType stepType)
         {
             return _steps[stepType].Select(s => s.StepInvoker);
-        }
-
-        private void SetStepInfos<TAttribute>(StepType stepType, IEnumerable<IStepInvoker> steps)
-            where TAttribute : class, IStepAttribute
-        {
-            _steps[stepType] = steps.Select(step =>
-                {
-                    return new StepInfo
-                        {
-                            StepInvoker = step,
-                            PrettyPrintedName = SubstituteParameters(step.Name.PrettyName, step.SuppressOutput)
-                        };
-                }).ToList();
         }
 
         private SuppressOutputAttribute ExtractSuppressOutputAttribute(Type declaringType)

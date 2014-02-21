@@ -9,12 +9,9 @@ namespace Kekiri.Impl
 {
     internal static class ScenarioMapper
     {
-        public static ScenarioTestMetadata Map(ScenarioTest test)
+        public static void FillParameters(object test, IDictionary<string,string> parameters)
         {
             var type = test.GetType();
-
-            var scenario = new ScenarioTestMetadata(type);
-
             var ctor = type.GetConstructors().SingleOrDefault();
             if (ctor != null)
             {
@@ -36,38 +33,29 @@ namespace Kekiri.Impl
                         {
                             value = "UNKNOWN!";
                         }
-                        scenario.Parameters.Add(parameter.Name.ToUpper(), value);
+                        parameters.Add(parameter.Name.ToUpper(), value);
                     }
                 }
             }
-
-            var steps = GetStepInvokers(type);
-
-            scenario.GivenMethods = steps.Where(s => s.Type == StepType.Given).ToList();
-            scenario.WhenMethods = ValidateAndBuildWhenSteps(test, steps);
-            scenario.ThenMethods = ValidateAndBuildThenSteps(test, steps);
-
-          
-            return scenario;
         }
-        private static IEnumerable<IStepInvoker> ValidateAndBuildWhenSteps(ScenarioTest test, IEnumerable<IStepInvoker> steps)
+
+        public static IList<IStepInvoker> GetStepInvokers(Type type)
         {
-            var whens = steps.Where(s => s.Type == StepType.When)
-                .Reverse()
+            // Walk the type hierarchy from ScenarioTest downward so that base class givens are invoked before derived ones
+            var derivedScenarioTestTypes = new Stack<Type>(new[] {type});
+            while (type != null && type.BaseType != typeof(ScenarioTest))
+            {
+                type = type.BaseType;
+                derivedScenarioTestTypes.Push(type);
+            }
+
+            return derivedScenarioTestTypes
+                .SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
+                                              BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
+                .Where(IsStepMethod)
+                .Select(GetStepFromMember)
                 .Distinct(new StepNameComparer())
                 .ToList();
-
-            if (whens.Count == 0)
-            {
-                throw new FixtureShouldHaveWhens(test);
-            }
-            if (whens.Count > 1)
-            {
-                throw new NotSupportedException(string.Format(
-                    "Currently, only a single 'When' is supported, found: {0}", whens.Count)); 
-            }
-
-            return whens;
         }
 
         private class StepNameComparer : IEqualityComparer<IStepInvoker>
@@ -83,62 +71,23 @@ namespace Kekiri.Impl
             }
         }
 
-        private static IEnumerable<IStepInvoker> ValidateAndBuildThenSteps(ScenarioTest test, IEnumerable<IStepInvoker> steps)
+        private static IStepInvoker GetStepFromMember(MethodInfo method)
         {
-            var thenMethods = steps.Where(s => s.Type == StepType.Then).ToList();
+            if (method.IsPrivate)
+                throw new StepMethodShouldBePublic(method.DeclaringType, method);
+            if (method.GetParameters().Length > 0)
+                throw new ScenarioStepMethodsShouldNotHaveParameters(method.DeclaringType,
+                    "The method '" + method.Name + "' is in a ScenarioTest and cannot have parameters");
 
-            if (thenMethods.Count == 0)
-            {
-                throw new FixtureShouldHaveThens(test); 
-            }
-
-            return thenMethods;
+            return new StepMethodInvoker(method);
         }
 
-        private static IStepInvoker GetStepFromMember(MemberInfo member)
+        private static bool IsStepMethod(MethodInfo method)
         {
-            if (member is FieldInfo)
-            {
-                return new StepClassInvoker(((FieldInfo)member).FieldType);
-            }
-            if (member is MethodInfo)
-            {
-                return new StepMethodInvoker((MethodInfo)member);
-            }
-            throw new Exception("Unexpected member type");
-        }
-
-        private static IList<IStepInvoker> GetStepInvokers(Type type)
-        {
-            // Walk the type hierarchy from ScenarioTest downward so that base class givens are invoked before derived ones
-            var derivedScenarioTestTypes = new Stack<Type>(new[] {type});
-            while (type != null && type.BaseType != typeof(ScenarioTest))
-            {
-                type = type.BaseType;
-                derivedScenarioTestTypes.Push(type);
-            }
-
-            return derivedScenarioTestTypes
-                .SelectMany(t => t.GetMembers(BindingFlags.Public | BindingFlags.NonPublic |
-                                          BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
-                .Where(m => IsStepMethod(m) || IsStepClass(m))
-                .Select(GetStepFromMember)
-                .ToList();
-        }
-
-        private static bool IsStepClass(MemberInfo member)
-        {
-            return member is FieldInfo &&
-                   typeof (Step).IsAssignableFrom(((FieldInfo) member).FieldType);
-        }
-
-        private static bool IsStepMethod(MemberInfo member)
-        {
-            if(member.GetCustomAttributes(true).Any(a => a.GetType() == typeof(TestAttribute)))
-                throw new FixtureShouldNotUseTestAttribute(member);
+            if(method.GetCustomAttributes(true).Any(a => a.GetType() == typeof(TestAttribute)))
+                throw new FixtureShouldNotUseTestAttribute(method);
             
-            return member is MethodInfo &&
-                   member.HasAttribute<IStepAttribute>();
+            return method.HasAttribute<IStepAttribute>();
         }
     }
 }
