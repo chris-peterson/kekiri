@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 
-namespace Kekiri.UnitTests.SharedSteps
+namespace Kekiri.UnitTests.Fluent
 {
     public class Can_share_strongly_typed_context_between_steps : FluentScenario<StronglyTypedContext>
     {

@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using FluentAssertions;
+﻿using FluentAssertions;
 
-namespace Kekiri.UnitTests.SharedSteps
+namespace Kekiri.UnitTests.Fluent
 {
     public class Steps_are_executed_in_declared_order : FluentScenario
     {

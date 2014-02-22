@@ -21,13 +21,15 @@ namespace Kekiri
         public virtual void SetupScenario()
         {
             _scenarioRunner = new ScenarioRunner(this, _reportTarget);
-            foreach (var step in ScenarioMapper.GetStepInvokers(GetType()))
+            foreach (var step in ScenarioMapper.GetStepInvokers(this))
             {
                 _scenarioRunner.AddStep(step);
             }
             _scenarioRunner.ReportScenario();
-            _scenarioRunner.RunGivensAndWhen();
+            _scenarioRunner.RunGivens();
+            _scenarioRunner.RunWhen();
             _scenarioRunner.EnsureAtLeastOneThenExists();
+            //thens are executed by NUnit
         }
 
         [SetUp]

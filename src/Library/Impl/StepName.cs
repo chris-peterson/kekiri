@@ -1,22 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using Kekiri.Config;
 
 namespace Kekiri.Impl
 {
-    public class StepName
+    internal class StepName
     {
         private readonly GherkinTestFrameworkSettingsFacade _settings = GherkinTestFrameworkSettingsFacade.GetInstance();
-        
-        public StepName(StepType stepType, string name)
+
+        public StepName(StepType stepType, string name, IEnumerable<KeyValuePair<string, object>> substitutionParameters = null)
         {
             StepType = stepType;
             SeparatorToken = GetSeparatorToken(stepType, name);
-            PrettyName = GetPrettyName(stepType, name);
+            Outline = GetOutline(stepType, name);
+            PrettyName = SubstituteParameters(Outline, substitutionParameters);
         }
 
         public StepType StepType { get; private set; }
 
         public string PrettyName { get; private set; }
+
+        public string Outline { get; private set; }
 
         public TokenType SeparatorToken { get; private set; }
 
@@ -57,7 +61,7 @@ namespace Kekiri.Impl
             return TokenType.And;
         }
 
-        private string GetPrettyName(StepType stepType, string name)
+        private string GetOutline(StepType stepType, string name)
         {
             var stepNameSansStepType = GetStepNameWithoutTypeNorSeperators(stepType, name);
 
@@ -75,6 +79,25 @@ namespace Kekiri.Impl
             stepName = stepName.RemovePrefix(_settings.GetStep(stepType));
             stepName = stepName.RemovePrefix(_settings.GetToken(TokenType.And));
             stepName = stepName.RemovePrefix(_settings.GetToken(TokenType.But));
+
+            return stepName;
+        }
+
+        private string SubstituteParameters(string stepName, IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            if (parameters == null)
+                return stepName;
+            
+            foreach (var parameter in parameters)
+            {
+                foreach (var word in stepName.Split(' '))
+                {
+                    if (word == parameter.Key.ToUpperInvariant())
+                    {
+                        stepName = stepName.Replace(word, parameter.Value.ToString());
+                    }
+                }
+            }
 
             return stepName;
         }

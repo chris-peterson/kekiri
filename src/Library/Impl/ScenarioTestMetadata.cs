@@ -21,12 +21,10 @@ namespace Kekiri.Impl
         private GherkinTestFrameworkSettingsFacade Settings { get; set; }
 
         private readonly IDictionary<StepType, IList<StepInfo>> _steps = new Dictionary<StepType, IList<StepInfo>>();
-        private readonly IDictionary<string, string> _parameters = new Dictionary<string, string>();
-
+        
         public ScenarioTestMetadata(Type scenarioTestType)
         {
             Settings = GherkinTestFrameworkSettingsFacade.GetInstance();
-
             _scenarioTestType = scenarioTestType;
             foreach (StepType stepType in Enum.GetValues(typeof(StepType)))
             {
@@ -47,7 +45,7 @@ namespace Kekiri.Impl
             var stepInfo = new StepInfo
             {
                 StepInvoker = step,
-                PrettyPrintedName = SubstituteParameters(step.Name.PrettyName, step.SuppressOutput)
+                PrettyPrintedName = step.SuppressOutput ? string.Empty : step.Name.PrettyName
             };
             if (step.Type == StepType.When && string.IsNullOrEmpty(stepInfo.PrettyPrintedName) && !step.SuppressOutput)
             {
@@ -72,11 +70,6 @@ namespace Kekiri.Impl
             get { return GetSteps(StepType.Then); }
         }
 
-        public IDictionary<string, string> Parameters
-        {
-            get { return _parameters; }
-        }
-
         public bool IsOutputSuppressed { get; private set; }
 
         public ScenarioReportingContext CreateReportForEntireScenario()
@@ -87,16 +80,6 @@ namespace Kekiri.Impl
         public ScenarioReportingContext CreateReportForCurrentTest()
         {
             return CreateReport(ReportType.CurrentTest);
-        }
-
-        private string SubstituteParameters(string stepName, bool suppressOutput)
-        {
-            if (suppressOutput)
-            {
-                return string.Empty;
-            }
-            
-            return StepNameFormatter.SubstituteParameters(stepName, _parameters);
         }
 
         private IEnumerable<IStepInvoker> GetSteps(StepType stepType)
@@ -112,8 +95,7 @@ namespace Kekiri.Impl
 
         private T ExtractAttributeFromScenarioTest<T>() where T : class
         {
-            return _scenarioTestType.GetCustomAttributes(
-                typeof (T), true).SingleOrDefault() as T;
+            return _scenarioTestType.AttributeOrDefault<T>();
         }
 
         private IEnumerable<T> ExtractAttributesFromScenarioTest<T>() where T : class

@@ -1,7 +1,7 @@
 ﻿using System.Dynamic;
 using FluentAssertions;
 
-namespace Kekiri.UnitTests.SharedSteps
+namespace Kekiri.UnitTests.Fluent
 {
     public class Can_use_steps_from_step_class : FluentScenario
     {

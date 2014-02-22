@@ -9,7 +9,19 @@ namespace Kekiri.Impl
 {
     internal static class ScenarioMapper
     {
-        public static void FillParameters(object test, IDictionary<string,string> parameters)
+        public static string[] GetParameterNames(object test)
+        {
+            var type = test.GetType();
+            var ctor = type.GetConstructors().SingleOrDefault();
+            if(ctor == null)
+                return new string[0];
+
+            return ctor.GetParameters()
+                .Select(p => p.Name.ToUpperInvariant())
+                .ToArray();
+        }
+        
+        public static IEnumerable<KeyValuePair<string,object>> GetParameters(object test)
         {
             var type = test.GetType();
             var ctor = type.GetConstructors().SingleOrDefault();
@@ -24,23 +36,25 @@ namespace Kekiri.Impl
                                 StringComparison.InvariantCultureIgnoreCase) == 0);
                     if (backedField != null)
                     {
-                        string value;
+                        object value;
                         try
                         {
-                            value = backedField.GetValue(test).ToString();
+                            value = backedField.GetValue(test);
                         }
                         catch
                         {
                             value = "UNKNOWN!";
                         }
-                        parameters.Add(parameter.Name.ToUpper(), value);
+                        yield return new KeyValuePair<string, object>(parameter.Name, value);
                     }
                 }
             }
         }
 
-        public static IList<IStepInvoker> GetStepInvokers(Type type)
+        public static IList<IStepInvoker> GetStepInvokers(object test)
         {
+            var parameters = GetParameters(test).ToArray();
+            var type = test.GetType();
             // Walk the type hierarchy from ScenarioTest downward so that base class givens are invoked before derived ones
             var derivedScenarioTestTypes = new Stack<Type>(new[] {type});
             while (type != null && type.BaseType != typeof(ScenarioTest))
@@ -53,7 +67,7 @@ namespace Kekiri.Impl
                 .SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
                                               BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
                 .Where(IsStepMethod)
-                .Select(GetStepFromMember)
+                .Select(m => GetStepFromMethod(m, parameters))
                 .Distinct(new StepNameComparer())
                 .ToList();
         }
@@ -71,7 +85,7 @@ namespace Kekiri.Impl
             }
         }
 
-        private static IStepInvoker GetStepFromMember(MethodInfo method)
+        private static IStepInvoker GetStepFromMethod(MethodInfo method, KeyValuePair<string,object>[] parameters)
         {
             if (method.IsPrivate)
                 throw new StepMethodShouldBePublic(method.DeclaringType, method);
@@ -79,7 +93,7 @@ namespace Kekiri.Impl
                 throw new ScenarioStepMethodsShouldNotHaveParameters(method.DeclaringType,
                     "The method '" + method.Name + "' is in a ScenarioTest and cannot have parameters");
 
-            return new StepMethodInvoker(method);
+            return new StepMethodInvoker(method, parameters);
         }
 
         private static bool IsStepMethod(MethodInfo method)

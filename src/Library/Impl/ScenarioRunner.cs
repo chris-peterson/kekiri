@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Kekiri.Exceptions;
@@ -17,7 +18,7 @@ namespace Kekiri.Impl
         public ScenarioRunner(object test, IReportTarget reportTarget)
         {
             _test = test;
-            _scenarioMetadata = BuildScenarioMetadata(test);
+            _scenarioMetadata = new ScenarioTestMetadata(test.GetType());
             _reportTarget = reportTarget;
         }
 
@@ -46,8 +47,8 @@ namespace Kekiri.Impl
         public void Run()
         {
             ReportScenario();
-            InvokeGivens();
-            InvokeWhen();
+            RunGivens();
+            RunWhen();
             InvokeThens();
             AssertExceptionState();
         }
@@ -64,12 +65,6 @@ namespace Kekiri.Impl
             {
                 _reportTarget.Report(ReportType.CurrentTest, _scenarioMetadata.CreateReportForCurrentTest());
             }
-        }
-
-        public void RunGivensAndWhen()
-        {
-            InvokeGivens();
-            InvokeWhen();
         }
 
         public void AssertExceptionState()
@@ -91,7 +86,7 @@ namespace Kekiri.Impl
                 throw new FixtureShouldHaveThens(_test);
         }
 
-        private void InvokeGivens()
+        public void RunGivens()
         {
             foreach (var given in _scenarioMetadata.GivenMethods)
             {
@@ -106,7 +101,7 @@ namespace Kekiri.Impl
             }
         }
 
-        private void InvokeWhen()
+        public void RunWhen()
         {
             var when = _scenarioMetadata.WhenMethod;
             if (when == null)
@@ -146,13 +141,6 @@ namespace Kekiri.Impl
                     throw new ThenFailed(_test, given.Name.PrettyName, ex.InnerException);
                 }
             }
-        }
-
-        private ScenarioTestMetadata BuildScenarioMetadata(object test)
-        {
-            var scenarioMetadata = new ScenarioTestMetadata(test.GetType());
-            ScenarioMapper.FillParameters(test, scenarioMetadata.Parameters);
-            return scenarioMetadata;
         }
     }
 }

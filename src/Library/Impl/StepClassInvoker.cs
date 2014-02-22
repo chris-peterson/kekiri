@@ -1,21 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Kekiri.Impl
 {
-    public class StepClassInvoker : IStepInvoker
+    internal class StepClassInvoker : IStepInvoker
     {
         private readonly Type _stepClass;
 
-        public StepClassInvoker(Type stepClass) : this(GetStepType(stepClass), stepClass) { }
-
-        public StepClassInvoker(StepType stepType, Type stepClass)
+        public StepClassInvoker(StepType stepType, Type stepClass, IDictionary<string,object> substitutionParameters)
         {
             if (!typeof(Step).IsAssignableFrom(stepClass))
                 throw new ArgumentException("The stepClass must inherit from Step", "stepClass");
             _stepClass = stepClass;
             Type = stepType;
-            Name = new StepName(Type, _stepClass.Name);
+            Name = new StepName(Type, _stepClass.Name, substitutionParameters);
         }
 
         public StepType Type { get; private set; }
@@ -43,15 +42,6 @@ namespace Kekiri.Impl
             if(contextContainer == null)
                 throw new InvalidOperationException("The test must implement IContextContainer");
             Step.InstanceFor(contextContainer, _stepClass).Execute();
-        }
-
-        private static StepType GetStepType(Type stepClass)
-        {
-            var stepName = Enum.GetNames(typeof (StepType))
-                .FirstOrDefault(name => stepClass.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase));
-            if(stepName == null)
-                throw new InvalidOperationException("The step class name should begin with one of " + String.Join(",", Enum.GetNames(typeof(StepType))));
-            return (StepType)Enum.Parse(typeof (StepType), stepName, ignoreCase: true);
         }
     }
 }
