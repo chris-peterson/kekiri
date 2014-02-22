@@ -29,20 +29,11 @@ namespace Kekiri.Impl
         {
             Method = method;
             Type = stepType;
-            Parameters = GetParameters(method, supportedParameters);
+            Parameters = method.BindParameters(supportedParameters);
             Name = new StepName(Type, method.Name, supportedParameters);
             SuppressOutput = method.SuppressOutputAttribute() != null;
             ExceptionExpected = method.AttributeOrDefault<ThrowsAttribute>() != null;
             SourceDescription = string.Format("{0}.{1}", method.DeclaringType.FullName, method.Name);
-        }
-
-        private KeyValuePair<string, object>[] GetParameters(MethodBase method, KeyValuePair<string, object>[] supportedParameters)
-        {
-            supportedParameters = supportedParameters ?? new KeyValuePair<string, object>[0];
-            var methodParameters = method.GetParameters();
-            return supportedParameters
-                .Where(supportedParam => methodParameters.Any(p => p.Name.Equals(supportedParam.Key, StringComparison.OrdinalIgnoreCase)))
-                .ToArray();
         }
 
         public virtual void Invoke(object test)

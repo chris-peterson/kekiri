@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Kekiri.Impl;
 using Kekiri.IoC;
 
@@ -6,9 +8,9 @@ namespace Kekiri
 {
     public abstract class Step
     {
-        public static Step InstanceFor(IContextAccessor test, Type stepClass)
+        public static Step InstanceFor(IContextAccessor test, Type stepClass, KeyValuePair<string,object>[] parameters)
         {
-            var instance = (Step)Activator.CreateInstance(stepClass);
+            var instance = (Step)Activator.CreateInstance(stepClass, parameters.Select(p => p.Value).ToArray());
             instance.SetScenario(test);
 
             return instance;

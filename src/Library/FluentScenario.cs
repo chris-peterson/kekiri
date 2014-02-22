@@ -70,10 +70,10 @@ namespace Kekiri
             AddStepMethod(action.Method, a, b, c);
         }
 
-        protected void Given<TStep>() where TStep : Step
+        protected void Given<TStep>(params object[] parameterValues) where TStep : Step
         {
             _stepType = StepType.Given;
-            AddStepClass<TStep>();
+            AddStepClass<TStep>(parameterValues);
         }
 
         #endregion
@@ -104,10 +104,10 @@ namespace Kekiri
             AddStepMethod(action.Method, a, b, c);
         }
 
-        protected void When<TStep>() where TStep : Step
+        protected void When<TStep>(params object[] parameterValues) where TStep : Step
         {
             _stepType = StepType.When;
-            AddStepClass<TStep>();
+            AddStepClass<TStep>(parameterValues);
         }
 
         #endregion
@@ -138,10 +138,10 @@ namespace Kekiri
             AddStepMethod(action.Method, a, b, c);
         }
 
-        protected void Then<TStep>() where TStep : Step
+        protected void Then<TStep>(params object[] parameterValues) where TStep : Step
         {
             _stepType = StepType.Then;
-            AddStepClass<TStep>();
+            AddStepClass<TStep>(parameterValues);
         }
 
         #endregion
@@ -168,9 +168,9 @@ namespace Kekiri
             AddStepMethod(action.Method, a, b, c);
         }
 
-        protected void And<TStep>() where TStep : Step
+        protected void And<TStep>(params object[] parameterValues) where TStep : Step
         {
-            AddStepClass<TStep>();
+            AddStepClass<TStep>(parameterValues);
         }
 
         #endregion
@@ -197,7 +197,7 @@ namespace Kekiri
             AddStepMethod(action.Method, a, b, c);
         }
 
-        protected void But<TStep>() where TStep : Step
+        protected void But<TStep>(params object[] parameterValues) where TStep : Step
         {
             AddStepClass<TStep>();
         }
@@ -215,12 +215,14 @@ namespace Kekiri
             _scenarioRunner.AddStep(new StepMethodInvoker(_stepType, method, parameters));
         }
 
-        private void AddStepClass<TStep>() where TStep : Step
+        private void AddStepClass<TStep>(params object[] parameterValues) where TStep : Step
         {
-            _scenarioRunner.AddStep(new StepClassInvoker(_stepType, typeof(TStep), new Dictionary<string, object>()));
+            var stepClass = typeof(TStep);
+            var parameters = ExtractParameters(stepClass.GetConstructors().Single(), parameterValues);
+            _scenarioRunner.AddStep(new StepClassInvoker(_stepType, stepClass, parameters));
         }
 
-        private KeyValuePair<string, object>[] ExtractParameters(MethodInfo method, object[] parameterValues)
+        private KeyValuePair<string, object>[] ExtractParameters(MethodBase method, object[] parameterValues)
         {
             return method.GetParameters()
                 .Select((p, index) => new KeyValuePair<string, object>(p.Name, parameterValues[index]))
