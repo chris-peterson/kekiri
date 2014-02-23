@@ -26,7 +26,7 @@ namespace Kekiri
         }
         
         [Test]
-        public void RunScenario()
+        public virtual void RunScenario()
         {
             try
             {
