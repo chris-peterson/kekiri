@@ -1,6 +1,4 @@
-﻿using NUnit.Framework;
-
-namespace Kekiri.IoC.Autofac
+﻿namespace Kekiri.IoC.Autofac
 {
     public class AutofacFluentScenario : IoCFluentScenario
     {
