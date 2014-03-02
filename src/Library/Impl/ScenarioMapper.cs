@@ -9,18 +9,6 @@ namespace Kekiri.Impl
 {
     internal static class ScenarioMapper
     {
-        public static string[] GetParameterNames(object test)
-        {
-            var type = test.GetType();
-            var ctor = type.GetConstructors().SingleOrDefault();
-            if(ctor == null)
-                return new string[0];
-
-            return ctor.GetParameters()
-                .Select(p => p.Name.ToUpperInvariant())
-                .ToArray();
-        }
-        
         public static IEnumerable<KeyValuePair<string,object>> GetParameters(object test)
         {
             var type = test.GetType();

@@ -11,9 +11,9 @@ namespace Kekiri.UnitTests.Fluent
         
         public Steps_are_executed_in_declared_order()
         {
-            Given(step_1);
-            And<step_2>();
-            And(step_3);
+           Given(step_1)
+              .And<step_2>()
+              .And(step_3);
             When(the_steps_are_executed);
             Then(they_are_executed_in_the_order_they_were_declared);
         }

@@ -9,261 +9,298 @@ using NUnit.Framework;
 
 namespace Kekiri
 {
-    [TestFixture]
-    public abstract class FluentScenario : IContextAccessor
-    {
-        private readonly ScenarioRunner _scenarioRunner;
-        private readonly string[] _parameterNames;
-        private StepType _stepType = StepType.Given;
+   [TestFixture]
+   public abstract class FluentScenario : IContextAccessor
+   {
+      private readonly ScenarioRunner _scenarioRunner;
 
-        protected FluentScenario()
-        {
-            // ReSharper disable DoNotCallOverridableMethodsInConstructor
-            var reportTarget = CreateReportTarget();
-            // ReSharper restore DoNotCallOverridableMethodsInConstructor
-            _parameterNames = ScenarioMapper.GetParameterNames(this);
-            _scenarioRunner = new ScenarioRunner(this, reportTarget);
-        }
-        
-        [Test]
-        public virtual void RunScenario()
-        {
-            try
-            {
-                Before();
-                _scenarioRunner.Run();
-            }
-            finally
-            {
-                After();
-            }
-        }
+      protected FluentScenario()
+      {
+// ReSharper disable DoNotCallOverridableMethodsInConstructor
+         var reportTarget = CreateReportTarget();
+// ReSharper restore DoNotCallOverridableMethodsInConstructor
+         _scenarioRunner = new ScenarioRunner(this, reportTarget);
+      }
 
-        protected TException Catch<TException>() where TException : Exception
-        {
-            return _scenarioRunner.Catch<TException>();
-        }
+      [Test]
+      public virtual void RunScenario()
+      {
+         try
+         {
+            Before();
+            _scenarioRunner.Run();
+         }
+         finally
+         {
+            After();
+         }
+      }
 
-        #region Given
+      protected TException Catch<TException>() where TException : Exception
+      {
+         return _scenarioRunner.Catch<TException>();
+      }
 
-        protected void Given(Action action)
-        {
-            _stepType = StepType.Given;
-            AddStepMethod(action);
-        }
+      public abstract class FluentOptionsForStep
+      {
+         private readonly FluentScenario _scenario;
 
-        protected void Given<T>(Action<T> action, T a)
-        {
-            _stepType = StepType.Given;
-            AddStepMethod(action.Method, a);
-        }
+         protected FluentOptionsForStep(FluentScenario scenario)
+         {
+            _scenario = scenario;
+         }
 
-        protected void Given<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
-        {
-            _stepType = StepType.Given;
-            AddStepMethod(action.Method, a, b);
-        }
+         protected abstract StepType StepType { get; }
 
-        protected void Given<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
-        {
-            _stepType = StepType.Given;
-            AddStepMethod(action.Method, a, b, c);
-        }
+         #region And
+         public FluentOptionsForStep And(Action action)
+         {
+            _scenario.AddStepMethod(StepType, action);
+            return this;
+         }
 
-        protected void Given<TStep>(params object[] parameterValues) where TStep : Step
-        {
-            _stepType = StepType.Given;
-            AddStepClass<TStep>(parameterValues);
-        }
+         public FluentOptionsForStep And<T>(Action<T> action, T a)
+         {
+            _scenario.AddStepMethod(StepType, action.Method, a);
+            return this;
+         }
 
-        #endregion
+         public FluentOptionsForStep And<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+         {
+            _scenario.AddStepMethod(StepType, action.Method, a, b);
+            return this;
+         }
 
-        #region When
+         public FluentOptionsForStep And<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+         {
+            _scenario.AddStepMethod(StepType, action.Method, a, b, c);
+            return this;
+         }
 
-        protected void When(Action action)
-        {
-            _stepType = StepType.When;
-            AddStepMethod(action);
-        }
+         public FluentOptionsForStep And<TStep>(params object[] parameterValues) where TStep : Step
+         {
+            _scenario.AddStepClass<TStep>(StepType, parameterValues);
+            return this;
+         }
+         #endregion
 
-        protected void When<T>(Action<T> action, T a)
-        {
-            _stepType = StepType.When;
-            AddStepMethod(action.Method, a);
-        }
+         #region But
+         public FluentOptionsForStep But(Action action)
+         {
+            _scenario.AddStepMethod(StepType, action);
+            return this;
+         }
 
-        protected void When<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
-        {
-            _stepType = StepType.When;
-            AddStepMethod(action.Method, a, b);
-        }
+         public FluentOptionsForStep But<T>(Action<T> action, T a)
+         {
+            _scenario.AddStepMethod(StepType, action.Method, a);
+            return this;
+         }
 
-        protected void When<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
-        {
-            _stepType = StepType.When;
-            AddStepMethod(action.Method, a, b, c);
-        }
+         public FluentOptionsForStep But<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+         {
+            _scenario.AddStepMethod(StepType, action.Method, a, b);
+            return this;
+         }
 
-        protected void When<TStep>(params object[] parameterValues) where TStep : Step
-        {
-            _stepType = StepType.When;
-            AddStepClass<TStep>(parameterValues);
-        }
+         public FluentOptionsForStep But<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+         {
+            _scenario.AddStepMethod(StepType, action.Method, a, b, c);
+            return this;
+         }
 
-        #endregion
+         public FluentOptionsForStep But<TStep>(params object[] parameterValues) where TStep : Step
+         {
+            _scenario.AddStepClass<TStep>(StepType, parameterValues);
+            return this;
+         }
+         #endregion
+      }
 
-        #region Then
+      #region Given
+      public class FluentOptionsForGiven : FluentOptionsForStep
+      {
+         public FluentOptionsForGiven(FluentScenario scenario) : base(scenario)
+         {
+         }
 
-        protected void Then(Action action)
-        {
-            _stepType = StepType.Then;
-            AddStepMethod(action);
-        }
+         protected override StepType StepType
+         {
+            get { return StepType.Given; }
+         }
+      }
 
-        protected void Then<T>(Action<T> action, T a)
-        {
-            _stepType = StepType.Then;
-            AddStepMethod(action.Method, a);
-        }
+      protected FluentOptionsForStep Given(Action action)
+      {
+         return new FluentOptionsForGiven(this).And(action);
+      }
 
-        protected void Then<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
-        {
-            _stepType = StepType.Then;
-            AddStepMethod(action.Method, a, b);
-        }
+      protected FluentOptionsForStep Given<T>(Action<T> action, T a)
+      {
+         return new FluentOptionsForGiven(this).And(action, a);
+      }
 
-        protected void Then<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
-        {
-            _stepType = StepType.Then;
-            AddStepMethod(action.Method, a, b, c);
-        }
+      protected FluentOptionsForStep Given<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+      {
+         return new FluentOptionsForGiven(this).And(action, a, b);
+      }
 
-        protected void Then<TStep>(params object[] parameterValues) where TStep : Step
-        {
-            _stepType = StepType.Then;
-            AddStepClass<TStep>(parameterValues);
-        }
+      protected FluentOptionsForStep Given<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+      {
+         return new FluentOptionsForGiven(this).And(action, a, b, c);
+      }
 
-        #endregion
+      protected FluentOptionsForStep Given<TStep>(params object[] parameterValues) where TStep : Step
+      {
+         return new FluentOptionsForGiven(this).And<TStep>(parameterValues);
+      }
 
-        #region And
+      #endregion
 
-        protected void And(Action action)
-        {
-            AddStepMethod(action);
-        }
+      #region When
 
-        protected void And<T>(Action<T> action, T a)
-        {
-            AddStepMethod(action.Method, a);
-        }
+      // NOTE: this class is introduced for symmetry and DRY purposes, but we don't currently expose a fluent handle 
+      // to the API caller since only a single When is supported.
+      // May want to revisit and fork the type heirarchy to have Given/When share a derivation but When not
+      public class FluentOptionsForWhen : FluentOptionsForStep
+      {
+         public FluentOptionsForWhen(FluentScenario scenario) : base(scenario)
+         {
+         }
 
-        protected void And<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
-        {
-            AddStepMethod(action.Method, a, b);
-        }
+         protected override StepType StepType
+         {
+            get { return StepType.When; }
+         }
+      }
 
-        protected void And<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
-        {
-            AddStepMethod(action.Method, a, b, c);
-        }
+      protected void When(Action action)
+      {
+         new FluentOptionsForWhen(this).And(action);
+      }
 
-        protected void And<TStep>(params object[] parameterValues) where TStep : Step
-        {
-            AddStepClass<TStep>(parameterValues);
-        }
+      protected void When<T>(Action<T> action, T a)
+      {
+         new FluentOptionsForWhen(this).And(action, a);
+      }
 
-        #endregion
+      protected void When<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+      {
+         new FluentOptionsForWhen(this).And(action, a, b);
+      }
 
-        #region But
+      protected void When<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+      {
+         new FluentOptionsForWhen(this).And(action, a, b, c);
+      }
 
-        protected void But(Action action)
-        {
-            AddStepMethod(action);
-        }
+      protected void When<TStep>(params object[] parameterValues) where TStep : Step
+      {
+         new FluentOptionsForWhen(this).And<TStep>(parameterValues);
+      }
+      #endregion
 
-        protected void But<T>(Action<T> action, T a)
-        {
-            AddStepMethod(action.Method, a);
-        }
+      #region Then
+      public class FluentOptionsForThen : FluentOptionsForStep
+      {
+         public FluentOptionsForThen(FluentScenario scenario) : base(scenario)
+         {
+         }
 
-        protected void But<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
-        {
-            AddStepMethod(action.Method, a, b);
-        }
+         protected override StepType StepType
+         {
+            get { return StepType.Then; }
+         }
+      }
 
-        protected void But<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
-        {
-            AddStepMethod(action.Method, a, b, c);
-        }
+      protected FluentOptionsForStep Then(Action action)
+      {
+         return new FluentOptionsForThen(this).And(action);
+      }
 
-        protected void But<TStep>(params object[] parameterValues) where TStep : Step
-        {
-            AddStepClass<TStep>();
-        }
+      protected FluentOptionsForStep Then<T>(Action<T> action, T a)
+      {
+         return new FluentOptionsForThen(this).And(action, a);
+      }
 
-        #endregion
+      protected FluentOptionsForStep Then<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+      {
+         return new FluentOptionsForThen(this).And(action, a, b);
+      }
 
-        private void AddStepMethod(Action action)
-        {
-            _scenarioRunner.AddStep(new StepMethodInvoker(_stepType, action.Method));
-        }
+      protected FluentOptionsForStep Then<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+      {
+         return new FluentOptionsForThen(this).And(action, a, b, c);
+      }
 
-        private void AddStepMethod(MethodInfo method, params object[] parameterValues)
-        {
-            var parameters = ExtractParameters(method, parameterValues);
-            _scenarioRunner.AddStep(new StepMethodInvoker(_stepType, method, parameters));
-        }
+      protected FluentOptionsForStep Then<TStep>(params object[] parameterValues) where TStep : Step
+      {
+         return new FluentOptionsForThen(this).And<TStep>(parameterValues);
+      }
+      #endregion
 
-        private void AddStepClass<TStep>(params object[] parameterValues) where TStep : Step
-        {
-            var stepClass = typeof(TStep);
-            var parameters = ExtractParameters(stepClass.GetConstructors().Single(), parameterValues);
-            _scenarioRunner.AddStep(new StepClassInvoker(_stepType, stepClass, parameters));
-        }
+      private void AddStepMethod(StepType stepType, Action action)
+      {
+         _scenarioRunner.AddStep(new StepMethodInvoker(stepType, action.Method));
+      }
 
-        private KeyValuePair<string, object>[] ExtractParameters(MethodBase method, object[] parameterValues)
-        {
-            return method.GetParameters()
-                .Select((p, index) => new KeyValuePair<string, object>(p.Name, parameterValues[index]))
-                .ToArray();
-        }
+      private void AddStepMethod(StepType stepType, MethodInfo method, params object[] parameterValues)
+      {
+         var parameters = ExtractParameters(method, parameterValues);
+         _scenarioRunner.AddStep(new StepMethodInvoker(stepType, method, parameters));
+      }
 
-        private object _context;
-        protected internal dynamic Context
-        {
-            get { return _context ?? (_context = CreateContextObject()); }
-        }
+      private void AddStepClass<TStep>(StepType stepType, params object[] parameterValues) where TStep : Step
+      {
+         var stepClass = typeof(TStep);
+         var parameters = ExtractParameters(stepClass.GetConstructors().Single(), parameterValues);
+         _scenarioRunner.AddStep(new StepClassInvoker(stepType, stepClass, parameters));
+      }
 
-        dynamic IContextAccessor.Context
-        {
-            get { return Context; }
-        }
+      private KeyValuePair<string, object>[] ExtractParameters(MethodBase method, object[] parameterValues)
+      {
+         return method.GetParameters()
+             .Select((p, index) => new KeyValuePair<string, object>(p.Name, parameterValues[index]))
+             .ToArray();
+      }
 
-        protected virtual void Before() {}
-        protected virtual void After() {}
+      private object _context;
+      protected internal dynamic Context
+      {
+         get { return _context ?? (_context = CreateContextObject()); }
+      }
 
-        protected virtual object CreateContextObject()
-        {
-            return new ExpandoObject();
-        }
+      dynamic IContextAccessor.Context
+      {
+         get { return Context; }
+      }
 
-        protected virtual IReportTarget CreateReportTarget()
-        {
-            return TraceReportTarget.GetInstance();
-        }
-    }
+      protected virtual void Before() { }
+      protected virtual void After() { }
 
-    public abstract class FluentScenario<TContext> : FluentScenario where TContext : new()
-    {
-        protected override object CreateContextObject()
-        {
-            return new TContext();
-        }
+      protected virtual object CreateContextObject()
+      {
+         return new ExpandoObject();
+      }
 
-        protected internal new TContext Context
-        {
-            get { return base.Context; }
-        }
-    }
+      protected virtual IReportTarget CreateReportTarget()
+      {
+         return TraceReportTarget.GetInstance();
+      }
+
+
+   }
+
+   public abstract class FluentScenario<TContext> : FluentScenario where TContext : new()
+   {
+      protected override object CreateContextObject()
+      {
+         return new TContext();
+      }
+
+      protected internal new TContext Context
+      {
+         get { return base.Context; }
+      }
+   }
 }

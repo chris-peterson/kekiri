@@ -14,10 +14,10 @@ namespace Kekiri.UnitTests.Fluent
         {
             _expectedAValue = a;
             _expectedBValue = b;
-            
-            Given(a_fluent_scenario_outline);
-            And(a_step_method_uses_a_parameter_A, a);
-            And<a_step_class_uses_a_parameter_B>(b);
+
+           Given(a_fluent_scenario_outline)
+              .And(a_step_method_uses_a_parameter_A, a)
+              .And<a_step_class_uses_a_parameter_B>(b);
             When(the_scenario_is_executed);
             Then(the_parameters_are_used_by_the_scenario);
         }
