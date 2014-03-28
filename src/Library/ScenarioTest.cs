@@ -38,6 +38,7 @@ namespace Kekiri
             ProcessWhens(_scenario.WhenMethods);
         }
 
+        // TODO: delete?
         [SetUp]
         public virtual void SetupTest()
         {
@@ -83,7 +84,7 @@ namespace Kekiri
 
         protected virtual IReportTarget CreateReportTarget()
         {
-            return TraceReportTarget.GetInstance();
+            return CompositeReportTarget.GetInstance();
         }
 
         private void ProcessGivens(IEnumerable<MethodBase> givens)

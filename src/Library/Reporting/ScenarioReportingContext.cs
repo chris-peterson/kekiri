@@ -7,14 +7,14 @@ namespace Kekiri.Reporting
 {
     public class ScenarioReportingContext
     {
-        public IList<string> FeatureReport { get; private set; }
+        public FeatureReport FeatureReport { get; private set; }
         public IList<string> ScenarioReport { get; private set; }
         public IList<string> StepReport { get; private set; }
 
         public GherkinTestFrameworkSettingsFacade Settings { get; set; }
 
         public ScenarioReportingContext(
-            IList<string> featureReport,
+            FeatureReport featureReport,
             IList<string> scenarioReport,
             IList<string> stepReport,
             GherkinTestFrameworkSettingsFacade settings)
@@ -25,13 +25,21 @@ namespace Kekiri.Reporting
             Settings = settings;
         }
 
-        public string CreateReportWithStandardSpacing(int indentationLevel)
+        public string CreateReportWithStandardSpacing(int indentationLevel, bool includeFeatureReport = true)
         {
             var report = new List<string>();
 
-            if (HasItems(FeatureReport))
+            if (includeFeatureReport)
             {
-                report.AddRange(FeatureReport);
+                report.Insert(0, string.Format("{0}{1}",
+                    Settings.GetToken(TokenType.Feature), FeatureReport.Summary));
+                if (FeatureReport.Details != null)
+                {
+                    report.AddRange(FeatureReport.Details.Select(line =>
+                        string.Format(
+                            "{0}{1}",
+                            Settings.GetSeperator(SeperatorType.Indent), line)));
+                }
                 report.Add(string.Empty);
                 indentationLevel++;
             }
@@ -74,5 +82,14 @@ namespace Kekiri.Reporting
                                  string.Join(Settings.GetSeperator(SeperatorType.Line), lines),
                                  Settings.GetSeperator(SeperatorType.Line));
         }
+    }
+
+    public class FeatureReport
+    {
+        public string Name { get; internal set; }
+
+        public string Summary { get; internal set; }
+
+        public IList<string> Details { get; internal set; }
     }
 }

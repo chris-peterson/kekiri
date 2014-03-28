@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace Kekiri
 {
+    // TODO: consider adding a flavor that supports enumerations rather than strings
     [AttributeUsage(AttributeTargets.Class)]
     public class FeatureAttribute : CategoryAttribute
     {

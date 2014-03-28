@@ -11,9 +11,9 @@ namespace Kekiri.TestSupport.Reporting.Targets
 
         public string ReportString { get; private set; }
 
-        public void Report(ReportType reportType, ScenarioReportingContext reportingContext)
+        public void Report(ReportType reportType, ScenarioReportingContext scenario)
         {
-            ReportString += reportingContext.CreateReportWithStandardSpacing(0);
+            ReportString += scenario.CreateReportWithStandardSpacing(0);
         }
     }
 }
