@@ -42,7 +42,9 @@ namespace Kekiri.IoC.Autofac
                         {
                             foreach (var obj in Fakes)
                             {
-                                builder.RegisterInstance(obj).AsImplementedInterfaces();
+                                builder.RegisterInstance(obj)
+                                    .AsSelf()
+                                    .AsImplementedInterfaces();
                             }
                         });
                 }

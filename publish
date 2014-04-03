@@ -1,0 +1,4 @@
+#!/bin/sh
+
+./build //p:Configuration=Release
+./.nuget/nuget.exe push $1
