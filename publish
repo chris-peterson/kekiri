@@ -1,4 +1,14 @@
 #!/bin/sh
 
-./build //p:Configuration=Release
-./.nuget/nuget.exe push $1
+config=Release
+
+rm ./packages/bin/$config -rf
+./build //p:Configuration=$config
+
+packages=`ls ./packages/bin/$config/$1*.nupkg`
+echo "Publishing packages: $packages"
+
+for pkg in $packages
+do
+  ./.nuget/nuget.exe push $pkg
+done
