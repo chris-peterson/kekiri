@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Kekiri.Exceptions;
 using Kekiri.Impl;
 using Kekiri.Reporting;
 using NUnit.Framework;
@@ -18,114 +14,44 @@ namespace Kekiri
 // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
-        private ScenarioTestMetadata _scenario;
+        private ScenarioRunner _scenarioRunner;
         private readonly IReportTarget _reportTarget;
-
-        private Exception _exception;
-        private bool _exceptionCaught;
 
         [TestFixtureSetUp]
         public virtual void SetupScenario()
         {
-            _scenario = ScenarioMapper.Map(this);
-
-            if (!_scenario.IsOutputSuppressed)
+            _scenarioRunner = new ScenarioRunner(this, _reportTarget);
+            foreach (var step in ScenarioMapper.GetStepInvokers(this))
             {
-                _reportTarget.Report(ReportType.EntireScenario, _scenario.CreateReportForEntireScenario());
+                _scenarioRunner.AddStep(step);
             }
-
-            ProcessGivens(_scenario.GivenMethods);
-            ProcessWhens(_scenario.WhenMethods);
+            _scenarioRunner.ReportScenario();
+            _scenarioRunner.RunGivens();
+            _scenarioRunner.RunWhen();
+            _scenarioRunner.EnsureAtLeastOneThenExists();
+            //thens are executed by NUnit
         }
 
         [SetUp]
         public virtual void SetupTest()
         {
-            if (!_scenario.IsOutputSuppressed)
-            {
-                 _reportTarget.Report(ReportType.CurrentTest, _scenario.CreateReportForCurrentTest());
-            }
+            _scenarioRunner.ReportCurrentTest();
         }
 
         [TestFixtureTearDown]
         public virtual void CleanupScenario()
         {
-            if (_exception != null && !_exceptionCaught)
-            {
-                throw new ExpectedExceptionNotCaught(this, _exception);
-            }
-
-            var when = _scenario.WhenMethods.Single();
-            var throwsAttribute =
-                when.GetCustomAttributes(typeof(ThrowsAttribute), false).SingleOrDefault() as ThrowsAttribute;
-            if (throwsAttribute != null && _exception == null)
-            {
-                throw new NoExceptionThrown(this);
-            }
+            _scenarioRunner.AssertExceptionState();
         }
 
         protected TException Catch<TException>() where TException : Exception
         {
-            if (_exception == null)
-            {
-                throw new NoExceptionThrown(this, typeof(TException));
-            }
-
-            var exception = _exception as TException;
-            if (exception == null)
-            {
-                throw new WrongExceptionType(this, typeof(TException), _exception);
-            }
-
-            _exceptionCaught = true;
-            return exception;
+            return _scenarioRunner.Catch<TException>();
         }
-
+        
         protected virtual IReportTarget CreateReportTarget()
         {
             return TraceReportTarget.GetInstance();
-        }
-
-        private void ProcessGivens(IEnumerable<MethodBase> givens)
-        {
-            foreach (var given in givens)
-            {
-                try
-                {
-                    InvokeStepMethod(given);
-                }
-                catch (TargetInvocationException ex)
-                {
-                    throw new GivenFailed(this, given, ex.InnerException);
-                }
-            }
-        }
-
-        private void ProcessWhens(IEnumerable<MethodBase> whenMethods)
-        {
-            var when = whenMethods.Single();
-
-            try
-            {
-                InvokeStepMethod(when);
-            }
-            catch (TargetInvocationException ex)
-            {
-                var exceptionWasExpected = when.GetCustomAttributes(typeof(ThrowsAttribute), false).SingleOrDefault() != null;
-                if (exceptionWasExpected)
-                {
-                    _exception = ex.InnerException;
-                }
-                else
-                {
-                    throw new WhenFailed(this, when, ex.InnerException);
-                }
-            }
-        }
-
-        private void InvokeStepMethod(MethodBase stepMethod)
-        {
-            stepMethod.Invoke(stepMethod.IsStatic ? null : this, null);
         }
     }
 }

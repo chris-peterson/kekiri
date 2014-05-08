@@ -5,7 +5,7 @@ namespace Kekiri.Exceptions
     public class WrongExceptionType : ScenarioTestException
     {
         public WrongExceptionType(
-            ScenarioTest test,
+            object test,
             Type expectedExceptionType,
             Exception innerException)
             : base(
