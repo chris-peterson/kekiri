@@ -56,8 +56,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\ConfigScenarioTest.cs" />
-    <Compile Include="Config\When_using_custom_config_file.cs" />
     <Compile Include="Exceptions\_TestBase.cs" />
     <Compile Include="Exceptions\When_fixture_has_no_whens.cs" />
     <Compile Include="Exceptions\When_fixture_has_private_then.cs" />
@@ -100,10 +98,6 @@
     <Compile Include="When_overriding_when.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <EmbeddedResource Include="Config\Custom.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

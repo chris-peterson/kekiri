@@ -6,7 +6,7 @@ namespace Kekiri.Impl
 {
     internal class StepName
     {
-        private readonly GherkinTestFrameworkSettingsFacade _settings = GherkinTestFrameworkSettingsFacade.GetInstance();
+        private readonly Settings _settings = Settings.GetInstance();
 
         public StepName(StepType stepType, string name, IEnumerable<KeyValuePair<string, object>> substitutionParameters = null)
         {

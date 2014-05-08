@@ -31,13 +31,6 @@ namespace Kekiri
             //thens are executed by NUnit
         }
 
-        // TODO: delete?
-        [SetUp]
-        public virtual void SetupTest()
-        {
-            _scenarioRunner.ReportCurrentTest();
-        }
-
         [TestFixtureTearDown]
         public virtual void CleanupScenario()
         {

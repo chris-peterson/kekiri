@@ -18,13 +18,13 @@ namespace Kekiri.Impl
             public string PrettyPrintedName { get; set; }
         }
 
-        private GherkinTestFrameworkSettingsFacade Settings { get; set; }
+        private Settings Settings { get; set; }
 
         private readonly IDictionary<StepType, IList<StepInfo>> _steps = new Dictionary<StepType, IList<StepInfo>>();
         
         public ScenarioTestMetadata(Type scenarioTestType)
         {
-            Settings = GherkinTestFrameworkSettingsFacade.GetInstance();
+            Settings = Settings.GetInstance();
             _scenarioTestType = scenarioTestType;
             foreach (StepType stepType in Enum.GetValues(typeof(StepType)))
             {

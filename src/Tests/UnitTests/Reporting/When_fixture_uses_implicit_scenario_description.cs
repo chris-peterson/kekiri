@@ -16,7 +16,7 @@ namespace Kekiri.UnitTests.Reporting
         public void It_should_use_the_class_name()
         {
             ScenarioReport.Should().StartWith(string.Format("{0}Fixture uses implicit scenario description",
-                GherkinTestFrameworkSettingsFacade.GetInstance().GetToken(TokenType.Scenario)));
+                Settings.GetInstance().GetToken(TokenType.Scenario)));
         }
     }
 }

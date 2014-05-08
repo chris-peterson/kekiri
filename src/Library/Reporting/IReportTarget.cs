@@ -143,36 +143,7 @@ namespace Kekiri.Reporting
                 }
             }
 
-            int indentationLevel = 0;
-            // avoid repeating the same feature over and over
-            var featureKey = GetKey(scenario.FeatureReport);
-            bool includeFeatureReport = true;
-            if (featureKey != null && featureKey == _previousFeatureKey)
-            {
-                indentationLevel = 1;
-                includeFeatureReport = false;
-            }
-
-            Trace.WriteLine(scenario.CreateReportWithStandardSpacing(indentationLevel, includeFeatureReport));
-
-            _previousFeatureKey = featureKey;
-        }
-
-        private static string GetKey(FeatureReport report)
-        {
-            if (report == null)
-            {
-                return null;
-            }
-
-            // TODO: this is garbage.
-            var list = new List<string> {report.Summary};
-            if (report.Details != null)
-            {
-                list.AddRange(report.Details);
-            }
-
-            return string.Join("-", list);
+            Trace.WriteLine(scenario.CreateReportWithStandardSpacing());
         }
     }
 }

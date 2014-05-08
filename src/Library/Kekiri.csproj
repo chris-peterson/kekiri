@@ -42,8 +42,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\GherkinTestFrameworkSettings.cs" />
-    <Compile Include="Config\GherkinTestFrameworkSettingsFacade.cs" />
+    <Compile Include="Config\Settings.cs" />
     <Compile Include="Config\SeperatorType.cs" />
     <Compile Include="Config\TokenType.cs" />
     <Compile Include="ExampleAttribute.cs" />

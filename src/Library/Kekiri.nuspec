@@ -14,8 +14,7 @@
     <copyright>2012-2014</copyright>
     <releaseNotes>
         Added Fluent syntax to support sharing scenario steps
-        Added ability to target multiple output files when generating scenario report
-        Dropped support for trace feature output
+        Added ability to target multiple output files when generating scenario report (dropped support for customizing trace target)
         Dropped support for custom configuration
     </releaseNotes>
   </metadata>

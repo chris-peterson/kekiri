@@ -11,13 +11,13 @@ namespace Kekiri.Reporting
         public IList<string> ScenarioReport { get; private set; }
         public IList<string> StepReport { get; private set; }
 
-        public GherkinTestFrameworkSettingsFacade Settings { get; set; }
+        public Settings Settings { get; set; }
 
         public ScenarioReportingContext(
             FeatureReport featureReport,
             IList<string> scenarioReport,
             IList<string> stepReport,
-            GherkinTestFrameworkSettingsFacade settings)
+            Settings settings)
         {
             FeatureReport = featureReport;
             ScenarioReport = scenarioReport;
@@ -25,7 +25,7 @@ namespace Kekiri.Reporting
             Settings = settings;
         }
 
-        public string CreateReportWithStandardSpacing(int indentationLevel, bool includeFeatureReport = true)
+        public string CreateReportWithStandardSpacing(int indentationLevel = 0, bool includeFeatureReport = true)
         {
             var report = new List<string>();
 
