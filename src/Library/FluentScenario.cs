@@ -16,9 +16,8 @@ namespace Kekiri
 
       protected FluentScenario()
       {
-// ReSharper disable DoNotCallOverridableMethodsInConstructor
+         // ReSharper disable once DoNotCallOverridableMethodsInConstructor
          var reportTarget = CreateReportTarget();
-// ReSharper restore DoNotCallOverridableMethodsInConstructor
          _scenarioRunner = new ScenarioRunner(this, reportTarget);
       }
 

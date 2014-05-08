@@ -10,11 +10,13 @@
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
-    <tags>bdd tdd nunit scenario test gherkin cucumber specflow</tags>
+    <tags>bdd scenario test gherkin cucumber pickles nunit specflow</tags>
     <copyright>2012-2014</copyright>
     <releaseNotes>
         Added Fluent syntax to support sharing scenario steps
         Added ability to target multiple output files when generating scenario report
+        Dropped support for trace feature output
+        Dropped support for custom configuration
     </releaseNotes>
   </metadata>
 </package>

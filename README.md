@@ -389,24 +389,6 @@ Here's our test fixture:
 
 When calling **Resolve**, a full object graph is created for **_orchestrator**.  Unless explicitly injected into the IoC container (**Container**), real objects are used!
 
-## Configuration Options
-If you want to generate a .feature file as you run your unit tests, add to your test project's **App.config**, e.g.
-
-```xml
-  <configuration>
-    <system.diagnostics>
-      <trace autoflush="true" indentsize="4">
-        <listeners>
-          <add name="fileListener" type="System.Diagnostics.TextWriterTraceListener"
-             initializeData="YOUR_FEATURE_NAME.feature" />
-        </listeners>
-      </trace>
-    </system.diagnostics>
-  </configuration>
-```
-
-Replacing **YOUR_FEATURE_NAME** with your feature's name.
-
 ## Contributing
 
 1. Fork it
@@ -419,7 +401,7 @@ Replacing **YOUR_FEATURE_NAME** with your feature's name.
 ## Acknowledgements
 Kekiri uses and is influenced by the following open source projects:
 * http://nunit.org/
-* https://code.google.com/p/autofac/ and https://code.google.com/p/whitebox/
-* https://code.google.com/p/moq/
+* https://code.google.com/p/autofac/
 * https://github.com/dennisdoomen/FluentAssertions
 * https://github.com/andyalm/xrepo
+* https://github.com/picklesdoc/pickles

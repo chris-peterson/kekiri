@@ -5,10 +5,9 @@
         [Given]
         public void Given() { }
 
-        // ReSharper disable UnusedMember.Local
         [When]
+        // ReSharper disable once UnusedMember.Local
         private void When() { }
-        // ReSharper restore UnusedMember.Local
 
         [Then]
         public void Then() { }

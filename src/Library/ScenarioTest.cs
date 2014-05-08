@@ -9,9 +9,8 @@ namespace Kekiri
     {
         protected ScenarioTest()
         {
-// ReSharper disable DoNotCallOverridableMethodsInConstructor
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
             _reportTarget = CreateReportTarget();
-// ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
         private ScenarioRunner _scenarioRunner;

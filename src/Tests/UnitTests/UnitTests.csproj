@@ -54,12 +54,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Whitebox">
-      <HintPath>..\..\..\packages\Whitebox.0.2.0.0\lib\net40\Whitebox.dll</HintPath>
-    </Reference>
-    <Reference Include="Whitebox.Containers.Autofac">
-      <HintPath>..\..\..\packages\Whitebox.Autofac.0.2.0.0\lib\net40\Whitebox.Containers.Autofac.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigScenarioTest.cs" />
@@ -75,7 +69,6 @@
     <Compile Include="Exceptions\When_test_throws_expected_exception.cs" />
     <Compile Include="Exceptions\When_test_throws_no_exception_when_expected_to_throw.cs" />
     <Compile Include="Fluent\Can_fluently_execute_a_scenario_outline.cs" />
-    <Compile Include="IoC\Autofac\SetupTests.cs" />
     <Compile Include="IoC\Autofac\Using_mocks.cs" />
     <Compile Include="IoC\Autofac\Using_fakes.cs" />
     <Compile Include="Reporting\Fixture_has_multiple_tags_scenario.cs" />
