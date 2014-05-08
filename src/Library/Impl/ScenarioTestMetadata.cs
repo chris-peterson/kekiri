@@ -110,7 +110,7 @@ namespace Kekiri.Impl
                 scenarioAttribute is ScenarioOutlineAttribute
                     ? Settings.GetToken(TokenType.ScenarioOutline)
                     : Settings.GetToken(TokenType.Scenario),
-                string.IsNullOrWhiteSpace(scenarioAttribute.Description)
+                scenarioAttribute == null || string.IsNullOrWhiteSpace(scenarioAttribute.Description)
                     ? declaringType.Name.WithSpaces()
                     : scenarioAttribute.Description);
         }
@@ -131,21 +131,21 @@ namespace Kekiri.Impl
         
         private ScenarioReportingContext CreateReport(ReportType reportType)
         {
-            var featureReport = new List<string>();
+            var featureReport = new FeatureReport();
             var scenarioReport = new List<string>();
             var stepReport = new List<string>();
 
             var featureAttribute = ExtractAttributeFromScenarioTest<FeatureAttribute>();
-            if (featureAttribute != null)
+            if (featureAttribute == null)
             {
-                featureReport.Add(string.Format("{0}{1}",
-                                                Settings.GetToken(TokenType.Feature), featureAttribute.FeatureSummary));
-                featureReport.AddRange(
-                    featureAttribute.FeatureDetails
-                                    .Select(line =>
-                                            string.Format(
-                                                "{0}{1}",
-                                                Settings.GetSeperator(SeperatorType.Indent), line)));
+                featureReport.Name = _scenarioTestType.Namespace.Split('.').Last();
+                featureReport.Summary = featureReport.Name.WithSpaces();
+            }
+            else
+            {
+                featureReport.Summary = featureAttribute.FeatureSummary;
+                featureReport.Name = featureReport.Summary.Replace(" ", null);
+                featureReport.Details = featureAttribute.FeatureDetails;
             }
 
             var tagAttributes = ExtractAttributesFromScenarioTest<TagAttribute>();
@@ -155,10 +155,7 @@ namespace Kekiri.Impl
             }
 
             var scenarioAttribute = ExtractAttributeFromScenarioTest<ScenarioAttribute>();
-            if (scenarioAttribute != null)
-            {
-                scenarioReport.Add(GetScenarioDescriptionOrDefaultValue(scenarioAttribute, _scenarioTestType));
-            }
+            scenarioReport.Add(GetScenarioDescriptionOrDefaultValue(scenarioAttribute, _scenarioTestType));
 
             stepReport.AddRange(GetStepReport(StepType.Given));
             stepReport.AddRange(GetStepReport(StepType.When));

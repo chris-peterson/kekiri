@@ -32,6 +32,7 @@ namespace Kekiri
             //thens are executed by NUnit
         }
 
+        // TODO: delete?
         [SetUp]
         public virtual void SetupTest()
         {
@@ -51,7 +52,7 @@ namespace Kekiri
         
         protected virtual IReportTarget CreateReportTarget()
         {
-            return TraceReportTarget.GetInstance();
+            return CompositeReportTarget.GetInstance();
         }
     }
 }
