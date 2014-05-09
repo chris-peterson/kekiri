@@ -5,8 +5,13 @@ namespace Kekiri
     [AttributeUsage(AttributeTargets.Class)]
     public class ScenarioAttribute : Attribute
     {
-        public ScenarioAttribute() : this(null)
+        public ScenarioAttribute()
         {
+        }
+
+        public ScenarioAttribute(object featureEnum)
+        {
+            Feature = featureEnum;
         }
 
         public ScenarioAttribute(string description)
@@ -15,5 +20,7 @@ namespace Kekiri
         }
 
         public string Description { get; protected set; }
+
+        public object Feature { get; private set; }
     }
 }

@@ -13,9 +13,7 @@
     <tags>bdd scenario test gherkin cucumber pickles ioc di autofac nunit specflow</tags>
     <copyright>2013-2014</copyright>
     <releaseNotes>
-        Added Fluent syntax to support sharing scenario steps
-        Added ability to target multiple output files when generating scenario report (dropped support for customizing trace target)
-        Dropped support for custom configuration
+        Goes along with release of Kekiri library version 2.0.  See its releaseNotes for details.
     </releaseNotes>
     <dependencies>
       <dependency id="Kekiri" version="2.0-alpha" />

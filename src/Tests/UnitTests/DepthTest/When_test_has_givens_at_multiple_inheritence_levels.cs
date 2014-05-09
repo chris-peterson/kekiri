@@ -3,7 +3,7 @@ using Kekiri.TestSupport.Scenarios.DepthTest;
 
 namespace Kekiri.UnitTests.DepthTest
 {
-    [Feature("Subclassed test fixtures", "In order to allow developers to have the freedom to structure test fixtures in a type hierarchy of their chosing,", "The framework supports subclassed ScenarioTest classes")]
+    [Scenario(Feature.Subclassing)]
     class When_test_has_givens_at_multiple_inheritence_levels : ScenarioTest
     {
         readonly When_scenario_test_has_derived_depth2 _test = new When_scenario_test_has_derived_depth2();

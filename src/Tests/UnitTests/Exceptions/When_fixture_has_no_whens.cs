@@ -3,7 +3,8 @@ using Kekiri.TestSupport.Scenarios.Exceptions;
 
 namespace Kekiri.UnitTests.Exceptions
 {
-    class When_fixture_has_no_whens : FixtureExceptionScenarioTest
+    [Scenario(Feature.FixtureExceptionHandling)]
+    class When_fixture_has_no_whens : ScenarioTest
     {
         [When, Throws]
         public void When()

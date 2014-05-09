@@ -2,7 +2,7 @@
 
 namespace Kekiri.UnitTests.Fluent
 {
-    [ScenarioOutline]
+    [Scenario]
     [Example("example1", 3)]
     [Example("example2", 57)]
     public class Can_fluently_execute_a_scenario_outline : FluentScenario

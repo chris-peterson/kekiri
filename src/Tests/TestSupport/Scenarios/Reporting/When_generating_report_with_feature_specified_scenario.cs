@@ -1,6 +1,6 @@
 ﻿namespace Kekiri.TestSupport.Scenarios.Reporting
 {
-    [Feature("Feature summary", "Detail 1", "Detail 2")]
+    [Scenario(Feature.Reporting)]
     public class When_generating_report_with_feature_specified_scenario : ReportingScenarioMetaTest
     {
         [Given]
@@ -17,5 +17,10 @@
         public void It_should_do_the_right_thing()
         {
         }
+    }
+
+    public enum Feature
+    {
+        Reporting
     }
 }

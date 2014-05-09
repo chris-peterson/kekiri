@@ -4,7 +4,8 @@ using Kekiri.TestSupport.Scenarios.Exceptions;
 
 namespace Kekiri.UnitTests.Exceptions
 {
-    class When_test_throws_expected_exception : TestExceptionScenarioTest
+    [Scenario(Feature.TestExceptionHandling)]
+    class When_test_throws_expected_exception : ScenarioTest
     {
         readonly When_test_throws_expected_exception_scenario _scenario = new When_test_throws_expected_exception_scenario();
 

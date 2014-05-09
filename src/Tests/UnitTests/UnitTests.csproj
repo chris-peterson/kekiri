@@ -56,7 +56,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\_TestBase.cs" />
     <Compile Include="Exceptions\When_fixture_has_no_whens.cs" />
     <Compile Include="Exceptions\When_fixture_has_private_then.cs" />
     <Compile Include="Exceptions\When_fixture_has_private_when.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="Exceptions\When_test_throws_an_exception_that_is_not_caught.cs" />
     <Compile Include="Exceptions\When_test_throws_expected_exception.cs" />
     <Compile Include="Exceptions\When_test_throws_no_exception_when_expected_to_throw.cs" />
+    <Compile Include="Feature.cs" />
     <Compile Include="Fluent\Can_fluently_execute_a_scenario_outline.cs" />
     <Compile Include="IoC\Autofac\Using_mocks.cs" />
     <Compile Include="IoC\Autofac\Using_fakes.cs" />

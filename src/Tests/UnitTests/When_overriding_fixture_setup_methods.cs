@@ -3,7 +3,7 @@ using Kekiri.TestSupport.Scenarios;
 
 namespace Kekiri.UnitTests
 {
-    [Feature("Customized fixture setup and teardown", "In order to allow developers to do custom steps during a fixture setup or teardown,", "The framework has a way of overriding the default behavior")]
+    [Scenario(Feature.SetupAndTeardown)]
     class When_overriding_fixture_setup_methods : ScenarioTest
     {
         readonly When_overriding_fixture_setup_methods_scenario _scenario = new When_overriding_fixture_setup_methods_scenario();
