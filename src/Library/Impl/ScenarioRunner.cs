@@ -56,15 +56,7 @@ namespace Kekiri.Impl
         public void ReportScenario()
         {
             if (!_scenarioMetadata.IsOutputSuppressed)
-                _reportTarget.Report(ReportType.EntireScenario, _scenarioMetadata.CreateReportForEntireScenario());
-        }
-
-        public void ReportCurrentTest()
-        {
-            if (!_scenarioMetadata.IsOutputSuppressed)
-            {
-                _reportTarget.Report(ReportType.CurrentTest, _scenarioMetadata.CreateReportForCurrentTest());
-            }
+                _reportTarget.Report(_scenarioMetadata.CreateReport());
         }
 
         public void AssertExceptionState()

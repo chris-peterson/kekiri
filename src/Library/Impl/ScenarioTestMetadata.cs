@@ -72,14 +72,58 @@ namespace Kekiri.Impl
 
         public bool IsOutputSuppressed { get; private set; }
 
-        public ScenarioReportingContext CreateReportForEntireScenario()
+        public ScenarioReportingContext CreateReport()
         {
-            return CreateReport(ReportType.EntireScenario);
-        }
+            var featureReport = new FeatureReport();
+            var scenarioReport = new List<string>();
+            var stepReport = new List<string>();
 
-        public ScenarioReportingContext CreateReportForCurrentTest()
-        {
-            return CreateReport(ReportType.CurrentTest);
+            var scenario = ExtractAttributeFromScenarioTest<ScenarioAttribute>();
+            var feature = scenario == null ? null : scenario.Feature;
+            if (feature == null)
+            {
+                featureReport.Name = _scenarioTestType.Namespace.Split('.').Last();
+                featureReport.Summary = featureReport.Name.WithSpaces();
+            }
+            else
+            {
+                var featureStr = feature.ToString();
+                featureReport.Name = featureStr;
+
+                var featureAttribute = feature.GetType().GetField(featureStr)
+                    .AttributeOrDefault<FeatureAttribute>();
+                if (featureAttribute == null)
+                {
+                    featureReport.Summary = featureStr;
+                }
+                else
+                {
+                    featureReport.Summary = featureAttribute.FeatureSummary;
+                    featureReport.Details = featureAttribute.FeatureDetails;
+                }
+            }
+
+            var tagAttributes = ExtractAttributesFromScenarioTest<TagAttribute>();
+            if (tagAttributes != null)
+            {
+                scenarioReport.AddRange(tagAttributes.Select(tag => string.Format("@{0}", tag.Name)));
+            }
+
+            var scenarioAttribute = ExtractAttributeFromScenarioTest<ScenarioAttribute>();
+            if (scenarioAttribute != null)
+            {
+                scenarioReport.Add(GetScenarioDescriptionOrDefaultValue(scenarioAttribute, _scenarioTestType));
+            }
+
+            stepReport.AddRange(GetStepReport(StepType.Given));
+            stepReport.AddRange(GetStepReport(StepType.When));
+            stepReport.AddRange(GetStepReport(StepType.Then));
+
+            return new ScenarioReportingContext(
+                featureReport,
+                scenarioReport,
+                stepReport,
+                Settings);
         }
 
         private IEnumerable<IStepInvoker> GetSteps(StepType stepType)
@@ -127,59 +171,6 @@ namespace Kekiri.Impl
             return string.Format("{0} {1}",
                                  step.StepInvoker.Name.SeparatorToken,
                                  step.PrettyPrintedName);
-        }
-        
-        private ScenarioReportingContext CreateReport(ReportType reportType)
-        {
-            var featureReport = new FeatureReport();
-            var scenarioReport = new List<string>();
-            var stepReport = new List<string>();
-
-            var feature = ExtractAttributeFromScenarioTest<ScenarioAttribute>().Feature;
-            if (feature == null)
-            {
-                featureReport.Name = _scenarioTestType.Namespace.Split('.').Last();
-                featureReport.Summary = featureReport.Name.WithSpaces();
-            }
-            else
-            {
-                var featureStr = feature.ToString();
-                featureReport.Name = featureStr;
-
-                // TODO: implement [FeatureDescription]
-                //var field = feature.GetType().GetField(featureStr);
-                //featureReport.Summary = feature.FeatureSummary;
-                //featureReport.Details = feature.FeatureDetails;
-            }
-
-            var tagAttributes = ExtractAttributesFromScenarioTest<TagAttribute>();
-            if (tagAttributes != null)
-            {
-                scenarioReport.AddRange(tagAttributes.Select(tag => string.Format("@{0}", tag.Name)));
-            }
-
-            var scenarioAttribute = ExtractAttributeFromScenarioTest<ScenarioAttribute>();
-            scenarioReport.Add(GetScenarioDescriptionOrDefaultValue(scenarioAttribute, _scenarioTestType));
-
-            stepReport.AddRange(GetStepReport(StepType.Given));
-            stepReport.AddRange(GetStepReport(StepType.When));
-            switch (reportType)
-            {
-                case ReportType.EntireScenario:
-                    stepReport.AddRange(GetStepReport(StepType.Then));
-                    break;
-                case ReportType.CurrentTest:
-                    stepReport.Add(GetReportForCurrentThen());
-                    break;
-                default:
-                    throw new NotSupportedException(string.Format("Unknown report type '{0}'", reportType));
-            }
-
-            return new ScenarioReportingContext(
-                featureReport,
-                scenarioReport,
-                stepReport,
-                Settings);
         }
 
         private IEnumerable<string> GetStepReport(StepType stepType)

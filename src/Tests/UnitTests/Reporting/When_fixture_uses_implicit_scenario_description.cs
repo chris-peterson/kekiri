@@ -15,7 +15,8 @@ namespace Kekiri.UnitTests.Reporting
         [Then]
         public void It_should_use_the_class_name()
         {
-            ScenarioReport.Should().StartWith(string.Format("{0}Fixture uses implicit scenario description",
+            ScenarioReport.Should().StartWith(
+                string.Format("{0}Fixture uses implicit scenario description",
                 Settings.GetInstance().GetToken(TokenType.Scenario)));
         }
     }

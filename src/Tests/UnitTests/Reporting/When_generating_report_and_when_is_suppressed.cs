@@ -27,7 +27,7 @@ namespace Kekiri.UnitTests.Reporting
         [Then]
         public void But_not_for_when()
         {
-            ScenarioReport.Should().NotContain(Settings.GetStep(StepType.When));
+            ScenarioReport.Should().NotContain("When method is suppressed");
         }
     }
 }

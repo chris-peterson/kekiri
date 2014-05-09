@@ -5,13 +5,20 @@ namespace Kekiri.TestSupport.Scenarios.Reporting
 {
     public class ReportingScenarioMetaTest : ScenarioTest
     {
-        private readonly StringReportTarget _target = new StringReportTarget();
+        private StringReportTarget _target;
 
         public string Report { get { return _target.ReportString; } }
 
         protected override IReportTarget CreateReportTarget()
         {
+            if (_target == null)
+            {
+                _target = new StringReportTarget(IncludeFeatureReport);
+            }
+
             return _target;
         }
+
+        public bool IncludeFeatureReport { get; set; }
     }
 }

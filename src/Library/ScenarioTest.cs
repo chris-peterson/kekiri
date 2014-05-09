@@ -7,18 +7,13 @@ namespace Kekiri
 {
     public abstract class ScenarioTest
     {
-        protected ScenarioTest()
-        {
-            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
-            _reportTarget = CreateReportTarget();
-        }
-
         private ScenarioRunner _scenarioRunner;
-        private readonly IReportTarget _reportTarget;
+        private IReportTarget _reportTarget;
 
         [TestFixtureSetUp]
         public virtual void SetupScenario()
         {
+            _reportTarget = CreateReportTarget();
             _scenarioRunner = new ScenarioRunner(this, _reportTarget);
             foreach (var step in ScenarioMapper.GetStepInvokers(this))
             {

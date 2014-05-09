@@ -1,8 +1,13 @@
 ﻿namespace Kekiri.TestSupport.Scenarios.Reporting
 {
     [Scenario(Feature.Reporting)]
-    public class When_generating_report_with_feature_specified_scenario : ReportingScenarioMetaTest
+    public class Feature_specified : ReportingScenarioMetaTest
     {
+        public Feature_specified()
+        {
+            IncludeFeatureReport = true;
+        }
+
         [Given]
         public void Given_precondition()
         {

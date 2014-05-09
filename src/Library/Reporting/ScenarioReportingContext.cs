@@ -25,8 +25,9 @@ namespace Kekiri.Reporting
             Settings = settings;
         }
 
-        public string CreateReportWithStandardSpacing(int indentationLevel = 0, bool includeFeatureReport = true)
+        public string CreateReport(bool includeFeatureReport)
         {
+            int indentationLevel = 0;
             var report = new List<string>();
 
             if (includeFeatureReport)
@@ -41,7 +42,6 @@ namespace Kekiri.Reporting
                             Settings.GetSeperator(SeperatorType.Indent), line)));
                 }
                 report.Add(string.Empty);
-                indentationLevel++;
             }
 
             if (HasItems(ScenarioReport))

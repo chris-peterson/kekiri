@@ -8,7 +8,7 @@ namespace Kekiri.Reporting
 {
     public interface IReportTarget
     {
-        void Report(ReportType reportType, ScenarioReportingContext scenario);
+        void Report(ScenarioReportingContext scenario);
     }
 
     public class CompositeReportTarget : IReportTarget
@@ -30,11 +30,11 @@ namespace Kekiri.Reporting
                 });
         }
 
-        public void Report(ReportType reportType, ScenarioReportingContext scenario)
+        public void Report(ScenarioReportingContext scenario)
         {
             foreach (var target in _targets)
             {
-                target.Report(reportType, scenario);
+                target.Report(scenario);
             }
         }
     }
@@ -54,13 +54,8 @@ namespace Kekiri.Reporting
             return _target.Value;
         }
 
-        public void Report(ReportType reportType, ScenarioReportingContext scenario)
+        public void Report(ScenarioReportingContext scenario)
         {
-            if (reportType != ReportType.EntireScenario)
-            {
-                return;
-            }
-
             var featureName = scenario.FeatureReport.Name;
             if (_featureState.ContainsKey(featureName))
             {
@@ -87,8 +82,7 @@ namespace Kekiri.Reporting
         {
             using (var writer = new StreamWriter(fs))
             {
-                writer.WriteLine(reportingContext.CreateReportWithStandardSpacing(
-                    0, includeFeatureReport));
+                writer.WriteLine(reportingContext.CreateReport(includeFeatureReport));
             }
         }
 
@@ -119,7 +113,6 @@ namespace Kekiri.Reporting
     public class TraceReportTarget : IReportTarget
     {
         private static readonly Lazy<TraceReportTarget> _target = new Lazy<TraceReportTarget>(() => new TraceReportTarget());
-        private string _previousFeatureKey;
 
         private TraceReportTarget()
         {
@@ -130,20 +123,9 @@ namespace Kekiri.Reporting
             return _target.Value;
         }
 
-        public void Report(ReportType reportType, ScenarioReportingContext scenario)
+        public void Report(ScenarioReportingContext scenario)
         {
-            // only output current test info if running in R# -- it's not useful in command line builds
-            if (reportType == ReportType.CurrentTest)
-            {
-                var executingProcessName = Process.GetCurrentProcess().ProcessName;
-
-                if (executingProcessName.IndexOf("JetBrains.ReSharper", StringComparison.InvariantCultureIgnoreCase) == -1)
-                {
-                    return;
-                }
-            }
-
-            Trace.WriteLine(scenario.CreateReportWithStandardSpacing());
+            Trace.WriteLine(scenario.CreateReport(true));
         }
     }
 }

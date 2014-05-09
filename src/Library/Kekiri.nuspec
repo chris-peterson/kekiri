@@ -19,6 +19,7 @@
         Dropped [ScenarioOutline] -- just use Scenario
         Dropped support for customizing trace target
         Dropped support for custom configuration
+        Don't generate a trace report on a per-test basis (just at the fixture level)
     </releaseNotes>
   </metadata>
 </package>

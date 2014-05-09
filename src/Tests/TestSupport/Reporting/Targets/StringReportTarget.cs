@@ -4,16 +4,19 @@ namespace Kekiri.TestSupport.Reporting.Targets
 {
     public class StringReportTarget : IReportTarget
     {
-        public StringReportTarget()
+        private readonly bool _includeFeatureReport;
+
+        public StringReportTarget(bool includeFeatureReport)
         {
+            _includeFeatureReport = includeFeatureReport;
             ReportString = string.Empty;
         }
 
         public string ReportString { get; private set; }
 
-        public void Report(ReportType reportType, ScenarioReportingContext scenario)
+        public void Report(ScenarioReportingContext scenario)
         {
-            ReportString += scenario.CreateReportWithStandardSpacing(0);
+            ReportString += scenario.CreateReport(_includeFeatureReport);
         }
     }
 }

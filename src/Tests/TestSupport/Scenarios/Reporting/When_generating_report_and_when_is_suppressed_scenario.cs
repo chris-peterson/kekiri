@@ -11,7 +11,7 @@ namespace Kekiri.TestSupport.Scenarios.Reporting
 
         [When]
         [SuppressOutput]
-        public void When()
+        public void When_method_is_suppressed()
         {
         }
 

@@ -20,15 +20,15 @@ namespace Kekiri
             return attributeOnMethod;
         }
 
-        public static TAttribute AttributeOrDefault<TAttribute>(this MemberInfo method) where TAttribute : class
+        public static TAttribute AttributeOrDefault<TAttribute>(this MemberInfo member) where TAttribute : class
         {
-            return method.GetCustomAttributes(typeof (TAttribute), false)
+            return member.GetCustomAttributes(typeof (TAttribute), false)
                 .SingleOrDefault() as TAttribute;
         }
 
         public static bool HasAttribute<TAttribute>(this MemberInfo member) where TAttribute : class
         {
-            return member.AttributeOrDefault<TAttribute>() != null;
+            return member.GetCustomAttributes(typeof (TAttribute), false).Any();
         }
 
         public static TAttribute AttributeOrDefault<TAttribute>(this Type type) where TAttribute : class
