@@ -9,7 +9,7 @@ namespace Kekiri.Impl
 {
     internal static class ScenarioMapper
     {
-        public static IEnumerable<KeyValuePair<string,object>> GetParameters(object test)
+        public static IEnumerable<KeyValuePair<string, object>> GetParameters(object test)
         {
             var type = test.GetType();
             var ctor = type.GetConstructors().SingleOrDefault();
@@ -45,7 +45,7 @@ namespace Kekiri.Impl
             var type = test.GetType();
             // Walk the type hierarchy from ScenarioTest downward so that base class givens are invoked before derived ones
             var derivedScenarioTestTypes = new Stack<Type>(new[] {type});
-            while (type != null && type.BaseType != typeof(ScenarioTest))
+            while (type != null && type.BaseType != typeof (ScenarioTest))
             {
                 type = type.BaseType;
                 derivedScenarioTestTypes.Push(type);
@@ -56,6 +56,7 @@ namespace Kekiri.Impl
                                               BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
                 .Where(IsStepMethod)
                 .Select(m => GetStepFromMethod(m, parameters))
+                .OrderBy(i => i, new StepNameOrderer())
                 .Distinct(new StepNameComparer())
                 .ToList();
         }
@@ -73,7 +74,21 @@ namespace Kekiri.Impl
             }
         }
 
-        private static IStepInvoker GetStepFromMethod(MethodInfo method, KeyValuePair<string,object>[] parameters)
+        private class StepNameOrderer : IComparer<IStepInvoker>
+        {
+            public int Compare(IStepInvoker x, IStepInvoker y)
+            {
+                if (x.Type == StepType.When && y.Type == StepType.When)
+                {
+                    // favor derived class for Whens
+                    return y.Order.CompareTo(x.Order);
+                }
+
+                return x.Order.CompareTo(y.Order);
+            }
+        }
+
+        private static IStepInvoker GetStepFromMethod(MethodInfo method, KeyValuePair<string, object>[] parameters)
         {
             if (method.IsPrivate)
                 throw new StepMethodShouldBePublic(method.DeclaringType, method);
@@ -86,9 +101,9 @@ namespace Kekiri.Impl
 
         private static bool IsStepMethod(MethodInfo method)
         {
-            if(method.GetCustomAttributes(true).Any(a => a.GetType() == typeof(TestAttribute)))
+            if (method.GetCustomAttributes(true).Any(a => a.GetType() == typeof (TestAttribute)))
                 throw new FixtureShouldNotUseTestAttribute(method);
-            
+
             return method.HasAttribute<IStepAttribute>();
         }
     }

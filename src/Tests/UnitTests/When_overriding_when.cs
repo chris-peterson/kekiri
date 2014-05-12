@@ -4,18 +4,18 @@ namespace Kekiri.UnitTests
 {
     public class When_overriding_when : ScenarioTest
     {
-        private When_overridding_when_scenario_derived_class scenario;
+        private When_overridding_when_scenario_derived_class _scenario;
 
         [Given]
         public void Given()
         {
-            scenario = new When_overridding_when_scenario_derived_class();
+            _scenario = new When_overridding_when_scenario_derived_class();
         }
 
         [When]
         public void When()
         {
-            scenario.SetupScenario();
+            _scenario.SetupScenario();
         }
 
         [Then]
