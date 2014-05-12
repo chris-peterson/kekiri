@@ -91,15 +91,15 @@ namespace Kekiri.Impl
                 featureReport.Name = featureStr;
 
                 var featureAttribute = feature.GetType().GetField(featureStr)
-                    .AttributeOrDefault<FeatureAttribute>();
+                    .AttributeOrDefault<FeatureDescriptionAttribute>();
                 if (featureAttribute == null)
                 {
                     featureReport.Summary = featureStr;
                 }
                 else
                 {
-                    featureReport.Summary = featureAttribute.FeatureSummary;
-                    featureReport.Details = featureAttribute.FeatureDetails;
+                    featureReport.Summary = featureAttribute.Summary;
+                    featureReport.Details = featureAttribute.Details;
                 }
             }
 

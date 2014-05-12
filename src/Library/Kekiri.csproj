@@ -73,7 +73,7 @@
     <Compile Include="Exceptions\NoExceptionThrown.cs" />
     <Compile Include="Exceptions\WrongExceptionType.cs" />
     <Compile Include="Reporting\IReportTarget.cs" />
-    <Compile Include="FeatureAttribute.cs" />
+    <Compile Include="FeatureDescriptionAttribute.cs" />
     <Compile Include="StepAttribute.cs" />
     <Compile Include="Reporting\SuppressOutputAttribute.cs" />
     <Compile Include="ThenAttribute.cs" />

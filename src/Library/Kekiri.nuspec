@@ -15,7 +15,7 @@
     <releaseNotes>
         Added Fluent syntax to support sharing scenario steps
         Added ability to target multiple output files when generating scenario report 
-        [Feature] now targets an Enum literal rather than a class to support [Scenario(Feature.Foo)]
+        [Feature] is now [FeatureDescription] and targets an Enum literal rather than a class.  The new sytax is [Scenario(Feature.Foo)].
         Dropped [ScenarioOutline] -- just use Scenario
         Dropped support for customizing trace target
         Dropped support for custom configuration
