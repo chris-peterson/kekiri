@@ -2,7 +2,7 @@ using System;
 
 namespace Kekiri.TestSupport.Scenarios.Exceptions
 {
-    public class When_test_throws_expected_exception_scenario : SuppressedOutputScenarioTest
+    public class When_test_throws_expected_exception_scenario : ScenarioTest
     {
         [When, Throws]
         public void When()

@@ -2,24 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Kekiri.Reporting;
 
 namespace Kekiri
 {
     internal static class ReflectionExtensions
     {
-        public static SuppressOutputAttribute SuppressOutputAttribute(this MemberInfo method)
-        {
-            var attributeOnMethod = method.AttributeOrDefault<SuppressOutputAttribute>();
-
-            if (attributeOnMethod == null)
-            {
-                return method.DeclaringType.AttributeOrDefault<SuppressOutputAttribute>();
-            }
-
-            return attributeOnMethod;
-        }
-
         public static TAttribute AttributeOrDefault<TAttribute>(this MemberInfo member) where TAttribute : class
         {
             return member.GetCustomAttributes(typeof (TAttribute), false)

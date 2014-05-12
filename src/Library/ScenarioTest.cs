@@ -36,8 +36,8 @@ namespace Kekiri
         {
             return _scenarioRunner.Catch<TException>();
         }
-        
-        protected virtual IReportTarget CreateReportTarget()
+
+        internal virtual IReportTarget CreateReportTarget()
         {
             return CompositeReportTarget.GetInstance();
         }

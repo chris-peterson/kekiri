@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Kekiri.Exceptions;
@@ -55,8 +54,7 @@ namespace Kekiri.Impl
 
         public void ReportScenario()
         {
-            if (!_scenarioMetadata.IsOutputSuppressed)
-                _reportTarget.Report(_scenarioMetadata.CreateReport());
+             _reportTarget.Report(_scenarioMetadata.CreateReport());
         }
 
         public void AssertExceptionState()

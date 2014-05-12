@@ -9,7 +9,7 @@ namespace Kekiri.TestSupport.Scenarios.Reporting
 
         public string Report { get { return _target.ReportString; } }
 
-        protected override IReportTarget CreateReportTarget()
+        internal override IReportTarget CreateReportTarget()
         {
             if (_target == null)
             {

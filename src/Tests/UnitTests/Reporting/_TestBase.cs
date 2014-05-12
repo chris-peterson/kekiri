@@ -7,7 +7,7 @@ namespace Kekiri.UnitTests.Reporting
     public abstract class ReportingScenarioTest : ScenarioTest
     {
         protected ReportingScenarioMetaTest Scenario { private get; set; }
-        protected Settings Settings { get; private set; }
+        internal Settings Settings { get; private set; }
 
         protected ReportingScenarioTest()
         {

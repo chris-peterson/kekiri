@@ -63,15 +63,12 @@
     <Compile Include="Scenarios\Reporting\Feature_specified.cs" />
     <Compile Include="Scenarios\When_initializing_valid_fixture_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\Fixture_doesnt_start_with_when_scenario.cs" />
-    <Compile Include="Scenarios\Reporting\When_generating_report_and_fixture_is_suppressed_scenario.cs" />
     <Compile Include="Scenarios\Reporting\_TestBase.cs" />
     <Compile Include="Scenarios\DepthTest\ScenarioDepthTestLevel.cs" />
     <Compile Include="Reporting\Targets\StringReportTarget.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_has_a_parameterized_given_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_has_private_given_scenario.cs" />
     <Compile Include="Scenarios\Reporting\When_generating_report_with_suppressed_given_scenario.cs" />
-    <Compile Include="Scenarios\Reporting\When_generating_report_and_then_is_suppressed_scenario.cs" />
-    <Compile Include="Scenarios\Reporting\When_generating_report_and_when_is_suppressed_scenario.cs" />
     <Compile Include="Scenarios\When_overridding_when_scenario.cs" />
     <Compile Include="Scenarios\When_overriding_fixture_setup_methods_scenario.cs" />
     <Compile Include="Scenarios\DepthTest\When_scenario_test_has_derived_depth1.cs" />
@@ -79,7 +76,6 @@
     <Compile Include="Scenarios\Exceptions\When_fixture_with_no_thens_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_has_private_then_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_has_private_when_scenario.cs" />
-    <Compile Include="SuppressedOutputScenarioTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

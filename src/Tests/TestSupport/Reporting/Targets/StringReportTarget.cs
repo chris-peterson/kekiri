@@ -2,7 +2,7 @@
 
 namespace Kekiri.TestSupport.Reporting.Targets
 {
-    public class StringReportTarget : IReportTarget
+    internal class StringReportTarget : IReportTarget
     {
         private readonly bool _includeFeatureReport;
 

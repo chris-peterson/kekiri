@@ -282,12 +282,10 @@ namespace Kekiri
          return new ExpandoObject();
       }
 
-      protected virtual IReportTarget CreateReportTarget()
+      internal virtual IReportTarget CreateReportTarget()
       {
          return TraceReportTarget.GetInstance();
       }
-
-
    }
 
    public abstract class FluentScenario<TContext> : FluentScenario where TContext : new()

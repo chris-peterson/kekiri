@@ -2,7 +2,7 @@
 
 namespace Kekiri.Exceptions
 {
-    public class NoExceptionThrown : ScenarioTestException
+    internal class NoExceptionThrown : ScenarioTestException
     {
         public NoExceptionThrown(
             object test) :

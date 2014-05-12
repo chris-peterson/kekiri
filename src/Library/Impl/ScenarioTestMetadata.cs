@@ -30,8 +30,6 @@ namespace Kekiri.Impl
             {
                 _steps.Add(stepType, new List<StepInfo>());
             }
-
-            IsOutputSuppressed = ExtractSuppressOutputAttribute(_scenarioTestType) != null;
         }
 
         public void AddStep(IStepInvoker step)
@@ -45,9 +43,9 @@ namespace Kekiri.Impl
             var stepInfo = new StepInfo
             {
                 StepInvoker = step,
-                PrettyPrintedName = step.SuppressOutput ? string.Empty : step.Name.PrettyName
+                PrettyPrintedName = step.Name.PrettyName
             };
-            if (step.Type == StepType.When && string.IsNullOrEmpty(stepInfo.PrettyPrintedName) && !step.SuppressOutput)
+            if (step.Type == StepType.When && string.IsNullOrEmpty(stepInfo.PrettyPrintedName))
             {
                 stepInfo.PrettyPrintedName = new StepName(StepType.When, _scenarioTestType.Name).PrettyName;
             }
@@ -69,8 +67,6 @@ namespace Kekiri.Impl
         {
             get { return GetSteps(StepType.Then); }
         }
-
-        public bool IsOutputSuppressed { get; private set; }
 
         public ScenarioReportingContext CreateReport()
         {
@@ -131,12 +127,6 @@ namespace Kekiri.Impl
             return _steps[stepType].Select(s => s.StepInvoker);
         }
 
-        private SuppressOutputAttribute ExtractSuppressOutputAttribute(Type declaringType)
-        {
-            return declaringType.GetCustomAttributes(typeof (SuppressOutputAttribute), true)
-                                .SingleOrDefault() as SuppressOutputAttribute;
-        }
-
         private T ExtractAttributeFromScenarioTest<T>() where T : class
         {
             return _scenarioTestType.AttributeOrDefault<T>();
@@ -190,38 +180,9 @@ namespace Kekiri.Impl
 
             return lines;
         }
-
-        private string GetReportForCurrentThen()
-        {
-            if (TestContext.CurrentContext == null || TestContext.CurrentContext.Test == null)
-            {
-                return "!!! Test Context Unknown -- check your test runner's NUnit version !!!";
-            }
-
-            string testName;
-            try
-            {
-                testName = TestContext.CurrentContext.Test.Name;
-            }
-            catch (NullReferenceException)
-            {
-                return "!!! Cannot get test name -- check your NUnit version !!!";
-            }
-
-            var currentTestNameSplit = testName.Split('.');
-            string currentTestName = currentTestNameSplit.Last();
-
-            var step = _steps[StepType.Then].FirstOrDefault(s => s.StepInvoker.SourceDescription.Split('.').Last() == currentTestName);
-            if (step == null)
-            {
-                return string.Format("!!! Unknown Test '{0}' !!!", currentTestName);
-            }
-
-            return GetStepNameWithTokenizedStepType(step);
-        }
     }
 
-    public static class StepNameStringHelpers
+    internal static class StepNameStringHelpers
     {
         public static string RemovePrefix(this string stepName, string prefix)
         {

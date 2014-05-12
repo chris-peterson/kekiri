@@ -1,6 +1,6 @@
 ﻿namespace Kekiri.TestSupport.Scenarios.Exceptions
 {
-    public class When_fixture_has_private_then_scenario : SuppressedOutputScenarioTest
+    public class When_fixture_has_private_then_scenario : ScenarioTest
     {
         [Given]
         public void Given() { }

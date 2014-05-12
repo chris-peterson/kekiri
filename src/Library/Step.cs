@@ -8,7 +8,7 @@ namespace Kekiri
 {
     public abstract class Step
     {
-        public static Step InstanceFor(IContextAccessor test, Type stepClass, KeyValuePair<string,object>[] parameters)
+        internal static Step InstanceFor(IContextAccessor test, Type stepClass, KeyValuePair<string,object>[] parameters)
         {
             var instance = (Step)Activator.CreateInstance(stepClass, parameters.Select(p => p.Value).ToArray());
             instance.SetScenario(test);

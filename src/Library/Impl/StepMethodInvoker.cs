@@ -18,8 +18,6 @@ namespace Kekiri.Impl
 
         public string SourceDescription { get; private set; }
 
-        public bool SuppressOutput { get; private set; }
-
         public KeyValuePair<string, object>[] Parameters { get; private set; } 
 
         public StepMethodInvoker(MethodBase method, KeyValuePair<string, object>[] supportedParameters = null)
@@ -31,7 +29,6 @@ namespace Kekiri.Impl
             Type = stepType;
             Parameters = method.BindParameters(supportedParameters);
             Name = new StepName(Type, method.Name, supportedParameters);
-            SuppressOutput = method.SuppressOutputAttribute() != null;
             ExceptionExpected = method.AttributeOrDefault<ThrowsAttribute>() != null;
             SourceDescription = string.Format("{0}.{1}", method.DeclaringType.FullName, method.Name);
         }

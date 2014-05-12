@@ -1,6 +1,6 @@
 ﻿namespace Kekiri.Impl
 {
-    public interface IContextAccessor
+    internal interface IContextAccessor
     {
         dynamic Context { get; }
     }

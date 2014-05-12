@@ -5,7 +5,7 @@ using Kekiri.Config;
 
 namespace Kekiri.Reporting
 {
-    public class ScenarioReportingContext
+    internal class ScenarioReportingContext
     {
         public FeatureReport FeatureReport { get; private set; }
         public IList<string> ScenarioReport { get; private set; }
@@ -84,7 +84,7 @@ namespace Kekiri.Reporting
         }
     }
 
-    public class FeatureReport
+    internal class FeatureReport
     {
         public string Name { get; internal set; }
 

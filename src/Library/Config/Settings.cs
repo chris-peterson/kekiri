@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Kekiri.Config
 {
-    public class Settings
+    internal class Settings
     {
         private readonly ConfigFileBasedSettings _settings;
 

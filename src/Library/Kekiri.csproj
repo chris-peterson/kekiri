@@ -75,7 +75,6 @@
     <Compile Include="Reporting\IReportTarget.cs" />
     <Compile Include="FeatureDescriptionAttribute.cs" />
     <Compile Include="StepAttribute.cs" />
-    <Compile Include="Reporting\SuppressOutputAttribute.cs" />
     <Compile Include="ThenAttribute.cs" />
     <Compile Include="Exceptions\FixtureShouldHaveThens.cs" />
     <Compile Include="Exceptions\ScenarioTestException.cs" />

@@ -1,6 +1,6 @@
 ﻿namespace Kekiri.TestSupport.Scenarios
 {
-    public class When_initializing_valid_fixture_scenario : SuppressedOutputScenarioTest
+    public class When_initializing_valid_fixture_scenario : ScenarioTest
     {
         [Given]
         public void Given()

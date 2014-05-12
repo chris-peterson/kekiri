@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 
 namespace Kekiri.Reporting
 {
-    public interface IReportTarget
+    internal interface IReportTarget
     {
         void Report(ScenarioReportingContext scenario);
     }
 
-    public class CompositeReportTarget : IReportTarget
+    internal class CompositeReportTarget : IReportTarget
     {
         private readonly List<IReportTarget> _targets;
 
@@ -39,7 +39,7 @@ namespace Kekiri.Reporting
         }
     }
 
-    public class FeatureFileReportTarget : IReportTarget
+    internal class FeatureFileReportTarget : IReportTarget
     {
         private static readonly Lazy<FeatureFileReportTarget> _target = new Lazy<FeatureFileReportTarget>(() => new FeatureFileReportTarget());
 
@@ -110,7 +110,7 @@ namespace Kekiri.Reporting
         }
     }
 
-    public class TraceReportTarget : IReportTarget
+    internal class TraceReportTarget : IReportTarget
     {
         private static readonly Lazy<TraceReportTarget> _target = new Lazy<TraceReportTarget>(() => new TraceReportTarget());
 

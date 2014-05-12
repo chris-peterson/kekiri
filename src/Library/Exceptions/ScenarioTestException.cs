@@ -2,7 +2,7 @@ using System;
 
 namespace Kekiri.Exceptions
 {
-    public class ScenarioTestException : Exception
+    internal class ScenarioTestException : Exception
     {
         public object Test { get; private set; }
 

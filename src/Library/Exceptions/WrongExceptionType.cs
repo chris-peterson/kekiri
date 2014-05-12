@@ -2,7 +2,7 @@
 
 namespace Kekiri.Exceptions
 {
-    public class WrongExceptionType : ScenarioTestException
+    internal class WrongExceptionType : ScenarioTestException
     {
         public WrongExceptionType(
             object test,
