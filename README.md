@@ -15,14 +15,14 @@ Kekiri allows developers to write BDD tests just as quickly and easily as they w
 The resulting tests are concise and highly portable.
 
 ## Example
-For this **ScenarioTest**, we will be implementing a basic calculator.
+For this **Test**, we will be implementing a basic calculator.
 
 ### Start with the test
 Just like in TDD, when employing BDD, we write the test first:
 
 ```c#
     [Scenario]
-    class Adding_two_numbers : ScenarioTest {
+    class Adding_two_numbers : Test {
         [Given]
         public void Given_a_calculator() {}
 
@@ -52,7 +52,7 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
 ### Add the implementation
 ```c#
     [Scenario]
-    class Adding_two_numbers : ScenarioTest {
+    class Adding_two_numbers : Test {
         private Calculator _calculator;
 
         [Given]
@@ -108,11 +108,11 @@ underscore convention (e.g. `When_doing_the_thing`).
 
 ### Expected Exceptions
 ```c#
-    class When_dividing_by_zero : ScenarioTest {
+    class Divide_by_zero : Test {
         readonly Calculator _calculator = new Calculator();
 
         [When, Throws]
-        public void When() {
+        public void When_dividing() {
             _calculator.Divide();
         }
 
@@ -123,23 +123,20 @@ underscore convention (e.g. `When_doing_the_thing`).
     }
 ```
 
-Notice, here we've used the `[Throws]` attribute to inform the **ScenarioTest** that throwing an
+Notice, here we've used the `[Throws]` attribute to inform the **Test** that throwing an
 exception is the expected behavior.  In 1 or more `[Then]`s, the thrown type of exception must
 be caught (using the templated method `Catch<>`).
 
-Also, notice that this test is more terse than the previous example.  This is a stylistic choice.
-By not using the `[Scenario]` attribute, and naming the class after the **When**, the test
-output is also more terse:
-
-        When dividing by zero
+   Scenario: Divide by zero
+        When dividing
         Then it should throw an exception
 
 ### Data-driven
 ```c#
-    [ScenarioOutline("eating")]
+    [Scenario(Feature.Eating)]
     [Example(12, 5, 7)]
     [Example(20, 5, 15)]
-    public class Eating_cucumbers : ScenarioTest {
+    public class Eating_cucumbers : Test {
         private readonly int _start;
         private readonly int _eat;
         private readonly int _left;
@@ -354,7 +351,7 @@ Consider this collection of classes:
 Here's our test fixture:
 ```c#
     [Scenario]
-    class Using_fakes_with_autofac : AutofacScenarioTest
+    class Using_fakes_with_autofac : AutofacTest
     {
         private Orchestrator _orchestrator;
 

@@ -56,33 +56,38 @@ namespace Kekiri.Reporting
 
         public void Report(ScenarioReportingContext scenario)
         {
-            var featureName = scenario.FeatureReport.Name;
-            if (_featureState.ContainsKey(featureName))
-            {
-                using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
-                {
-                    WriteScenario(scenario, fs, includeFeatureReport: false);
-                }
-            }
-            else
-            {
-                _featureState.Add(featureName, new
-                {
-                    Path = string.Format("{0}.feature", CoerceValidFileName(featureName))
-                });
+            var report = scenario.CreateReport();
 
-                using (var fs = File.Create(_featureState[featureName].Path))
+            if (!string.IsNullOrWhiteSpace(report))
+            {
+                var featureName = scenario.FeatureReport.Name;
+                if (_featureState.ContainsKey(featureName))
                 {
-                    WriteScenario(scenario, fs, includeFeatureReport: true);
+                    using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
+                    {
+                        WriteScenario(scenario, fs);
+                    }
+                }
+                else
+                {
+                    _featureState.Add(featureName, new
+                    {
+                        Path = string.Format("{0}.feature", CoerceValidFileName(featureName))
+                    });
+
+                    using (var fs = File.Create(_featureState[featureName].Path))
+                    {
+                        WriteScenario(scenario, fs);
+                    }
                 }
             }
         }
 
-        private static void WriteScenario(ScenarioReportingContext reportingContext, Stream fs, bool includeFeatureReport)
+        private static void WriteScenario(ScenarioReportingContext reportingContext, Stream fs)
         {
             using (var writer = new StreamWriter(fs))
             {
-                writer.WriteLine(reportingContext.CreateReport(includeFeatureReport));
+                writer.WriteLine(reportingContext.CreateReport());
             }
         }
 
@@ -125,7 +130,7 @@ namespace Kekiri.Reporting
 
         public void Report(ScenarioReportingContext scenario)
         {
-            Trace.WriteLine(scenario.CreateReport(true));
+            Trace.WriteLine(scenario.CreateReport());
         }
     }
 }

@@ -4,7 +4,7 @@ using Kekiri.TestSupport.Scenarios.Exceptions;
 namespace Kekiri.UnitTests.Exceptions
 {
     [Scenario(Feature.TestExceptionHandling)]
-    class When_test_throws_an_exception_that_is_not_caught : ScenarioTest
+    class When_test_throws_an_exception_that_is_not_caught : Test
     {
         [When, Throws]
         public void When()

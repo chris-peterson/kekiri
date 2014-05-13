@@ -3,7 +3,6 @@ using Kekiri.TestSupport.Scenarios.Reporting;
 
 namespace Kekiri.UnitTests.Reporting
 {
-    [Scenario("The 'given' is suppressed")]
     class When_generating_report_and_given_is_suppressed : ReportingScenarioTest
     {
         [Given]

@@ -6,7 +6,7 @@ using Kekiri.TestSupport.Scenarios.Exceptions;
 namespace Kekiri.UnitTests.Exceptions
 {
     [Scenario(Feature.TestExceptionHandling)]
-    class When_test_throws_wrong_exception_type : ScenarioTest
+    class When_test_throws_wrong_exception_type : Test
     {
         [When, Throws]
         public void When()

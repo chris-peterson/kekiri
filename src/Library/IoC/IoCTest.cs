@@ -3,11 +3,11 @@
     /// <summary>
     /// Base class for an IoC capable <c>ScenarioTest</c>.
     /// </summary>
-    public abstract class IoCScenarioTest : ScenarioTest, IContainerAccessor
+    public abstract class IoCTest : Test, IContainerAccessor
     {
         protected internal Container Container;
 
-        protected IoCScenarioTest(Container container)
+        protected IoCTest(Container container)
         {
             Container = container;
         }

@@ -2,10 +2,10 @@
 
 namespace Kekiri.UnitTests.Fluent
 {
-    [Scenario]
+    [Scenario(Feature.TabularTests)]
     [Example("example1", 3)]
     [Example("example2", 57)]
-    public class Can_fluently_execute_a_scenario_outline : FluentScenario
+    public class Can_fluently_execute_a_scenario_outline : FluentTest
     {
         private string _expectedAValue;
         private int _expectedBValue;

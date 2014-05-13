@@ -4,7 +4,7 @@ using Kekiri.TestSupport.Scenarios;
 namespace Kekiri.UnitTests
 {
     [Scenario(Feature.SetupAndTeardown)]
-    class When_overriding_fixture_setup_methods : ScenarioTest
+    class When_overriding_fixture_setup_methods : Test
     {
         readonly When_overriding_fixture_setup_methods_scenario _scenario = new When_overriding_fixture_setup_methods_scenario();
 

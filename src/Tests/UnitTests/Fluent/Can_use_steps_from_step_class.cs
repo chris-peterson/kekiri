@@ -3,7 +3,7 @@ using FluentAssertions;
 
 namespace Kekiri.UnitTests.Fluent
 {
-    public class Can_use_steps_from_step_class : FluentScenario
+    public class Can_use_steps_from_step_class : FluentTest
     {
         public Can_use_steps_from_step_class()
         {

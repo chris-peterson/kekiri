@@ -73,7 +73,6 @@
     <Compile Include="Reporting\When_fixture_uses_implicit_scenario_description.cs" />
     <Compile Include="Reporting\_TestBase.cs" />
     <Compile Include="Reporting\When_generating_report_with_scenario_specified.cs" />
-    <Compile Include="Reporting\When_generating_report_with_feature_specified.cs" />
     <Compile Include="Reporting\When_generating_report_and_given_is_suppressed.cs" />
     <Compile Include="Reporting\When_generating_report_for_default_step_names_and_custom_steps.cs" />
     <Compile Include="Reporting\When_generating_report_for_default_step_names.cs" />

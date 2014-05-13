@@ -5,8 +5,8 @@ using Kekiri.IoC.Autofac;
 
 namespace Kekiri.UnitTests.IoC.Autofac
 {
-    [Scenario]
-    public class Using_fakes : AutofacScenarioTest
+    [Scenario(Feature.IoC)]
+    public class Using_fakes : AutofacTest
     {
         private Orchestrator _orchestrator;
 

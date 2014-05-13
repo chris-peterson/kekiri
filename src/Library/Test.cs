@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Kekiri
 {
-    public abstract class ScenarioTest
+    public abstract class Test
     {
         private ScenarioRunner _scenarioRunner;
         private IReportTarget _reportTarget;

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Kekiri.Config;
 using Kekiri.Reporting;
-using NUnit.Framework;
 
 namespace Kekiri.Impl
 {
@@ -70,32 +69,21 @@ namespace Kekiri.Impl
 
         public ScenarioReportingContext CreateReport()
         {
-            var featureReport = new FeatureReport();
+            FeatureReport featureReport = null;
             var scenarioReport = new List<string>();
             var stepReport = new List<string>();
 
             var scenario = ExtractAttributeFromScenarioTest<ScenarioAttribute>();
             var feature = scenario == null ? null : scenario.Feature;
-            if (feature == null)
+            if (feature != null)
             {
-                featureReport.Name = _scenarioTestType.Namespace.Split('.').Last();
-                featureReport.Summary = featureReport.Name.WithSpaces();
-            }
-            else
-            {
-                var featureStr = feature.ToString();
-                featureReport.Name = featureStr;
+                featureReport = new FeatureReport(feature.ToString());
 
-                var featureAttribute = feature.GetType().GetField(featureStr)
+                var featureAttribute = feature.GetType().GetField(featureReport.Name)
                     .AttributeOrDefault<FeatureDescriptionAttribute>();
-                if (featureAttribute == null)
+                if (featureAttribute != null)
                 {
-                    featureReport.Summary = featureStr;
-                }
-                else
-                {
-                    featureReport.Summary = featureAttribute.Summary;
-                    featureReport.Details = featureAttribute.Details;
+                    featureReport.Set(featureAttribute.Summary, featureAttribute.Details);
                 }
             }
 

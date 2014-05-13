@@ -2,7 +2,7 @@
 
 namespace Kekiri.TestSupport.Scenarios.DepthTest
 {
-    public abstract class ScenarioDepthTestBase : ScenarioTest
+    public abstract class ScenarioDepthTestBase : Test
     {
         private readonly List<ScenarioDepthTestLevel> _levels = new List<ScenarioDepthTestLevel>();
 

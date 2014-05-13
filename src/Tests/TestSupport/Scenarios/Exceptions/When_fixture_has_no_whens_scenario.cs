@@ -1,6 +1,6 @@
 ﻿namespace Kekiri.TestSupport.Scenarios.Exceptions
 {
-    public class When_fixture_has_no_whens_scenario : ScenarioTest
+    public class When_fixture_has_no_whens_scenario : Test
     {
         [Given]
         public void Given()

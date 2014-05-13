@@ -3,7 +3,8 @@ using Kekiri.TestSupport.Reporting.Targets;
 
 namespace Kekiri.TestSupport.Scenarios.Reporting
 {
-    public class ReportingScenarioMetaTest : ScenarioTest
+    [Scenario(Feature.TestSupport)]
+    public class ReportingScenarioMetaTest : Test
     {
         private StringReportTarget _target;
 
@@ -11,14 +12,7 @@ namespace Kekiri.TestSupport.Scenarios.Reporting
 
         internal override IReportTarget CreateReportTarget()
         {
-            if (_target == null)
-            {
-                _target = new StringReportTarget(IncludeFeatureReport);
-            }
-
-            return _target;
+            return _target ?? (_target = new StringReportTarget());
         }
-
-        public bool IncludeFeatureReport { get; set; }
     }
 }

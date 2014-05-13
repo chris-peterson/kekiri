@@ -4,7 +4,7 @@ using Kekiri.TestSupport.Scenarios.Exceptions;
 namespace Kekiri.UnitTests.Exceptions
 {
     [Scenario(Feature.FixtureExceptionHandling)]
-    class When_fixture_has_private_when : ScenarioTest
+    class When_fixture_has_private_when : Test
     {
         [When, Throws]
         public void When()

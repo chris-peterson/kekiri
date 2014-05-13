@@ -25,24 +25,26 @@ namespace Kekiri.Reporting
             Settings = settings;
         }
 
-        public string CreateReport(bool includeFeatureReport)
+        public string CreateReport()
         {
+            if (FeatureReport == null)
+            {
+                return string.Empty;
+            }
+
             int indentationLevel = 0;
             var report = new List<string>();
 
-            if (includeFeatureReport)
+            report.Insert(0, string.Format("{0}{1}",
+                Settings.GetToken(TokenType.Feature), FeatureReport.Summary));
+            if (HasItems(FeatureReport.Details))
             {
-                report.Insert(0, string.Format("{0}{1}",
-                    Settings.GetToken(TokenType.Feature), FeatureReport.Summary));
-                if (FeatureReport.Details != null)
-                {
-                    report.AddRange(FeatureReport.Details.Select(line =>
-                        string.Format(
-                            "{0}{1}",
-                            Settings.GetSeperator(SeperatorType.Indent), line)));
-                }
-                report.Add(string.Empty);
+                report.AddRange(FeatureReport.Details.Select(line =>
+                    string.Format(
+                        "{0}{1}",
+                        Settings.GetSeperator(SeperatorType.Indent), line)));
             }
+            report.Add(string.Empty);
 
             if (HasItems(ScenarioReport))
             {
@@ -86,10 +88,21 @@ namespace Kekiri.Reporting
 
     internal class FeatureReport
     {
-        public string Name { get; internal set; }
+        public FeatureReport(string name)
+        {
+            Summary = Name = name;
+        }
 
-        public string Summary { get; internal set; }
+        public string Name { get; private set; }
 
-        public IList<string> Details { get; internal set; }
+        public string Summary { get; private set; }
+
+        public IEnumerable<string> Details { get; private set; }
+
+        public void Set(string summary, IEnumerable<string> details)
+        {
+            Summary = summary;
+            Details = details;
+        }
     }
 }

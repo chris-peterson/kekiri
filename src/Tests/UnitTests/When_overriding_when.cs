@@ -2,7 +2,7 @@
 
 namespace Kekiri.UnitTests
 {
-    public class When_overriding_when : ScenarioTest
+    public class When_overriding_when : Test
     {
         private When_overridding_when_scenario_derived_class _scenario;
 

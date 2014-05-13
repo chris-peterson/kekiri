@@ -4,7 +4,7 @@ using Kekiri.TestSupport.Scenarios;
 namespace Kekiri.UnitTests
 {
     [Scenario(Feature.ExecuteTests)]
-    class When_initializing_valid_fixture : ScenarioTest
+    class When_initializing_valid_fixture : Test
     {
         readonly When_initializing_valid_fixture_scenario _scenario = new When_initializing_valid_fixture_scenario();
 

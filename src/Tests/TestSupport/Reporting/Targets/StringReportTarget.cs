@@ -4,11 +4,8 @@ namespace Kekiri.TestSupport.Reporting.Targets
 {
     internal class StringReportTarget : IReportTarget
     {
-        private readonly bool _includeFeatureReport;
-
-        public StringReportTarget(bool includeFeatureReport)
+        public StringReportTarget()
         {
-            _includeFeatureReport = includeFeatureReport;
             ReportString = string.Empty;
         }
 
@@ -16,7 +13,7 @@ namespace Kekiri.TestSupport.Reporting.Targets
 
         public void Report(ScenarioReportingContext scenario)
         {
-            ReportString += scenario.CreateReport(_includeFeatureReport);
+            ReportString += scenario.CreateReport();
         }
     }
 }

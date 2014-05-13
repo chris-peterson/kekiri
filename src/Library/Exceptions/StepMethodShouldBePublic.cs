@@ -5,8 +5,8 @@ namespace Kekiri.Exceptions
 {
     internal class StepMethodShouldBePublic : ScenarioTestException
     {
-        public StepMethodShouldBePublic(Type scenarioType, MethodBase nonPublicGiven)
-            : base(scenarioType, string.Format("'{0}' is not public", nonPublicGiven.Name))
+        public StepMethodShouldBePublic(Type type, MethodBase nonPublicGiven)
+            : base(type, string.Format("'{0}' is not public", nonPublicGiven.Name))
         {
         }
     }

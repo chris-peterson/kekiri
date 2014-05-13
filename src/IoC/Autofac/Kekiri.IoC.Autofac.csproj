@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="AutofacContainer.cs" />
     <Compile Include="AutofacFluentScenario.cs" />
-    <Compile Include="AutofacScenarioTest.cs" />
+    <Compile Include="AutofacTest.cs" />
     <Compile Include="CustomBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

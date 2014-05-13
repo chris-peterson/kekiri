@@ -10,11 +10,11 @@ using NUnit.Framework;
 namespace Kekiri
 {
    [TestFixture]
-   public abstract class FluentScenario : IContextAccessor
+   public abstract class FluentTest : IContextAccessor
    {
       private readonly ScenarioRunner _scenarioRunner;
 
-      protected FluentScenario()
+      protected FluentTest()
       {
          // ReSharper disable once DoNotCallOverridableMethodsInConstructor
          var reportTarget = CreateReportTarget();
@@ -42,9 +42,9 @@ namespace Kekiri
 
       public abstract class FluentOptionsForStep
       {
-         private readonly FluentScenario _scenario;
+         private readonly FluentTest _scenario;
 
-         protected FluentOptionsForStep(FluentScenario scenario)
+         protected FluentOptionsForStep(FluentTest scenario)
          {
             _scenario = scenario;
          }
@@ -119,7 +119,7 @@ namespace Kekiri
       #region Given
       public class FluentOptionsForGiven : FluentOptionsForStep
       {
-         public FluentOptionsForGiven(FluentScenario scenario) : base(scenario)
+         public FluentOptionsForGiven(FluentTest scenario) : base(scenario)
          {
          }
 
@@ -163,7 +163,7 @@ namespace Kekiri
       // May want to revisit and fork the type heirarchy to have Given/When share a derivation but When not
       public class FluentOptionsForWhen : FluentOptionsForStep
       {
-         public FluentOptionsForWhen(FluentScenario scenario) : base(scenario)
+         public FluentOptionsForWhen(FluentTest scenario) : base(scenario)
          {
          }
 
@@ -202,7 +202,7 @@ namespace Kekiri
       #region Then
       public class FluentOptionsForThen : FluentOptionsForStep
       {
-         public FluentOptionsForThen(FluentScenario scenario) : base(scenario)
+         public FluentOptionsForThen(FluentTest scenario) : base(scenario)
          {
          }
 
@@ -288,7 +288,7 @@ namespace Kekiri
       }
    }
 
-   public abstract class FluentScenario<TContext> : FluentScenario where TContext : new()
+   public abstract class FluentTest<TContext> : FluentTest where TContext : new()
    {
       protected override object CreateContextObject()
       {

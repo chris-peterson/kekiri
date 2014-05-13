@@ -9,7 +9,53 @@ namespace Kekiri.Impl
 {
     internal static class ScenarioMapper
     {
-        public static IEnumerable<KeyValuePair<string, object>> GetParameters(object test)
+        public static IList<IStepInvoker> GetStepInvokers(object test)
+        {
+            // NOTE: in the case of subclassing, we desire that the steps run in order of declaration from least to most derived 
+            // (in all cases except for duplicate name [either by override or new] in which case we prefer the most derived)
+            var type = test.GetType();
+            var subclassTypes = new Stack<Type>(new[] {type});
+            while (type != null && type.BaseType != typeof (Test))
+            {
+                type = type.BaseType;
+                subclassTypes.Push(type);
+            }
+
+            return subclassTypes
+                .SelectMany(AllMethods)
+                .Where(IsStepMethod)
+                .Select(m => GetStepFromMethod(m, GetParameters(test)))
+                .ToLookup(invoker => invoker.Name)
+                .Select(i => i.LastOrDefault())
+                .ToList();
+        }
+
+        private static IStepInvoker GetStepFromMethod(MethodInfo method, IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            if (method.IsPrivate)
+                throw new StepMethodShouldBePublic(method.DeclaringType, method);
+            if (method.GetParameters().Length > 0)
+                throw new ScenarioStepMethodsShouldNotHaveParameters(method.DeclaringType,
+                    "The method '" + method.Name + "' is in a ScenarioTest and cannot have parameters");
+
+            return new StepMethodInvoker(method, parameters.ToArray());
+        }
+
+        private static IEnumerable<MethodInfo> AllMethods(Type t)
+        {
+            return t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
+                                BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance);
+        }
+
+        private static bool IsStepMethod(MethodInfo method)
+        {
+            if (method.GetCustomAttributes(true).Any(a => a.GetType() == typeof (TestAttribute)))
+                throw new FixtureShouldNotUseTestAttribute(method);
+
+            return method.HasAttribute<IStepAttribute>();
+        }
+
+        private static IEnumerable<KeyValuePair<string, object>> GetParameters(object test)
         {
             var type = test.GetType();
             var ctor = type.GetConstructors().SingleOrDefault();
@@ -37,49 +83,6 @@ namespace Kekiri.Impl
                     }
                 }
             }
-        }
-
-        public static IList<IStepInvoker> GetStepInvokers(object test)
-        {
-            // NOTE: in the case of subclassing, we desire that the steps run in order of declaration from least to most derived 
-            // (in all cases except for duplicate name [either by override or new] in which case we prefer the most derived)
-
-            var parameters = GetParameters(test).ToArray();
-            var type = test.GetType();
-            var derivedScenarioTestTypes = new Stack<Type>(new[] {type});
-            while (type != null && type.BaseType != typeof (ScenarioTest))
-            {
-                type = type.BaseType;
-                derivedScenarioTestTypes.Push(type);
-            }
-
-            return derivedScenarioTestTypes
-                .SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
-                                              BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
-                .Where(IsStepMethod)
-                .Select(m => GetStepFromMethod(m, parameters))
-                .ToLookup(invoker => invoker.Name)
-                .Select(i => i.LastOrDefault())
-                .ToList();
-        }
-
-        private static IStepInvoker GetStepFromMethod(MethodInfo method, KeyValuePair<string, object>[] parameters)
-        {
-            if (method.IsPrivate)
-                throw new StepMethodShouldBePublic(method.DeclaringType, method);
-            if (method.GetParameters().Length > 0)
-                throw new ScenarioStepMethodsShouldNotHaveParameters(method.DeclaringType,
-                    "The method '" + method.Name + "' is in a ScenarioTest and cannot have parameters");
-
-            return new StepMethodInvoker(method, parameters);
-        }
-
-        private static bool IsStepMethod(MethodInfo method)
-        {
-            if (method.GetCustomAttributes(true).Any(a => a.GetType() == typeof (TestAttribute)))
-                throw new FixtureShouldNotUseTestAttribute(method);
-
-            return method.HasAttribute<IStepAttribute>();
         }
     }
 }

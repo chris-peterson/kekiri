@@ -3,7 +3,6 @@ using Kekiri.TestSupport.Scenarios.Reporting;
 
 namespace Kekiri.UnitTests.Reporting
 {
-    [Scenario]
     class Fixture_has_multiple_tags : ReportingScenarioTest
     {
         [Given]

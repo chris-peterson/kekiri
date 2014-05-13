@@ -15,10 +15,13 @@
     <releaseNotes>
         Added Fluent syntax to support sharing scenario steps
         Added ability to target multiple output files when generating scenario report 
+        Several renames:
+         * ScenarioTest -> Test
+         * IocScenarioTest -> IoCTest
+         * AutofacScenarioTest => AutofacTest
         [Feature] is now [FeatureDescription] and targets an Enum literal rather than a class.  The new sytax is [Scenario(Feature.Foo)].
-        Dropped [ScenarioOutline] -- just use Scenario
-        Dropped [SuppressOutput].  Now, if you don't want your test output, don't add [Scenario].  Hiding individual steps is typically only useful for Givens, in which case, suppression can be acheived by either a) using the constructor or b) naming the method "Given"
-        Dropped support for customizing trace target
+        Removed [ScenarioOutline] -- just use [Scenario]
+        Removed [SuppressOutput].  Now, if you don't want your test output, don't don't add [Scenario].  Hiding individual steps is typically only useful for Givens, in which case, suppression can be acheived by either a) using the constructor or b) naming the method "Given"
         Dropped support for custom configuration
         Don't generate a trace report on a per-test basis (just at the fixture level)
     </releaseNotes>

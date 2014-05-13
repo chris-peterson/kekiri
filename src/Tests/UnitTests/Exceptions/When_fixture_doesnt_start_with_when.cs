@@ -3,7 +3,7 @@
 namespace Kekiri.UnitTests.Exceptions
 {
     [Scenario(Feature.FixtureExceptionHandling)]
-    class When_fixture_doesnt_start_with_when : ScenarioTest
+    class When_fixture_doesnt_start_with_when : Test
     {
         [When]
         public void When()

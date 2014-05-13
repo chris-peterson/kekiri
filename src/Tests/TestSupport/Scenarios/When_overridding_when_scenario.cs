@@ -2,7 +2,7 @@
 
 namespace Kekiri.TestSupport.Scenarios
 {
-    public class When_overridding_when_scenario_base_class : ScenarioTest
+    public class When_overridding_when_scenario_base_class : Test
     {
         [Given]
         public void Given()

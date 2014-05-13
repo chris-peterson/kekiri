@@ -4,7 +4,7 @@ using Kekiri.TestSupport.Scenarios.DepthTest;
 namespace Kekiri.UnitTests.DepthTest
 {
     [Scenario(Feature.Subclassing)]
-    class When_test_has_givens_at_multiple_inheritence_levels : ScenarioTest
+    class When_test_has_givens_at_multiple_inheritence_levels : Test
     {
         readonly When_scenario_test_has_derived_depth2 _test = new When_scenario_test_has_derived_depth2();
 

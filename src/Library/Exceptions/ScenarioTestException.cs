@@ -11,8 +11,8 @@ namespace Kekiri.Exceptions
         {
         }
 
-        public ScenarioTestException(Type scenarioType, string message) :
-            this(scenarioType, message, null)
+        public ScenarioTestException(Type type, string message) :
+            this(type, message, null)
         {
         }
 
@@ -22,8 +22,8 @@ namespace Kekiri.Exceptions
             Test = test;
         }
 
-        public ScenarioTestException(Type scenarioType, string message, Exception innerException) :
-            base(string.Format("Error in '{0}':\r\n{1}", scenarioType.Name, message), innerException)
+        public ScenarioTestException(Type type, string message, Exception innerException) :
+            base(string.Format("Error in '{0}':\r\n{1}", type.Name, message), innerException)
         {
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Kekiri.UnitTests.Fluent
 {
-    public class Steps_are_executed_in_declared_order : FluentScenario
+    public class Steps_are_executed_in_declared_order : FluentTest
     {
         protected override void Before()
         {

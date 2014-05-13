@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Kekiri.Config;
 using Kekiri.TestSupport.Scenarios.Examples;
 
 namespace Kekiri.UnitTests.Reporting
@@ -16,10 +15,7 @@ namespace Kekiri.UnitTests.Reporting
         public void It_should_generate_the_correct_report()
         {
             ScenarioReport.Should().Be(
-                string.Format(
-                    "Scenario Outline: eating{0}{1}Given there are 12 cucumbers{0}{1}When i eat 5 cucumbers{0}{1}Then i should have 7 cucumbers",
-                    Settings.GetSeperator(SeperatorType.Line),
-                    Settings.GetSeperator(SeperatorType.Indent)));
+                "Feature: TestSupport\r\n\r\nScenario Outline: Eating cucumbers\r\n  Given there are 12 cucumbers\r\n  When i eat 5 cucumbers\r\n  Then i should have 7 cucumbers");
         }
     }
 }

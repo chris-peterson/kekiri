@@ -4,7 +4,7 @@ using Kekiri.TestSupport.Scenarios.Reporting;
 namespace Kekiri.UnitTests.Reporting
 {
     [Scenario(Feature.Reporting)]
-    public abstract class ReportingScenarioTest : ScenarioTest
+    public abstract class ReportingScenarioTest : Test
     {
         protected ReportingScenarioMetaTest Scenario { private get; set; }
         internal Settings Settings { get; private set; }

@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Kekiri.TestSupport.Scenarios.Examples
 {
     // Inspired by https://github.com/cucumber/cucumber/wiki/Scenario-Outlines
-    [Scenario("eating")]
+    [Scenario(Feature.TestSupport)]
     [Example(12, 5, 7)]
     [Example(20, 5, 15)]
     public class Eating_cucumbers : ReportingScenarioMetaTest

@@ -49,7 +49,7 @@
     <Compile Include="Exceptions\ThenFailed.cs" />
     <Compile Include="Exceptions\StepMethodShouldBePublic.cs" />
     <Compile Include="Exceptions\StepNotFound.cs" />
-    <Compile Include="FluentScenario.cs" />
+    <Compile Include="FluentTest.cs" />
     <Compile Include="Impl\IStepInvoker.cs" />
     <Compile Include="Impl\ScenarioRunner.cs" />
     <Compile Include="Impl\StepMethodInvoker.cs" />
@@ -57,7 +57,7 @@
     <Compile Include="Impl\StepName.cs" />
     <Compile Include="IoC\IContainerAccessor.cs" />
     <Compile Include="IoC\IoCFluentScenario.cs" />
-    <Compile Include="IoC\IoCScenarioTest.cs" />
+    <Compile Include="IoC\IoCTest.cs" />
     <Compile Include="IoC\Container.cs" />
     <Compile Include="Impl\IContextAccessor.cs" />
     <Compile Include="LinqExtensions.cs" />
@@ -81,7 +81,7 @@
     <Compile Include="Exceptions\GivenFailed.cs" />
     <Compile Include="Exceptions\ScenarioStepMethodsShouldNotHaveParameters.cs" />
     <Compile Include="StepType.cs" />
-    <Compile Include="ScenarioTest.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="Impl\ScenarioTestMetadata.cs" />
     <Compile Include="GivenAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

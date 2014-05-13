@@ -2,7 +2,7 @@
 
 namespace Kekiri.TestSupport.Scenarios.Exceptions
 {
-    public class When_fixture_step_given_throws_exception_scenario : ScenarioTest
+    public class When_fixture_step_given_throws_exception_scenario : Test
     {
         [Given]
         public void Given()
