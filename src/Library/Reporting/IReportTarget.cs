@@ -58,36 +58,35 @@ namespace Kekiri.Reporting
         {
             var report = scenario.CreateReport();
 
-            if (!string.IsNullOrWhiteSpace(report))
+            if (string.IsNullOrWhiteSpace(report))
             {
-                var featureName = scenario.FeatureReport.Name;
-                if (_featureState.ContainsKey(featureName))
-                {
-                    using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
-                    {
-                        WriteScenario(scenario, fs);
-                    }
-                }
-                else
-                {
-                    _featureState.Add(featureName, new
-                    {
-                        Path = string.Format("{0}.feature", CoerceValidFileName(featureName))
-                    });
+                return;
+            }
 
-                    using (var fs = File.Create(_featureState[featureName].Path))
+            var featureName = scenario.FeatureReport.Name;
+            if (_featureState.ContainsKey(featureName))
+            {
+                using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
+                {
+                    using (var writer = new StreamWriter(fs))
                     {
-                        WriteScenario(scenario, fs);
+                        writer.WriteLine(scenario.CreateReport(omitFeatureOutput: true));
                     }
                 }
             }
-        }
-
-        private static void WriteScenario(ScenarioReportingContext reportingContext, Stream fs)
-        {
-            using (var writer = new StreamWriter(fs))
+            else
             {
-                writer.WriteLine(reportingContext.CreateReport());
+                _featureState.Add(featureName, new
+                {
+                    Path = string.Format("{0}.feature", CoerceValidFileName(featureName))
+                });
+                using (var fs = File.Create(_featureState[featureName].Path))
+                {
+                    using (var writer = new StreamWriter(fs))
+                    {
+                        writer.WriteLine(scenario.CreateReport());
+                    }
+                }
             }
         }
 

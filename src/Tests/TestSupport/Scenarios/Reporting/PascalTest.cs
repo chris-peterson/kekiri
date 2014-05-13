@@ -1,6 +1,6 @@
 namespace Kekiri.TestSupport.Scenarios.Reporting
 {
-    public class When_generating_report_for_pascal_step_names_scenario : ReportingScenarioMetaTest
+    public class PascalTest : ReportingScenarioMetaTest
     {
         [Given]
         public void GivenAnAssumption()

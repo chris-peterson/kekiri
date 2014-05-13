@@ -25,8 +25,9 @@ namespace Kekiri.Reporting
             Settings = settings;
         }
 
-        public string CreateReport()
+        public string CreateReport(bool omitFeatureOutput = false)
         {
+            // if this test isn't categorized into a feature bucket, don't output it!
             if (FeatureReport == null)
             {
                 return string.Empty;
@@ -35,16 +36,19 @@ namespace Kekiri.Reporting
             int indentationLevel = 0;
             var report = new List<string>();
 
-            report.Insert(0, string.Format("{0}{1}",
-                Settings.GetToken(TokenType.Feature), FeatureReport.Summary));
-            if (HasItems(FeatureReport.Details))
+            if (!omitFeatureOutput)
             {
-                report.AddRange(FeatureReport.Details.Select(line =>
-                    string.Format(
-                        "{0}{1}",
-                        Settings.GetSeperator(SeperatorType.Indent), line)));
+                report.Insert(0, string.Format("{0}{1}",
+                    Settings.GetToken(TokenType.Feature), FeatureReport.Summary));
+                if (HasItems(FeatureReport.Details))
+                {
+                    report.AddRange(FeatureReport.Details.Select(line =>
+                        string.Format(
+                            "{0}{1}",
+                            Settings.GetSeperator(SeperatorType.Indent), line)));
+                }
+                report.Add(string.Empty);
             }
-            report.Add(string.Empty);
 
             if (HasItems(ScenarioReport))
             {

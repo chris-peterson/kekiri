@@ -8,14 +8,14 @@ namespace Kekiri.UnitTests.Reporting
         [Given]
         public void Given()
         {
-            Scenario = new When_generating_report_for_pascal_step_names_scenario();
+            Scenario = new PascalTest();
         }
 
         [Then]
         public void It_should_generate_the_correct_report()
         {
             ScenarioReport.Should().Be(
-                "Feature: TestSupport\r\n\r\nScenario: When generating report for pascal step names scenario\r\n  Given an assumption\r\n  When performing the deed\r\n  Then it should do the right thing");
+                "Feature: TestSupport\r\n\r\nScenario: Pascal test\r\n  Given an assumption\r\n  When performing the deed\r\n  Then it should do the right thing");
         }
     }
 }

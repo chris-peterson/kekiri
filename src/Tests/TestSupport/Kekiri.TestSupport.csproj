@@ -53,7 +53,7 @@
     <Compile Include="Scenarios\Reporting\When_generating_report_for_underscore_step_names_scenario.cs" />
     <Compile Include="Scenarios\Reporting\When_generating_report_for_default_step_names_scenario.cs" />
     <Compile Include="Scenarios\Reporting\When_generating_report_for_default_step_names_and_custom_steps_scenario.cs" />
-    <Compile Include="Scenarios\Reporting\When_generating_report_for_pascal_step_names_scenario.cs" />
+    <Compile Include="Scenarios\Reporting\PascalTest.cs" />
     <Compile Include="Scenarios\DepthTest\ScenarioDepthTestBase.cs" />
     <Compile Include="Scenarios\Exceptions\When_test_throws_no_exception_when_expected_to_throw_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_has_test_instead_of_then_scenario.cs" />

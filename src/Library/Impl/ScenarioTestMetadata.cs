@@ -202,6 +202,15 @@ namespace Kekiri.Impl
             return string.Format("{0}{1}", char.ToLower(str[0]), str.Length == 1 ? null : str.Substring(1));
         }
 
+        public static string ToLowerExceptFirstLetter(this string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return string.Empty;
+            }
+            return string.Format("{0}{1}", str[0], str.Length == 1 ? null : str.Substring(1).ToLower());
+        }
+
         public static string WithSpaces(this string str)
         {
             bool usingUnderscoreNamingConvention = str.Contains("_");
@@ -212,10 +221,10 @@ namespace Kekiri.Impl
             }
             
             // pascal casing -- Adapted from: http://stackoverflow.com/questions/272633/add-spaces-before-capital-letters#272929
-            var splitIntoWords = Regex.Replace(
+            var sentence = Regex.Replace(
                 str, @"((?<=\p{Ll})\p{Lu})|((?!\A)\p{Lu}(?>\p{Ll}))", " $0");
 
-            return splitIntoWords.ToLower();
+            return sentence.ToLowerExceptFirstLetter();
         }
     }
 }
