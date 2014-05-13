@@ -6,8 +6,6 @@ namespace Kekiri.Impl
 
         bool ExceptionExpected { get; }
 
-        int Order { get; }
-
         StepName Name { get; }
 
         StepType Type { get; }

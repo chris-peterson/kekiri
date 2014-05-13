@@ -20,8 +20,6 @@ namespace Kekiri.Impl
 
         public StepType Type { get; private set; }
 
-        public int Order { get; private set; }
-
         public StepName Name { get; private set; }
 
         public KeyValuePair<string, object>[] Parameters { get; private set; } 

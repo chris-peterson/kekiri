@@ -41,9 +41,11 @@ namespace Kekiri.Impl
 
         public static IList<IStepInvoker> GetStepInvokers(object test)
         {
+            // NOTE: in the case of subclassing, we desire that the steps run in order of declaration from least to most derived 
+            // (in all cases except for duplicate name [either by override or new] in which case we prefer the most derived)
+
             var parameters = GetParameters(test).ToArray();
             var type = test.GetType();
-            // Walk the type hierarchy from ScenarioTest downward so that base class givens are invoked before derived ones
             var derivedScenarioTestTypes = new Stack<Type>(new[] {type});
             while (type != null && type.BaseType != typeof (ScenarioTest))
             {
@@ -56,36 +58,9 @@ namespace Kekiri.Impl
                                               BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
                 .Where(IsStepMethod)
                 .Select(m => GetStepFromMethod(m, parameters))
-                .OrderBy(i => i, new StepNameOrderer())
-                .Distinct(new StepNameComparer())
+                .ToLookup(invoker => invoker.Name)
+                .Select(i => i.LastOrDefault())
                 .ToList();
-        }
-
-        private class StepNameComparer : IEqualityComparer<IStepInvoker>
-        {
-            public bool Equals(IStepInvoker x, IStepInvoker y)
-            {
-                return x.Name.Equals(y.Name);
-            }
-
-            public int GetHashCode(IStepInvoker obj)
-            {
-                return obj.Name.GetHashCode();
-            }
-        }
-
-        private class StepNameOrderer : IComparer<IStepInvoker>
-        {
-            public int Compare(IStepInvoker x, IStepInvoker y)
-            {
-                if (x.Type == StepType.When && y.Type == StepType.When)
-                {
-                    // favor derived class for Whens
-                    return y.Order.CompareTo(x.Order);
-                }
-
-                return x.Order.CompareTo(y.Order);
-            }
         }
 
         private static IStepInvoker GetStepFromMethod(MethodInfo method, KeyValuePair<string, object>[] parameters)

@@ -6,14 +6,10 @@ namespace Kekiri.Impl
 {
     internal class StepMethodInvoker : IStepInvoker
     {
-        private static int _order;
-
         protected MethodBase Method { get; private set; }
 
         public bool ExceptionExpected { get; private set; }
         
-        public int Order { get; private set; }
-
         public StepName Name { get; private set; }
 
         public StepType Type { get; private set; }
@@ -27,7 +23,6 @@ namespace Kekiri.Impl
 
         public StepMethodInvoker(StepType stepType, MethodBase method, KeyValuePair<string, object>[] supportedParameters = null)
         {
-            Order = _order++;
             Method = method;
             Type = stepType;
             Parameters = method.BindParameters(supportedParameters);
