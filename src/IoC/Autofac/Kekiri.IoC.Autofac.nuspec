@@ -14,9 +14,10 @@
     <copyright>2013-2014</copyright>
     <releaseNotes>
         Goes along with release of Kekiri library version 2.0.  See its releaseNotes for details.
+        Update to Autofac 3.4.0
     </releaseNotes>
     <dependencies>
-      <dependency id="Kekiri" version="2.0-alpha" />
+      <dependency id="Kekiri" version="2.0-rc2" />
     </dependencies>
   </metadata>
 </package>
