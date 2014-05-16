@@ -4,7 +4,7 @@ namespace Kekiri.Impl
     {
         void Invoke(object test);
 
-        bool ExceptionExpected { get; }
+        bool ExceptionExpected { get; set; }
 
         StepName Name { get; }
 

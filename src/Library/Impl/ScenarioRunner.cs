@@ -91,6 +91,11 @@ namespace Kekiri.Impl
             }
         }
 
+        public void ExpectException()
+        {
+            _scenarioMetadata.WhenMethod.ExceptionExpected = true;
+        }
+
         public void RunWhen()
         {
             var when = _scenarioMetadata.WhenMethod;

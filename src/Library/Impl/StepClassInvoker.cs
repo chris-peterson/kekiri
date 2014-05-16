@@ -24,10 +24,7 @@ namespace Kekiri.Impl
 
         public KeyValuePair<string, object>[] Parameters { get; private set; } 
 
-        public bool ExceptionExpected
-        {
-            get { return _stepClass.HasAttribute<ThrowsAttribute>(); }
-        }
+        public bool ExceptionExpected { get; set; }
 
         public string SourceDescription
         {

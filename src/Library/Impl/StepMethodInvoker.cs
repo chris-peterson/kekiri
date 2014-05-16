@@ -8,7 +8,7 @@ namespace Kekiri.Impl
     {
         protected MethodBase Method { get; private set; }
 
-        public bool ExceptionExpected { get; private set; }
+        public bool ExceptionExpected { get; set; }
         
         public StepName Name { get; private set; }
 
