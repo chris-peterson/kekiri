@@ -5,20 +5,17 @@ Kekiri honors the conventions of the [cucumber language] (https://github.com/cuc
 
 ## Setup
 `PM> Install-Package Kekiri`  
-`C:\> cinst Kekiri.Tools`
-
 
 ## Why Kekiri?
-Unlike other BDD frameworks that impose process overhead (management of feature files & shared steps, etc)
+Unlike other BDD frameworks that impose process overhead (management of feature files, custom tools, etc)
 Kekiri allows developers to write BDD tests just as quickly and easily as they would technical tests.
 
-The resulting tests are concise and highly portable.
+The resulting tests are concise, highly portable, and adhere to [Act, Arrange, and Assert](http://www.arrangeactassert.com/why-and-what-is-arrange-act-assert/).
 
 ## Example
 For this **Test**, we will be implementing a basic calculator.
 
 ### Start with the test
-Just like in TDD, when employing BDD, we write the test first:
 
 ```c#
     [Scenario]
@@ -92,9 +89,6 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
         }
     }
 ```
-
-### You're done!
-Wasn't that painless?
 
 ---
 
@@ -171,6 +165,8 @@ be caught (using the templated method `Catch<>`).
         Then i should have 7 cucumbers
 
 ### IoC Tests
+Requires an additional package:
+
 `PM> Install-Package Kekiri.IoC.Autofac`
 
 #### Example
