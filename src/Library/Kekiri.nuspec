@@ -13,7 +13,7 @@
     <tags>bdd scenario test gherkin cucumber pickles nunit specflow</tags>
     <copyright>2012-2014</copyright>
     <releaseNotes>
-        Update to NUnit 2.6.3
+        Update to NUnit 2.6.3, .NET 4.5
         Added Fluent syntax to support sharing scenario steps
         Added ability to target multiple output files when generating scenario report 
         Several renames:
