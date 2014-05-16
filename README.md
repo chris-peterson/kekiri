@@ -170,108 +170,6 @@ be caught (using the templated method `Catch<>`).
         When i eat 5 cucumbers
         Then i should have 7 cucumbers
 
-#### Using Complex Types
-Here's a more complicated example that uses an approach to data driven tests with complex types. NOTE: Kekiri's `ExampleAttribute` doesn't support the same kind of string substiution with complex types as it does with the primitive types like the example above.
-
-```c#
-[Example(ShowdownScenarios.between_two_players_with_different_highcards)]
-[Example(ShowdownScenarios.between_two_players_with_straight_and_flush)]
-public class When_determining_the_outcome_of_a_showdown
-{
-    private readonly PokerShowdown Scenario;
-    private int ActualWinner;
-
-    public When_determining_the_outcome_of_a_showdown(ShowdownScenarios showdown)
-    {
-        Scenario = ShowdownScenarioFactory.Create[showdown].Invoke();
-    }
-
-    [When]
-    public void When()
-    {
-        ActualWinner = Scenario.Game.Showdown(Scenario.Players);
-    }
-
-    [Then]
-    public void Then_the_correct_player_wins()
-    {
-        Assert.AreEqual(Scenario.Winner, ActualWinner);
-    }
-}
-
-public enum ShowdownScenarios
-{
-    between_two_players_with_different_highcards,
-    between_two_players_with_straight_and_flush
-}
-
-static class ShowdownScenarioFactory
-{
-    public static readonly IDictionary<ShowdownScenarios, Func<PokerShowdown>> Create = new Dictionary<ShowdownScenarios, Func<PokerShowdown>>
-    {
-        {ShowdownScenarios.between_two_players_with_different_highcards, () => new BetweenTwoPlayersWithDifferentHighCards()},
-        {ShowdownScenarios.between_two_players_with_straight_and_flush, () => new BetweenTwoPlayersWithStraightAndFlush()}
-    };
-
-}
-
-sealed class BetweenTwoPlayersWithStraightAndFlush : PokerShowdown
-{
-    PokerGame PokerShowdown.Game
-    {
-        get { throw new NotImplementedException(); }
-    }
-
-    IEnumerable<PokerPlayer> PokerShowdown.Players
-    {
-        get { throw new NotImplementedException(); }
-    }
-
-    int PokerShowdown.Winner
-    {
-        get { throw new NotImplementedException(); }
-    }
-}
-
-sealed class BetweenTwoPlayersWithDifferentHighCards : PokerShowdown
-{
-    PokerGame PokerShowdown.Game
-    {
-        get { throw new NotImplementedException(); }
-    }
-
-    IEnumerable<PokerPlayer> PokerShowdown.Players
-    {
-        get { throw new NotImplementedException(); }
-    }
-
-    int PokerShowdown.Winner
-    {
-        get { throw new NotImplementedException(); }
-    }
-}
-
-interface PokerShowdown
-{
-    PokerGame Game { get; }
-    IEnumerable<PokerPlayer> Players { get; }
-    int Winner { get; }
-}
-
-sealed class PokerGame
-{
-    public int Showdown(IEnumerable<PokerPlayer> players)
-    {
-        throw new NotImplementedException();
-    }
-}
-
-sealed class PokerPlayer
-{
-    public int Id { get; private set; }
-}
-```
-
 ### IoC Tests
 `PM> Install-Package Kekiri.IoC.Autofac`
 
@@ -385,6 +283,8 @@ Here's our test fixture:
 ```
 
 When calling **Resolve**, a full object graph is created for **_orchestrator**.  Unless explicitly injected into the IoC container (**Container**), real objects are used!
+
+For more advanced topics, check out the [wiki](https://github.com/chris-peterson/Kekiri/wiki).
 
 ## Contributing
 
