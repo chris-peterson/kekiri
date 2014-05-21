@@ -6,7 +6,12 @@ using Kekiri.Reporting;
 
 namespace Kekiri.Impl
 {
-    internal class ScenarioRunner
+    internal interface IRunnerCatchException
+    {
+        TException Catch<TException>() where TException : Exception;
+    }
+
+    internal class ScenarioRunner : IRunnerCatchException
     {
         private readonly object _test;
         private readonly ScenarioTestMetadata _scenarioMetadata;
@@ -117,6 +122,18 @@ namespace Kekiri.Impl
                 else
                 {
                     throw new WhenFailed(_test, when.Name.PrettyName, ex.InnerException);
+                }
+            }
+            catch (Exception ex)
+            {
+                var exceptionWasExpected = when.ExceptionExpected;
+                if (exceptionWasExpected)
+                {
+                    _exception = ex;
+                }
+                else
+                {
+                    throw new WhenFailed(_test, when.Name.PrettyName, ex);
                 }
             }
         }
