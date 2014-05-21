@@ -119,6 +119,18 @@ namespace Kekiri.Impl
                     throw new WhenFailed(_test, when.Name.PrettyName, ex.InnerException);
                 }
             }
+            catch (Exception ex)
+            {
+                var exceptionWasExpected = when.ExceptionExpected;
+                if (exceptionWasExpected)
+                {
+                    _exception = ex;
+                }
+                else
+                {
+                    throw new WhenFailed(_test, when.Name.PrettyName, ex);
+                }
+            }
         }
 
         private void InvokeThens()
