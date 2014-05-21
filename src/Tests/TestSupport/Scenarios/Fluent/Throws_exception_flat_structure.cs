@@ -2,9 +2,9 @@
 
 namespace Kekiri.TestSupport.Scenarios.Fluent
 {
-    public class Throws_exception : FluentTest
+    public class Throws_exception_flat_structure : FluentTest
     {
-        public Throws_exception()
+        public Throws_exception_flat_structure()
         {
             When(Doing_the_deed).Throws();
             Then(The_correct_exception_occurs);

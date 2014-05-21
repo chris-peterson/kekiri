@@ -6,12 +6,14 @@ using Kekiri.Reporting;
 
 namespace Kekiri.Impl
 {
-    internal interface IRunnerCatchException
+    internal interface IExceptionHandler
     {
+        void ExpectException();
         TException Catch<TException>() where TException : Exception;
+        void AssertExceptionCompliance();
     }
 
-    internal class ScenarioRunner : IRunnerCatchException
+    internal class ScenarioRunner : IExceptionHandler
     {
         private readonly object _test;
         private readonly ScenarioTestMetadata _scenarioMetadata;
@@ -31,6 +33,12 @@ namespace Kekiri.Impl
             _scenarioMetadata.AddStep(step);
         }
 
+        #region IExceptionHandler Members
+        public void ExpectException()
+        {
+            _scenarioMetadata.WhenMethod.ExceptionExpected = true;
+        }
+
         public TException Catch<TException>() where TException : Exception
         {
             if (_exception == null)
@@ -48,21 +56,7 @@ namespace Kekiri.Impl
             return exception;
         }
 
-        public void Run()
-        {
-            ReportScenario();
-            RunGivens();
-            RunWhen();
-            InvokeThens();
-            AssertExceptionState();
-        }
-
-        public void ReportScenario()
-        {
-             _reportTarget.Report(_scenarioMetadata.CreateReport());
-        }
-
-        public void AssertExceptionState()
+        public void AssertExceptionCompliance()
         {
             if (_exception != null && !_exceptionCaught)
             {
@@ -73,6 +67,21 @@ namespace Kekiri.Impl
             {
                 throw new NoExceptionThrown(_test);
             }
+        }
+        #endregion
+
+        public void Run()
+        {
+            ReportScenario();
+            RunGivens();
+            RunWhen();
+            InvokeThens();
+            AssertExceptionCompliance();
+        }
+
+        public void ReportScenario()
+        {
+             _reportTarget.Report(_scenarioMetadata.CreateReport());
         }
 
         public void EnsureAtLeastOneThenExists()
@@ -96,11 +105,6 @@ namespace Kekiri.Impl
             }
         }
 
-        public void ExpectException()
-        {
-            _scenarioMetadata.WhenMethod.ExceptionExpected = true;
-        }
-
         public void RunWhen()
         {
             var when = _scenarioMetadata.WhenMethod;
@@ -112,28 +116,20 @@ namespace Kekiri.Impl
             {
                 when.Invoke(_test);
             }
-            catch (TargetInvocationException ex)
+            catch (Exception ex)
             {
-                var exceptionWasExpected = when.ExceptionExpected;
-                if (exceptionWasExpected)
+                if (ex is TargetInvocationException)
                 {
                     _exception = ex.InnerException;
                 }
                 else
                 {
-                    throw new WhenFailed(_test, when.Name.PrettyName, ex.InnerException);
-                }
-            }
-            catch (Exception ex)
-            {
-                var exceptionWasExpected = when.ExceptionExpected;
-                if (exceptionWasExpected)
-                {
                     _exception = ex;
                 }
-                else
+
+                if (!when.ExceptionExpected)
                 {
-                    throw new WhenFailed(_test, when.Name.PrettyName, ex);
+                    throw new WhenFailed(_test, when.Name.PrettyName, _exception);
                 }
             }
         }

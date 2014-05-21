@@ -29,7 +29,7 @@ namespace Kekiri
         [TestFixtureTearDown]
         public virtual void CleanupScenario()
         {
-            _scenarioRunner.AssertExceptionState();
+            _scenarioRunner.AssertExceptionCompliance();
         }
 
         protected TException Catch<TException>() where TException : Exception

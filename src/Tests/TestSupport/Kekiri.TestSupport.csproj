@@ -47,8 +47,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reporting\Targets\CountingReportTarget.cs" />
     <Compile Include="Scenarios\Examples\Eating_cucumbers.cs" />
-    <Compile Include="Scenarios\Fluent\Throws_exception.cs" />
-    <Compile Include="Scenarios\Fluent\Throws_exception_with_class.cs" />
+    <Compile Include="Scenarios\Fluent\Throws_exception_flat_structure.cs" />
+    <Compile Include="Scenarios\Fluent\Throws_exception_with_classes.cs" />
     <Compile Include="Scenarios\ReadMe_Examples.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_has_no_whens_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_step_given_throws_exception_scenario.cs" />

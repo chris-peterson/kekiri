@@ -52,6 +52,7 @@ namespace Kekiri
             protected abstract StepType StepType { get; }
         }
 
+        #region Base
         public abstract class FluentOptionsForStepWithNesting : FluentOptionsForStep
         {
             protected FluentOptionsForStepWithNesting(FluentTest scenario) : base(scenario)
@@ -122,7 +123,7 @@ namespace Kekiri
             }
             #endregion
         }
-
+        #endregion
 
         #region Given
         public class FluentOptionsForGiven : FluentOptionsForStepWithNesting
@@ -166,10 +167,6 @@ namespace Kekiri
         #endregion
 
         #region When
-
-        // NOTE: this class is introduced for symmetry and DRY purposes, but we don't currently expose a fluent handle 
-        // to the API caller since only a single When is supported.
-        // May want to revisit and fork the type heirarchy to have Given/When share a derivation but When not
         public class FluentOptionsForWhen : FluentOptionsForStep
         {
             public FluentOptionsForWhen(FluentTest scenario) : base(scenario)

@@ -8,16 +8,16 @@ namespace Kekiri
 {
     public abstract class Step
     {
-        internal static Step InstanceFor(IContextAccessor test, Type stepClass, KeyValuePair<string, object>[] parameters, IRunnerCatchException runnerCatchException)
+        internal static Step InstanceFor(IContextAccessor test, Type stepClass, KeyValuePair<string, object>[] parameters, IExceptionHandler exceptionHandler)
         {
             var instance = (Step)Activator.CreateInstance(stepClass, parameters.Select(p => p.Value).ToArray());
-            instance.SetScenario(test, runnerCatchException);
+            instance.SetScenario(test, exceptionHandler);
 
             return instance;
         }
         
         private IContextAccessor _scenario;
-        private IRunnerCatchException _runnerCatchException;
+        private IExceptionHandler _exceptionHandler;
 
         protected dynamic Context
         {
@@ -35,17 +35,17 @@ namespace Kekiri
             }
         }
 
-        private void SetScenario(IContextAccessor test, IRunnerCatchException runnerCatchException)
+        private void SetScenario(IContextAccessor test, IExceptionHandler exceptionHandler)
         {
             _scenario = test;
-            _runnerCatchException = runnerCatchException;
+            _exceptionHandler = exceptionHandler;
         }
 
         public abstract void Execute();
 
         public TException Catch<TException>() where TException : Exception
         {
-            return _runnerCatchException.Catch<TException>();
+            return _exceptionHandler.Catch<TException>();
         }
     }
 

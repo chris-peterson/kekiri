@@ -7,14 +7,14 @@ namespace Kekiri.Impl
     internal class StepClassInvoker : IStepInvoker
     {
         private readonly Type _stepClass;
-        private readonly IRunnerCatchException _runnerCatchException;
+        private readonly IExceptionHandler _exceptionHandler;
 
-        public StepClassInvoker(StepType stepType, Type stepClass, KeyValuePair<string,object>[] supportedParameters, IRunnerCatchException runnerCatchException)
+        public StepClassInvoker(StepType stepType, Type stepClass, KeyValuePair<string,object>[] supportedParameters, IExceptionHandler exceptionHandler)
         {
             if (!typeof(Step).IsAssignableFrom(stepClass))
                 throw new ArgumentException("The stepClass must inherit from Step", "stepClass");
             _stepClass = stepClass;
-            _runnerCatchException = runnerCatchException;
+            _exceptionHandler = exceptionHandler;
             Type = stepType;
             Name = new StepName(Type, _stepClass.Name, supportedParameters);
             Parameters = _stepClass.GetConstructors().Single().BindParameters(supportedParameters);
@@ -38,7 +38,7 @@ namespace Kekiri.Impl
             var contextContainer = test as IContextAccessor;
             if(contextContainer == null)
                 throw new InvalidOperationException("The test must implement IContextContainer");
-            Step.InstanceFor(contextContainer, _stepClass, Parameters, _runnerCatchException).Execute();
+            Step.InstanceFor(contextContainer, _stepClass, Parameters, _exceptionHandler).Execute();
         }
     }
 }
