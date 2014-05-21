@@ -3,7 +3,7 @@
   <metadata>
     <id>Kekiri.Tools</id>
     <title>Kekiri.Tools</title>
-    <version>2.0-rc3</version>
+    <version>2.0</version>
     <authors>Chris Peterson</authors>
     <description>Tools package for Kekiri</description>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
