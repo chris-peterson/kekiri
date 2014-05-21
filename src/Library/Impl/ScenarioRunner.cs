@@ -6,7 +6,12 @@ using Kekiri.Reporting;
 
 namespace Kekiri.Impl
 {
-    internal class ScenarioRunner
+    internal interface IRunnerCatchException
+    {
+        TException Catch<TException>() where TException : Exception;
+    }
+
+    internal class ScenarioRunner : IRunnerCatchException
     {
         private readonly object _test;
         private readonly ScenarioTestMetadata _scenarioMetadata;

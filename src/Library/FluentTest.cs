@@ -298,7 +298,7 @@ namespace Kekiri
         {
             var stepClass = typeof(TStep);
             var parameters = ExtractParameters(stepClass.GetConstructors().Single(), parameterValues);
-            _scenarioRunner.AddStep(new StepClassInvoker(stepType, stepClass, parameters));
+            _scenarioRunner.AddStep(new StepClassInvoker(stepType, stepClass, parameters, _scenarioRunner));
         }
 
         private KeyValuePair<string, object>[] ExtractParameters(MethodBase method, object[] parameterValues)
