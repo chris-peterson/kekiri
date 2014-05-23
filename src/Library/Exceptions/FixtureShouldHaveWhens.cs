@@ -1,24 +1,22 @@
-using Kekiri.Impl;
-
 namespace Kekiri.Exceptions
 {
     internal class FixtureShouldHaveWhens : ScenarioTestException
     {
-        private static string GetMessage(ScenarioTestMetadata metaData)
+        public FixtureShouldHaveWhens(object test)
+            : base(test, GetMessage(test))
+        {
+        }
+
+        private static string GetMessage(object test)
         {
             string messageDetail = string.Empty;
 
-            if (metaData.ScenarioTestType.BaseType == typeof(Test))
-                messageDetail = "; whens should be parameterless public methods that use the [When] attribute";
-            else if (metaData.ScenarioTestType.BaseType == typeof(FluentTest))
-                messageDetail = "; whens should be specified with the When() method";
+            if (test is Test)
+                messageDetail = "; a when method should be a parameterless public method that uses the [When] attribute";
+            else if (test is FluentTest)
+                messageDetail = "; a when should be specified by calling When in the constructor";
 
             return "No whens found" + messageDetail;
-        }
-
-        public FixtureShouldHaveWhens(ScenarioTestMetadata metaData, object test)
-            : base(test, GetMessage(metaData))
-        {
         }
     }
 }

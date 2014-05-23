@@ -9,7 +9,7 @@ namespace Kekiri.Impl
 {
     internal class ScenarioTestMetadata
     {
-        public readonly Type ScenarioTestType;
+        private readonly Type _scenarioTestType;
 
         private class StepInfo
         {
@@ -24,7 +24,7 @@ namespace Kekiri.Impl
         public ScenarioTestMetadata(Type scenarioTestType)
         {
             Settings = Settings.GetInstance();
-            ScenarioTestType = scenarioTestType;
+            _scenarioTestType = scenarioTestType;
             foreach (StepType stepType in Enum.GetValues(typeof(StepType)))
             {
                 _steps.Add(stepType, new List<StepInfo>());
@@ -46,7 +46,7 @@ namespace Kekiri.Impl
             };
             if (step.Type == StepType.When && string.IsNullOrEmpty(stepInfo.PrettyPrintedName))
             {
-                stepInfo.PrettyPrintedName = new StepName(StepType.When, ScenarioTestType.Name).PrettyName;
+                stepInfo.PrettyPrintedName = new StepName(StepType.When, _scenarioTestType.Name).PrettyName;
             }
             
             _steps[step.Type].Add(stepInfo);   
@@ -96,7 +96,7 @@ namespace Kekiri.Impl
             var scenarioAttribute = ExtractAttributeFromScenarioTest<ScenarioAttribute>();
             if (scenarioAttribute != null)
             {
-                scenarioReport.Add(GetScenarioDescriptionOrDefaultValue(scenarioAttribute, ScenarioTestType));
+                scenarioReport.Add(GetScenarioDescriptionOrDefaultValue(scenarioAttribute, _scenarioTestType));
             }
 
             stepReport.AddRange(GetStepReport(StepType.Given));
@@ -117,12 +117,12 @@ namespace Kekiri.Impl
 
         private T ExtractAttributeFromScenarioTest<T>() where T : class
         {
-            return ScenarioTestType.AttributeOrDefault<T>();
+            return _scenarioTestType.AttributeOrDefault<T>();
         }
 
         private IEnumerable<T> ExtractAttributesFromScenarioTest<T>() where T : class
         {
-            return ScenarioTestType.GetCustomAttributes(
+            return _scenarioTestType.GetCustomAttributes(
                 typeof(T), true) as IEnumerable<T>;
         }
 

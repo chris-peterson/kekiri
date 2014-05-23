@@ -110,7 +110,7 @@ namespace Kekiri.Impl
             var when = _scenarioMetadata.WhenMethod;
             if (when == null)
             {
-                throw new FixtureShouldHaveWhens(_scenarioMetadata, _test);
+                throw new FixtureShouldHaveWhens(_test);
             }
             try
             {
