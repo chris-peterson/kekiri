@@ -50,7 +50,6 @@
     <Compile Include="Scenarios\Fluent\Throws_exception_flat_structure.cs" />
     <Compile Include="Scenarios\Fluent\Throws_exception_with_classes.cs" />
     <Compile Include="Scenarios\ReadMe_Examples.cs" />
-    <Compile Include="Scenarios\Exceptions\When_fixture_has_no_whens_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_step_given_throws_exception_scenario.cs" />
     <Compile Include="Scenarios\Exceptions\When_fixture_step_when_throws_exception_scenario.cs" />
     <Compile Include="Scenarios\Reporting\Fixture_has_multiple_tags.cs" />
