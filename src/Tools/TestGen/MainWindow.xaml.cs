@@ -55,8 +55,8 @@ namespace Kekiri.TestGen
             const string scenarioToken = "Scenario:";
             if (line.StartsWith(scenarioToken))
             {
-                builder.AppendLine("   [Scenario]");
-                builder.AppendLine(string.Format("   class {0} : ScenarioTest", Sanitize(line.Substring(scenarioToken.Length))));
+                builder.AppendLine("   [Scenario(Feature.Unknown)]");
+                builder.AppendLine(string.Format("   class {0} : Test", Sanitize(line.Substring(scenarioToken.Length))));
                 builder.AppendLine("   {");
                 return;
             }
