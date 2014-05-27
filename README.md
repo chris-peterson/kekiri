@@ -98,6 +98,9 @@ underscore convention (e.g. `When_doing_the_thing`).
 
 ---
 
+## Wiki
+[More info available here](https://github.com/chris-peterson/Kekiri/wiki)
+
 ## Other common use cases
 
 ### Expected Exceptions
