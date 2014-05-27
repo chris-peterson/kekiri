@@ -326,7 +326,7 @@ namespace Kekiri
 
         internal virtual IReportTarget CreateReportTarget()
         {
-            return TraceReportTarget.GetInstance();
+            return CompositeReportTarget.GetInstance();
         }
     }
 
