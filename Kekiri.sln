@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "src\Tests\UnitTests\UnitTests.csproj", "{D0E50F59-142F-4B33-8436-56D7BFB99CC5}"
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests", "src\Tests\UnitTests\Kekiri.UnitTests.csproj", "{D0E50F59-142F-4B33-8436-56D7BFB99CC5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43E5189D-BB90-4EBE-921A-01457419C7BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSupport", "src\Tests\TestSupport\TestSupport.csproj", "{E0470571-E10C-46D0-B86F-C32DAF8E6FE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.TestSupport", "src\Tests\TestSupport\Kekiri.TestSupport.csproj", "{E0470571-E10C-46D0-B86F-C32DAF8E6FE1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{31DFD7A2-7178-414F-B92A-F3A7097E954B}"
 EndProject

@@ -1,9 +1,11 @@
+using System;
+
 namespace Kekiri.Exceptions
 {
-    public class ScenarioStepMethodsShouldNotHaveParameters : ScenarioTestException
+    internal class ScenarioStepMethodsShouldNotHaveParameters : ScenarioTestException
     {
-        public ScenarioStepMethodsShouldNotHaveParameters(ScenarioTest test, string message) :
-            base(test, message)
+        public ScenarioStepMethodsShouldNotHaveParameters(Type type, string message) :
+            base(type, message)
         {
         }
     }

@@ -2,11 +2,11 @@
 
 namespace Kekiri.TestSupport.Reporting.Targets
 {
-    public class CountingReportTarget : IReportTarget
+    internal class CountingReportTarget : IReportTarget
     {
         public int WriteCount { get; set; }
 
-        public void Report(ReportType reportType, ScenarioReportingContext reportingContext)
+        public void Report(ScenarioReportingContext scenario)
         {
             WriteCount++;
         }

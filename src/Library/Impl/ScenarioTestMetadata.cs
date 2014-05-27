@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using Kekiri.Config;
 using Kekiri.Reporting;
-using NUnit.Framework;
 
 namespace Kekiri.Impl
 {
@@ -15,220 +13,78 @@ namespace Kekiri.Impl
 
         private class StepInfo
         {
-            public MethodBase MethodBase { get; set; }
-            public IStepAttribute StepAttribute { get; set; }
-            public SuppressOutputAttribute SuppressOutputAttribute { get; set; }
+            public IStepInvoker StepInvoker { get; set; }
             public string PrettyPrintedName { get; set; }
         }
 
-        private GherkinTestFrameworkSettingsFacade Settings { get; set; }
+        private Settings Settings { get; set; }
 
         private readonly IDictionary<StepType, IList<StepInfo>> _steps = new Dictionary<StepType, IList<StepInfo>>();
-        private readonly IDictionary<string, string> _parameters = new Dictionary<string, string>();
-
+        
         public ScenarioTestMetadata(Type scenarioTestType)
         {
-            Settings = GherkinTestFrameworkSettingsFacade.GetInstance();
-
+            Settings = Settings.GetInstance();
             _scenarioTestType = scenarioTestType;
             foreach (StepType stepType in Enum.GetValues(typeof(StepType)))
             {
                 _steps.Add(stepType, new List<StepInfo>());
             }
-
-            IsOutputSuppressed = ExtractSuppressOutputAttribute(_scenarioTestType) != null;
         }
 
-        public IEnumerable<MethodBase> GivenMethods
+        public void AddStep(IStepInvoker step)
         {
-            get { return GetMethodBases(StepType.Given); }
-            set { SetStepInfos<GivenAttribute>(StepType.Given, value); }
-        }
-
-        public IEnumerable<MethodBase> WhenMethods
-        {
-            get { return GetMethodBases(StepType.When); }
-            set 
+            if (step.Type == StepType.When && _steps[StepType.When].Count == 1)
             {
-                SetStepInfos<WhenAttribute>(StepType.When, value);
-
-                var whenInfos = _steps[StepType.When];
-                if ((whenInfos.Count == 1) && string.IsNullOrEmpty(whenInfos[0].PrettyPrintedName))
-                {
-                    whenInfos[0].PrettyPrintedName = PrettyPrintStepName(StepType.When, _scenarioTestType.Name, whenInfos[0].SuppressOutputAttribute != null);
-                }
+                throw new NotSupportedException(string.Format(
+                    "Currently, only a single 'When' is supported, found: {0} and {1}", _steps[StepType.When].First().StepInvoker.SourceDescription, step.SourceDescription));
             }
-        }
 
-        public IEnumerable<MethodBase> ThenMethods
-        {
-            get { return GetMethodBases(StepType.Then); }
-            set { SetStepInfos<ThenAttribute>(StepType.Then, value); }
-        }
-
-        public IDictionary<string, string> Parameters
-        {
-            get { return _parameters; }
-        }
-
-        public bool IsOutputSuppressed { get; private set; }
-
-        public ScenarioReportingContext CreateReportForEntireScenario()
-        {
-            return CreateReport(ReportType.EntireScenario);
-        }
-
-        public ScenarioReportingContext CreateReportForCurrentTest()
-        {
-            return CreateReport(ReportType.CurrentTest);
-        }
-
-        private string PrettyPrintStepName(StepType stepType, string stepName, bool suppressOutput)
-        {
-            if (suppressOutput)
+            var stepInfo = new StepInfo
             {
-                return string.Empty;
+                StepInvoker = step,
+                PrettyPrintedName = step.Name.PrettyName
+            };
+            if (step.Type == StepType.When && string.IsNullOrEmpty(stepInfo.PrettyPrintedName))
+            {
+                stepInfo.PrettyPrintedName = new StepName(StepType.When, _scenarioTestType.Name).PrettyName;
             }
             
-            var stepNameSansStepType = GetStepNameWithoutTypeNorSeperators(stepType, stepName);
-
-            if (string.IsNullOrWhiteSpace(stepNameSansStepType))
-            {
-                // no conversion to _ or PascalCase necessary -- bail
-                return string.Empty;
-            }
-
-            var prettyPrinted = stepNameSansStepType.WithSpaces();
-
-            foreach (var parameter in _parameters)
-            {
-                foreach (var word in prettyPrinted.Split(' '))
-                {
-                    if (word == parameter.Key)
-                    {
-                        prettyPrinted = prettyPrinted.Replace(word, parameter.Value);
-                    }
-                }
-            }
-
-            return prettyPrinted.WithFirstLetterLowercase();
+            _steps[step.Type].Add(stepInfo);   
         }
 
-        private IEnumerable<MethodBase> GetMethodBases(StepType stepType)
+        public IEnumerable<IStepInvoker> GivenMethods
         {
-            return _steps[stepType].Select(s => s.MethodBase);
+            get { return GetSteps(StepType.Given); }
         }
 
-        private void SetStepInfos<TAttribute>(StepType stepType, IEnumerable<MethodBase> methodBases)
-            where TAttribute : class, IStepAttribute
+        public IStepInvoker WhenMethod
         {
-            _steps[stepType] = methodBases.Select(methodBase =>
-                {
-                    var suppressOutputAttribute = ExtractSuppressOutputAttribute(methodBase);
-                    return new StepInfo
-                        {
-                            MethodBase = methodBase,
-                            StepAttribute = methodBase.GetCustomAttributes(typeof (TAttribute), false).SingleOrDefault() as TAttribute,
-                            SuppressOutputAttribute = suppressOutputAttribute,
-                            PrettyPrintedName = PrettyPrintStepName(stepType, methodBase.Name, suppressOutputAttribute != null)
-                        };
-                }).ToList();
+            get { return GetSteps(StepType.When).SingleOrDefault(); }
         }
 
-        private SuppressOutputAttribute ExtractSuppressOutputAttribute(MethodBase methodBase)
+        public IEnumerable<IStepInvoker> ThenMethods
         {
-            var attributeOnMethod = methodBase
-                                        .GetCustomAttributes(typeof (SuppressOutputAttribute), false)
-                                        .SingleOrDefault() as SuppressOutputAttribute;
-
-            if (attributeOnMethod == null)
-            {
-                return ExtractSuppressOutputAttribute(methodBase.DeclaringType);
-            }
-
-            return attributeOnMethod;
+            get { return GetSteps(StepType.Then); }
         }
 
-        private SuppressOutputAttribute ExtractSuppressOutputAttribute(Type declaringType)
+        public ScenarioReportingContext CreateReport()
         {
-            return declaringType.GetCustomAttributes(typeof (SuppressOutputAttribute), true)
-                                .SingleOrDefault() as SuppressOutputAttribute;
-        }
-
-        private T ExtractAttributeFromScenarioTest<T>() where T : class
-        {
-            return _scenarioTestType.GetCustomAttributes(
-                typeof (T), true).SingleOrDefault() as T;
-        }
-
-        private IEnumerable<T> ExtractAttributesFromScenarioTest<T>() where T : class
-        {
-            return _scenarioTestType.GetCustomAttributes(
-                typeof(T), true) as IEnumerable<T>;
-        }
-
-        private string GetScenarioDescriptionOrDefaultValue(ScenarioAttribute scenarioAttribute, Type declaringType)
-        {
-            return string.Format("{0}{1}",
-                scenarioAttribute is ScenarioOutlineAttribute
-                    ? Settings.GetToken(TokenType.ScenarioOutline)
-                    : Settings.GetToken(TokenType.Scenario),
-                string.IsNullOrWhiteSpace(scenarioAttribute.Description)
-                    ? declaringType.Name.WithSpaces()
-                    : scenarioAttribute.Description);
-        }
-
-        private string GetStepNameWithTokenizedStepType(StepInfo stepInfo)
-        {
-            return string.Format("{0} {1}",
-                                 Settings.GetStep(stepInfo.StepAttribute.StepType),
-                                 stepInfo.PrettyPrintedName);
-        }
-
-        private string GetStepNameWithTokenizedSeperators(StepInfo step)
-        {
-            return string.Format("{0} {1}",
-                                 GetPrefixTokenForStep(step.MethodBase.Name),
-                                 step.PrettyPrintedName);
-        }
-
-        private string GetPrefixTokenForStep(string methodName)
-        {
-            var but = Settings.GetToken(TokenType.But);
-            if (methodName.StartsWith(but, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return but;
-            }
-
-            return Settings.GetToken(TokenType.And);
-        }
-
-        private string GetStepNameWithoutTypeNorSeperators(StepType stepType, string stepName)
-        {
-            stepName = stepName.RemovePrefix(Settings.GetStep(stepType));
-            stepName = stepName.RemovePrefix(Settings.GetToken(TokenType.And));
-            stepName = stepName.RemovePrefix(Settings.GetToken(TokenType.But));
-
-            return stepName;
-        }
-
-        private ScenarioReportingContext CreateReport(ReportType reportType)
-        {
-            var featureReport = new List<string>();
+            FeatureReport featureReport = null;
             var scenarioReport = new List<string>();
             var stepReport = new List<string>();
 
-            var featureAttribute = ExtractAttributeFromScenarioTest<FeatureAttribute>();
-            if (featureAttribute != null)
+            var scenario = ExtractAttributeFromScenarioTest<ScenarioAttribute>();
+            var feature = scenario == null ? null : scenario.Feature;
+            if (feature != null)
             {
-                featureReport.Add(string.Format("{0}{1}",
-                                                Settings.GetToken(TokenType.Feature), featureAttribute.FeatureSummary));
-                featureReport.AddRange(
-                    featureAttribute.FeatureDetails
-                                    .Select(line =>
-                                            string.Format(
-                                                "{0}{1}",
-                                                Settings.GetSeperator(SeperatorType.Indent), line)));
+                featureReport = new FeatureReport(feature.ToString());
+
+                var featureAttribute = feature.GetType().GetField(featureReport.Name)
+                    .AttributeOrDefault<FeatureDescriptionAttribute>();
+                if (featureAttribute != null)
+                {
+                    featureReport.Set(featureAttribute.Summary, featureAttribute.Details);
+                }
             }
 
             var tagAttributes = ExtractAttributesFromScenarioTest<TagAttribute>();
@@ -245,23 +101,54 @@ namespace Kekiri.Impl
 
             stepReport.AddRange(GetStepReport(StepType.Given));
             stepReport.AddRange(GetStepReport(StepType.When));
-            switch (reportType)
-            {
-                case ReportType.EntireScenario:
-                    stepReport.AddRange(GetStepReport(StepType.Then));
-                    break;
-                case ReportType.CurrentTest:
-                    stepReport.Add(GetReportForCurrentThen());
-                    break;
-                default:
-                    throw new NotSupportedException(string.Format("Unknown report type '{0}'", reportType));
-            }
+            stepReport.AddRange(GetStepReport(StepType.Then));
 
             return new ScenarioReportingContext(
                 featureReport,
                 scenarioReport,
                 stepReport,
                 Settings);
+        }
+
+        private IEnumerable<IStepInvoker> GetSteps(StepType stepType)
+        {
+            return _steps[stepType].Select(s => s.StepInvoker);
+        }
+
+        private T ExtractAttributeFromScenarioTest<T>() where T : class
+        {
+            return _scenarioTestType.AttributeOrDefault<T>();
+        }
+
+        private IEnumerable<T> ExtractAttributesFromScenarioTest<T>() where T : class
+        {
+            return _scenarioTestType.GetCustomAttributes(
+                typeof(T), true) as IEnumerable<T>;
+        }
+
+        private string GetScenarioDescriptionOrDefaultValue(ScenarioAttribute scenarioAttribute, Type declaringType)
+        {
+            return string.Format("{0}{1}",
+                declaringType.HasAttribute<ExampleAttribute>()
+                    ? Settings.GetToken(TokenType.ScenarioOutline)
+                    : Settings.GetToken(TokenType.Scenario),
+                scenarioAttribute == null || string.IsNullOrWhiteSpace(scenarioAttribute.Description)
+                    ? declaringType.Name.WithSpaces()
+                    : scenarioAttribute.Description);
+        }
+
+        private string GetStepNameWithTokenizedStepType(StepInfo stepInfo)
+        {
+            return string.Format("{0} {1}",
+                                 Settings.GetStep(stepInfo.StepInvoker.Type),
+                                 stepInfo.PrettyPrintedName);
+        }
+
+        private string GetStepNameWithTokenizedSeperators(StepInfo step)
+        {
+            return string.Format("{0} {1}",
+                                 step.StepInvoker.Name.SeparatorToken,
+                                 step.PrettyPrintedName);
         }
 
         private IEnumerable<string> GetStepReport(StepType stepType)
@@ -281,38 +168,9 @@ namespace Kekiri.Impl
 
             return lines;
         }
-
-        private string GetReportForCurrentThen()
-        {
-            if (TestContext.CurrentContext == null || TestContext.CurrentContext.Test == null)
-            {
-                return "!!! Test Context Unknown -- check your test runner's NUnit version !!!";
-            }
-
-            string testName;
-            try
-            {
-                testName = TestContext.CurrentContext.Test.Name;
-            }
-            catch (NullReferenceException)
-            {
-                return "!!! Cannot get test name -- check your NUnit version !!!";
-            }
-
-            var currentTestNameSplit = testName.Split('.');
-            string currentTestName = currentTestNameSplit.Last();
-
-            var step = _steps[StepType.Then].FirstOrDefault(s => s.MethodBase.Name == currentTestName);
-            if (step == null)
-            {
-                return string.Format("!!! Unknown Test '{0}' !!!", currentTestName);
-            }
-
-            return GetStepNameWithTokenizedStepType(step);
-        }
     }
 
-    public static class StepNameStringHelpers
+    internal static class StepNameStringHelpers
     {
         public static string RemovePrefix(this string stepName, string prefix)
         {
@@ -344,6 +202,15 @@ namespace Kekiri.Impl
             return string.Format("{0}{1}", char.ToLower(str[0]), str.Length == 1 ? null : str.Substring(1));
         }
 
+        public static string ToLowerExceptFirstLetter(this string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return string.Empty;
+            }
+            return string.Format("{0}{1}", str[0], str.Length == 1 ? null : str.Substring(1).ToLower());
+        }
+
         public static string WithSpaces(this string str)
         {
             bool usingUnderscoreNamingConvention = str.Contains("_");
@@ -354,10 +221,10 @@ namespace Kekiri.Impl
             }
             
             // pascal casing -- Adapted from: http://stackoverflow.com/questions/272633/add-spaces-before-capital-letters#272929
-            var splitIntoWords = Regex.Replace(
+            var sentence = Regex.Replace(
                 str, @"((?<=\p{Ll})\p{Lu})|((?!\A)\p{Lu}(?>\p{Ll}))", " $0");
 
-            return splitIntoWords.ToLower();
+            return sentence.ToLowerExceptFirstLetter();
         }
     }
 }

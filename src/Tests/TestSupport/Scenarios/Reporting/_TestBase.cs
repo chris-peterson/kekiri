@@ -3,15 +3,16 @@ using Kekiri.TestSupport.Reporting.Targets;
 
 namespace Kekiri.TestSupport.Scenarios.Reporting
 {
-    public class ReportingScenarioMetaTest : ScenarioTest
+    [Scenario(Feature.TestSupport)]
+    public class ReportingScenarioMetaTest : Test
     {
-        private readonly StringReportTarget _target = new StringReportTarget();
+        private StringReportTarget _target;
 
         public string Report { get { return _target.ReportString; } }
 
-        protected override IReportTarget CreateReportTarget()
+        internal override IReportTarget CreateReportTarget()
         {
-            return _target;
+            return _target ?? (_target = new StringReportTarget());
         }
     }
 }

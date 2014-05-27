@@ -2,7 +2,7 @@
 
 namespace Kekiri.TestSupport.Reporting.Targets
 {
-    public class StringReportTarget : IReportTarget
+    internal class StringReportTarget : IReportTarget
     {
         public StringReportTarget()
         {
@@ -11,9 +11,9 @@ namespace Kekiri.TestSupport.Reporting.Targets
 
         public string ReportString { get; private set; }
 
-        public void Report(ReportType reportType, ScenarioReportingContext reportingContext)
+        public void Report(ScenarioReportingContext scenario)
         {
-            ReportString += reportingContext.CreateReportWithStandardSpacing(0);
+            ReportString += scenario.CreateReport();
         }
     }
 }

@@ -1,65 +1,135 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Kekiri.Reporting
 {
-    public interface IReportTarget
+    internal interface IReportTarget
     {
-        void Report(ReportType reportType, ScenarioReportingContext reportingContext);
+        void Report(ScenarioReportingContext scenario);
     }
 
-    public class TraceReportTarget : IReportTarget
+    internal class CompositeReportTarget : IReportTarget
     {
-        private static readonly Lazy<TraceReportTarget> _target = new Lazy<TraceReportTarget>(() => new TraceReportTarget());
+        private readonly List<IReportTarget> _targets;
 
-        public static TraceReportTarget GetInstance()
+        private CompositeReportTarget(IEnumerable<IReportTarget> targets)
+        {
+            _targets = new List<IReportTarget>(targets);
+        }
+
+        public static IReportTarget GetInstance()
+        {
+            return new CompositeReportTarget(
+                new[]
+                {
+                    TraceReportTarget.GetInstance(),
+                    FeatureFileReportTarget.GetInstance()
+                });
+        }
+
+        public void Report(ScenarioReportingContext scenario)
+        {
+            foreach (var target in _targets)
+            {
+                target.Report(scenario);
+            }
+        }
+    }
+
+    internal class FeatureFileReportTarget : IReportTarget
+    {
+        private static readonly Lazy<FeatureFileReportTarget> _target = new Lazy<FeatureFileReportTarget>(() => new FeatureFileReportTarget());
+
+        private readonly Dictionary<string, dynamic> _featureState = new Dictionary<string, dynamic>();
+
+        private FeatureFileReportTarget()
+        {
+        }
+        
+        public static IReportTarget GetInstance()
         {
             return _target.Value;
         }
+
+        public void Report(ScenarioReportingContext scenario)
+        {
+            var report = scenario.CreateReport();
+
+            if (string.IsNullOrWhiteSpace(report))
+            {
+                return;
+            }
+
+            var featureName = scenario.FeatureReport.Name;
+            if (_featureState.ContainsKey(featureName))
+            {
+                using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
+                {
+                    using (var writer = new StreamWriter(fs))
+                    {
+                        writer.WriteLine(scenario.CreateReport(omitFeatureOutput: true));
+                    }
+                }
+            }
+            else
+            {
+                _featureState.Add(featureName, new
+                {
+                    Path = string.Format("{0}.feature", CoerceValidFileName(featureName))
+                });
+                using (var fs = File.Create(_featureState[featureName].Path))
+                {
+                    using (var writer = new StreamWriter(fs))
+                    {
+                        writer.WriteLine(scenario.CreateReport());
+                    }
+                }
+            }
+        }
+
+        // http://stackoverflow.com/questions/309485/c-sharp-sanitize-file-name
+        private static string CoerceValidFileName(string filename)
+        {
+            var invalidChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
+            var invalidReStr = string.Format(@"[{0}]+", invalidChars);
+
+            var reservedWords = new[]
+                                    {
+                                        "CON", "PRN", "AUX", "CLOCK$", "NUL", "COM0", "COM1", "COM2", "COM3", "COM4",
+                                        "COM5", "COM6", "COM7", "COM8", "COM9", "LPT0", "LPT1", "LPT2", "LPT3", "LPT4",
+                                        "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
+                                    };
+
+            var sanitisedNamePart = Regex.Replace(filename, invalidReStr, "_");
+            foreach (var reservedWord in reservedWords)
+            {
+                var reservedWordPattern = string.Format("^{0}\\.", reservedWord);
+                sanitisedNamePart = Regex.Replace(sanitisedNamePart, reservedWordPattern, "_reservedWord_.", RegexOptions.IgnoreCase);
+            }
+
+            return sanitisedNamePart;
+        }
+    }
+
+    internal class TraceReportTarget : IReportTarget
+    {
+        private static readonly Lazy<TraceReportTarget> _target = new Lazy<TraceReportTarget>(() => new TraceReportTarget());
 
         private TraceReportTarget()
         {
         }
 
-        private string _previousFeatureKey;
-
-        public void Report(ReportType reportType, ScenarioReportingContext reportingContext)
+        public static IReportTarget GetInstance()
         {
-            // only output current test info if running in R# -- it's not useful in command line builds
-            if (reportType == ReportType.CurrentTest)
-            {
-                var executingProcessName = Process.GetCurrentProcess().ProcessName;
-
-                if (executingProcessName.IndexOf("JetBrains.ReSharper", StringComparison.InvariantCultureIgnoreCase) == -1)
-                {
-                    return;
-                }
-            }
-
-            int indentationLevel = 0;
-            // avoid repeating the same feature over and over
-            var featureKey = GetKey(reportingContext.FeatureReport);
-            if (featureKey != null && featureKey == _previousFeatureKey)
-            {
-                indentationLevel = 1;
-                reportingContext.FeatureReport.Clear();
-            }
-
-            Trace.WriteLine(reportingContext.CreateReportWithStandardSpacing(indentationLevel));
-
-            _previousFeatureKey = featureKey;
+            return _target.Value;
         }
 
-        private string GetKey(IList<string> report)
+        public void Report(ScenarioReportingContext scenario)
         {
-            if (report == null || !report.Any())
-            {
-                return null;
-            }
-
-            return string.Join("-", report);
+            Trace.WriteLine(scenario.CreateReport());
         }
     }
 }

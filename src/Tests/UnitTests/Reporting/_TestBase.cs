@@ -3,16 +3,15 @@ using Kekiri.TestSupport.Scenarios.Reporting;
 
 namespace Kekiri.UnitTests.Reporting
 {
-    [Feature("Report generation", "In order to view the business rules of the system under test,",
-        "The framework supports generating a human-readable report using Gherkin language semantics")]
-    public abstract class ReportingScenarioTest : ScenarioTest
+    [Scenario(Feature.Reporting)]
+    public abstract class ReportingScenarioTest : Test
     {
         protected ReportingScenarioMetaTest Scenario { private get; set; }
-        protected GherkinTestFrameworkSettingsFacade Settings { get; private set; }
+        internal Settings Settings { get; private set; }
 
         protected ReportingScenarioTest()
         {
-            Settings = GherkinTestFrameworkSettingsFacade.GetInstance();
+            Settings = Settings.GetInstance();
         }
 
         [When]

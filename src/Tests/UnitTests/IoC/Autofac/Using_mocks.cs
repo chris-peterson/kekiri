@@ -4,8 +4,8 @@ using Moq;
 
 namespace Kekiri.UnitTests.IoC.Autofac
 {
-    [Scenario]
-    public class Using_mocks : AutofacScenarioTest
+    [Scenario(Feature.IoC)]
+    public class Using_mocks : AutofacTest
     {
         private string _result;
 

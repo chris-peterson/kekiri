@@ -1,11 +1,10 @@
 ﻿namespace Kekiri.TestSupport.Scenarios.Exceptions
 {
-    public class When_fixture_has_private_given_scenario : SuppressedOutputScenarioTest
+    public class When_fixture_has_private_given_scenario : Test
     {
-        // ReSharper disable UnusedMember.Local
         [Given]
+        // ReSharper disable once UnusedMember.Local
         private void GivenThatIsIncorrectlyPrivate()
-            // ReSharper restore UnusedMember.Local
         {
         }
 

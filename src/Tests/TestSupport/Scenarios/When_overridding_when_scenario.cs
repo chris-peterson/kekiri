@@ -2,7 +2,7 @@
 
 namespace Kekiri.TestSupport.Scenarios
 {
-    public class When_overridding_when_scenario_base_class : ScenarioTest
+    public class When_overridding_when_scenario_base_class : Test
     {
         [Given]
         public void Given()
@@ -12,20 +12,21 @@ namespace Kekiri.TestSupport.Scenarios
         [When]
         public virtual void When()
         {
-            throw new ApplicationException("Shouldn't have called this when");
-        }
-
-        [Then]
-        public void It_should_do_something()
-        {
         }
     }
 
     public class When_overridding_when_scenario_derived_class : When_overridding_when_scenario_base_class
     {
-        [When]
+        [When, Throws]
         public override void When()
         {
+            throw new ApplicationException("foo");
+        }
+
+        [Then]
+        public void It_should_throw()
+        {
+            Catch<ApplicationException>();
         }
     }
 }

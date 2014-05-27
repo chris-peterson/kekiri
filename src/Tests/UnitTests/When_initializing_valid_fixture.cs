@@ -3,8 +3,8 @@ using Kekiri.TestSupport.Scenarios;
 
 namespace Kekiri.UnitTests
 {
-    [Feature("Happy path test execution", "In order to be a viable test framework, it certainly must support tests that perform as expected, i.e. pass")]
-    class When_initializing_valid_fixture : ScenarioTest
+    [Scenario(Feature.ExecuteTests)]
+    class When_initializing_valid_fixture : Test
     {
         readonly When_initializing_valid_fixture_scenario _scenario = new When_initializing_valid_fixture_scenario();
 

@@ -3,7 +3,8 @@ using Kekiri.TestSupport.Scenarios.Exceptions;
 
 namespace Kekiri.UnitTests.Exceptions
 {
-    class When_fixture_has_private_then : FixtureExceptionScenarioTest
+    [Scenario(Feature.FixtureExceptionHandling)]
+    class When_fixture_has_private_then : Test
     {
         [When, Throws]
         public void When()
@@ -14,7 +15,7 @@ namespace Kekiri.UnitTests.Exceptions
         [Then]
         public void It_should_throw_proper_exception()
         {
-            Catch<ThensShouldBePublic>();
+            Catch<StepMethodShouldBePublic>();
         }
     }
 }

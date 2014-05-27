@@ -1,4 +1,5 @@
 ﻿using System;
+using Kekiri.TestSupport.Scenarios.Reporting;
 using NUnit.Framework;
 
 namespace Kekiri.TestSupport.Scenarios
@@ -21,8 +22,8 @@ namespace Kekiri.TestSupport.Scenarios
         }
     }
 
-    [Scenario]
-    class Adding_two_numbers : ScenarioTest
+    [Scenario(Feature.TestSupport)]
+    class Adding_two_numbers : Test
     {
         private Calculator _calculator;
 
@@ -57,7 +58,7 @@ namespace Kekiri.TestSupport.Scenarios
         }
     }
 
-    class When_dividing_by_zero : ScenarioTest
+    class When_dividing_by_zero : Test
     {
         readonly Calculator _calculator = new Calculator();
 

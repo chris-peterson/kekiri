@@ -5,24 +5,21 @@ Kekiri honors the conventions of the [cucumber language] (https://github.com/cuc
 
 ## Setup
 `PM> Install-Package Kekiri`  
-`C:\> cinst Kekiri.Tools`
-
 
 ## Why Kekiri?
-Unlike other BDD frameworks that impose process overhead (management of feature files & shared steps, etc)
+Unlike other BDD frameworks that impose process overhead (management of feature files, custom tools, etc)
 Kekiri allows developers to write BDD tests just as quickly and easily as they would technical tests.
 
-The resulting tests are concise and highly portable.
+The resulting tests are concise, highly portable, and adhere to [Act, Arrange, and Assert](http://www.arrangeactassert.com/why-and-what-is-arrange-act-assert/).
 
 ## Example
-For this **ScenarioTest**, we will be implementing a basic calculator.
+For this **Test**, we will be implementing a basic calculator.
 
 ### Start with the test
-Just like in TDD, when employing BDD, we write the test first:
 
 ```c#
     [Scenario]
-    class Adding_two_numbers : ScenarioTest {
+    class Adding_two_numbers : Test {
         [Given]
         public void Given_a_calculator() {}
 
@@ -52,7 +49,7 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
 ### Add the implementation
 ```c#
     [Scenario]
-    class Adding_two_numbers : ScenarioTest {
+    class Adding_two_numbers : Test {
         private Calculator _calculator;
 
         [Given]
@@ -93,9 +90,6 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
     }
 ```
 
-### You're done!
-Wasn't that painless?
-
 ---
 
 ## Supported Naming Conventions
@@ -104,15 +98,18 @@ underscore convention (e.g. `When_doing_the_thing`).
 
 ---
 
+## Wiki
+[More info available here](https://github.com/chris-peterson/Kekiri/wiki)
+
 ## Other common use cases
 
 ### Expected Exceptions
 ```c#
-    class When_dividing_by_zero : ScenarioTest {
+    class Divide_by_zero : Test {
         readonly Calculator _calculator = new Calculator();
 
         [When, Throws]
-        public void When() {
+        public void When_dividing() {
             _calculator.Divide();
         }
 
@@ -123,23 +120,20 @@ underscore convention (e.g. `When_doing_the_thing`).
     }
 ```
 
-Notice, here we've used the `[Throws]` attribute to inform the **ScenarioTest** that throwing an
+Notice, here we've used the `[Throws]` attribute to inform the **Test** that throwing an
 exception is the expected behavior.  In 1 or more `[Then]`s, the thrown type of exception must
 be caught (using the templated method `Catch<>`).
 
-Also, notice that this test is more terse than the previous example.  This is a stylistic choice.
-By not using the `[Scenario]` attribute, and naming the class after the **When**, the test
-output is also more terse:
-
-        When dividing by zero
+   Scenario: Divide by zero
+        When dividing
         Then it should throw an exception
 
 ### Data-driven
 ```c#
-    [ScenarioOutline("eating")]
+    [Scenario(Feature.Eating)]
     [Example(12, 5, 7)]
     [Example(20, 5, 15)]
-    public class Eating_cucumbers : ScenarioTest {
+    public class Eating_cucumbers : Test {
         private readonly int _start;
         private readonly int _eat;
         private readonly int _left;
@@ -173,109 +167,9 @@ output is also more terse:
         When i eat 5 cucumbers
         Then i should have 7 cucumbers
 
-#### Using Complex Types
-Here's a more complicated example that uses an approach to data driven tests with complex types. NOTE: Kekiri's `ExampleAttribute` doesn't support the same kind of string substiution with complex types as it does with the primitive types like the example above.
-
-```c#
-[Example(ShowdownScenarios.between_two_players_with_different_highcards)]
-[Example(ShowdownScenarios.between_two_players_with_straight_and_flush)]
-public class When_determining_the_outcome_of_a_showdown
-{
-    private readonly PokerShowdown Scenario;
-    private int ActualWinner;
-
-    public When_determining_the_outcome_of_a_showdown(ShowdownScenarios showdown)
-    {
-        Scenario = ShowdownScenarioFactory.Create[showdown].Invoke();
-    }
-
-    [When]
-    public void When()
-    {
-        ActualWinner = Scenario.Game.Showdown(Scenario.Players);
-    }
-
-    [Then]
-    public void Then_the_correct_player_wins()
-    {
-        Assert.AreEqual(Scenario.Winner, ActualWinner);
-    }
-}
-
-public enum ShowdownScenarios
-{
-    between_two_players_with_different_highcards,
-    between_two_players_with_straight_and_flush
-}
-
-static class ShowdownScenarioFactory
-{
-    public static readonly IDictionary<ShowdownScenarios, Func<PokerShowdown>> Create = new Dictionary<ShowdownScenarios, Func<PokerShowdown>>
-    {
-        {ShowdownScenarios.between_two_players_with_different_highcards, () => new BetweenTwoPlayersWithDifferentHighCards()},
-        {ShowdownScenarios.between_two_players_with_straight_and_flush, () => new BetweenTwoPlayersWithStraightAndFlush()}
-    };
-
-}
-
-sealed class BetweenTwoPlayersWithStraightAndFlush : PokerShowdown
-{
-    PokerGame PokerShowdown.Game
-    {
-        get { throw new NotImplementedException(); }
-    }
-
-    IEnumerable<PokerPlayer> PokerShowdown.Players
-    {
-        get { throw new NotImplementedException(); }
-    }
-
-    int PokerShowdown.Winner
-    {
-        get { throw new NotImplementedException(); }
-    }
-}
-
-sealed class BetweenTwoPlayersWithDifferentHighCards : PokerShowdown
-{
-    PokerGame PokerShowdown.Game
-    {
-        get { throw new NotImplementedException(); }
-    }
-
-    IEnumerable<PokerPlayer> PokerShowdown.Players
-    {
-        get { throw new NotImplementedException(); }
-    }
-
-    int PokerShowdown.Winner
-    {
-        get { throw new NotImplementedException(); }
-    }
-}
-
-interface PokerShowdown
-{
-    PokerGame Game { get; }
-    IEnumerable<PokerPlayer> Players { get; }
-    int Winner { get; }
-}
-
-sealed class PokerGame
-{
-    public int Showdown(IEnumerable<PokerPlayer> players)
-    {
-        throw new NotImplementedException();
-    }
-}
-
-sealed class PokerPlayer
-{
-    public int Id { get; private set; }
-}
-```
-
 ### IoC Tests
+Requires an additional package:
+
 `PM> Install-Package Kekiri.IoC.Autofac`
 
 #### Example
@@ -354,7 +248,7 @@ Consider this collection of classes:
 Here's our test fixture:
 ```c#
     [Scenario]
-    class Using_fakes_with_autofac : AutofacScenarioTest
+    class Using_fakes_with_autofac : AutofacTest
     {
         private Orchestrator _orchestrator;
 
@@ -389,23 +283,7 @@ Here's our test fixture:
 
 When calling **Resolve**, a full object graph is created for **_orchestrator**.  Unless explicitly injected into the IoC container (**Container**), real objects are used!
 
-## Configuration Options
-If you want to generate a .feature file as you run your unit tests, add to your test project's **App.config**, e.g.
-
-```xml
-  <configuration>
-    <system.diagnostics>
-      <trace autoflush="true" indentsize="4">
-        <listeners>
-          <add name="fileListener" type="System.Diagnostics.TextWriterTraceListener"
-             initializeData="YOUR_FEATURE_NAME.feature" />
-        </listeners>
-      </trace>
-    </system.diagnostics>
-  </configuration>
-```
-
-Replacing **YOUR_FEATURE_NAME** with your feature's name.
+For more advanced topics, check out the [wiki](https://github.com/chris-peterson/Kekiri/wiki).
 
 ## Contributing
 
@@ -419,7 +297,7 @@ Replacing **YOUR_FEATURE_NAME** with your feature's name.
 ## Acknowledgements
 Kekiri uses and is influenced by the following open source projects:
 * http://nunit.org/
-* https://code.google.com/p/autofac/ and https://code.google.com/p/whitebox/
-* https://code.google.com/p/moq/
+* https://code.google.com/p/autofac/
 * https://github.com/dennisdoomen/FluentAssertions
 * https://github.com/andyalm/xrepo
+* https://github.com/picklesdoc/pickles

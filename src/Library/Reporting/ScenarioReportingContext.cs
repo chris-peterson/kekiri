@@ -5,19 +5,19 @@ using Kekiri.Config;
 
 namespace Kekiri.Reporting
 {
-    public class ScenarioReportingContext
+    internal class ScenarioReportingContext
     {
-        public IList<string> FeatureReport { get; private set; }
+        public FeatureReport FeatureReport { get; private set; }
         public IList<string> ScenarioReport { get; private set; }
         public IList<string> StepReport { get; private set; }
 
-        public GherkinTestFrameworkSettingsFacade Settings { get; set; }
+        public Settings Settings { get; set; }
 
         public ScenarioReportingContext(
-            IList<string> featureReport,
+            FeatureReport featureReport,
             IList<string> scenarioReport,
             IList<string> stepReport,
-            GherkinTestFrameworkSettingsFacade settings)
+            Settings settings)
         {
             FeatureReport = featureReport;
             ScenarioReport = scenarioReport;
@@ -25,15 +25,29 @@ namespace Kekiri.Reporting
             Settings = settings;
         }
 
-        public string CreateReportWithStandardSpacing(int indentationLevel)
+        public string CreateReport(bool omitFeatureOutput = false)
         {
+            // if this test isn't categorized into a feature bucket, don't output it!
+            if (FeatureReport == null)
+            {
+                return string.Empty;
+            }
+
+            int indentationLevel = 0;
             var report = new List<string>();
 
-            if (HasItems(FeatureReport))
+            if (!omitFeatureOutput)
             {
-                report.AddRange(FeatureReport);
+                report.Insert(0, string.Format("{0}{1}",
+                    Settings.GetToken(TokenType.Feature), FeatureReport.Summary));
+                if (HasItems(FeatureReport.Details))
+                {
+                    report.AddRange(FeatureReport.Details.Select(line =>
+                        string.Format(
+                            "{0}{1}",
+                            Settings.GetSeperator(SeperatorType.Indent), line)));
+                }
                 report.Add(string.Empty);
-                indentationLevel++;
             }
 
             if (HasItems(ScenarioReport))
@@ -73,6 +87,26 @@ namespace Kekiri.Reporting
             return string.Format("{0}{1}",
                                  string.Join(Settings.GetSeperator(SeperatorType.Line), lines),
                                  Settings.GetSeperator(SeperatorType.Line));
+        }
+    }
+
+    internal class FeatureReport
+    {
+        public FeatureReport(string name)
+        {
+            Summary = Name = name;
+        }
+
+        public string Name { get; private set; }
+
+        public string Summary { get; private set; }
+
+        public IEnumerable<string> Details { get; private set; }
+
+        public void Set(string summary, IEnumerable<string> details)
+        {
+            Summary = summary;
+            Details = details;
         }
     }
 }

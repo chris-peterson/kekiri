@@ -1,6 +1,6 @@
 ﻿namespace Kekiri.TestSupport.Scenarios
 {
-    public class When_overriding_fixture_setup_methods_scenario : SuppressedOutputScenarioTest
+    public class When_overriding_fixture_setup_methods_scenario : Test
     {
         public int SetupScenairoCalledCount { get; private set; }
         public int CleanupScenarioCalledCount { get; private set; }

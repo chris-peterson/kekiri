@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -18,6 +19,9 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
+[assembly: InternalsVisibleTo("Kekiri.UnitTests")]
+[assembly: InternalsVisibleTo("Kekiri.TestSupport")]
+
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("71b2ea37-d2e7-449f-8840-f437bab441e4")]
 
@@ -31,5 +35,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.1")]
-[assembly: AssemblyInformationalVersionAttribute("1.5.1")]
+[assembly: AssemblyVersion("2.0.0")]
+[assembly: AssemblyInformationalVersionAttribute("2.0.0")]
