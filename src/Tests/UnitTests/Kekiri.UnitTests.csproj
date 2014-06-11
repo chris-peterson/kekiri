@@ -36,10 +36,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Autofac.3.4.0\lib\net40\Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="FluentAssertions, Version=3.0.107.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\FluentAssertions.3.0.107\lib\net40\FluentAssertions.dll</HintPath>
@@ -75,8 +71,6 @@
     <Compile Include="Feature.cs" />
     <Compile Include="Fluent\Can_fluently_execute_a_scenario_outline.cs" />
     <Compile Include="Exceptions\No_when.cs" />
-    <Compile Include="IoC\Autofac\Using_mocks.cs" />
-    <Compile Include="IoC\Autofac\Using_fakes.cs" />
     <Compile Include="Reporting\Fixture_has_multiple_tags_scenario.cs" />
     <Compile Include="Reporting\When_fixture_uses_implicit_scenario_description.cs" />
     <Compile Include="Reporting\_TestBase.cs" />

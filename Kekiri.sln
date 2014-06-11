@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests", "src\Tests\UnitTests\Kekiri.UnitTests.csproj", "{D0E50F59-142F-4B33-8436-56D7BFB99CC5}"
 EndProject
@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.IoC.Autofac", "src\I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri", "src\Library\Kekiri.csproj", "{5827C04B-91A2-42AC-8A99-E23BBB27CD94}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests.Autofac2", "Tests\Kekiri.UnitTests.Autofac2\Kekiri.UnitTests.Autofac2.csproj", "{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests.Autofac3", "Tests\Kekiri.UnitTests.Autofac3\Kekiri.UnitTests.Autofac3.csproj", "{5219967B-0D18-43B3-ABB5-5505A71EDA57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,14 +61,23 @@ Global
 		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D0E50F59-142F-4B33-8436-56D7BFB99CC5} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
-		{E0470571-E10C-46D0-B86F-C32DAF8E6FE1} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 		{AC577237-AF11-40A8-B29E-56F10B38A892} = {31DFD7A2-7178-414F-B92A-F3A7097E954B}
 		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4} = {DF16D56E-1B85-4B64-A128-C24EED22E633}
+		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
+		{5219967B-0D18-43B3-ABB5-5505A71EDA57} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 	EndGlobalSection
 EndGlobal

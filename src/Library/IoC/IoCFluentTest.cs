@@ -1,10 +1,10 @@
 ﻿namespace Kekiri.IoC
 {
-    public abstract class IoCFluentScenario : FluentTest, IContainerAccessor
+    public abstract class IoCFluentTest : FluentTest, IContainerAccessor
     {
         protected internal Container Container;
 
-        protected IoCFluentScenario(Container container)
+        protected IoCFluentTest(Container container)
         {
             Container = container;
         }
@@ -15,11 +15,11 @@
         }
     }
 
-    public abstract class IoCFluentScenario<TContext> : FluentTest, IContainerAccessor where TContext : new()
+    public abstract class IoCFluentTest<TContext> : FluentTest, IContainerAccessor where TContext : new()
     {
         protected internal Container Container;
 
-        protected IoCFluentScenario(Container container)
+        protected IoCFluentTest(Container container)
         {
             Container = container;
         }

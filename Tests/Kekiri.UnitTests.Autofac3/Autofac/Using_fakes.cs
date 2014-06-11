@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data.SqlClient;
 using FluentAssertions;
+using Kekiri;
 using Kekiri.IoC.Autofac;
 
-namespace Kekiri.UnitTests.IoC.Autofac
+namespace UnitTests.Autofac3.Autofac
 {
     [Scenario(Feature.IoC)]
     public class Using_fakes : AutofacTest

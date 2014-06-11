@@ -1,8 +1,9 @@
 ﻿using FluentAssertions;
+using Kekiri;
 using Kekiri.IoC.Autofac;
 using Moq;
 
-namespace Kekiri.UnitTests.IoC.Autofac
+namespace UnitTests.Autofac3.Autofac
 {
     [Scenario(Feature.IoC)]
     public class Using_mocks : AutofacTest

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using Module = Autofac.Module;
 
 namespace Kekiri.IoC.Autofac
 {
@@ -21,9 +22,11 @@ namespace Kekiri.IoC.Autofac
             {
                 var containerBuilder = new ContainerBuilder();
                 containerBuilder.RegisterAssemblyTypes(assemblies);
+
+                var moduleRegistrationMethod = GetRegistrationMethodForThisAutofacVersion();
                 foreach (var module in CustomBehavior.Modules)
                 {
-                    containerBuilder.RegisterModule(module);
+                    moduleRegistrationMethod.Invoke(null, new object[] { containerBuilder, module });
                 }
                 return containerBuilder.Build();
             }
@@ -57,6 +60,18 @@ namespace Kekiri.IoC.Autofac
                 _lifetimeScope.Dispose();
                 _lifetimeScope = null;
             }
+        }
+
+        private static MethodInfo GetRegistrationMethodForThisAutofacVersion()
+        {
+            // Autofac 3.4+
+            var newLocation = Type.GetType("Autofac.ModuleRegistrationExtensions, Autofac");
+            return newLocation == null
+                // old location:
+                ? typeof(RegistrationExtensions).GetMethod("RegisterModule",
+                    new[] { typeof(ContainerBuilder), typeof(Module) })
+                : newLocation.GetMethod("RegisterModule",
+                    new[] { typeof(ContainerBuilder), typeof(Module) });
         }
     }
 }

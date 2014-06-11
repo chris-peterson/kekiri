@@ -32,10 +32,6 @@
 
         [FeatureDescription("Tabular tests",
             "The framework supports tabular tests via [Example] attributes")]
-        TabularTests,
-        
-        [FeatureDescription("Inversion of Control",
-            "The framework supports Inversion of Control.  OOB, it offers integration with Autofac")]
-        IoC
+        TabularTests
     }
 }

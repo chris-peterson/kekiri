@@ -60,7 +60,7 @@
     <Compile Include="Impl\StepClassInvoker.cs" />
     <Compile Include="Impl\StepName.cs" />
     <Compile Include="IoC\IContainerAccessor.cs" />
-    <Compile Include="IoC\IoCFluentScenario.cs" />
+    <Compile Include="IoC\IoCFluentTest.cs" />
     <Compile Include="IoC\IoCTest.cs" />
     <Compile Include="IoC\Container.cs" />
     <Compile Include="Impl\IContextAccessor.cs" />
