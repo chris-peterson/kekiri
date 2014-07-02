@@ -15,7 +15,7 @@
         }
     }
 
-    public abstract class IoCFluentTest<TContext> : FluentTest, IContainerAccessor where TContext : new()
+    public abstract class IoCFluentTest<TContext> : FluentTest, IContainerAccessor
     {
         protected internal Container Container;
 
@@ -36,7 +36,7 @@
 
         protected override object CreateContextObject()
         {
-            return new TContext();
+            return Container.Resolve<TContext>();
         }
     }
 }

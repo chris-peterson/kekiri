@@ -7,7 +7,7 @@
         }
     }
 
-    public class AutofacFluentTest<TContext> : IoCFluentTest<TContext> where TContext : new()
+    public class AutofacFluentTest<TContext> : IoCFluentTest<TContext>
     {
         public AutofacFluentTest()
             : base(new AutofacContainer())
