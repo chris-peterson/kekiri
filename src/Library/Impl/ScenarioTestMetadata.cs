@@ -199,6 +199,13 @@ namespace Kekiri.Impl
             {
                 return string.Empty;
             }
+
+            // string looks like it was intended to remain uppercase
+            if (str.TakeWhile(Char.IsLetterOrDigit).Count(Char.IsUpper) > 1)
+            {
+                return str;
+            }
+
             return string.Format("{0}{1}", char.ToLower(str[0]), str.Length == 1 ? null : str.Substring(1));
         }
 
