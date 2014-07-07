@@ -133,7 +133,7 @@ namespace Kekiri.Impl
                     ? Settings.GetToken(TokenType.ScenarioOutline)
                     : Settings.GetToken(TokenType.Scenario),
                 scenarioAttribute == null || string.IsNullOrWhiteSpace(scenarioAttribute.Description)
-                    ? declaringType.Name.WithSpaces()
+                    ? declaringType.Name.AsSentence()
                     : scenarioAttribute.Description);
         }
 
@@ -199,7 +199,26 @@ namespace Kekiri.Impl
             {
                 return string.Empty;
             }
+
             return string.Format("{0}{1}", char.ToLower(str[0]), str.Length == 1 ? null : str.Substring(1));
+        }
+
+        public static bool StartsWithMultipleUppercaseLetters(this string str)
+        {
+            int uppercaseCount = 0;
+
+            foreach (var c in str.SkipWhile(c => !char.IsLetterOrDigit(c)))
+            {
+                if (Char.IsUpper(c))
+                {
+                    uppercaseCount++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return uppercaseCount > 1;
         }
 
         public static string ToLowerExceptFirstLetter(this string str)
@@ -211,7 +230,7 @@ namespace Kekiri.Impl
             return string.Format("{0}{1}", str[0], str.Length == 1 ? null : str.Substring(1).ToLower());
         }
 
-        public static string WithSpaces(this string str)
+        public static string AsSentence(this string str)
         {
             bool usingUnderscoreNamingConvention = str.Contains("_");
 
@@ -219,12 +238,14 @@ namespace Kekiri.Impl
             {
                 return str.Replace("_", " ").TrimStart();
             }
-            
+
             // pascal casing -- Adapted from: http://stackoverflow.com/questions/272633/add-spaces-before-capital-letters#272929
             var sentence = Regex.Replace(
                 str, @"((?<=\p{Ll})\p{Lu})|((?!\A)\p{Lu}(?>\p{Ll}))", " $0");
 
-            return sentence.ToLowerExceptFirstLetter();
+            return sentence.StartsWithMultipleUppercaseLetters()
+                ? sentence
+                : sentence.ToLowerExceptFirstLetter();
         }
     }
 }

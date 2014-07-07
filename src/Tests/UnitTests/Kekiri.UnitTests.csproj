@@ -71,7 +71,9 @@
     <Compile Include="Feature.cs" />
     <Compile Include="Fluent\Can_fluently_execute_a_scenario_outline.cs" />
     <Compile Include="Exceptions\No_when.cs" />
+    <Compile Include="IoC\When_creating_contexts.cs" />
     <Compile Include="Reporting\Fixture_has_multiple_tags_scenario.cs" />
+    <Compile Include="Reporting\Reporting_helpers.cs" />
     <Compile Include="Reporting\When_fixture_uses_implicit_scenario_description.cs" />
     <Compile Include="Reporting\_TestBase.cs" />
     <Compile Include="Reporting\When_generating_report_with_scenario_specified.cs" />
@@ -112,6 +114,7 @@
       <Name>Kekiri.TestSupport</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
