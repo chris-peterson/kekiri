@@ -9,12 +9,23 @@ namespace Kekiri.UnitTests.Reporting
     public class Reporting_helpers
     {
         [Test]
-        public void TestStartsWithMultipleUppercaseLetters()
+        [TestCase("ABC", true)]
+        [TestCase(" ABC", true)]
+        [TestCase("abc", false)]
+        [TestCase("AbC", false)]
+        public void TestStartsWithMultipleUppercaseLetters(string str, bool expectation)
         {
-            "ABC".StartsWithMultipleUppercaseLetters().Should().BeTrue();
-            "abc".StartsWithMultipleUppercaseLetters().Should().BeFalse();
-            "AbC".StartsWithMultipleUppercaseLetters().Should().BeFalse();
-            " ABC".StartsWithMultipleUppercaseLetters().Should().BeTrue();
+            str.StartsWithMultipleUppercaseLetters().Should().Be(expectation);
+        }
+
+        [Test]
+        [TestCase("PascalNaming", "Pascal naming")]
+        [TestCase("Underscore_naming", "Underscore naming")]
+        [TestCase("Underscore_PRESERVES_CASING", "Underscore PRESERVES CASING")]
+        [TestCase("STARTS_WITH_CAPS", "STARTS WITH CAPS")]
+        public void TestWithSpaces(string input, string output)
+        {
+            input.WithSpaces().Should().Be(output);
         }
 
         [Test]
