@@ -1,4 +1,7 @@
-﻿namespace Kekiri.IoC
+﻿using System;
+using System.Reflection;
+
+namespace Kekiri.IoC
 {
     public abstract class IoCFluentTest : FluentTest, IContainerAccessor
     {
@@ -36,7 +39,8 @@
 
         protected override object CreateContextObject()
         {
-            return Container.Resolve<TContext>();
+            var defaultConstructor = typeof (TContext).GetConstructor(Type.EmptyTypes);
+            return defaultConstructor == null ? Container.Resolve<TContext>() : defaultConstructor.Invoke(null);
         }
     }
 }
