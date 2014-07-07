@@ -29,6 +29,7 @@ namespace Kekiri.UnitTests.IoC
             {
             }
 
+            // ReSharper disable once UnusedParameter.Local
             public WithNoDefaultConstructor(Dependency dependency)
             {
             }
