@@ -3,7 +3,7 @@
   <metadata>
     <id>$id$</id>
     <title>$id$</title>
-    <version>2.1</version>
+    <version>2.1.1</version>
     <authors>$author$</authors>
     <summary>Autofac extensions for Kekiri</summary>
     <description>$description$</description>
@@ -13,11 +13,11 @@
     <tags>bdd scenario test gherkin cucumber pickles ioc di autofac nunit specflow</tags>
     <copyright>2013-2014</copyright>
     <releaseNotes>
-        Compatability release -- work with either Autofac 2.6 or Autofac 3.4.
-        Minor breaking change -- rename some types for consistency.  XFluentScenario -> XFluentTest
+        Enhancement: allow building of context objects using DI container
+        Bug fix: if example started with a parameter, string substitution in report would not occur
     </releaseNotes>
     <dependencies>
-      <dependency id="Kekiri" version="2.1" />
+      <dependency id="Kekiri" version="2.1.1" />
     </dependencies>
   </metadata>
 </package>
