@@ -206,7 +206,8 @@ namespace Kekiri.Impl
         public static bool StartsWithMultipleUppercaseLetters(this string str)
         {
             int uppercaseCount = 0;
-            foreach (var c in str.Where(Char.IsLetterOrDigit))
+
+            foreach (var c in str.SkipWhile(c => !char.IsLetterOrDigit(c)))
             {
                 if (Char.IsUpper(c))
                 {

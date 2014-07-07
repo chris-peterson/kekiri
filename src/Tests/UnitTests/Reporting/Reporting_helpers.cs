@@ -13,6 +13,7 @@ namespace Kekiri.UnitTests.Reporting
         [TestCase(" ABC", true)]
         [TestCase("abc", false)]
         [TestCase("AbC", false)]
+        [TestCase("A String", false)]
         public void TestStartsWithMultipleUppercaseLetters(string str, bool expectation)
         {
             str.StartsWithMultipleUppercaseLetters().Should().Be(expectation);
