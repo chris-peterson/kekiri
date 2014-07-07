@@ -71,7 +71,11 @@ namespace Kekiri.Impl
                 return string.Empty;
             }
 
-            return stepNameSansStepType.WithSpaces().WithFirstLetterLowercase();
+            var outline = stepNameSansStepType.WithSpaces();
+
+            return outline.StartsWithMultipleUppercaseLetters()
+                ? outline
+                : outline.WithFirstLetterLowercase();
         }
 
         private string GetStepNameWithoutTypeNorSeperators(StepType stepType, string stepName)
