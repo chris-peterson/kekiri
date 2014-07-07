@@ -24,9 +24,9 @@ namespace Kekiri.UnitTests.Reporting
         [TestCase("Underscore_naming", "Underscore naming")]
         [TestCase("Underscore_PRESERVES_CASING", "Underscore PRESERVES CASING")]
         [TestCase("STARTS_WITH_CAPS", "STARTS WITH CAPS")]
-        public void TestWithSpaces(string input, string output)
+        public void TestAsSentence(string input, string output)
         {
-            input.WithSpaces().Should().Be(output);
+            input.AsSentence().Should().Be(output);
         }
 
         [Test]

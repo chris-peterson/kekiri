@@ -133,7 +133,7 @@ namespace Kekiri.Impl
                     ? Settings.GetToken(TokenType.ScenarioOutline)
                     : Settings.GetToken(TokenType.Scenario),
                 scenarioAttribute == null || string.IsNullOrWhiteSpace(scenarioAttribute.Description)
-                    ? declaringType.Name.WithSpaces()
+                    ? declaringType.Name.AsSentence()
                     : scenarioAttribute.Description);
         }
 
@@ -230,7 +230,7 @@ namespace Kekiri.Impl
             return string.Format("{0}{1}", str[0], str.Length == 1 ? null : str.Substring(1).ToLower());
         }
 
-        public static string WithSpaces(this string str)
+        public static string AsSentence(this string str)
         {
             bool usingUnderscoreNamingConvention = str.Contains("_");
 

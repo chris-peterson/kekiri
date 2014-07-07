@@ -71,7 +71,7 @@ namespace Kekiri.Impl
                 return string.Empty;
             }
 
-            var outline = stepNameSansStepType.WithSpaces();
+            var outline = stepNameSansStepType.AsSentence();
 
             return outline.StartsWithMultipleUppercaseLetters()
                 ? outline
