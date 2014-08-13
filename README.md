@@ -18,7 +18,6 @@ For this **Test**, we will be implementing a basic calculator.
 ### Start with the test
 
 ```c#
-    [Scenario]
     class Adding_two_numbers : Test {
         [Given]
         public void Given_a_calculator() {}
@@ -48,7 +47,6 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
 
 ### Add the implementation
 ```c#
-    [Scenario]
     class Adding_two_numbers : Test {
         private Calculator _calculator;
 
@@ -98,6 +96,11 @@ underscore convention (e.g. `When_doing_the_thing`).
 
 ---
 
+## .feature file output
+Kekiri is capable of generating .feature files when running tests.  To do so, decorate your test fixtures with [Scenario(Feature.X)].  The names of your features will be the names of the generated .feature files.
+
+---
+
 ## Wiki
 [More info available here](https://github.com/chris-peterson/Kekiri/wiki)
 
@@ -130,7 +133,6 @@ be caught (using the templated method `Catch<>`).
 
 ### Data-driven
 ```c#
-    [Scenario(Feature.Eating)]
     [Example(12, 5, 7)]
     [Example(20, 5, 15)]
     public class Eating_cucumbers : Test {
