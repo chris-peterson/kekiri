@@ -97,7 +97,7 @@ underscore convention (e.g. `When_doing_the_thing`).
 ---
 
 ## .feature file output
-Kekiri is capable of generating .feature files when running tests.  To do so, decorate your test fixtures with [Scenario(Feature.X)].  The names of your features will be the names of the generated .feature files.
+Kekiri is capable of generating .feature files when running tests.  To do so, decorate your test fixtures with `[Scenario(Feature.X)]`.  The names of your features will be the names of the generated .feature files.
 
 ---
 
