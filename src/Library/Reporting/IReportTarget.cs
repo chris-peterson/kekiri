@@ -56,9 +56,8 @@ namespace Kekiri.Reporting
 
         public void Report(ScenarioReportingContext scenario)
         {
-            var report = scenario.CreateReport();
-
-            if (string.IsNullOrWhiteSpace(report))
+            // if this test isn't categorized into a feature bucket, don't output it!
+            if (scenario.FeatureReport == null)
             {
                 return;
             }

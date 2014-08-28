@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using Kekiri.Exceptions;
 using Kekiri.Impl;
 using Kekiri.Reporting;
 using NUnit.Framework;
@@ -294,7 +295,15 @@ namespace Kekiri
         private void AddStepClass<TStep>(StepType stepType, params object[] parameterValues) where TStep : Step
         {
             var stepClass = typeof(TStep);
-            var parameters = ExtractParameters(stepClass.GetConstructors().Single(), parameterValues);
+            var ctor = stepClass.GetConstructors()
+                .SingleOrDefault();
+            if (ctor == null)
+            {
+                throw new StepNotFound(string.Format("Could not find a constructor for {0} {1} ({2})", stepType, stepClass.Name, 
+                    string.Join(", ", 
+                    parameterValues.Select(p => string.Format("{0} {1}", p.GetType().Name, p)))));
+            }
+            var parameters = ExtractParameters(ctor, parameterValues);
             _scenarioRunner.AddStep(new StepClassInvoker(stepType, stepClass, parameters, _scenarioRunner));
         }
 

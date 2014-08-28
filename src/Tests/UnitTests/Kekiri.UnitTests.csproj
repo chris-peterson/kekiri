@@ -71,6 +71,7 @@
     <Compile Include="Feature.cs" />
     <Compile Include="Fluent\Can_fluently_execute_a_scenario_outline.cs" />
     <Compile Include="Exceptions\No_when.cs" />
+    <Compile Include="Fluent\Can_parameterize_steps.cs" />
     <Compile Include="IoC\When_creating_contexts.cs" />
     <Compile Include="Reporting\Fixture_has_multiple_tags_scenario.cs" />
     <Compile Include="Reporting\Reporting_helpers.cs" />

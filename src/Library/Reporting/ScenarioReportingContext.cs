@@ -27,16 +27,10 @@ namespace Kekiri.Reporting
 
         public string CreateReport(bool omitFeatureOutput = false)
         {
-            // if this test isn't categorized into a feature bucket, don't output it!
-            if (FeatureReport == null)
-            {
-                return string.Empty;
-            }
-
             int indentationLevel = 0;
             var report = new List<string>();
 
-            if (!omitFeatureOutput)
+            if (FeatureReport != null && !omitFeatureOutput)
             {
                 report.Insert(0, string.Format("{0}{1}",
                     Settings.GetToken(TokenType.Feature), FeatureReport.Summary));
