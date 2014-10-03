@@ -3,7 +3,7 @@
   <metadata>
     <id>$id$</id>
     <title>$id$</title>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <authors>$author$</authors>
     <summary>A low-friction BDD framework</summary>
     <description>$description$</description>
@@ -13,8 +13,7 @@
     <tags>bdd scenario test gherkin cucumber pickles nunit specflow</tags>
     <copyright>2012-2014</copyright>
     <releaseNotes>
-        Enhancement: allow building of context objects using DI container
-        Bug fix: if example started with a parameter, string substitution in report would not occur
+        Bug fixes around parameterized test output
     </releaseNotes>
   </metadata>
 </package>
