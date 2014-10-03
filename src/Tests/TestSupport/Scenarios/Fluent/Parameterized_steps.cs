@@ -4,9 +4,14 @@ namespace Kekiri.TestSupport.Scenarios.Fluent
     {
         public Parameterized_steps()
         {
-            Given<Use_case_PARAMETER>("foo");
+            Given<Use_case_PARAMETER>("foo")
+                .And(NULL_param, (string) null);
             When(Doing_task_TASKNUMBER, 1);
             Then(It_should_RESULT, "pass");
+        }
+
+        void NULL_param(string @null)
+        {
         }
 
         void Doing_task_TASKNUMBER(int taskNumber)

@@ -98,7 +98,10 @@ namespace Kekiri.Impl
                 {
                     if (word == parameter.Key.ToUpperInvariant())
                     {
-                        stepName = stepName.Replace(word, parameter.Value.ToString());
+                        stepName = stepName.Replace(word,
+                            parameter.Value == null
+                                ? "{null}"
+                                : parameter.Value.ToString());
                     }
                 }
             }
