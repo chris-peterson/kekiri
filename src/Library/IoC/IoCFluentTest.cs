@@ -18,7 +18,7 @@ namespace Kekiri.IoC
         }
     }
 
-    public abstract class IoCFluentTest<TContext> : FluentTest, IContainerAccessor
+    public abstract class IoCFluentTest<TContext> : FluentTest, IContainerAccessor where TContext : class
     {
         protected internal Container Container;
 
