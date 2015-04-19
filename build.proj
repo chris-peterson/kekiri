@@ -13,6 +13,7 @@
         </MakeDir>
         <Exec Command=".nuget\nuget.exe pack src\library\Kekiri.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
         <Exec Command=".nuget\nuget.exe pack src\IoC\Autofac\Kekiri.IoC.Autofac.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
+        <Exec Command=".nuget\nuget.exe pack src\IoC\SimpleInjector\Kekiri.IoC.SimpleInjector.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
         <Exec Command=".nuget\nuget.exe pack src\tools\tools.nuspec -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
     </Target>
 

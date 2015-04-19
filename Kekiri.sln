@@ -29,11 +29,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC", "IoC", "{DF16D56E-1B8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.IoC.Autofac", "src\IoC\Autofac\Kekiri.IoC.Autofac.csproj", "{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.IoC.SimpleInjector", "src\IoC\SimpleInjector\Kekiri.IoC.SimpleInjector.csproj", "{FFC8D620-6C3E-4E5C-B447-C36EB610BE94}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri", "src\Library\Kekiri.csproj", "{5827C04B-91A2-42AC-8A99-E23BBB27CD94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests.Autofac2", "Tests\Kekiri.UnitTests.Autofac2\Kekiri.UnitTests.Autofac2.csproj", "{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests.Autofac3", "Tests\Kekiri.UnitTests.Autofac3\Kekiri.UnitTests.Autofac3.csproj", "{5219967B-0D18-43B3-ABB5-5505A71EDA57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests.SimpleInjector", "Tests\Kekiri.UnitTests.SimpleInjector\Kekiri.UnitTests.SimpleInjector.csproj", "{903AB18E-7DC8-4BCF-A9BB-F301B13F0BA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,14 @@ Global
 		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFC8D620-6C3E-4E5C-B447-C36EB610BE94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFC8D620-6C3E-4E5C-B447-C36EB610BE94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFC8D620-6C3E-4E5C-B447-C36EB610BE94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFC8D620-6C3E-4E5C-B447-C36EB610BE94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{903AB18E-7DC8-4BCF-A9BB-F301B13F0BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{903AB18E-7DC8-4BCF-A9BB-F301B13F0BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{903AB18E-7DC8-4BCF-A9BB-F301B13F0BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{903AB18E-7DC8-4BCF-A9BB-F301B13F0BA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,5 +91,7 @@ Global
 		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4} = {DF16D56E-1B85-4B64-A128-C24EED22E633}
 		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 		{5219967B-0D18-43B3-ABB5-5505A71EDA57} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
+		{FFC8D620-6C3E-4E5C-B447-C36EB610BE94} = {DF16D56E-1B85-4B64-A128-C24EED22E633}
+		{903AB18E-7DC8-4BCF-A9BB-F301B13F0BA9} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 	EndGlobalSection
 EndGlobal

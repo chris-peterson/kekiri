@@ -5,15 +5,17 @@
     <title>$id$</title>
     <version>2.1.3</version>
     <authors>$author$</authors>
-    <summary>A low-friction BDD framework</summary>
+    <summary>SimpleInjector extensions for Kekiri</summary>
     <description>$description$</description>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
-    <tags>bdd scenario test gherkin cucumber pickles nunit specflow</tags>
-    <copyright>2012-2014</copyright>
+    <tags>bdd scenario test gherkin cucumber pickles ioc di autofac nunit specflow</tags>
+    <copyright>2013-2015</copyright>
     <releaseNotes>
-        Registered objects must be reference types.
     </releaseNotes>
+    <dependencies>
+      <dependency id="Kekiri" version="2.1.3" />
+    </dependencies>
   </metadata>
 </package>

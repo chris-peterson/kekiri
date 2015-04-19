@@ -52,9 +52,9 @@ namespace Kekiri.IoC
             }
         }
 
-        protected abstract T OnResolve<T>();
+        protected abstract T OnResolve<T>() where T : class;
 
-        public T Resolve<T>()
+        public T Resolve<T>() where T : class
         {
             _registrationClosed = true;
 
