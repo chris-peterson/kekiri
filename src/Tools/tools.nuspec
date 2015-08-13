@@ -3,16 +3,16 @@
   <metadata>
     <id>Kekiri.Tools</id>
     <title>Kekiri.Tools</title>
-    <version>2.0</version>
+    <version>3.0</version>
     <authors>Chris Peterson</authors>
     <description>Tools package for Kekiri</description>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
     <tags>bdd tdd nunit scenario test gherkin cucumber specflow</tags>
-    <copyright>2012-2014</copyright>
+    <copyright>2012-2015</copyright>
     <releaseNotes>
-      Update to target .NET 4.5
+      Update to target .NET 4.5.2
     </releaseNotes>
   </metadata>
   <files>

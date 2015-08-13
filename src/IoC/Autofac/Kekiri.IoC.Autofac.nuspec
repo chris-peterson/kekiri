@@ -3,7 +3,7 @@
   <metadata>
     <id>$id$</id>
     <title>$id$</title>
-    <version>2.1.1</version>
+    <version>3.0</version>
     <authors>$author$</authors>
     <summary>Autofac extensions for Kekiri</summary>
     <description>$description$</description>
@@ -11,13 +11,12 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
     <tags>bdd scenario test gherkin cucumber pickles ioc di autofac nunit specflow</tags>
-    <copyright>2013-2014</copyright>
-    <releaseNotes>
-        Enhancement: allow building of context objects using DI container
-        Bug fix: if example started with a parameter, string substitution in report would not occur
-    </releaseNotes>
-    <dependencies>
-      <dependency id="Kekiri" version="2.1.1" />
+    <copyright>2013-2015</copyright>
+      <releaseNotes>
+          Update to latest NUnit (2.6.4) and target .NET 4.5.2
+      </releaseNotes>
+      <dependencies>
+      <dependency id="Kekiri" version="3.0" />
     </dependencies>
   </metadata>
 </package>

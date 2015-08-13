@@ -3,7 +3,7 @@
   <metadata>
     <id>$id$</id>
     <title>$id$</title>
-    <version>1.0</version>
+    <version>3.0</version>
     <authors>$author$</authors>
     <summary>SimpleInjector extensions for Kekiri</summary>
     <description>$description$</description>
@@ -13,9 +13,10 @@
     <tags>bdd scenario test gherkin cucumber pickles ioc di autofac nunit specflow</tags>
     <copyright>2015</copyright>
     <releaseNotes>
+        Update to latest NUnit (2.6.4) and target .NET 4.5.2
     </releaseNotes>
     <dependencies>
-      <dependency id="Kekiri" version="2.1.3" />
+      <dependency id="Kekiri" version="3.0.0" />
     </dependencies>
   </metadata>
 </package>
