@@ -12,7 +12,17 @@ namespace Kekiri.TestGen
             InitializeComponent();
         }
 
-        private void OnGenerateClick(object sender, RoutedEventArgs e)
+        private void OnGenerateClassicClick(object sender, RoutedEventArgs e)
+        {
+            ProcessScenario(ScenarioStyle.Classic);
+        }
+
+        private void OnGenerateFluentClick(object sender, RoutedEventArgs e)
+        {
+            ProcessScenario(ScenarioStyle.Fluent);
+        }
+
+        void ProcessScenario(ScenarioStyle style)
         {
             var builder = new StringBuilder();
 
@@ -22,19 +32,20 @@ namespace Kekiri.TestGen
                 .Select(t => t.Trim())
                 .Where(t => !string.IsNullOrWhiteSpace(t)))
             {
-                ProcessScenarioLine(line, ref stepType, builder);
+                ProcessScenarioLine(style, line, ref stepType, builder);
             }
 
             // remove the extra whitespace line after methods
             builder.Remove(builder.Length - 2, 2);
-            
+
             builder.AppendLine("   }");
 
-            Clipboard.SetText(builder.ToString());
+            var scenario = builder.ToString();
 
+            Clipboard.SetText(scenario);
         }
 
-        private void ProcessScenarioLine(string line, ref StepType stepType, StringBuilder builder)
+        private void ProcessScenarioLine(ScenarioStyle style, string line, ref StepType stepType, StringBuilder builder)
         {
             if (stepType == StepType.When)
             {
@@ -49,15 +60,33 @@ namespace Kekiri.TestGen
             const string tagToken = "@";
             if (line.StartsWith(tagToken))
             {
-                builder.AppendLine(string.Format("   [Tag(\"{0}\")]", line.TrimStart('@')));
+                var tags = line.Split('@');
+
+                foreach (var tag in tags
+                    .Select(t => t.Trim().Trim('@'))
+                    .Where(t => !string.IsNullOrWhiteSpace(t)))
+                {
+                    builder.AppendLine($"   [Tag(\"{tag}\")]");
+                }
                 return;
             }
             const string scenarioToken = "Scenario:";
             if (line.StartsWith(scenarioToken))
             {
-                builder.AppendLine("   [Scenario(Feature.Unknown)]");
-                builder.AppendLine(string.Format("   class {0} : Test", Sanitize(line.Substring(scenarioToken.Length))));
+                if (style == ScenarioStyle.Classic) builder.AppendLine("   [Scenario(Feature.Unknown)]");
+                string className = Sanitize(line.Substring(scenarioToken.Length));
+                builder.AppendLine($"   public class {className} : {GetScenarioTypeName(style)}");
                 builder.AppendLine("   {");
+
+                if (style == ScenarioStyle.Fluent)
+                {
+                    builder.AppendLine($"      public {className}()");
+                    builder.AppendLine("      {");
+                    builder.AppendLine("         TODO");
+                    builder.AppendLine("      }");
+                    builder.AppendLine();
+                }
+
                 return;
             }
 
@@ -68,11 +97,37 @@ namespace Kekiri.TestGen
 
             var methodName = ProcessStepLine(line, stepType);
 
-            builder.AppendLine(string.Format("      [{0}]", stepType));
-            builder.AppendLine(string.Format("      public void {0}()", methodName));
+            if (style == ScenarioStyle.Classic) builder.AppendLine($"      [{stepType}]");
+            builder.AppendLine($"      {GetAccessModifierForStep(style)}void {methodName}()");
             builder.AppendLine("      {");
             builder.AppendLine("      }");
             builder.AppendLine();
+        }
+
+        static string GetAccessModifierForStep(ScenarioStyle style)
+        {
+            switch (style)
+            {
+                case ScenarioStyle.Classic:
+                    return "public ";
+                case ScenarioStyle.Fluent:
+                    return "";
+                default:
+                    throw new NotSupportedException($"{style} is not supported");
+            }
+        }
+
+        static string GetScenarioTypeName(ScenarioStyle style)
+        {
+            switch (style)
+            {
+                case ScenarioStyle.Classic:
+                    return "Test";
+                case ScenarioStyle.Fluent:
+                    return "FluentTest";
+                default:
+                    throw new NotSupportedException($"{style} is not supported");
+            }
         }
 
         private string ProcessStepLine(string stepLine, StepType stepType)

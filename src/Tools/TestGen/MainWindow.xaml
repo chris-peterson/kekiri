@@ -4,8 +4,11 @@
         Title="Kekiri ScenarioTest Generator" Height="350" Width="525" WindowStartupLocation="CenterScreen">
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-            <Button Click="OnGenerateClick">
-                Generate
+            <Button Click="OnGenerateClassicClick">
+                Generate Classic Scenario
+            </Button>
+            <Button Click="OnGenerateFluentClick">
+                Generate Fluent Scenario
             </Button>
         </StackPanel>
         <TextBox x:Name="_textBox" TextWrapping="Wrap" AcceptsReturn="True" />
