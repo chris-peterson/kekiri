@@ -2,7 +2,7 @@
 
 namespace Kekiri.TestSupport.Scenarios.Fluent
 {
-    class Throws_exception_with_classes : FluentTest
+    class Throws_exception_with_classes : ScenarioBase
     {
         public Throws_exception_with_classes()
         {

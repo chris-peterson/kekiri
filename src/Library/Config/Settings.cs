@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Kekiri.Config
 {
-    internal class Settings
+    class Settings
     {
-        private readonly ConfigFileBasedSettings _settings;
+        readonly ConfigFileBasedSettings _settings;
 
         public static Settings GetInstance()
         {
@@ -17,7 +17,7 @@ namespace Kekiri.Config
             return new Settings(settings);
         }
 
-        private Settings(ConfigFileBasedSettings settings)
+        Settings(ConfigFileBasedSettings settings)
         {
             _settings = settings;
         }
@@ -33,7 +33,7 @@ namespace Kekiri.Config
                 case StepType.Then:
                     return _settings.Then;
                 default:
-                    throw new NotSupportedException(string.Format("Unknown step type: {0}", stepType));
+                    throw new NotSupportedException($"Unknown step type: {stepType}");
             }
         }
 
@@ -46,7 +46,7 @@ namespace Kekiri.Config
                 case SeperatorType.Indent:
                     return _settings.Indent;
                 default:
-                    throw new NotSupportedException(string.Format("Unknown seperator type: {0}", seperatorType));
+                    throw new NotSupportedException($"Unknown seperator type: {seperatorType}");
             }
         }
 
@@ -65,13 +65,13 @@ namespace Kekiri.Config
                 case TokenType.ScenarioOutline:
                     return _settings.ScenarioOutline;
                 default:
-                    throw new NotSupportedException(string.Format("Unknown token type: {0}", tokenType));
+                    throw new NotSupportedException($"Unknown token type: {tokenType}");
             }
         }
     }
 
     // removed support for clients specifying this, but since it was developed as a config section, keep it around JIC.
-    internal class ConfigFileBasedSettings : ConfigurationSection
+    class ConfigFileBasedSettings : ConfigurationSection
     {
         public static ConfigFileBasedSettings GetInstanceWithDefaultValues()
         {

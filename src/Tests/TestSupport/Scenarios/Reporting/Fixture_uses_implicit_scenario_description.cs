@@ -1,6 +1,6 @@
 ﻿namespace Kekiri.TestSupport.Scenarios.Reporting
 {
-    [Scenario(Feature.TestSupport)]
+    [ScenarioBase(Feature.TestSupport)]
     public class Fixture_uses_implicit_scenario_description : ReportingScenarioMetaTest
     {
         [When]

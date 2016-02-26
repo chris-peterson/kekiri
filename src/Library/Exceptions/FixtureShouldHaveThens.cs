@@ -1,22 +1,10 @@
 namespace Kekiri.Exceptions
 {
-    internal class FixtureShouldHaveThens : ScenarioTestException
+    class FixtureShouldHaveThens : ScenarioException
     {
         public FixtureShouldHaveThens(object test)
-            : base(test, GetMessage(test))
+            : base(test, "No thens found; a then should be specified by calling Then in the constructor")
         {
-        }
-
-        private static string GetMessage(object test)
-        {
-            string messageDetail = string.Empty;
-
-            if (test is Test)
-                messageDetail = "; a then method should be a parameterless public method that uses the [Then] attribute";
-            else if (test is FluentTest)
-                messageDetail = "; a then should be specified by calling Then in the constructor";
-
-            return "No thens found" + messageDetail;
         }
     }
 }

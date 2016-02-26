@@ -2,10 +2,10 @@ using System;
 
 namespace Kekiri.Exceptions
 {
-    internal class WhenFailed : ScenarioTestException
+    class WhenFailed : ScenarioException
     {
         public WhenFailed(object test, string stepName, Exception innerException) :
-            base(test, string.Format("'{0}' threw an exception.  If this is expected behavior use [Throws] attribute and add test(s) with Catch<>", stepName), innerException)
+            base(test, $"'{stepName}' threw an exception.  If this is expected behavior use .Throws() and add a step that uses Catch<>", innerException)
         {
         }
     }

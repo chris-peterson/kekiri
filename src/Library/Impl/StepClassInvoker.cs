@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace Kekiri.Impl
 {
-    internal class StepClassInvoker : IStepInvoker
+    class StepClassInvoker : IStepInvoker
     {
-        private readonly Type _stepClass;
-        private readonly IExceptionHandler _exceptionHandler;
+        readonly Type _stepClass;
+        readonly IExceptionHandler _exceptionHandler;
 
         public StepClassInvoker(StepType stepType, Type stepClass, KeyValuePair<string,object>[] supportedParameters, IExceptionHandler exceptionHandler)
         {
@@ -20,18 +20,15 @@ namespace Kekiri.Impl
             Parameters = _stepClass.GetConstructors().Single().BindParameters(supportedParameters);
         }
 
-        public StepType Type { get; private set; }
+        public StepType Type { get; }
 
-        public StepName Name { get; private set; }
+        public StepName Name { get; }
 
-        public KeyValuePair<string, object>[] Parameters { get; private set; } 
+        public KeyValuePair<string, object>[] Parameters { get; } 
 
         public bool ExceptionExpected { get; set; }
 
-        public string SourceDescription
-        {
-            get { return _stepClass.FullName; }
-        }
+        public string SourceDescription => _stepClass.FullName;
 
         public void Invoke(object test)
         {

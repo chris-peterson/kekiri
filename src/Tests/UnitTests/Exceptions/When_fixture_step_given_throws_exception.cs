@@ -5,7 +5,7 @@ using Kekiri.TestSupport.Scenarios.Exceptions;
 
 namespace Kekiri.UnitTests.Exceptions
 {
-    [Scenario(Feature.FixtureExceptionHandling)]
+    [ScenarioBase(Feature.FixtureExceptionHandling)]
     class When_fixture_step_given_throws_exception : Test
     {
         [When, Throws]

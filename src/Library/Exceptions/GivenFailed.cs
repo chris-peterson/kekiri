@@ -2,10 +2,10 @@ using System;
 
 namespace Kekiri.Exceptions
 {
-    internal class GivenFailed : ScenarioTestException
+    class GivenFailed : ScenarioException
     {
         public GivenFailed(object test, string stepName, Exception innerException) :
-            base(test, string.Format("'{0}' failed", stepName), innerException)
+            base(test, $"'{stepName}' failed", innerException)
         {
         }
     }

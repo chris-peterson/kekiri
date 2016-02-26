@@ -2,7 +2,7 @@
 
 namespace Kekiri.TestSupport.Scenarios.Fluent
 {
-    public class Throws_exception_flat_structure : FluentTest
+    public class Throws_exception_flat_structure : ScenarioBase
     {
         public Throws_exception_flat_structure()
         {

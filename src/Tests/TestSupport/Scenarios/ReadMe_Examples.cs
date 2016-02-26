@@ -22,7 +22,7 @@ namespace Kekiri.TestSupport.Scenarios
         }
     }
 
-    [Scenario(Feature.TestSupport)]
+    [ScenarioBase(Feature.TestSupport)]
     class Adding_two_numbers : Test
     {
         private Calculator _calculator;

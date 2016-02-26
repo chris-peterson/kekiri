@@ -1,6 +1,6 @@
 namespace Kekiri.TestSupport.Scenarios.Fluent
 {
-    public class Parameterized_steps : FluentTest
+    public class Parameterized_steps : ScenarioBase
     {
         public Parameterized_steps()
         {

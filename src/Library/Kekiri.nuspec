@@ -3,7 +3,7 @@
   <metadata>
     <id>$id$</id>
     <title>$id$</title>
-    <version>3.0</version>
+    <version>4.0</version>
     <authors>$author$</authors>
     <summary>A low-friction BDD framework</summary>
     <description>$description$</description>
@@ -11,9 +11,12 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
     <tags>bdd scenario test gherkin cucumber pickles nunit specflow</tags>
-    <copyright>2012-2015</copyright>
+    <copyright>2012-2016</copyright>
     <releaseNotes>
-        Update to latest NUnit (2.6.4) and target .NET 4.5.2
+        Consolidate to Fluent style (drop attribute based Tests)
+        Rename FluentTest => Scenario
+        Isolate NUnit dependencies in seperate package (Kekiri.NUnit)
+        Drop TestGen package
     </releaseNotes>
   </metadata>
 </package>

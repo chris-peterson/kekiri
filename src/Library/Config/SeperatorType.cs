@@ -1,6 +1,6 @@
 ﻿namespace Kekiri.Config
 {
-    internal enum SeperatorType
+    enum SeperatorType
     {
         Line,
         Indent

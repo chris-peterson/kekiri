@@ -11,7 +11,7 @@ namespace Kekiri.UnitTests.Exceptions
     public class No_when
     {
         [Ignore]
-        public class FluentFixture : FluentTest
+        public class FluentFixture : ScenarioBase
         {
             public FluentFixture()
             {

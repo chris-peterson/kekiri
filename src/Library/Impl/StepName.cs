@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Kekiri.Config;
 
 namespace Kekiri.Impl
 {
-    internal class StepName
+    class StepName
     {
-        private readonly Settings _settings = Settings.GetInstance();
+        readonly Settings _settings = Settings.GetInstance();
 
         public StepName(StepType stepType, string name, IEnumerable<KeyValuePair<string, object>> substitutionParameters = null)
         {
@@ -16,17 +17,17 @@ namespace Kekiri.Impl
             PrettyName = SubstituteParameters(Outline, substitutionParameters);
         }
 
-        public StepType StepType { get; private set; }
+        public StepType StepType { get; }
 
-        public string PrettyName { get; private set; }
+        public string PrettyName { get; }
 
-        public string Outline { get; private set; }
+        public string Outline { get; }
 
         public TokenType SeparatorToken { get; private set; }
 
         public override string ToString()
         {
-            return string.Format("{0} {1}", StepType, PrettyName);
+            return $"{StepType} {PrettyName}";
         }
 
         protected bool Equals(StepName other)
@@ -38,7 +39,7 @@ namespace Kekiri.Impl
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((StepName) obj);
         }
 
@@ -50,7 +51,7 @@ namespace Kekiri.Impl
             }
         }
 
-        private TokenType GetSeparatorToken(StepType stepType, string name)
+        TokenType GetSeparatorToken(StepType stepType, string name)
         {
             if(stepType == StepType.Then &&
                name.StartsWith(_settings.GetToken(TokenType.But), StringComparison.OrdinalIgnoreCase))
@@ -61,7 +62,7 @@ namespace Kekiri.Impl
             return TokenType.And;
         }
 
-        private string GetOutline(StepType stepType, string name)
+        string GetOutline(StepType stepType, string name)
         {
             var stepNameSansStepType = GetStepNameWithoutTypeNorSeperators(stepType, name);
 
@@ -78,7 +79,7 @@ namespace Kekiri.Impl
                 : outline.WithFirstLetterLowercase();
         }
 
-        private string GetStepNameWithoutTypeNorSeperators(StepType stepType, string stepName)
+        string GetStepNameWithoutTypeNorSeperators(StepType stepType, string stepName)
         {
             stepName = stepName.RemovePrefix(_settings.GetStep(stepType));
             stepName = stepName.RemovePrefix(_settings.GetToken(TokenType.And));
@@ -87,22 +88,18 @@ namespace Kekiri.Impl
             return stepName;
         }
 
-        private string SubstituteParameters(string stepName, IEnumerable<KeyValuePair<string, object>> parameters)
+        static string SubstituteParameters(string stepName, IEnumerable<KeyValuePair<string, object>> parameters)
         {
             if (parameters == null)
                 return stepName;
             
             foreach (var parameter in parameters)
             {
-                foreach (var word in stepName.Split(' '))
+                foreach (var word in stepName.Split(' ')
+                    .Where(word => word == parameter.Key.ToUpperInvariant()))
                 {
-                    if (word == parameter.Key.ToUpperInvariant())
-                    {
-                        stepName = stepName.Replace(word,
-                            parameter.Value == null
-                                ? "{null}"
-                                : parameter.Value.ToString());
-                    }
+                    stepName = stepName.Replace(word,
+                        parameter.Value?.ToString() ?? "{null}");
                 }
             }
 

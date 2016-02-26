@@ -2,7 +2,7 @@
 
 namespace Kekiri.Exceptions
 {
-    internal class WrongExceptionType : ScenarioTestException
+    class WrongExceptionType : ScenarioException
     {
         public WrongExceptionType(
             object test,
@@ -10,7 +10,7 @@ namespace Kekiri.Exceptions
             Exception innerException)
             : base(
                 test,
-                string.Format("Expected '{0}', but was '{1}'", expectedExceptionType.Name, innerException.GetType().Name),
+                $"Expected '{expectedExceptionType.Name}', but was '{innerException.GetType().Name}'",
                 innerException)
         {
             ExpectedExceptionType = expectedExceptionType;

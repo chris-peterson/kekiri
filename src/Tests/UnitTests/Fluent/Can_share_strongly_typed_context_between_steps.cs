@@ -2,7 +2,7 @@
 
 namespace Kekiri.UnitTests.Fluent
 {
-    public class Can_share_strongly_typed_context_between_steps : FluentTest<StronglyTypedContext>
+    public class Can_share_strongly_typed_context_between_steps : Scenario<StronglyTypedContext>
     {
         public Can_share_strongly_typed_context_between_steps()
         {

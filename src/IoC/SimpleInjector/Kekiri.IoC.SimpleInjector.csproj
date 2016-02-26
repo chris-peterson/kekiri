@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IocConfig.cs" />
-    <Compile Include="SimpleInjectorFluentTest.cs" />
+    <Compile Include="SimpleInjectorScenario.cs" />
     <Compile Include="SimpleInjectorContainer.cs" />
     <Compile Include="SimpleInjectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

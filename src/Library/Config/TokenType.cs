@@ -1,6 +1,6 @@
 ﻿namespace Kekiri.Config
 {
-    internal enum TokenType
+    enum TokenType
     {
         And,
         But,

@@ -1,6 +1,6 @@
 namespace Kekiri.Impl
 {
-    internal interface IStepInvoker
+    interface IStepInvoker
     {
         void Invoke(object test);
 

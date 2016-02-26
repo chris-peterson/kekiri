@@ -5,13 +5,10 @@ namespace Kekiri.IoC
 {
     public abstract class Container
     {
-        private readonly List<object> _fakes = new List<object>();
-        private bool _registrationClosed;
+        readonly List<object> _fakes = new List<object>();
+        bool _registrationClosed;
 
-        protected IEnumerable<object> Fakes
-        {
-            get { return _fakes; }
-        }
+        protected IEnumerable<object> Fakes => _fakes;
 
         public void Register(object instance)
         {
@@ -22,7 +19,7 @@ namespace Kekiri.IoC
 
             if (ReferenceEquals(instance, null))
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
 
             // check for Moq -- we don't want to take on a dependency so we use reflection

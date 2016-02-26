@@ -6,20 +6,20 @@ using Kekiri.Reporting;
 
 namespace Kekiri.Impl
 {
-    internal interface IExceptionHandler
+    interface IExceptionHandler
     {
         void ExpectException();
         TException Catch<TException>() where TException : Exception;
         void AssertExceptionCompliance();
     }
 
-    internal class ScenarioRunner : IExceptionHandler
+    class ScenarioRunner : IExceptionHandler
     {
-        private readonly object _test;
-        private readonly ScenarioTestMetadata _scenarioMetadata;
-        private readonly IReportTarget _reportTarget;
-        private Exception _exception;
-        private bool _exceptionCaught;
+        readonly object _test;
+        readonly ScenarioTestMetadata _scenarioMetadata;
+        readonly IReportTarget _reportTarget;
+        Exception _exception;
+        bool _exceptionCaught;
 
         public ScenarioRunner(object test, IReportTarget reportTarget)
         {
@@ -134,7 +134,7 @@ namespace Kekiri.Impl
             }
         }
 
-        private void InvokeThens()
+        void InvokeThens()
         {
             EnsureAtLeastOneThenExists();
             

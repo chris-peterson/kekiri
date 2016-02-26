@@ -4,22 +4,19 @@ using System.Reflection;
 
 namespace Kekiri.Impl
 {
-    internal class StepMethodInvoker : IStepInvoker
+    class StepMethodInvoker : IStepInvoker
     {
-        protected MethodBase Method { get; private set; }
+        protected MethodBase Method { get; }
 
         public bool ExceptionExpected { get; set; }
         
-        public StepName Name { get; private set; }
+        public StepName Name { get; }
 
-        public StepType Type { get; private set; }
+        public StepType Type { get; }
 
-        public string SourceDescription { get; private set; }
+        public string SourceDescription { get; }
 
-        public KeyValuePair<string, object>[] Parameters { get; private set; } 
-
-        public StepMethodInvoker(MethodBase method, KeyValuePair<string, object>[] supportedParameters = null)
-            : this(method.AttributeOrDefault<IStepAttribute>().StepType, method, supportedParameters) { }
+        public KeyValuePair<string, object>[] Parameters { get; } 
 
         public StepMethodInvoker(StepType stepType, MethodBase method, KeyValuePair<string, object>[] supportedParameters = null)
         {
@@ -27,8 +24,7 @@ namespace Kekiri.Impl
             Type = stepType;
             Parameters = method.BindParameters(supportedParameters);
             Name = new StepName(Type, method.Name, supportedParameters);
-            ExceptionExpected = method.AttributeOrDefault<ThrowsAttribute>() != null;
-            SourceDescription = string.Format("{0}.{1}", method.DeclaringType.FullName, method.Name);
+            SourceDescription = $"{method.DeclaringType?.FullName}.{method.Name}";
         }
 
         public virtual void Invoke(object test)

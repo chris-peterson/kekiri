@@ -7,19 +7,19 @@ using Kekiri.Reporting;
 
 namespace Kekiri.Impl
 {
-    internal class ScenarioTestMetadata
+    class ScenarioTestMetadata
     {
-        private readonly Type _scenarioTestType;
+        readonly Type _scenarioTestType;
 
-        private class StepInfo
+        class StepInfo
         {
             public IStepInvoker StepInvoker { get; set; }
             public string PrettyPrintedName { get; set; }
         }
 
-        private Settings Settings { get; set; }
+        Settings Settings { get; }
 
-        private readonly IDictionary<StepType, IList<StepInfo>> _steps = new Dictionary<StepType, IList<StepInfo>>();
+        readonly IDictionary<StepType, IList<StepInfo>> _steps = new Dictionary<StepType, IList<StepInfo>>();
         
         public ScenarioTestMetadata(Type scenarioTestType)
         {
@@ -35,8 +35,8 @@ namespace Kekiri.Impl
         {
             if (step.Type == StepType.When && _steps[StepType.When].Count == 1)
             {
-                throw new NotSupportedException(string.Format(
-                    "Currently, only a single 'When' is supported, found: {0} and {1}", _steps[StepType.When].First().StepInvoker.SourceDescription, step.SourceDescription));
+                throw new NotSupportedException(
+                    $"Only a single 'When' is supported, found: {_steps[StepType.When].First().StepInvoker.SourceDescription} and {step.SourceDescription}");
             }
 
             var stepInfo = new StepInfo
@@ -52,106 +52,43 @@ namespace Kekiri.Impl
             _steps[step.Type].Add(stepInfo);   
         }
 
-        public IEnumerable<IStepInvoker> GivenMethods
-        {
-            get { return GetSteps(StepType.Given); }
-        }
+        public IEnumerable<IStepInvoker> GivenMethods => GetSteps(StepType.Given);
 
-        public IStepInvoker WhenMethod
-        {
-            get { return GetSteps(StepType.When).SingleOrDefault(); }
-        }
+        public IStepInvoker WhenMethod => GetSteps(StepType.When).SingleOrDefault();
 
-        public IEnumerable<IStepInvoker> ThenMethods
-        {
-            get { return GetSteps(StepType.Then); }
-        }
+        public IEnumerable<IStepInvoker> ThenMethods => GetSteps(StepType.Then);
 
         public ScenarioReportingContext CreateReport()
         {
-            FeatureReport featureReport = null;
             var scenarioReport = new List<string>();
             var stepReport = new List<string>();
-
-            var scenario = ExtractAttributeFromScenarioTest<ScenarioAttribute>();
-            var feature = scenario == null ? null : scenario.Feature;
-            if (feature != null)
-            {
-                featureReport = new FeatureReport(feature.ToString());
-
-                var featureAttribute = feature.GetType().GetField(featureReport.Name)
-                    .AttributeOrDefault<FeatureDescriptionAttribute>();
-                if (featureAttribute != null)
-                {
-                    featureReport.Set(featureAttribute.Summary, featureAttribute.Details);
-                }
-            }
-
-            var tagAttributes = ExtractAttributesFromScenarioTest<TagAttribute>();
-            if (tagAttributes != null)
-            {
-                scenarioReport.AddRange(tagAttributes.Select(tag => string.Format("@{0}", tag.Name)));
-            }
-
-            var scenarioAttribute = ExtractAttributeFromScenarioTest<ScenarioAttribute>();
-            if (scenarioAttribute != null)
-            {
-                scenarioReport.Add(GetScenarioDescriptionOrDefaultValue(scenarioAttribute, _scenarioTestType));
-            }
 
             stepReport.AddRange(GetStepReport(StepType.Given));
             stepReport.AddRange(GetStepReport(StepType.When));
             stepReport.AddRange(GetStepReport(StepType.Then));
 
             return new ScenarioReportingContext(
-                featureReport,
                 scenarioReport,
                 stepReport,
                 Settings);
         }
 
-        private IEnumerable<IStepInvoker> GetSteps(StepType stepType)
+        IEnumerable<IStepInvoker> GetSteps(StepType stepType)
         {
             return _steps[stepType].Select(s => s.StepInvoker);
         }
 
-        private T ExtractAttributeFromScenarioTest<T>() where T : class
+        string GetStepNameWithTokenizedStepType(StepInfo stepInfo)
         {
-            return _scenarioTestType.AttributeOrDefault<T>();
+            return $"{Settings.GetStep(stepInfo.StepInvoker.Type)} {stepInfo.PrettyPrintedName}";
         }
 
-        private IEnumerable<T> ExtractAttributesFromScenarioTest<T>() where T : class
+        string GetStepNameWithTokenizedSeperators(StepInfo step)
         {
-            return _scenarioTestType.GetCustomAttributes(
-                typeof(T), true) as IEnumerable<T>;
+            return $"{step.StepInvoker.Name.SeparatorToken} {step.PrettyPrintedName}";
         }
 
-        private string GetScenarioDescriptionOrDefaultValue(ScenarioAttribute scenarioAttribute, Type declaringType)
-        {
-            return string.Format("{0}{1}",
-                declaringType.HasAttribute<ExampleAttribute>()
-                    ? Settings.GetToken(TokenType.ScenarioOutline)
-                    : Settings.GetToken(TokenType.Scenario),
-                scenarioAttribute == null || string.IsNullOrWhiteSpace(scenarioAttribute.Description)
-                    ? declaringType.Name.AsSentence()
-                    : scenarioAttribute.Description);
-        }
-
-        private string GetStepNameWithTokenizedStepType(StepInfo stepInfo)
-        {
-            return string.Format("{0} {1}",
-                                 Settings.GetStep(stepInfo.StepInvoker.Type),
-                                 stepInfo.PrettyPrintedName);
-        }
-
-        private string GetStepNameWithTokenizedSeperators(StepInfo step)
-        {
-            return string.Format("{0} {1}",
-                                 step.StepInvoker.Name.SeparatorToken,
-                                 step.PrettyPrintedName);
-        }
-
-        private IEnumerable<string> GetStepReport(StepType stepType)
+        IEnumerable<string> GetStepReport(StepType stepType)
         {
             var lines = new List<string>();
             int insertedStepsCount = 0;
@@ -161,8 +98,7 @@ namespace Kekiri.Impl
             {
                 lines.Add(insertedStepsCount == 0
                                       ? GetStepNameWithTokenizedStepType(step)
-                                      : string.Format("{0}{1}", Settings.GetSeperator(SeperatorType.Indent),
-                                                      GetStepNameWithTokenizedSeperators(step)));
+                                      : $"{Settings.GetSeperator(SeperatorType.Indent)}{GetStepNameWithTokenizedSeperators(step)}");
                 insertedStepsCount++;
             }
 
@@ -200,7 +136,7 @@ namespace Kekiri.Impl
                 return string.Empty;
             }
 
-            return string.Format("{0}{1}", char.ToLower(str[0]), str.Length == 1 ? null : str.Substring(1));
+            return $"{char.ToLower(str[0])}{(str.Length == 1 ? null : str.Substring(1))}";
         }
 
         public static bool StartsWithMultipleUppercaseLetters(this string str)
@@ -209,7 +145,7 @@ namespace Kekiri.Impl
 
             foreach (var c in str.SkipWhile(c => !char.IsLetterOrDigit(c)))
             {
-                if (Char.IsUpper(c))
+                if (char.IsUpper(c))
                 {
                     uppercaseCount++;
                 }
@@ -223,11 +159,7 @@ namespace Kekiri.Impl
 
         public static string ToLowerExceptFirstLetter(this string str)
         {
-            if (string.IsNullOrWhiteSpace(str))
-            {
-                return string.Empty;
-            }
-            return string.Format("{0}{1}", str[0], str.Length == 1 ? null : str.Substring(1).ToLower());
+            return string.IsNullOrWhiteSpace(str) ? string.Empty : $"{str[0]}{(str.Length == 1 ? null : str.Substring(1).ToLower())}";
         }
 
         public static string AsSentence(this string str)

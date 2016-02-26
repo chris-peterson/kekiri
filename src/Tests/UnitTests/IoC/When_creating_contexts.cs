@@ -9,13 +9,13 @@ namespace Kekiri.UnitTests.IoC
         [Test]
         public void If_class_has_default_constructor_then_use_it()
         {
-            Assert.IsNotNull(new AutofacFluentTest<WithDefaultConstructor>().Context);
+            Assert.IsNotNull(new AutofacScenario<WithDefaultConstructor>().Context);
         }
 
         [Test]
         public void If_class_has_no_default_constructor_then_use_container()
         {
-            Assert.IsNotNull(new AutofacFluentTest<WithNoDefaultConstructor>().Context);
+            Assert.IsNotNull(new AutofacScenario<WithNoDefaultConstructor>().Context);
         }
 
         #region Supporting Types

@@ -3,7 +3,7 @@ using Kekiri.TestSupport.Scenarios.Reporting;
 
 namespace Kekiri.UnitTests.Reporting
 {
-    [Scenario(Feature.Reporting)]
+    [ScenarioBase(Feature.Reporting)]
     public abstract class ReportingScenarioTest : Test
     {
         protected ReportingScenarioMetaTest Scenario { private get; set; }

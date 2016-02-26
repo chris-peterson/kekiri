@@ -3,7 +3,7 @@ using Kekiri.TestSupport.Scenarios.Exceptions;
 
 namespace Kekiri.UnitTests.Exceptions
 {
-    [Scenario(Feature.TestExceptionHandling)]
+    [ScenarioBase(Feature.TestExceptionHandling)]
     class When_test_throws_no_exception_when_expected_to_throw : Test
     {
         [When, Throws]

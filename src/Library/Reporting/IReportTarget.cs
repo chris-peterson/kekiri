@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Kekiri.Reporting
 {
-    internal interface IReportTarget
+    interface IReportTarget
     {
         void Report(ScenarioReportingContext scenario);
     }
 
-    internal class CompositeReportTarget : IReportTarget
+    class CompositeReportTarget : IReportTarget
     {
-        private readonly List<IReportTarget> _targets;
+        readonly List<IReportTarget> _targets;
 
-        private CompositeReportTarget(IEnumerable<IReportTarget> targets)
+        CompositeReportTarget(IEnumerable<IReportTarget> targets)
         {
             _targets = new List<IReportTarget>(targets);
         }
@@ -39,13 +40,13 @@ namespace Kekiri.Reporting
         }
     }
 
-    internal class FeatureFileReportTarget : IReportTarget
+    class FeatureFileReportTarget : IReportTarget
     {
-        private static readonly Lazy<FeatureFileReportTarget> _target = new Lazy<FeatureFileReportTarget>(() => new FeatureFileReportTarget());
+        static readonly Lazy<FeatureFileReportTarget> _target = new Lazy<FeatureFileReportTarget>(() => new FeatureFileReportTarget());
 
-        private readonly Dictionary<string, dynamic> _featureState = new Dictionary<string, dynamic>();
+        readonly Dictionary<string, dynamic> _featureState = new Dictionary<string, dynamic>();
 
-        private FeatureFileReportTarget()
+        FeatureFileReportTarget()
         {
         }
         
@@ -56,41 +57,37 @@ namespace Kekiri.Reporting
 
         public void Report(ScenarioReportingContext scenario)
         {
-            // if this test isn't categorized into a feature bucket, don't output it!
-            if (scenario.FeatureReport == null)
-            {
-                return;
-            }
-
-            var featureName = scenario.FeatureReport.Name;
-            if (_featureState.ContainsKey(featureName))
-            {
-                using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
-                {
-                    using (var writer = new StreamWriter(fs))
-                    {
-                        writer.WriteLine(scenario.CreateReport(omitFeatureOutput: true));
-                    }
-                }
-            }
-            else
-            {
-                _featureState.Add(featureName, new
-                {
-                    Path = string.Format("{0}.feature", CoerceValidFileName(featureName))
-                });
-                using (var fs = File.Create(_featureState[featureName].Path))
-                {
-                    using (var writer = new StreamWriter(fs))
-                    {
-                        writer.WriteLine(scenario.CreateReport());
-                    }
-                }
-            }
+            return;
+            // TODO: infer featurename from namespace?
+            //var featureName = scenario.FeatureReport.Name;
+            //if (_featureState.ContainsKey(featureName))
+            //{
+            //    using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
+            //    {
+            //        using (var writer = new StreamWriter(fs))
+            //        {
+            //            writer.WriteLine(scenario.CreateReport(omitFeatureOutput: true));
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    _featureState.Add(featureName, new
+            //    {
+            //        Path = string.Format("{0}.feature", CoerceValidFileName(featureName))
+            //    });
+            //    using (var fs = File.Create(_featureState[featureName].Path))
+            //    {
+            //        using (var writer = new StreamWriter(fs))
+            //        {
+            //            writer.WriteLine(scenario.CreateReport());
+            //        }
+            //    }
+            //}
         }
 
         // http://stackoverflow.com/questions/309485/c-sharp-sanitize-file-name
-        private static string CoerceValidFileName(string filename)
+        static string CoerceValidFileName(string filename)
         {
             var invalidChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
             var invalidReStr = string.Format(@"[{0}]+", invalidChars);
@@ -103,21 +100,16 @@ namespace Kekiri.Reporting
                                     };
 
             var sanitisedNamePart = Regex.Replace(filename, invalidReStr, "_");
-            foreach (var reservedWord in reservedWords)
-            {
-                var reservedWordPattern = string.Format("^{0}\\.", reservedWord);
-                sanitisedNamePart = Regex.Replace(sanitisedNamePart, reservedWordPattern, "_reservedWord_.", RegexOptions.IgnoreCase);
-            }
 
-            return sanitisedNamePart;
+            return reservedWords.Select(reservedWord => $"^{reservedWord}\\.").Aggregate(sanitisedNamePart, (current, reservedWordPattern) => Regex.Replace(current, reservedWordPattern, "_reservedWord_.", RegexOptions.IgnoreCase));
         }
     }
 
-    internal class TraceReportTarget : IReportTarget
+    class TraceReportTarget : IReportTarget
     {
-        private static readonly Lazy<TraceReportTarget> _target = new Lazy<TraceReportTarget>(() => new TraceReportTarget());
+        static readonly Lazy<TraceReportTarget> _target = new Lazy<TraceReportTarget>(() => new TraceReportTarget());
 
-        private TraceReportTarget()
+        TraceReportTarget()
         {
         }
 
