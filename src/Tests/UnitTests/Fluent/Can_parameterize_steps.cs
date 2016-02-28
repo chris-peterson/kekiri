@@ -10,7 +10,7 @@ namespace Kekiri.UnitTests.Fluent
         public void Step_class()
         {
             var test = new Parameterized_steps();
-            test.RunScenario();
+            test.Run();
             Assert.Inconclusive("No way to verify this at the moment -- inspect output:\r\n\r\n");
         }
     }

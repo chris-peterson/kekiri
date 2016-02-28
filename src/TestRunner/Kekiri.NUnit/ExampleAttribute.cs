@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Kekiri.NUnit
+namespace Kekiri.TestRunner.NUnit
 {
     public class ExampleAttribute : TestFixtureAttribute, IExampleAttribute
     {

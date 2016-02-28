@@ -7,11 +7,11 @@ using Module = Autofac.Module;
 
 namespace Kekiri.IoC.Autofac
 {
-    internal class AutofacContainer : Container, IDisposable
+    class AutofacContainer : Container, IDisposable
     {
-        private ILifetimeScope _lifetimeScope;
+        ILifetimeScope _lifetimeScope;
 
-        private static readonly Lazy<IContainer> _container = new Lazy<IContainer>(() =>
+        static readonly Lazy<IContainer> _container = new Lazy<IContainer>(() =>
         {
             var assemblies = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll")
                 .Where(n => !CustomBehavior.IsBlacklistedAssembly(n))
@@ -62,7 +62,7 @@ namespace Kekiri.IoC.Autofac
             }
         }
 
-        private static MethodInfo GetRegistrationMethodForThisAutofacVersion()
+        static MethodInfo GetRegistrationMethodForThisAutofacVersion()
         {
             // Autofac 3.4+
             var newLocation = Type.GetType("Autofac.ModuleRegistrationExtensions, Autofac");

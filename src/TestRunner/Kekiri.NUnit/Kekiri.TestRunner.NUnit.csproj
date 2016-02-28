@@ -7,8 +7,8 @@
     <ProjectGuid>{3602271C-4227-4852-B2C0-15445065BFD6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Kekiri.NUnit</RootNamespace>
-    <AssemblyName>Kekiri.NUnit</AssemblyName>
+    <RootNamespace>Kekiri.TestRunner.NUnit</RootNamespace>
+    <AssemblyName>Kekiri.TestRunner.NUnit</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,7 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExampleAttribute.cs" />
-    <Compile Include="IExampleAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenario.cs" />
   </ItemGroup>
@@ -47,7 +46,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library\Kekiri.csproj">
+    <ProjectReference Include="..\..\Library\Kekiri.csproj">
       <Project>{5827C04B-91A2-42AC-8A99-E23BBB27CD94}</Project>
       <Name>Kekiri</Name>
     </ProjectReference>

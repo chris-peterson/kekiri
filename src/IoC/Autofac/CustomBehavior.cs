@@ -33,12 +33,7 @@ namespace Kekiri.IoC.Autofac
 
         public static bool IsBlacklistedAssembly(string assembly)
         {
-            if (CheckBlacklistedAssembly == null)
-            {
-                return false;
-            }
-
-            return CheckBlacklistedAssembly(assembly);
+            return CheckBlacklistedAssembly != null && CheckBlacklistedAssembly(assembly);
         }
     }
 }

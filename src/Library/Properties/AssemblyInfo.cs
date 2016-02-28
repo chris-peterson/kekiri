@@ -21,6 +21,7 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("Kekiri.UnitTests")]
 [assembly: InternalsVisibleTo("Kekiri.TestSupport")]
+[assembly: InternalsVisibleTo("Kekiri.IoC.Autofac")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("71b2ea37-d2e7-449f-8840-f437bab441e4")]

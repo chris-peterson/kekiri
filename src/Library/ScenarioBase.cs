@@ -5,11 +5,12 @@ using System.Linq;
 using System.Reflection;
 using Kekiri.Exceptions;
 using Kekiri.Impl;
+using Kekiri.IoC;
 using Kekiri.Reporting;
 
 namespace Kekiri
 {
-    public abstract class ScenarioBase : IContextAccessor
+    public abstract class ScenarioBase : IContextAccessor, IContainerAccessor
     {
         readonly ScenarioRunner _scenarioRunner;
 
@@ -20,7 +21,7 @@ namespace Kekiri
             _scenarioRunner = new ScenarioRunner(this, reportTarget);
         }
 
-        public virtual void RunScenario()
+        public virtual void Run()
         {
             try
             {
@@ -38,6 +39,20 @@ namespace Kekiri
             return _scenarioRunner.Catch<TException>();
         }
 
+        public static Func<Container> ContainerFactory { get; internal set; }
+
+        public Container Container
+        {
+            get
+            {
+                if (ContainerFactory == null)
+                {
+                    throw new ContainerFactoryNotInitialized(this);
+                }
+
+                return _container ?? (_container = ContainerFactory.Invoke());
+            }
+        }
 
         #region Base
         // shared by nestable steps (e.g. Given/Then) and steps that can't be nested (e.g. When)
@@ -322,6 +337,7 @@ namespace Kekiri
         }
 
         object _context;
+        Container _container;
         protected internal dynamic Context => _context ?? (_context = CreateContextObject());
 
         dynamic IContextAccessor.Context => Context;

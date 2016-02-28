@@ -1,14 +1,14 @@
 ﻿using NUnit.Framework;
 
-namespace Kekiri.NUnit
+namespace Kekiri.TestRunner.NUnit
 {
     [TestFixture]
     public abstract class Scenario : ScenarioBase
     {
         [Test]
-        public override void RunScenario()
+        public override void Run()
         {
-            base.RunScenario();
+            base.Run();
         }
     }
 }

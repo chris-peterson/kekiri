@@ -16,6 +16,8 @@
         Consolidate to Fluent style (drop attribute based Tests)
         Rename FluentTest => Scenario
         Isolate NUnit dependencies in seperate package (Kekiri.NUnit)
+        IoC (Container) is now baked into base Scenario
+        Drop support for SimpleInjector (might bring this back one IoC model is defined)
         Drop TestGen package
     </releaseNotes>
   </metadata>

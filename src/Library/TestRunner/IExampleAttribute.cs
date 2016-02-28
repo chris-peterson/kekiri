@@ -1,4 +1,4 @@
-﻿namespace Kekiri
+﻿namespace Kekiri.TestRunner
 {
     public interface IExampleAttribute
     {
