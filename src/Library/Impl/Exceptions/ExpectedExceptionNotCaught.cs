@@ -4,8 +4,8 @@ namespace Kekiri.Impl.Exceptions
 {
     class ExpectedExceptionNotCaught : ScenarioException
     {
-        public ExpectedExceptionNotCaught(object test, Exception exception) :
-            base(test, string.Format("Exception was expected but Catch<{0}>() was not called", exception.GetType()), exception)
+        public ExpectedExceptionNotCaught(ScenarioBase scenario, Exception exception) :
+            base(scenario, $"Exception was expected but Catch<{exception.GetType()}>() was not called", exception)
         {
         }
     }

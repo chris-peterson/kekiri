@@ -2,9 +2,9 @@
 
 namespace Kekiri.Impl.Exceptions
 {
-    class ConstructorNotFound : Exception
+    class ConstructorNotFound : ScenarioException
     {
-        public ConstructorNotFound(string message) : base(message)
+        public ConstructorNotFound(ScenarioBase scenario, string message) : base(scenario, message)
         {
         }
     }

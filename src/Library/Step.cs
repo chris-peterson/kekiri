@@ -2,39 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using Kekiri.Impl;
-using Kekiri.IoC;
 
 namespace Kekiri
 {
     public abstract class Step
     {
-        internal static Step InstanceFor(IContextAccessor test, Type stepClass, KeyValuePair<string, object>[] parameters, IExceptionHandler exceptionHandler)
+        internal static Step InstanceFor(ScenarioBase scenario, Type stepClass, KeyValuePair<string, object>[] parameters, IExceptionHandler exceptionHandler)
         {
             var instance = (Step)Activator.CreateInstance(stepClass, parameters.Select(p => p.Value).ToArray());
-            instance.SetScenario(test, exceptionHandler);
+            instance.SetScenario(scenario, exceptionHandler);
 
             return instance;
         }
 
-        IContextAccessor _scenario;
+        ScenarioBase _scenario;
         IExceptionHandler _exceptionHandler;
 
         protected dynamic Context => _scenario.Context;
 
-        protected Container Container
+        void SetScenario(ScenarioBase scenario, IExceptionHandler exceptionHandler)
         {
-            get
-            {
-                var iocScenario = _scenario as IContainerAccessor;
-                if(iocScenario == null)
-                    throw new InvalidOperationException("The Container property requires your scenario to inherit from an IoCScenarioTest");
-                return iocScenario.Container;
-            }
-        }
-
-        void SetScenario(IContextAccessor test, IExceptionHandler exceptionHandler)
-        {
-            _scenario = test;
+            _scenario = scenario;
             _exceptionHandler = exceptionHandler;
         }
 

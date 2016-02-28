@@ -50,14 +50,12 @@
     <Compile Include="Impl\Exceptions\ConstructorNotFound.cs" />
     <Compile Include="TestRunner\IExampleAttribute.cs" />
     <Compile Include="IoC\Container.cs" />
-    <Compile Include="IoC\IContainerAccessor.cs" />
     <Compile Include="ScenarioBase.cs" />
     <Compile Include="Impl\IStepInvoker.cs" />
     <Compile Include="Impl\ScenarioRunner.cs" />
     <Compile Include="Impl\StepMethodInvoker.cs" />
     <Compile Include="Impl\StepClassInvoker.cs" />
     <Compile Include="Impl\StepName.cs" />
-    <Compile Include="IContextAccessor.cs" />
     <Compile Include="Impl\ReflectionExtensions.cs" />
     <Compile Include="Step.cs" />
     <Compile Include="Impl\Reporting\ScenarioReportingContext.cs" />

@@ -5,11 +5,11 @@ namespace Kekiri.Impl.Exceptions
     class WrongExceptionType : ScenarioException
     {
         public WrongExceptionType(
-            object test,
+            ScenarioBase scenario,
             Type expectedExceptionType,
             Exception innerException)
             : base(
-                test,
+                scenario,
                 $"Expected '{expectedExceptionType.Name}', but was '{innerException.GetType().Name}'",
                 innerException)
         {

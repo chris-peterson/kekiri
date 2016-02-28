@@ -15,16 +15,16 @@ namespace Kekiri.Impl
 
     class ScenarioRunner : IExceptionHandler
     {
-        readonly object _test;
+        readonly ScenarioBase _scenario;
         readonly ScenarioTestMetadata _scenarioMetadata;
         readonly IReportTarget _reportTarget;
         Exception _exception;
         bool _exceptionCaught;
 
-        public ScenarioRunner(object test, IReportTarget reportTarget)
+        public ScenarioRunner(ScenarioBase scenario, IReportTarget reportTarget)
         {
-            _test = test;
-            _scenarioMetadata = new ScenarioTestMetadata(test.GetType());
+            _scenario = scenario;
+            _scenarioMetadata = new ScenarioTestMetadata(scenario.GetType());
             _reportTarget = reportTarget;
         }
 
@@ -43,13 +43,13 @@ namespace Kekiri.Impl
         {
             if (_exception == null)
             {
-                throw new NoExceptionThrown(_test, typeof(TException));
+                throw new NoExceptionThrown(_scenario, typeof(TException));
             }
 
             var exception = _exception as TException;
             if (exception == null)
             {
-                throw new WrongExceptionType(_test, typeof(TException), _exception);
+                throw new WrongExceptionType(_scenario, typeof(TException), _exception);
             }
 
             _exceptionCaught = true;
@@ -60,12 +60,12 @@ namespace Kekiri.Impl
         {
             if (_exception != null && !_exceptionCaught)
             {
-                throw new ExpectedExceptionNotCaught(_test, _exception);
+                throw new ExpectedExceptionNotCaught(_scenario, _exception);
             }
 
             if (_scenarioMetadata.WhenMethod.ExceptionExpected && _exception == null)
             {
-                throw new NoExceptionThrown(_test);
+                throw new NoExceptionThrown(_scenario);
             }
         }
         #endregion
@@ -87,7 +87,7 @@ namespace Kekiri.Impl
         public void EnsureAtLeastOneThenExists()
         {
             if (!_scenarioMetadata.ThenMethods.Any())
-                throw new FixtureShouldHaveThens(_test);
+                throw new FixtureShouldHaveThens(_scenario);
         }
 
         public void RunGivens()
@@ -96,11 +96,11 @@ namespace Kekiri.Impl
             {
                 try
                 {
-                    given.Invoke(_test);
+                    given.Invoke(_scenario);
                 }
                 catch (TargetInvocationException ex)
                 {
-                    throw new GivenFailed(_test, given.Name.PrettyName, ex.InnerException);
+                    throw new GivenFailed(_scenario, given.Name.PrettyName, ex.InnerException);
                 }
             }
         }
@@ -110,11 +110,11 @@ namespace Kekiri.Impl
             var when = _scenarioMetadata.WhenMethod;
             if (when == null)
             {
-                throw new FixtureShouldHaveWhens(_test);
+                throw new FixtureShouldHaveWhens(_scenario);
             }
             try
             {
-                when.Invoke(_test);
+                when.Invoke(_scenario);
             }
             catch (Exception ex)
             {
@@ -129,7 +129,7 @@ namespace Kekiri.Impl
 
                 if (!when.ExceptionExpected)
                 {
-                    throw new WhenFailed(_test, when.Name.PrettyName, _exception);
+                    throw new WhenFailed(_scenario, when.Name.PrettyName, _exception);
                 }
             }
         }
@@ -142,11 +142,11 @@ namespace Kekiri.Impl
             {
                 try
                 {
-                    given.Invoke(_test);
+                    given.Invoke(_scenario);
                 }
                 catch (TargetInvocationException ex)
                 {
-                    throw new ThenFailed(_test, given.Name.PrettyName, ex.InnerException);
+                    throw new ThenFailed(_scenario, given.Name.PrettyName, ex.InnerException);
                 }
             }
         }

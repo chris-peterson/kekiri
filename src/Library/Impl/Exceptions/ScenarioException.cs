@@ -4,22 +4,23 @@ namespace Kekiri.Impl.Exceptions
 {
     class ScenarioException : Exception
     {
-        public object Test { get; private set; }
+        public ScenarioBase Scenario { get; private set; }
 
-        public ScenarioException(object test, string message) :
-            this(test, message, null)
+        public ScenarioException(ScenarioBase scenario, string message) :
+            this(scenario, message, null)
         {
         }
+
+        public ScenarioException(ScenarioBase scenario, string message, Exception innerException) :
+            this(scenario.GetType(), message, innerException)
+        {
+            Scenario = scenario;
+        }
+
 
         public ScenarioException(Type type, string message) :
             this(type, message, null)
         {
-        }
-
-        public ScenarioException(object test, string message, Exception innerException) :
-            this(test.GetType(), message, innerException)
-        {
-            Test = test;
         }
 
         public ScenarioException(Type type, string message, Exception innerException) :

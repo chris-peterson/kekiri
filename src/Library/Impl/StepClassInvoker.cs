@@ -12,7 +12,7 @@ namespace Kekiri.Impl
         public StepClassInvoker(StepType stepType, Type stepClass, KeyValuePair<string,object>[] supportedParameters, IExceptionHandler exceptionHandler)
         {
             if (!typeof(Step).IsAssignableFrom(stepClass))
-                throw new ArgumentException("The stepClass must inherit from Step", "stepClass");
+                throw new ArgumentException("The stepClass must inherit from Step", nameof(stepClass));
             _stepClass = stepClass;
             _exceptionHandler = exceptionHandler;
             Type = stepType;
@@ -30,12 +30,9 @@ namespace Kekiri.Impl
 
         public string SourceDescription => _stepClass.FullName;
 
-        public void Invoke(object test)
+        public void Invoke(ScenarioBase scenario)
         {
-            var contextContainer = test as IContextAccessor;
-            if(contextContainer == null)
-                throw new InvalidOperationException("The test must implement IContextContainer");
-            Step.InstanceFor(contextContainer, _stepClass, Parameters, _exceptionHandler).Execute();
+           Step.InstanceFor(scenario, _stepClass, Parameters, _exceptionHandler).Execute();
         }
     }
 }

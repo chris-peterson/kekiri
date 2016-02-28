@@ -2,8 +2,8 @@ namespace Kekiri.Impl.Exceptions
 {
     class FixtureShouldHaveThens : ScenarioException
     {
-        public FixtureShouldHaveThens(object test)
-            : base(test, "No thens found; a then should be specified by calling Then in the constructor")
+        public FixtureShouldHaveThens(ScenarioBase scenario)
+            : base(scenario, "No thens found; a then should be specified by calling Then in the constructor")
         {
         }
     }

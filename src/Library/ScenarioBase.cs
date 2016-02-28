@@ -10,7 +10,7 @@ using Kekiri.IoC;
 
 namespace Kekiri
 {
-    public abstract class ScenarioBase : IContextAccessor, IContainerAccessor
+    public abstract class ScenarioBase
     {
         readonly ScenarioRunner _scenarioRunner;
 
@@ -41,6 +41,7 @@ namespace Kekiri
 
         public static Func<Container> ContainerFactory { get; internal set; }
 
+        Container _container;
         public Container Container
         {
             get
@@ -323,7 +324,7 @@ namespace Kekiri
                 .SingleOrDefault();
             if (ctor == null)
             {
-                throw new ConstructorNotFound($"Could not find a constructor for {stepType} {stepClass.Name} ({string.Join(", ", parameterValues.Select(p => $"{p.GetType().Name} {p}"))})");
+                throw new ConstructorNotFound(this, $"Could not find a constructor for {stepType} {stepClass.Name} ({string.Join(", ", parameterValues.Select(p => $"{p.GetType().Name} {p}"))})");
             }
             var parameters = ExtractParameters(ctor, parameterValues);
             _scenarioRunner.AddStep(new StepClassInvoker(stepType, stepClass, parameters, _scenarioRunner));
@@ -337,10 +338,8 @@ namespace Kekiri
         }
 
         object _context;
-        Container _container;
-        protected internal dynamic Context => _context ?? (_context = CreateContextObject());
 
-        dynamic IContextAccessor.Context => Context;
+        protected internal dynamic Context => _context ?? (_context = CreateContextObject());
 
         protected virtual void Before() { }
         protected virtual void After() { }

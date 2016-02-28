@@ -27,9 +27,9 @@ namespace Kekiri.Impl
             SourceDescription = $"{method.DeclaringType?.FullName}.{method.Name}";
         }
 
-        public virtual void Invoke(object test)
+        public virtual void Invoke(ScenarioBase scenario)
         {
-            Method.Invoke(Method.IsStatic ? null : test, Parameters.Select(p => p.Value).ToArray());
+            Method.Invoke(Method.IsStatic ? null : scenario, Parameters.Select(p => p.Value).ToArray());
         }
     }
 }

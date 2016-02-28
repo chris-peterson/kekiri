@@ -2,7 +2,7 @@ namespace Kekiri.Impl
 {
     interface IStepInvoker
     {
-        void Invoke(object test);
+        void Invoke(ScenarioBase scenario);
 
         bool ExceptionExpected { get; set; }
 
