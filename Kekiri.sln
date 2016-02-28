@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests.SimpleInje
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.NUnit", "src\Kekiri.NUnit\Kekiri.NUnit.csproj", "{3602271C-4227-4852-B2C0-15445065BFD6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples", "src\Tests\Kekiri.Examples\Kekiri.Examples.csproj", "{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{3602271C-4227-4852-B2C0-15445065BFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3602271C-4227-4852-B2C0-15445065BFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3602271C-4227-4852-B2C0-15445065BFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,5 +97,6 @@ Global
 		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 		{5219967B-0D18-43B3-ABB5-5505A71EDA57} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 		{903AB18E-7DC8-4BCF-A9BB-F301B13F0BA9} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
+		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 	EndGlobalSection
 EndGlobal

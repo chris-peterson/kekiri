@@ -38,11 +38,14 @@ namespace Kekiri
             return _scenarioRunner.Catch<TException>();
         }
 
-        public abstract class FluentOptionsForStep
+
+        #region Base
+        // shared by nestable steps (e.g. Given/Then) and steps that can't be nested (e.g. When)
+        public abstract class StepOptionsBase
         {
             protected readonly ScenarioBase Scenario;
 
-            protected FluentOptionsForStep(ScenarioBase scenario)
+            protected StepOptionsBase(ScenarioBase scenario)
             {
                 Scenario = scenario;
             }
@@ -50,39 +53,38 @@ namespace Kekiri
             protected abstract StepType StepType { get; }
         }
 
-        #region Base
-        public abstract class FluentOptionsForStepWithNesting : FluentOptionsForStep
+        public abstract class NestedStepOptions : StepOptionsBase
         {
-            protected FluentOptionsForStepWithNesting(ScenarioBase scenario) : base(scenario)
+            protected NestedStepOptions(ScenarioBase scenario) : base(scenario)
             {
             }
 
             #region And
-            public FluentOptionsForStepWithNesting And(Action action)
+            public NestedStepOptions And(Action action)
             {
                 Scenario.AddStepMethod(StepType, action);
                 return this;
             }
 
-            public FluentOptionsForStepWithNesting And<T>(Action<T> action, T a)
+            public NestedStepOptions And<T>(Action<T> action, T a)
             {
                 Scenario.AddStepMethod(StepType, action.Method, a);
                 return this;
             }
 
-            public FluentOptionsForStepWithNesting And<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+            public NestedStepOptions And<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
             {
                 Scenario.AddStepMethod(StepType, action.Method, a, b);
                 return this;
             }
 
-            public FluentOptionsForStepWithNesting And<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+            public NestedStepOptions And<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
             {
                 Scenario.AddStepMethod(StepType, action.Method, a, b, c);
                 return this;
             }
 
-            public FluentOptionsForStepWithNesting And<TStep>(params object[] parameterValues) where TStep : Step
+            public NestedStepOptions And<TStep>(params object[] parameterValues) where TStep : Step
             {
                 Scenario.AddStepClass<TStep>(StepType, parameterValues);
                 return this;
@@ -90,31 +92,31 @@ namespace Kekiri
             #endregion
 
             #region But
-            public FluentOptionsForStepWithNesting But(Action action)
+            public NestedStepOptions But(Action action)
             {
                 Scenario.AddStepMethod(StepType, action);
                 return this;
             }
 
-            public FluentOptionsForStepWithNesting But<T>(Action<T> action, T a)
+            public NestedStepOptions But<T>(Action<T> action, T a)
             {
                 Scenario.AddStepMethod(StepType, action.Method, a);
                 return this;
             }
 
-            public FluentOptionsForStepWithNesting But<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+            public NestedStepOptions But<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
             {
                 Scenario.AddStepMethod(StepType, action.Method, a, b);
                 return this;
             }
 
-            public FluentOptionsForStepWithNesting But<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+            public NestedStepOptions But<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
             {
                 Scenario.AddStepMethod(StepType, action.Method, a, b, c);
                 return this;
             }
 
-            public FluentOptionsForStepWithNesting But<TStep>(params object[] parameterValues) where TStep : Step
+            public NestedStepOptions But<TStep>(params object[] parameterValues) where TStep : Step
             {
                 Scenario.AddStepClass<TStep>(StepType, parameterValues);
                 return this;
@@ -124,157 +126,167 @@ namespace Kekiri
         #endregion
 
         #region Given
-        public class FluentOptionsForGiven : FluentOptionsForStepWithNesting
+        public class GivenOptions : NestedStepOptions
         {
-            public FluentOptionsForGiven(ScenarioBase scenario)
+            public GivenOptions(ScenarioBase scenario)
                 : base(scenario)
             {
             }
 
-            protected override StepType StepType
-            {
-                get { return StepType.Given; }
-            }
+            protected override StepType StepType => StepType.Given;
         }
 
-        protected FluentOptionsForStepWithNesting Given(Action action)
+        protected GivenOptions Given(Action action)
         {
-            return new FluentOptionsForGiven(this).And(action);
+            var given = new GivenOptions(this);
+            given.And(action);
+            return given;
         }
 
-        protected FluentOptionsForStepWithNesting Given<T>(Action<T> action, T a)
+        protected GivenOptions Given<T>(Action<T> action, T a)
         {
-            return new FluentOptionsForGiven(this).And(action, a);
+            var given = new GivenOptions(this);
+            given.And(action, a);
+            return given;
         }
 
-        protected FluentOptionsForStepWithNesting Given<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+        protected GivenOptions Given<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
         {
-            return new FluentOptionsForGiven(this).And(action, a, b);
+            var given = new GivenOptions(this);
+            given.And(action, a, b);
+            return given;
         }
 
-        protected FluentOptionsForStepWithNesting Given<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+        protected GivenOptions Given<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
         {
-            return new FluentOptionsForGiven(this).And(action, a, b, c);
+            var given = new GivenOptions(this);
+            given.And(action, a, b, c);
+            return given;
         }
 
-        protected FluentOptionsForStepWithNesting Given<TStep>(params object[] parameterValues) where TStep : Step
+        protected GivenOptions Given<TStep>(params object[] parameterValues) where TStep : Step
         {
-            return new FluentOptionsForGiven(this).And<TStep>(parameterValues);
+            var given = new GivenOptions(this);
+            given.And<TStep>(parameterValues);
+            return given;
         }
-
         #endregion
 
         #region When
-        public class FluentOptionsForWhen : FluentOptionsForStep
+        public class WhenOptions : StepOptionsBase
         {
-            public FluentOptionsForWhen(ScenarioBase scenario) : base(scenario)
+            public WhenOptions(ScenarioBase scenario) : base(scenario)
             {
             }
 
-            protected override StepType StepType
-            {
-                get { return StepType.When; }
-            }
+            protected override StepType StepType => StepType.When;
 
             public void Throws()
             {
                 Scenario._scenarioRunner.ExpectException();
             }
 
-            internal FluentOptionsForWhen That(Action action)
+            internal WhenOptions That(Action action)
             {
                 Scenario.AddStepMethod(StepType, action);
                 return this;
             }
 
-            internal FluentOptionsForWhen That<T>(Action<T> action, T a)
+            internal WhenOptions That<T>(Action<T> action, T a)
             {
                 Scenario.AddStepMethod(StepType, action.Method, a);
                 return this;
             }
 
-            internal FluentOptionsForWhen That<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+            internal WhenOptions That<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
             {
                 Scenario.AddStepMethod(StepType, action.Method, a, b);
                 return this;
             }
 
-            internal FluentOptionsForWhen That<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+            internal WhenOptions That<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
             {
                 Scenario.AddStepMethod(StepType, action.Method, a, b, c);
                 return this;
             }
 
-            internal FluentOptionsForWhen That<TStep>(params object[] parameterValues) where TStep : Step
+            internal WhenOptions That<TStep>(params object[] parameterValues) where TStep : Step
             {
                 Scenario.AddStepClass<TStep>(StepType, parameterValues);
                 return this;
             }
         }
 
-        protected FluentOptionsForWhen When(Action action)
+        protected WhenOptions When(Action action)
         {
-            return new FluentOptionsForWhen(this).That(action);
+            return new WhenOptions(this).That(action);
         }
 
-        protected FluentOptionsForWhen When<T>(Action<T> action, T a)
+        protected WhenOptions When<T>(Action<T> action, T a)
         {
-            return new FluentOptionsForWhen(this).That(action, a);
+            return new WhenOptions(this).That(action, a);
         }
 
-        protected FluentOptionsForWhen When<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+        protected WhenOptions When<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
         {
-            return new FluentOptionsForWhen(this).That(action, a, b);
+            return new WhenOptions(this).That(action, a, b);
         }
 
-        protected FluentOptionsForWhen When<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+        protected WhenOptions When<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
         {
-            return new FluentOptionsForWhen(this).That(action, a, b, c);
+            return new WhenOptions(this).That(action, a, b, c);
         }
 
-        protected FluentOptionsForWhen When<TStep>(params object[] parameterValues) where TStep : Step
+        protected WhenOptions When<TStep>(params object[] parameterValues) where TStep : Step
         {
-            return new FluentOptionsForWhen(this).That<TStep>(parameterValues);
+            return new WhenOptions(this).That<TStep>(parameterValues);
         }
         #endregion
 
         #region Then
-        public class FluentOptionsForThen : FluentOptionsForStepWithNesting
+        public class ThenOptions : NestedStepOptions
         {
-            public FluentOptionsForThen(ScenarioBase scenario)
+            public ThenOptions(ScenarioBase scenario)
                 : base(scenario)
             {
             }
 
-            protected override StepType StepType
-            {
-                get { return StepType.Then; }
-            }
+            protected override StepType StepType => StepType.Then;
         }
 
-        protected FluentOptionsForStepWithNesting Then(Action action)
+        protected ThenOptions Then(Action action)
         {
-            return new FluentOptionsForThen(this).And(action);
+            var then = new ThenOptions(this);
+            then.And(action);
+            return then;
         }
 
-        protected FluentOptionsForStepWithNesting Then<T>(Action<T> action, T a)
+        protected ThenOptions Then<T>(Action<T> action, T a)
         {
-            return new FluentOptionsForThen(this).And(action, a);
+            var then = new ThenOptions(this);
+            then.And(action, a);
+            return then;
         }
 
-        protected FluentOptionsForStepWithNesting Then<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
+        protected ThenOptions Then<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
         {
-            return new FluentOptionsForThen(this).And(action, a, b);
+            var then = new ThenOptions(this);
+            then.And(action, a, b);
+            return then;
         }
 
-        protected FluentOptionsForStepWithNesting Then<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
+        protected ThenOptions Then<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
         {
-            return new FluentOptionsForThen(this).And(action, a, b, c);
+            var then = new ThenOptions(this);
+            then.And(action, a, b, c);
+            return then;
         }
 
-        protected FluentOptionsForStepWithNesting Then<TStep>(params object[] parameterValues) where TStep : Step
+        protected ThenOptions Then<TStep>(params object[] parameterValues) where TStep : Step
         {
-            return new FluentOptionsForThen(this).And<TStep>(parameterValues);
+            var then = new ThenOptions(this);
+            then.And<TStep>(parameterValues);
+            return then;
         }
         #endregion
 
@@ -283,7 +295,7 @@ namespace Kekiri
             _scenarioRunner.AddStep(new StepMethodInvoker(stepType, action.Method));
         }
 
-        void AddStepMethod(StepType stepType, MethodInfo method, params object[] parameterValues)
+        void AddStepMethod(StepType stepType, MethodBase method, params object[] parameterValues)
         {
             var parameters = ExtractParameters(method, parameterValues);
             _scenarioRunner.AddStep(new StepMethodInvoker(stepType, method, parameters));
@@ -302,23 +314,17 @@ namespace Kekiri
             _scenarioRunner.AddStep(new StepClassInvoker(stepType, stepClass, parameters, _scenarioRunner));
         }
 
-        private KeyValuePair<string, object>[] ExtractParameters(MethodBase method, object[] parameterValues)
+        static KeyValuePair<string, object>[] ExtractParameters(MethodBase method, object[] parameterValues)
         {
             return method.GetParameters()
                 .Select((p, index) => new KeyValuePair<string, object>(p.Name, parameterValues[index]))
                 .ToArray();
         }
 
-        private object _context;
-        protected internal dynamic Context
-        {
-            get { return _context ?? (_context = CreateContextObject()); }
-        }
+        object _context;
+        protected internal dynamic Context => _context ?? (_context = CreateContextObject());
 
-        dynamic IContextAccessor.Context
-        {
-            get { return Context; }
-        }
+        dynamic IContextAccessor.Context => Context;
 
         protected virtual void Before() { }
         protected virtual void After() { }
@@ -341,9 +347,6 @@ namespace Kekiri
             return new TContext();
         }
 
-        protected internal new TContext Context
-        {
-            get { return base.Context; }
-        }
+        protected internal new TContext Context => base.Context;
     }
 }
