@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Kekiri.Config;
-using Kekiri.Reporting;
+using Kekiri.Impl.Config;
+using Kekiri.Impl.Reporting;
 
 namespace Kekiri.Impl
 {

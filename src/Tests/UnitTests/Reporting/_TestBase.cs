@@ -1,4 +1,4 @@
-﻿using Kekiri.Config;
+﻿using Kekiri.Impl.Config;
 using Kekiri.TestSupport.Scenarios.Reporting;
 
 namespace Kekiri.UnitTests.Reporting

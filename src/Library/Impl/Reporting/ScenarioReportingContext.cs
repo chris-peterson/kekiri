@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Kekiri.Config;
+using Kekiri.Impl.Config;
 
-namespace Kekiri.Reporting
+namespace Kekiri.Impl.Reporting
 {
     class ScenarioReportingContext
     {

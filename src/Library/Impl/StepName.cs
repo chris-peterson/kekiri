@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Kekiri.Config;
+using Kekiri.Impl.Config;
 
 namespace Kekiri.Impl
 {

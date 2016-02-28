@@ -1,6 +1,6 @@
-namespace Kekiri
+namespace Kekiri.Impl
 {
-    public enum StepType
+    enum StepType
     {
         Given,
         When,

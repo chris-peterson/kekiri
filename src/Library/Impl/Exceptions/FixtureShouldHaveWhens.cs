@@ -1,4 +1,4 @@
-namespace Kekiri.Exceptions
+namespace Kekiri.Impl.Exceptions
 {
     class FixtureShouldHaveWhens : ScenarioException
     {

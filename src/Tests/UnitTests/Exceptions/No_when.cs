@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
-using Kekiri.Exceptions;
 using Kekiri.Impl;
+using Kekiri.Impl.Exceptions;
 using Kekiri.TestSupport.Reporting.Targets;
 using NUnit.Framework;
 

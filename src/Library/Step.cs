@@ -15,14 +15,11 @@ namespace Kekiri
 
             return instance;
         }
-        
-        private IContextAccessor _scenario;
-        private IExceptionHandler _exceptionHandler;
 
-        protected dynamic Context
-        {
-            get { return _scenario.Context; }
-        }
+        IContextAccessor _scenario;
+        IExceptionHandler _exceptionHandler;
+
+        protected dynamic Context => _scenario.Context;
 
         protected Container Container
         {
@@ -35,7 +32,7 @@ namespace Kekiri
             }
         }
 
-        private void SetScenario(IContextAccessor test, IExceptionHandler exceptionHandler)
+        void SetScenario(IContextAccessor test, IExceptionHandler exceptionHandler)
         {
             _scenario = test;
             _exceptionHandler = exceptionHandler;
@@ -51,9 +48,6 @@ namespace Kekiri
 
     public abstract class Step<TContext> : Step
     {
-        protected new TContext Context
-        {
-            get { return (TContext)base.Context; }
-        }
+        protected new TContext Context => (TContext)base.Context;
     }
 }

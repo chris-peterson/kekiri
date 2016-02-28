@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using Kekiri.Exceptions;
+using Kekiri.Impl.Exceptions;
 using Kekiri.TestSupport.Scenarios.Exceptions;
 
 namespace Kekiri.UnitTests.Exceptions

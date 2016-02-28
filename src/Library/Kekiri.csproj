@@ -42,12 +42,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\Settings.cs" />
-    <Compile Include="Config\SeperatorType.cs" />
-    <Compile Include="Config\TokenType.cs" />
-    <Compile Include="Exceptions\ContainerFactoryNotInitialized.cs" />
-    <Compile Include="Exceptions\ThenFailed.cs" />
-    <Compile Include="Exceptions\ConstructorNotFound.cs" />
+    <Compile Include="Impl\Config\Settings.cs" />
+    <Compile Include="Impl\Config\SeperatorType.cs" />
+    <Compile Include="Impl\Config\TokenType.cs" />
+    <Compile Include="Impl\Exceptions\ContainerFactoryNotInitialized.cs" />
+    <Compile Include="Impl\Exceptions\ThenFailed.cs" />
+    <Compile Include="Impl\Exceptions\ConstructorNotFound.cs" />
     <Compile Include="TestRunner\IExampleAttribute.cs" />
     <Compile Include="IoC\Container.cs" />
     <Compile Include="IoC\IContainerAccessor.cs" />
@@ -57,21 +57,20 @@
     <Compile Include="Impl\StepMethodInvoker.cs" />
     <Compile Include="Impl\StepClassInvoker.cs" />
     <Compile Include="Impl\StepName.cs" />
-    <Compile Include="Impl\IContextAccessor.cs" />
-    <Compile Include="ReflectionExtensions.cs" />
+    <Compile Include="IContextAccessor.cs" />
+    <Compile Include="Impl\ReflectionExtensions.cs" />
     <Compile Include="Step.cs" />
-    <Compile Include="Reporting\ScenarioReportingContext.cs" />
-    <Compile Include="Exceptions\ExpectedExceptionNotCaught.cs" />
-    <Compile Include="Exceptions\WhenFailed.cs" />
-    <Compile Include="Exceptions\FixtureShouldHaveWhens.cs" />
-    <Compile Include="Exceptions\NoExceptionThrown.cs" />
-    <Compile Include="Exceptions\WrongExceptionType.cs" />
-    <Compile Include="Reporting\IReportTarget.cs" />
-    <Compile Include="StepAttribute.cs" />
-    <Compile Include="Exceptions\FixtureShouldHaveThens.cs" />
-    <Compile Include="Exceptions\ScenarioException.cs" />
-    <Compile Include="Exceptions\GivenFailed.cs" />
-    <Compile Include="StepType.cs" />
+    <Compile Include="Impl\Reporting\ScenarioReportingContext.cs" />
+    <Compile Include="Impl\Exceptions\ExpectedExceptionNotCaught.cs" />
+    <Compile Include="Impl\Exceptions\WhenFailed.cs" />
+    <Compile Include="Impl\Exceptions\FixtureShouldHaveWhens.cs" />
+    <Compile Include="Impl\Exceptions\NoExceptionThrown.cs" />
+    <Compile Include="Impl\Exceptions\WrongExceptionType.cs" />
+    <Compile Include="Impl\Reporting\IReportTarget.cs" />
+    <Compile Include="Impl\Exceptions\FixtureShouldHaveThens.cs" />
+    <Compile Include="Impl\Exceptions\ScenarioException.cs" />
+    <Compile Include="Impl\Exceptions\GivenFailed.cs" />
+    <Compile Include="Impl\StepType.cs" />
     <Compile Include="Impl\ScenarioTestMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

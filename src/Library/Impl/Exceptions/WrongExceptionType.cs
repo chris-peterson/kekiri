@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Kekiri.Exceptions
+namespace Kekiri.Impl.Exceptions
 {
     class WrongExceptionType : ScenarioException
     {

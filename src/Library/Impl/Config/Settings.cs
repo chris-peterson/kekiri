@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Linq;
 
-namespace Kekiri.Config
+namespace Kekiri.Impl.Config
 {
     class Settings
     {

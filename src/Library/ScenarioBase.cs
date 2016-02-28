@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using Kekiri.Exceptions;
 using Kekiri.Impl;
+using Kekiri.Impl.Exceptions;
+using Kekiri.Impl.Reporting;
 using Kekiri.IoC;
-using Kekiri.Reporting;
 
 namespace Kekiri
 {
@@ -65,7 +65,7 @@ namespace Kekiri
                 Scenario = scenario;
             }
 
-            protected abstract StepType StepType { get; }
+            internal abstract StepType StepType { get; }
         }
 
         public abstract class NestedStepOptions : StepOptionsBase
@@ -148,7 +148,7 @@ namespace Kekiri
             {
             }
 
-            protected override StepType StepType => StepType.Given;
+            internal override StepType StepType => StepType.Given;
         }
 
         protected GivenOptions Given(Action action)
@@ -194,7 +194,7 @@ namespace Kekiri
             {
             }
 
-            protected override StepType StepType => StepType.When;
+            internal override StepType StepType => StepType.When;
 
             public void Throws()
             {
@@ -266,7 +266,7 @@ namespace Kekiri
             {
             }
 
-            protected override StepType StepType => StepType.Then;
+            internal override StepType StepType => StepType.Then;
         }
 
         protected ThenOptions Then(Action action)

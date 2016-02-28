@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Kekiri
+namespace Kekiri.Impl
 {
     static class ReflectionExtensions
     {

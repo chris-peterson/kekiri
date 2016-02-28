@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Kekiri.Exceptions;
-using Kekiri.Reporting;
+using Kekiri.Impl.Exceptions;
+using Kekiri.Impl.Reporting;
 
 namespace Kekiri.Impl
 {

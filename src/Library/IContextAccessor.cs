@@ -1,4 +1,4 @@
-﻿namespace Kekiri.Impl
+﻿namespace Kekiri
 {
     interface IContextAccessor
     {

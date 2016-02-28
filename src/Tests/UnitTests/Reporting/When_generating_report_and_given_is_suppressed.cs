@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Kekiri.Impl;
 using Kekiri.TestSupport.Scenarios.Reporting;
 
 namespace Kekiri.UnitTests.Reporting

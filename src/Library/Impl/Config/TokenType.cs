@@ -1,4 +1,4 @@
-﻿namespace Kekiri.Config
+﻿namespace Kekiri.Impl.Config
 {
     enum TokenType
     {

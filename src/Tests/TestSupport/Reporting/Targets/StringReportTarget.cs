@@ -1,4 +1,4 @@
-﻿using Kekiri.Reporting;
+﻿using Kekiri.Impl.Reporting;
 
 namespace Kekiri.TestSupport.Reporting.Targets
 {
