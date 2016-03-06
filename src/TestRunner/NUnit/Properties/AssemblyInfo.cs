@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Kekiri.NUnit")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Kekiri.TestRunner.NUnit")]
+[assembly: AssemblyDescription("NUnit test runner adapter for Kekiri")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Kekiri.NUnit")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("Chris Peterson")]
+[assembly: AssemblyProduct("Kekiri.TestRunner.NUnit")]
+[assembly: AssemblyCopyright("Copyright © 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

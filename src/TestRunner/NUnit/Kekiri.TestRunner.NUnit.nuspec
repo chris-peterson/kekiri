@@ -3,23 +3,20 @@
     <metadata>
         <id>$id$</id>
         <title>$id$</title>
-        <version>4.0</version>
+        <version>1.0</version>
         <authors>$author$</authors>
-        <summary>Autofac extensions for Kekiri</summary>
+        <summary>NUnit test runner adapter for Kekiri</summary>
         <description>$description$</description>
         <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <projectUrl>http://github.com/chris-peterson/kekiri</projectUrl>
         <tags>bdd scenario test gherkin cucumber pickles ioc di autofac nunit specflow</tags>
-        <copyright>2013-2016</copyright>
+        <copyright>2016</copyright>
         <releaseNotes>
-            IoC providers are now bootstrapped at test run setup rather than requiring inheritance
+            First release
         </releaseNotes>
         <dependencies>
             <dependency id="Kekiri" version="4.0" />
         </dependencies>
     </metadata>
-    <files>
-        <file src="NuGet\Content\IocBootstrapper.cs.pp" target="Content" />
-    </files>
-</package>
+ </package>

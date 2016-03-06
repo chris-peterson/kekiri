@@ -10,3 +10,4 @@ _ReSharper.*
 *.cache
 *.dotCover
 *.DotSettings
+package/

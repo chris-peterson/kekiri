@@ -47,7 +47,7 @@
       <Project>{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}</Project>
       <Name>Kekiri.IoC.Autofac</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\TestRunner\Kekiri.NUnit\Kekiri.TestRunner.NUnit.csproj">
+    <ProjectReference Include="..\..\TestRunner\NUnit\Kekiri.TestRunner.NUnit.csproj">
       <Project>{3602271C-4227-4852-B2C0-15445065BFD6}</Project>
       <Name>Kekiri.TestRunner.NUnit</Name>
     </ProjectReference>

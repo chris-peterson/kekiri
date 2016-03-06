@@ -1,1 +1,1 @@
-%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe %~dp0\build.proj /p:Configuration=Release
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe" %~dp0\build.proj /p:Configuration=Release

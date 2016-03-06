@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Chris Peterson")]
 [assembly: AssemblyProduct("Kekiri")]
-[assembly: AssemblyCopyright("Copyright ©  2012-2016")]
+[assembly: AssemblyCopyright("Copyright © 2012-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -19,8 +19,6 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-[assembly: InternalsVisibleTo("Kekiri.UnitTests")]
-[assembly: InternalsVisibleTo("Kekiri.TestSupport")]
 [assembly: InternalsVisibleTo("Kekiri.IoC.Autofac")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM

@@ -2,10 +2,10 @@
 
 config=Release
 
-rm ./packages/bin/$config -rf
+rm ./package/$config -rf
 ./build //p:Configuration=$config
 
-packages=`ls ./packages/bin/$config/$1*.nupkg`
+packages=`ls ./package/$config/$1*.nupkg`
 echo "Publishing packages: $packages"
 
 for pkg in $packages

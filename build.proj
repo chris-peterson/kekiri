@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package" ToolsVersion="4.0">
     <PropertyGroup>
-        <Configuration Condition="$(Configuration)==''">Debug</Configuration>
+        <Configuration Condition="$(Configuration)==''">Release</Configuration>
     </PropertyGroup>
 
     <Target Name="Build">
@@ -8,17 +8,11 @@
     </Target>
 
     <Target Name="Package" DependsOnTargets="Build">
-        <MakeDir Directories="packages\bin\$(Configuration)">
+        <MakeDir Directories="package">
             <Output TaskParameter="DirectoriesCreated" ItemName="OutputDirectory"/>
         </MakeDir>
-        <Exec Command=".nuget\nuget.exe pack src\library\Kekiri.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
-        <Exec Command=".nuget\nuget.exe pack src\IoC\Autofac\Kekiri.IoC.Autofac.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
-        <Exec Command=".nuget\nuget.exe pack src\IoC\SimpleInjector\Kekiri.IoC.SimpleInjector.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
-        <Exec Command=".nuget\nuget.exe pack src\tools\tools.nuspec -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot; -NoPackageAnalysis" /> 
-    </Target>
-
-    <Target Name="Deploy" DependsOnTargets="Package">
-        <Exec Command="chocolatey uninstall kekiri.tools" ContinueOnError="true" />
-        <Exec Command="chocolatey install kekiri.tools -source $(MSBuildProjectDirectory)\packages\bin\$(Configuration) -pre" />
+        <Exec Command=".nuget\nuget.exe pack src\library\Kekiri.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot;" /> 
+        <Exec Command=".nuget\nuget.exe pack src\IoC\Autofac\Kekiri.IoC.Autofac.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot;" /> 
+        <Exec Command=".nuget\nuget.exe pack src\TestRunner\NUnit\Kekiri.TestRunner.NUnit.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot;" /> 
     </Target>
 </Project>

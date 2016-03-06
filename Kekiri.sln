@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests", "src\Tests\UnitTests\Kekiri.UnitTests.csproj", "{D0E50F59-142F-4B33-8436-56D7BFB99CC5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43E5189D-BB90-4EBE-921A-01457419C7BB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.TestSupport", "src\Tests\TestSupport\Kekiri.TestSupport.csproj", "{E0470571-E10C-46D0-B86F-C32DAF8E6FE1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9855DC8A-AF8B-4571-9415-4467C5229CD5}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,13 +18,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.IoC.Autofac", "src\I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri", "src\Library\Kekiri.csproj", "{5827C04B-91A2-42AC-8A99-E23BBB27CD94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests.Autofac2", "src\Tests\UnitTests\Kekiri.UnitTests.Autofac2\Kekiri.UnitTests.Autofac2.csproj", "{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.TestRunner.NUnit", "src\TestRunner\NUnit\Kekiri.TestRunner.NUnit.csproj", "{3602271C-4227-4852-B2C0-15445065BFD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.UnitTests.Autofac3", "src\Tests\UnitTests\Kekiri.UnitTests.Autofac3\Kekiri.UnitTests.Autofac3.csproj", "{5219967B-0D18-43B3-ABB5-5505A71EDA57}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.TestRunner.NUnit", "src\TestRunner\Kekiri.NUnit\Kekiri.TestRunner.NUnit.csproj", "{3602271C-4227-4852-B2C0-15445065BFD6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples", "src\Tests\Kekiri.Examples\Kekiri.Examples.csproj", "{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples", "src\Tests\Examples\Kekiri.Examples.csproj", "{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestRunner", "TestRunner", "{440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}"
 EndProject
@@ -38,14 +30,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D0E50F59-142F-4B33-8436-56D7BFB99CC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0E50F59-142F-4B33-8436-56D7BFB99CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0E50F59-142F-4B33-8436-56D7BFB99CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0E50F59-142F-4B33-8436-56D7BFB99CC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0470571-E10C-46D0-B86F-C32DAF8E6FE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0470571-E10C-46D0-B86F-C32DAF8E6FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0470571-E10C-46D0-B86F-C32DAF8E6FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0470571-E10C-46D0-B86F-C32DAF8E6FE1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,14 +38,6 @@ Global
 		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5219967B-0D18-43B3-ABB5-5505A71EDA57}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3602271C-4227-4852-B2C0-15445065BFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3602271C-4227-4852-B2C0-15445065BFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3602271C-4227-4852-B2C0-15445065BFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,11 +51,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D0E50F59-142F-4B33-8436-56D7BFB99CC5} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
-		{E0470571-E10C-46D0-B86F-C32DAF8E6FE1} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4} = {DF16D56E-1B85-4B64-A128-C24EED22E633}
-		{D2FDBB9B-6280-4D70-98D3-BFBBD0BDB830} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
-		{5219967B-0D18-43B3-ABB5-5505A71EDA57} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 		{3602271C-4227-4852-B2C0-15445065BFD6} = {440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}
 		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 	EndGlobalSection
