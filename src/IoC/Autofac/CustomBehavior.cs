@@ -6,10 +6,7 @@ using Module = Autofac.Module;
 
 namespace Kekiri.IoC.Autofac
 {
-    /// <summary>
-    /// Extension points for customizing autofac behavior.
-    /// </summary>
-    public static class CustomBehavior
+    static class CustomBehavior
     {
         static CustomBehavior()
         {

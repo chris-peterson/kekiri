@@ -1,4 +1,6 @@
-﻿namespace $rootnamespace$
+﻿using Kekiri.IoC.Autofac;
+
+namespace $rootnamespace$
 {
     #error Integrate with your test runner, e.g. uncomment the following line for NUnit
     //[SetUpFixture]
@@ -8,7 +10,10 @@
         //[SetUp]
         public void RunBeforeAnyTests()
         {
-            //CustomBehavior.BuildContainer = ...
+            AutofacBootstrapper.Initialize(c => 
+               //c.CustomizeContainer(...)
+               //.AssemblyScanning(...)
+            );
         }
     }
 }
