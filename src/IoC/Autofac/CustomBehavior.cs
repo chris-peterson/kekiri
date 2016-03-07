@@ -21,7 +21,7 @@ namespace Kekiri.IoC.Autofac
         /// <summary>
         /// Can be used to inject modules.  Ignored if <see cref="BuildContainer"/> is used.
         /// </summary>
-        public static IList<Module> Modules { get; private set; }
+        public static List<Module> Modules { get; private set; }
 
         /// <summary>
         /// Can be used to blacklist certain assemblies (to avoid scanning them for auto-registration)

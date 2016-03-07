@@ -11,7 +11,7 @@ namespace $rootnamespace$
         public void RunBeforeAnyTests()
         {
             AutofacBootstrapper.Initialize(c => 
-               //c.CustomizeContainer(...)
+               //c.WithModules(...)
                //.AssemblyScanning(...)
             );
         }
