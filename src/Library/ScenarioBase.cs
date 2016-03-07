@@ -355,11 +355,17 @@ namespace Kekiri
         }
     }
 
-    public abstract class Scenario<TContext> : ScenarioBase where TContext : new()
+    public abstract class ScenarioBase<TContext> : ScenarioBase
     {
         protected override object CreateContextObject()
         {
-            return new TContext();
+            var contextType = typeof (TContext);
+            var ctor = contextType.GetConstructor(new Type[] {});
+            if (ctor != null)
+                return ctor.Invoke(null);
+
+            var method = typeof (Container).GetMethod("Resolve").MakeGenericMethod(contextType);
+            return method.Invoke(Container, null);
         }
 
         protected internal new TContext Context => base.Context;

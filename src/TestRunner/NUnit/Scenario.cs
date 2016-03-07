@@ -11,4 +11,14 @@ namespace Kekiri.TestRunner.NUnit
             base.Run();
         }
     }
+
+    [TestFixture]
+    public abstract class Scenario<TContext> : ScenarioBase<TContext>
+    {
+        [Test]
+        public override void Run()
+        {
+            base.Run();
+        }
+    }
 }

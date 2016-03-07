@@ -4,14 +4,14 @@ using NUnit.Framework;
 
 namespace Kekiri.Examples
 {
-    public class Basic_scenario : Scenario
+    public class Untyped_scenario : Scenario
     {
         protected override void Before()
         {
            AutofacBootstrapper.Initialize();
         }
 
-        public Basic_scenario()
+        public Untyped_scenario()
         {
             Given(Precondition_1);
             When(Doing_the_deed);
