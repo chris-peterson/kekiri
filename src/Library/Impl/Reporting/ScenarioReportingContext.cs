@@ -7,40 +7,28 @@ namespace Kekiri.Impl.Reporting
 {
     class ScenarioReportingContext
     {
-        public IList<string> ScenarioReport { get; }
+        public string FeatureName { get; }
         public IList<string> StepReport { get; }
 
-        public Settings Settings { get; set; }
+        public Settings Settings { get; }
 
         public ScenarioReportingContext(
-            IList<string> scenarioReport,
+            string featureName,
             IList<string> stepReport,
             Settings settings)
         {
-            ScenarioReport = scenarioReport;
+            FeatureName = featureName;
             StepReport = stepReport;
             Settings = settings;
         }
 
-        public string CreateReport(bool omitFeatureOutput = false)
+        public string CreateReport()
         {
-            int indentationLevel = 0;
+            const int indentationLevel = 0;
             var report = new List<string>();
-
-            if (HasItems(ScenarioReport))
-            {
-                report.AddRange(TabifyLines(ScenarioReport, indentationLevel));
-                indentationLevel++;
-            }
-
             report.AddRange(TabifyLines(StepReport, indentationLevel));
             
             return InsertNewLines(report);
-        }
-
-        static bool HasItems(IEnumerable<string> lines)
-        {
-            return lines != null && lines.Any();
         }
 
         IEnumerable<string> TabifyLines(IEnumerable<string> lines, int indentationLevel)

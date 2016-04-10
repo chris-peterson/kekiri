@@ -39,6 +39,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculator\Addition\Adding_two_numbers.cs" />
+    <Compile Include="Calculator\Division\Divide_by_zero.cs" />
+    <Compile Include="Calculator\Subtraction\Subtracting_two_numbers.cs" />
     <Compile Include="Typed_context_with_injection.cs" />
     <Compile Include="Untyped_scenario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

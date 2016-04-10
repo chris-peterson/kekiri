@@ -60,7 +60,6 @@ namespace Kekiri.Impl
 
         public ScenarioReportingContext CreateReport()
         {
-            var scenarioReport = new List<string>();
             var stepReport = new List<string>();
 
             stepReport.AddRange(GetStepReport(StepType.Given));
@@ -68,7 +67,9 @@ namespace Kekiri.Impl
             stepReport.AddRange(GetStepReport(StepType.Then));
 
             return new ScenarioReportingContext(
-                scenarioReport,
+                _scenarioTestType
+                    .Namespace.Split('.')
+                    .Last(),
                 stepReport,
                 Settings);
         }
@@ -106,7 +107,7 @@ namespace Kekiri.Impl
         }
     }
 
-    internal static class StepNameStringHelpers
+    static class StepNameStringHelpers
     {
         public static string RemovePrefix(this string stepName, string prefix)
         {
@@ -131,12 +132,7 @@ namespace Kekiri.Impl
 
         public static string WithFirstLetterLowercase(this string str)
         {
-            if (string.IsNullOrWhiteSpace(str))
-            {
-                return string.Empty;
-            }
-
-            return $"{char.ToLower(str[0])}{(str.Length == 1 ? null : str.Substring(1))}";
+            return string.IsNullOrWhiteSpace(str) ? string.Empty : $"{char.ToLower(str[0])}{(str.Length == 1 ? null : str.Substring(1))}";
         }
 
         public static bool StartsWithMultipleUppercaseLetters(this string str)

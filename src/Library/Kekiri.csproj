@@ -48,6 +48,9 @@
     <Compile Include="Impl\Exceptions\ContainerFactoryNotInitialized.cs" />
     <Compile Include="Impl\Exceptions\ThenFailed.cs" />
     <Compile Include="Impl\Exceptions\ConstructorNotFound.cs" />
+    <Compile Include="Impl\Reporting\CompositeReportTarget.cs" />
+    <Compile Include="Impl\Reporting\FeatureFileReportTarget.cs" />
+    <Compile Include="Impl\Reporting\TraceReportTarget.cs" />
     <Compile Include="TestRunner\IExampleAttribute.cs" />
     <Compile Include="IoC\Container.cs" />
     <Compile Include="ScenarioBase.cs" />
