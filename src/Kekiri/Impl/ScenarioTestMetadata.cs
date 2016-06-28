@@ -116,7 +116,7 @@ namespace Kekiri.Impl
                 return null;
             }
 
-            if (stepName.StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase))
+            if (stepName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
             {
                 if (stepName.Length == prefix.Length)
                 {

@@ -1,0 +1,29 @@
+{
+  "version": "4.0.0-alpha-*",
+  "packOptions": {
+    "licenseUrl": "http://opensource.org/licenses/MIT",
+    "projectUrl": "http://github.com/chris-peterson/kekiri",
+    "tags": [
+      "bdd",
+      "scenario",
+      "test",
+      "gherkin",
+      "cucumber",
+      "pickles",
+      "nunit",
+      "specflow"
+    ] 
+  },
+  "copyright": "2012-2016",
+  "buildOptions": {
+    "debugType": "portable"
+  },
+  "frameworks": {
+    "netstandard1.6": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "Microsoft.CSharp": "4.0.1"
+      }
+    }
+  }
+}
