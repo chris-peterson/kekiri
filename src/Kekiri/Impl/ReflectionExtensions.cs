@@ -9,7 +9,7 @@ namespace Kekiri.Impl
     {
         public static TAttribute AttributeOrDefault<TAttribute>(this Type type) where TAttribute : class
         {
-            return type.GetCustomAttributes(typeof(TAttribute), true)
+            return type.GetTypeInfo().GetCustomAttributes(typeof(TAttribute), true)
                 .SingleOrDefault() as TAttribute;
         }
 

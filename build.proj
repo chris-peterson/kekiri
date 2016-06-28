@@ -1,18 +1,34 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package" ToolsVersion="4.0">
-    <PropertyGroup>
-        <Configuration Condition="$(Configuration)==''">Release</Configuration>
-    </PropertyGroup>
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
+  <PropertyGroup>
+    <DotNetCli Condition="$(DotNetCli)==''">dotnet</DotNetCli>
+    <VersionSuffix Condition="$(BuildNumber)!=''"> --version-suffix $(BuildNumber)</VersionSuffix>
+    <Configuration Condition="$(Configuration)==''">Debug</Configuration>
+  </PropertyGroup>
 
-    <Target Name="Build">
-        <MSBuild Projects="Kekiri.sln" />
-    </Target>
+  <ItemGroup>
+    <Project Include="src\Kekiri\project.json" />
+  </ItemGroup>
+  
+  <Target Name="Restore">
+    <Exec Command="$(DotNetCli) restore"
+          WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
 
-    <Target Name="Package" DependsOnTargets="Build">
-        <MakeDir Directories="package">
-            <Output TaskParameter="DirectoriesCreated" ItemName="OutputDirectory"/>
-        </MakeDir>
-        <Exec Command=".nuget\nuget.exe pack src\library\Kekiri.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot;" /> 
-        <Exec Command=".nuget\nuget.exe pack src\IoC\Autofac\Kekiri.IoC.Autofac.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot;" /> 
-        <Exec Command=".nuget\nuget.exe pack src\TestRunner\NUnit\Kekiri.TestRunner.NUnit.csproj -OutputDirectory &quot;@(OutputDirectory)&quot; -Properties &quot;configuration=$(Configuration)&quot;" /> 
-    </Target>
+  <Target Name="Build" DependsOnTargets="Restore">
+    <Exec Command="$(DotNetCli) build $(VersionSuffix) --configuration $(Configuration)"
+          WorkingDirectory="%(Project.RootDir)%(Project.Directory)" />
+  </Target>
+
+  <Target Name="Test" DependsOnTargets="Build">
+    <Exec Command="$(DotNetCli) test --configuration $(Configuration)"
+          WorkingDirectory="%(TestProject.RootDir)%(TestProject.Directory)"
+          Condition="@(TestProject)!=''" />
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Test">
+    <Exec Command="$(DotNetCli) pack $(VersionSuffix) --configuration $(Configuration)"
+          WorkingDirectory="%(Project.RootDir)%(Project.Directory)"
+          Condition="@(Project)!=''" />
+  </Target>
 </Project>
