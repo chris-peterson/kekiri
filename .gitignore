@@ -12,3 +12,5 @@ _ReSharper.*
 *.DotSettings
 project.lock.json
 .idea/
+TestResult.xml
+*.feature

@@ -12,6 +12,7 @@ namespace Kekiri.IoC.Autofac
 
         static readonly Lazy<IContainer> _container = new Lazy<IContainer>(() =>
         {
+            Console.WriteLine($"CurrentDirectory: {Directory.GetCurrentDirectory()}");
             var assemblies = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll")
                 .Where(n => !CustomBehavior.IsBlacklistedAssembly(n))
                 .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath)
