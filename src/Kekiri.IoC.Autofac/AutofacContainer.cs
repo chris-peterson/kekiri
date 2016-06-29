@@ -11,9 +11,8 @@ namespace Kekiri.IoC.Autofac
         ILifetimeScope _lifetimeScope;
 
         static readonly Lazy<IContainer> _container = new Lazy<IContainer>(() =>
-        {
-            Console.WriteLine($"CurrentDirectory: {Directory.GetCurrentDirectory()}");
-            var assemblies = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll")
+        {            
+            var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
                 .Where(n => !CustomBehavior.IsBlacklistedAssembly(n))
                 .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath)
                 .ToArray();
