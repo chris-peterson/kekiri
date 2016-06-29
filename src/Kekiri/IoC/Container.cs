@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
 
 namespace Kekiri.IoC
@@ -28,14 +29,14 @@ namespace Kekiri.IoC
             {
                 if (type.Name == "Mock")
                 {
-                    var objectProperty = type.GetProperty("Object");
+                    var objectProperty = type.GetTypeInfo().GetProperty("Object");
                     if (objectProperty != null)
                     {
                         instance = objectProperty.GetValue(instance, null);
                         break;
                     }
                 }
-                type = type.BaseType;
+                type = type.GetTypeInfo().BaseType;
             }
 
             _fakes.Add(instance);
