@@ -36,7 +36,9 @@ namespace Kekiri.Impl.Reporting
             {
                 _featureState.Add(featureName, new
                 {
-                    Path = $"{CoerceValidFileName(featureName)}.feature"
+                    Path = Path.Combine(
+                        AppContext.BaseDirectory,
+                        $"{CoerceValidFileName(featureName)}.feature")
                 });
                 using (var fs = File.Create(_featureState[featureName].Path))
                 {
