@@ -26,7 +26,7 @@
           WorkingDirectory="%(Project.RootDir)%(Project.Directory)" />
   </Target>
 
-  <Target Name="Test" DependsOnTargets="Build">
+  <Target Name="Test" DependsOnTargets="Restore">
     <Exec Command="$(DotNetCli) test --configuration $(Configuration)"
           WorkingDirectory="%(TestProject.RootDir)%(TestProject.Directory)"
           Condition="@(TestProject)!=''" />
