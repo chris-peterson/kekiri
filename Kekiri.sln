@@ -1,28 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43E5189D-BB90-4EBE-921A-01457419C7BB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9855DC8A-AF8B-4571-9415-4467C5229CD5}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC", "IoC", "{DF16D56E-1B85-4B64-A128-C24EED22E633}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.IoC.Autofac", "src\IoC\Autofac\Kekiri.IoC.Autofac.csproj", "{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri", "src\Library\Kekiri.csproj", "{5827C04B-91A2-42AC-8A99-E23BBB27CD94}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.TestRunner.NUnit", "src\TestRunner\NUnit\Kekiri.TestRunner.NUnit.csproj", "{3602271C-4227-4852-B2C0-15445065BFD6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples", "src\Tests\Examples\Kekiri.Examples.csproj", "{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestRunner", "TestRunner", "{440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kekiri", "src\Kekiri\Kekiri.xproj", "{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kekiri.Examples", "src\Kekiri.Examples\Kekiri.Examples.xproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kekiri.IoC.Autofac", "src\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.xproj", "{597BE251-91C3-407D-8FA5-BB2D51C3D98C}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kekiri.TestRunner.NUnit", "src\Kekiri.TestRunner.NUnit\Kekiri.TestRunner.NUnit.xproj", "{B50C8A20-A431-4866-9A2D-2FF28690FF38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,29 +23,29 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5827C04B-91A2-42AC-8A99-E23BBB27CD94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3602271C-4227-4852-B2C0-15445065BFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3602271C-4227-4852-B2C0-15445065BFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3602271C-4227-4852-B2C0-15445065BFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3602271C-4227-4852-B2C0-15445065BFD6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFB11BDE-9F07-4014-905D-33D94D10B7B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB11BDE-9F07-4014-905D-33D94D10B7B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB11BDE-9F07-4014-905D-33D94D10B7B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB11BDE-9F07-4014-905D-33D94D10B7B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{597BE251-91C3-407D-8FA5-BB2D51C3D98C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{597BE251-91C3-407D-8FA5-BB2D51C3D98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{597BE251-91C3-407D-8FA5-BB2D51C3D98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{597BE251-91C3-407D-8FA5-BB2D51C3D98C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B50C8A20-A431-4866-9A2D-2FF28690FF38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B50C8A20-A431-4866-9A2D-2FF28690FF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B50C8A20-A431-4866-9A2D-2FF28690FF38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B50C8A20-A431-4866-9A2D-2FF28690FF38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{3501637A-ABF5-4F80-BC0E-7B4A8ACD3CC4} = {DF16D56E-1B85-4B64-A128-C24EED22E633}
-		{3602271C-4227-4852-B2C0-15445065BFD6} = {440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}
-		{1C40E716-C725-4685-9C3F-3EFB4CF7E00D} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
+		{BFB11BDE-9F07-4014-905D-33D94D10B7B1} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
+		{597BE251-91C3-407D-8FA5-BB2D51C3D98C} = {DF16D56E-1B85-4B64-A128-C24EED22E633}
+		{B50C8A20-A431-4866-9A2D-2FF28690FF38} = {440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}
 	EndGlobalSection
 EndGlobal
