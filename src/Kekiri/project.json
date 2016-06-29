@@ -1,6 +1,7 @@
 {
   "version": "4.0.0-alpha-*",
   "packOptions": {
+    "summary": "A low-friction BDD framework",
     "licenseUrl": "http://opensource.org/licenses/MIT",
     "projectUrl": "http://github.com/chris-peterson/kekiri",
     "tags": [
@@ -12,7 +13,8 @@
       "pickles",
       "nunit",
       "specflow"
-    ] 
+    ],
+    "releaseNotes": "Consolidate to Fluent style (drop attribute based Tests). Rename FluentTest => Scenario. Isolate NUnit dependencies in seperate package (Kekiri.NUnit). IoC (Container) is now baked into base Scenario. Drop support for SimpleInjector (might bring this back one IoC model is defined) Drop TestGen package" 
   },
   "copyright": "2012-2016",
   "buildOptions": {
