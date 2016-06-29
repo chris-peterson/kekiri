@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Project Include="src\Kekiri\project.json" />
+    <Project Include="src\Kekiri.TestRunner.NUnit\project.json" />
   </ItemGroup>
   
   <Target Name="Restore">
