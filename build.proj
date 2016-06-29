@@ -11,6 +11,10 @@
     <Project Include="src\Kekiri.TestRunner.NUnit\project.json" />
     <Project Include="src\Kekiri.IoC.Autofac\project.json" />
   </ItemGroup>
+
+  <ItemGroup>
+    <TestProject Include="src\Kekiri.Examples\project.json" />
+  </ItemGroup>
   
   <Target Name="Restore">
     <Exec Command="$(DotNetCli) restore"
