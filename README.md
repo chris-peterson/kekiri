@@ -128,7 +128,7 @@ For example, if `Adding_two_numbers` was defined in `UnitTests.Features.Addition
 ---
 
 ## Wiki
-[More info available here](https://github.com/chris-peterson/Kekiri/wiki)
+More detailed documentation can be found [here].(https://github.com/chris-peterson/Kekiri/wiki)
 
 ## Other common use cases
 
