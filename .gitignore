@@ -10,4 +10,8 @@ _ReSharper.*
 *.cache
 *.dotCover
 *.DotSettings
-package/
+project.lock.json
+.idea/
+.vs/
+TestResult.xml
+*.feature

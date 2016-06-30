@@ -84,19 +84,19 @@ namespace Kekiri
 
             public NestedStepOptions And<T>(Action<T> action, T a)
             {
-                Scenario.AddStepMethod(StepType, action.Method, a);
+                Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a);
                 return this;
             }
 
             public NestedStepOptions And<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
             {
-                Scenario.AddStepMethod(StepType, action.Method, a, b);
+                Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b);
                 return this;
             }
 
             public NestedStepOptions And<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
             {
-                Scenario.AddStepMethod(StepType, action.Method, a, b, c);
+                Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b, c);
                 return this;
             }
 
@@ -116,19 +116,19 @@ namespace Kekiri
 
             public NestedStepOptions But<T>(Action<T> action, T a)
             {
-                Scenario.AddStepMethod(StepType, action.Method, a);
+                Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a);
                 return this;
             }
 
             public NestedStepOptions But<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
             {
-                Scenario.AddStepMethod(StepType, action.Method, a, b);
+                Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b);
                 return this;
             }
 
             public NestedStepOptions But<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
             {
-                Scenario.AddStepMethod(StepType, action.Method, a, b, c);
+                Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b, c);
                 return this;
             }
 
@@ -210,19 +210,19 @@ namespace Kekiri
 
             internal WhenOptions That<T>(Action<T> action, T a)
             {
-                Scenario.AddStepMethod(StepType, action.Method, a);
+                Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a);
                 return this;
             }
 
             internal WhenOptions That<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
             {
-                Scenario.AddStepMethod(StepType, action.Method, a, b);
+                Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b);
                 return this;
             }
 
             internal WhenOptions That<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
             {
-                Scenario.AddStepMethod(StepType, action.Method, a, b, c);
+                Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b, c);
                 return this;
             }
 
@@ -308,7 +308,7 @@ namespace Kekiri
 
         void AddStepMethod(StepType stepType, Action action)
         {
-            _scenarioRunner.AddStep(new StepMethodInvoker(stepType, action.Method));
+            _scenarioRunner.AddStep(new StepMethodInvoker(stepType, action.GetMethodInfo()));
         }
 
         void AddStepMethod(StepType stepType, MethodBase method, params object[] parameterValues)
@@ -320,7 +320,7 @@ namespace Kekiri
         void AddStepClass<TStep>(StepType stepType, params object[] parameterValues) where TStep : Step
         {
             var stepClass = typeof(TStep);
-            var ctor = stepClass.GetConstructors()
+            var ctor = stepClass.GetTypeInfo().GetConstructors()
                 .SingleOrDefault();
             if (ctor == null)
             {
@@ -360,11 +360,11 @@ namespace Kekiri
         protected override object CreateContextObject()
         {
             var contextType = typeof (TContext);
-            var ctor = contextType.GetConstructor(new Type[] {});
+            var ctor = contextType.GetTypeInfo().GetConstructor(new Type[] {});
             if (ctor != null)
                 return ctor.Invoke(null);
 
-            var method = typeof (Container).GetMethod("Resolve").MakeGenericMethod(contextType);
+            var method = typeof (Container).GetTypeInfo().GetMethod("Resolve").MakeGenericMethod(contextType);
             return method.Invoke(Container, null);
         }
 

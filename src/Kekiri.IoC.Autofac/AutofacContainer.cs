@@ -1,9 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Runtime.Loader;
 using Autofac;
-using Module = Autofac.Module;
 
 namespace Kekiri.IoC.Autofac
 {
@@ -12,10 +11,10 @@ namespace Kekiri.IoC.Autofac
         ILifetimeScope _lifetimeScope;
 
         static readonly Lazy<IContainer> _container = new Lazy<IContainer>(() =>
-        {
-            var assemblies = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll")
+        {            
+            var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
                 .Where(n => !CustomBehavior.IsBlacklistedAssembly(n))
-                .Select(Assembly.LoadFrom)
+                .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath)
                 .ToArray();
 
             if (CustomBehavior.BuildContainer == null)
@@ -23,10 +22,9 @@ namespace Kekiri.IoC.Autofac
                 var containerBuilder = new ContainerBuilder();
                 containerBuilder.RegisterAssemblyTypes(assemblies);
 
-                var moduleRegistrationMethod = GetRegistrationMethodForThisAutofacVersion();
                 foreach (var module in CustomBehavior.Modules)
                 {
-                    moduleRegistrationMethod.Invoke(null, new object[] { containerBuilder, module });
+                    containerBuilder.RegisterModule(module);
                 }
                 return containerBuilder.Build();
             }
@@ -60,18 +58,6 @@ namespace Kekiri.IoC.Autofac
                 _lifetimeScope.Dispose();
                 _lifetimeScope = null;
             }
-        }
-
-        static MethodInfo GetRegistrationMethodForThisAutofacVersion()
-        {
-            // Autofac 3.4+
-            var newLocation = Type.GetType("Autofac.ModuleRegistrationExtensions, Autofac");
-            return newLocation == null
-                // old location:
-                ? typeof(RegistrationExtensions).GetMethod("RegisterModule",
-                    new[] { typeof(ContainerBuilder), typeof(Module) })
-                : newLocation.GetMethod("RegisterModule",
-                    new[] { typeof(ContainerBuilder), typeof(Module) });
         }
     }
 }

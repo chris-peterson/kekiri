@@ -16,7 +16,7 @@ namespace Kekiri.Impl.Reporting
             return new CompositeReportTarget(
                 new[]
                 {
-                    TraceReportTarget.GetInstance(),
+                    DebugReportTarget.GetInstance(),
                     FeatureFileReportTarget.GetInstance()
                 });
         }
