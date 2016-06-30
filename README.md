@@ -1,9 +1,11 @@
 # Kekiri
 A .NET framework that supports writing low-ceremony BDD tests using Gherkin language.
 
-Kekiri honors the conventions of the [cucumber language] (https://github.com/cucumber/cucumber/wiki/Feature-Introduction)
+Kekiri honors the conventions of the [cucumber language](https://github.com/cucumber/cucumber/wiki/Feature-Introduction)
 
 ## Setup
+Kekiri targets `netstandard1.5`.  To get started, be sure to have the latest [dotnet core](https://www.microsoft.com/net/core) tools.
+
 Select your Test running framework and install the appropriate package.
 
 ### NUnit

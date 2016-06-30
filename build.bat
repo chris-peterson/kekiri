@@ -1,1 +1,0 @@
-"%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe" %~dp0\build.proj /p:Configuration=Release
