@@ -1,5 +1,5 @@
 {
-  "version": "4.0.0-alpha-*",
+  "version": "1.0.0-alpha-*",
   "packOptions": {
     "summary": "NUnit test runner adapter for Kekiri",
     "licenseUrl": "http://opensource.org/licenses/MIT",
