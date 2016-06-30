@@ -226,6 +226,5 @@ For more advanced topics, check out the [wiki](https://github.com/chris-peterson
 Kekiri uses and is influenced by the following open source projects:
 * http://nunit.org/
 * https://code.google.com/p/autofac/
-* https://github.com/dennisdoomen/FluentAssertions
 * https://github.com/andyalm/xrepo
 * https://github.com/picklesdoc/pickles
