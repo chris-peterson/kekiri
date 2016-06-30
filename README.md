@@ -6,15 +6,22 @@ Kekiri honors the conventions of the [cucumber language](https://github.com/cucu
 ## Setup
 Kekiri targets `netstandard1.5`.  To get started, be sure to have the latest [dotnet core](https://www.microsoft.com/net/core) tools.
 
-Select your Test running framework and install the appropriate package.
+### Select Test Runner
 
-### NUnit
+#### NUnit
 `PM> Install-Package Kekiri.TestRunner.NUnit`  
+
+### Select IoC Integration (optional)
+
+#### Autofac
+`PM> Install-Package Kekiri.IoC.Autofac`  
 
 ## Why Kekiri?
 Unlike other BDD frameworks that impose process overhead (management of feature files, custom tooling, etc) Kekiri allows developers to write BDD scenarios just as quickly and easily as they would a "plain old" test.
 
 The resulting scenario fixtures are concise, highly portable, and adhere to [Act, Arrange, and Assert](http://www.arrangeactassert.com/why-and-what-is-arrange-act-assert/).
+
+IoC is also a first-class citizen encouraging testing object interactions in collaboration rather than isolation.  More details [here](https://github.com/chris-peterson/Kekiri/wiki/IoC-Support).
 
 ## Example
 For this **Scenario**, we will be implementing a basic calculator.
