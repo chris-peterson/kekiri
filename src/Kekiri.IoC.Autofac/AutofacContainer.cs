@@ -8,35 +8,20 @@ namespace Kekiri.IoC.Autofac
 {
     class AutofacContainer : Container, IDisposable
     {
+        readonly CustomizeBehaviorApi _customizations;
+
+        public AutofacContainer(CustomizeBehaviorApi customizations)
+        {
+            _customizations = customizations;
+        }
+
         ILifetimeScope _lifetimeScope;
-
-        static readonly Lazy<IContainer> _container = new Lazy<IContainer>(() =>
-        {            
-            var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
-                .Where(n => !CustomBehavior.IsBlacklistedAssembly(n))
-                .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath)
-                .ToArray();
-
-            if (CustomBehavior.BuildContainer == null)
-            {
-                var containerBuilder = new ContainerBuilder();
-                containerBuilder.RegisterAssemblyTypes(assemblies);
-
-                foreach (var module in CustomBehavior.Modules)
-                {
-                    containerBuilder.RegisterModule(module);
-                }
-                return containerBuilder.Build();
-            }
-
-            return CustomBehavior.BuildContainer(assemblies);
-        });
 
         protected override T OnResolve<T>()
         {
             if (_lifetimeScope == null)
             {
-                _lifetimeScope = _container.Value.BeginLifetimeScope(
+                _lifetimeScope = BuildContainer().BeginLifetimeScope(
                     builder =>
                     {
                         foreach (var obj in Fakes)
@@ -58,6 +43,28 @@ namespace Kekiri.IoC.Autofac
                 _lifetimeScope.Dispose();
                 _lifetimeScope = null;
             }
+        }
+
+        IContainer BuildContainer()
+        {
+            var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
+                .Where(n => !_customizations.IsBlacklistedAssembly(n))
+                .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath)
+                .ToArray();
+
+            if (_customizations.BuildContainer == null)
+            {
+                var containerBuilder = new ContainerBuilder();
+                containerBuilder.RegisterAssemblyTypes(assemblies);
+
+                foreach (var module in _customizations.Modules)
+                {
+                    containerBuilder.RegisterModule(module);
+                }
+                return containerBuilder.Build();
+            }
+
+            return _customizations.BuildContainer(assemblies);
         }
     }
 }
