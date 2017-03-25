@@ -6,6 +6,7 @@
     <TargetFramework>netstandard1.6</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
     <PackageId>Kekiri</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>Consolidate to Fluent style (drop attribute based Tests). Rename FluentTest =&gt; Scenario. Isolate NUnit dependencies in seperate package (Kekiri.NUnit). IoC (Container) is now baked into base Scenario. Drop support for SimpleInjector (might bring this back one IoC model is defined) Drop TestGen package</PackageReleaseNotes>

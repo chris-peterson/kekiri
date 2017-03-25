@@ -10,12 +10,23 @@ namespace Kekiri.Examples.Xunit
     public class AdditionScenarios : Scenarios
     {
         [Scenario]
-        public void Can_add_two_numbers()
+        public void Can_add_one_plus_two()
         {
-            Given(a_one)
-            .And(a_two);
+            Given(a_number, 1)
+            .And(another_number, 2);
             When(adding_them_up);
-            Then(The_sum_is_three);
+            Then(The_sum_is, 3);
+        }
+
+        [ScenarioOutline]
+        [Example(1, 2, 3)]
+        [Example(2, 3, 5)]
+        public void Can_add_two_numbers(int a, int b, int sum)
+        {
+            Given(a_number, a)
+                .And(another_number, b);
+            When(adding_them_up);
+            Then(The_sum_is, sum);
         }
 
         protected override void Before()
@@ -23,15 +34,14 @@ namespace Kekiri.Examples.Xunit
             Context.Numbers = new List<int>();
         }
 
-        private void a_one()
+        private void a_number(int a)
         {
-            Console.WriteLine("a one");
-            Context.Numbers.Add(1);
+            Context.Numbers.Add(a);
         }
 
-        private void a_two()
+        private void another_number(int b)
         {
-            Context.Numbers.Add(2);
+            Context.Numbers.Add(b);
         }
 
         private void adding_them_up()
@@ -40,9 +50,9 @@ namespace Kekiri.Examples.Xunit
             Context.Sum = numbers.Sum();
         }
 
-        private void The_sum_is_three()
+        private void The_sum_is(int sum)
         {
-            Assert.Equal(3, Context.Sum);
+            Assert.Equal(sum, Context.Sum);
         }
     }
 }

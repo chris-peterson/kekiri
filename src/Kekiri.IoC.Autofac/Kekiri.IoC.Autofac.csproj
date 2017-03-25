@@ -6,6 +6,7 @@
     <TargetFramework>netstandard1.6</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.IoC.Autofac</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
     <PackageId>Kekiri.IoC.Autofac</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>IoC providers no longer require inheritance</PackageReleaseNotes>

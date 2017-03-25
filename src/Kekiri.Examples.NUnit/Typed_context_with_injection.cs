@@ -4,7 +4,7 @@ using Kekiri.IoC.Autofac;
 using Kekiri.TestRunner.NUnit;
 using NUnit.Framework;
 
-namespace Kekiri.Examples
+namespace Kekiri.Examples.NUnit
 {
     public class Typed_context_with_injection : Scenario<AdvancedCalculatorContext>
     {

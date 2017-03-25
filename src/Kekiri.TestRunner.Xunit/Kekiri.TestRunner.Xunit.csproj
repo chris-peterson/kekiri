@@ -3,6 +3,7 @@
     <TargetFramework>netstandard1.5</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.TestRunner.Xunit</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
     <PackageId>Kekiri.TestRunner.Xunit</PackageId>
   </PropertyGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestRunner", "TestRunner", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri", "src\Kekiri\Kekiri.csproj", "{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples", "src\Kekiri.Examples\Kekiri.Examples.csproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples.NUnit", "src\Kekiri.Examples.NUnit\Kekiri.Examples.NUnit.csproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.IoC.Autofac", "src\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj", "{597BE251-91C3-407D-8FA5-BB2D51C3D98C}"
 EndProject

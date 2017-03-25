@@ -2,7 +2,7 @@
 using Kekiri.TestRunner.NUnit;
 using NUnit.Framework;
 
-namespace Kekiri.Examples
+namespace Kekiri.Examples.NUnit
 {
     public class Untyped_scenario : Scenario
     {
