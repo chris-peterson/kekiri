@@ -95,11 +95,15 @@ namespace Kekiri.Impl
             
             foreach (var parameter in parameters)
             {
-                foreach (var word in stepName.Split(' ')
-                    .Where(word => word == parameter.Key.ToUpperInvariant()))
+                var placeholderWords = stepName.Split(' ')
+                    .Where(word => word == parameter.Key.ToUpperInvariant());
+                if(placeholderWords.Any())
                 {
-                    stepName = stepName.Replace(word,
-                        parameter.Value?.ToString() ?? "{null}");
+                    stepName = stepName.Replace(parameter.Key.ToUpperInvariant(), parameter.Value?.ToString() ?? "{null}");
+                }
+                else
+                {
+                    stepName += " " + parameter.Value?.ToString() ?? "{null}";
                 }
             }
 
