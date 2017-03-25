@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Kekiri.TestRunner.Xunit;
 using Xunit;
 
 namespace Kekiri.Examples.Xunit
 {
-    [Example(1, 2, 3)]
-    [Example(2, 3, 5)]
-    public class Can_add_two_numbers_examples : Scenario
+    public class AdditionExamples : Scenarios
     {
-        public Can_add_two_numbers_examples(int a, int b, int sum)
+        [ScenarioOutline]
+        [Example(1, 2, 3)]
+        [Example(2, 3, 5)]
+        public void Can_add_two_numbers_examples(int a, int b, int sum)
         {
             Given(a_number, a)
             .And(another_number, b);

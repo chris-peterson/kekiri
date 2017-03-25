@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>Kekiri.TestRunner.Xunit</AssemblyName>
+    <PackageId>Kekiri.TestRunner.Xunit</PackageId>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Kekiri/Kekiri.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.2.*" />
+    <PackageReference Include="xunit.abstractions" Version="2.0.*" />
+  </ItemGroup>
+</Project>

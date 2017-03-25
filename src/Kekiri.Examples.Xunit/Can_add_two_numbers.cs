@@ -7,9 +7,10 @@ using Xunit;
 
 namespace Kekiri.Examples.Xunit
 {
-    public class Can_add_two_numbers : Scenario
+    public class AdditionScenarios : Scenarios
     {
-        public Can_add_two_numbers()
+        [Scenario]
+        public void Can_add_two_numbers()
         {
             Given(a_one)
             .And(a_two);
@@ -24,6 +25,7 @@ namespace Kekiri.Examples.Xunit
 
         private void a_one()
         {
+            Console.WriteLine("a one");
             Context.Numbers.Add(1);
         }
 

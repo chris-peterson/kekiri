@@ -1,15 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Xunit.Sdk;
 
 namespace Kekiri.TestRunner.Xunit
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class ExampleAttribute : Attribute, IExampleAttribute
+    [DataDiscoverer("Xunit.Sdk.InlineDataDiscoverer", "xunit.core")]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    public class ExampleAttribute : DataAttribute
     {
-        public object[] Values { get; }
+        private readonly object[] _data;
 
-        public ExampleAttribute(params object[] values)
+        public ExampleAttribute(params object[] data)
         {
-            Values = values;
+            _data = data;
+        }
+
+        public override IEnumerable<object[]> GetData(MethodInfo testMethod)
+        {
+            return new object[1][]
+            {
+                _data
+            };
         }
     }
 }
