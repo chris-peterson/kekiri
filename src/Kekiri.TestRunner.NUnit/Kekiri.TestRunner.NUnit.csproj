@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>1.0.0-alpha3</VersionPrefix>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>Kekiri.TestRunner.NUnit</AssemblyName>
+    <PackageId>Kekiri.TestRunner.NUnit</PackageId>
+    <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
+    <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kekiri\Kekiri.csproj" />
+    <PackageReference Include="NUnit" Version="3.6.1" />
+  </ItemGroup>
+
+</Project>
