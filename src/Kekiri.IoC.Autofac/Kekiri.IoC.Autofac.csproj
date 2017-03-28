@@ -1,11 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>4.0.0-alpha</VersionPrefix>
-    <TargetFramework>netstandard1.5</TargetFramework>
+    <Copyright>2012-2017</Copyright>
+    <VersionPrefix>4.0.0-beta1</VersionPrefix>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.IoC.Autofac</AssemblyName>
     <PackageId>Kekiri.IoC.Autofac</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
+    <PackageReleaseNotes>IoC providers no longer require inheritance</PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
   </PropertyGroup>
