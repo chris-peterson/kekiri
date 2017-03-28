@@ -49,8 +49,11 @@ namespace Kekiri.IoC.Autofac
         {
             var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
                 .Where(n => !_customizations.IsBlacklistedAssembly(n))
-                .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath)
-                .ToArray();
+                .Select(path =>
+                    {
+                        return AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+                    }
+                ).ToArray();
 
             if (_customizations.BuildContainer == null)
             {

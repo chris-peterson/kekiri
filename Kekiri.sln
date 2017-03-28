@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43E5189D-BB90-4EBE-921A-01457419C7BB}"
 EndProject
@@ -9,13 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC", "IoC", "{DF16D56E-1B8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestRunner", "TestRunner", "{440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kekiri", "src\Kekiri\Kekiri.xproj", "{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri", "src\Kekiri\Kekiri.csproj", "{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kekiri.Examples", "src\Kekiri.Examples\Kekiri.Examples.xproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples", "src\Kekiri.Examples\Kekiri.Examples.csproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kekiri.IoC.Autofac", "src\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.xproj", "{597BE251-91C3-407D-8FA5-BB2D51C3D98C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.IoC.Autofac", "src\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj", "{597BE251-91C3-407D-8FA5-BB2D51C3D98C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kekiri.TestRunner.NUnit", "src\Kekiri.TestRunner.NUnit\Kekiri.TestRunner.NUnit.xproj", "{B50C8A20-A431-4866-9A2D-2FF28690FF38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.TestRunner.NUnit", "src\Kekiri.TestRunner.NUnit\Kekiri.TestRunner.NUnit.csproj", "{B50C8A20-A431-4866-9A2D-2FF28690FF38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
