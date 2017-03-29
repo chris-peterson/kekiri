@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Copyright>2012-2017</Copyright>
     <VersionPrefix>4.0.0-beta1</VersionPrefix>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard1.5</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri</AssemblyName>
     <RootNamespace>$(AssemblyName)</RootNamespace>
