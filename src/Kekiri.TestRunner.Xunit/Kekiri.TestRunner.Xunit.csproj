@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <VersionPrefix>1.0.0-beta1</VersionPrefix>
+    <DebugType>portable</DebugType>
+    <AssemblyName>Kekiri.TestRunner.Xunit</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <PackageId>Kekiri.TestRunner.Xunit</PackageId>
+    <Copyright>2012-2017</Copyright>
+    <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;xunit;specflow</PackageTags>
+    <PackageReleaseNotes>Initial beta release</PackageReleaseNotes>
+    <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Kekiri/Kekiri.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.2.*" />
+    <PackageReference Include="xunit.abstractions" Version="2.0.*" />
+  </ItemGroup>
+</Project>

@@ -1,7 +1,6 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26114.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43E5189D-BB90-4EBE-921A-01457419C7BB}"
 EndProject
@@ -9,13 +8,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC", "IoC", "{DF16D56E-1B8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestRunner", "TestRunner", "{440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri", "src\Kekiri\Kekiri.csproj", "{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri", "src\Kekiri\Kekiri.csproj", "{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples", "src\Kekiri.Examples\Kekiri.Examples.csproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples.NUnit", "src\Kekiri.Examples.NUnit\Kekiri.Examples.NUnit.csproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.IoC.Autofac", "src\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj", "{597BE251-91C3-407D-8FA5-BB2D51C3D98C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.IoC.Autofac", "src\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj", "{597BE251-91C3-407D-8FA5-BB2D51C3D98C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.TestRunner.NUnit", "src\Kekiri.TestRunner.NUnit\Kekiri.TestRunner.NUnit.csproj", "{B50C8A20-A431-4866-9A2D-2FF28690FF38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.TestRunner.NUnit", "src\Kekiri.TestRunner.NUnit\Kekiri.TestRunner.NUnit.csproj", "{B50C8A20-A431-4866-9A2D-2FF28690FF38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.TestRunner.Xunit", "src\Kekiri.TestRunner.Xunit\Kekiri.TestRunner.Xunit.csproj", "{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples.Xunit", "src\Kekiri.Examples.Xunit\Kekiri.Examples.Xunit.csproj", "{8173B052-D599-4A2B-94D2-D8B6775AE130}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +42,14 @@ Global
 		{B50C8A20-A431-4866-9A2D-2FF28690FF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B50C8A20-A431-4866-9A2D-2FF28690FF38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B50C8A20-A431-4866-9A2D-2FF28690FF38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8173B052-D599-4A2B-94D2-D8B6775AE130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8173B052-D599-4A2B-94D2-D8B6775AE130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8173B052-D599-4A2B-94D2-D8B6775AE130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8173B052-D599-4A2B-94D2-D8B6775AE130}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,5 +58,7 @@ Global
 		{BFB11BDE-9F07-4014-905D-33D94D10B7B1} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 		{597BE251-91C3-407D-8FA5-BB2D51C3D98C} = {DF16D56E-1B85-4B64-A128-C24EED22E633}
 		{B50C8A20-A431-4866-9A2D-2FF28690FF38} = {440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}
+		{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50} = {440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}
+		{8173B052-D599-4A2B-94D2-D8B6775AE130} = {43E5189D-BB90-4EBE-921A-01457419C7BB}
 	EndGlobalSection
 EndGlobal
