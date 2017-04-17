@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Loader;
+using System.Reflection;
 using Autofac;
+using Microsoft.Extensions.DependencyModel;
 
 namespace Kekiri.IoC.Autofac
 {
@@ -48,12 +50,11 @@ namespace Kekiri.IoC.Autofac
         IContainer BuildContainer()
         {
             var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
+                .Select(f => Path.GetFileNameWithoutExtension(f))
                 .Where(n => !_customizations.IsBlacklistedAssembly(n))
-                .Select(path =>
-                    {
-                        return AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
-                    }
-                ).ToArray();
+                .SelectMany(a => GetReferencingAssemblies(a))
+                .Distinct()
+                .ToArray();
 
             if (_customizations.BuildContainer == null)
             {
@@ -68,6 +69,28 @@ namespace Kekiri.IoC.Autofac
             }
 
             return _customizations.BuildContainer(assemblies);
+        }
+
+        // Adapted from http://www.michael-whelan.net/replacing-appdomain-in-dotnet-core/
+        static IEnumerable<Assembly> GetReferencingAssemblies(string assemblyName)
+        {
+            var assemblies = new List<Assembly>();
+            var dependencies = DependencyContext.Default.RuntimeLibraries;
+            foreach (var library in dependencies)
+            {
+                if (IsCandidateLibrary(library, assemblyName))
+                {
+                    var assembly = Assembly.Load(new AssemblyName(library.Name));
+                    assemblies.Add(assembly);
+                }
+            }
+            return assemblies;
+        }
+
+        static bool IsCandidateLibrary(RuntimeLibrary library, string assemblyName)
+        {
+            return string.Compare(assemblyName, library.Name, ignoreCase:true) == 0
+                || library.Dependencies.Any(d => d.Name.StartsWith(assemblyName));
         }
     }
 }

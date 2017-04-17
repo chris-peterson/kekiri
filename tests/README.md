@@ -1,3 +1,4 @@
-Given the checkered past of NUnit and dotnetcore, the entire testing suite for Kekiri was abandoned.
+Previous test suite was comprised of the pre-V4 attribute based (as opposed to Fluent) style tests.  
+Also, test suite was heavily coupled to NUnit (which is still not working with dotnetcore).
 
-Plan is to rebuild with xUnit -- Contributions welcome!
+The entire suite has been removed.  It needs to be rebuilt from scratch with xUnit -- Pull requests welcome!

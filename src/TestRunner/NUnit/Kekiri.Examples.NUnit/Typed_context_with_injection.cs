@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Kekiri.IoC.Autofac;
 using Kekiri.TestRunner.NUnit;
 using NUnit.Framework;
 
@@ -8,11 +7,6 @@ namespace Kekiri.Examples.NUnit
 {
     public class Typed_context_with_injection : Scenario<AdvancedCalculatorContext>
     {
-        protected override void Before()
-        {
-            AutofacBootstrapper.Initialize();
-        }
-
         public Typed_context_with_injection()
         {
             Given(Two_integers);

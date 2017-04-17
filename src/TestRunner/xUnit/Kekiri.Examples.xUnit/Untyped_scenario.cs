@@ -1,11 +1,12 @@
-﻿using Kekiri.TestRunner.NUnit;
-using NUnit.Framework;
+﻿using Kekiri.TestRunner.xUnit;
+using Xunit;
 
-namespace Kekiri.Examples.NUnit
+namespace Kekiri.Examples.xUnit
 {
-    public class Untyped_scenario : Scenario
+    public class Untyped_scenario : ExampleScenarios
     {
-        public Untyped_scenario()
+        [Scenario]
+        public void Can_resolve()
         {
             Given(Precondition_1);
             When(Doing_the_deed);
@@ -26,7 +27,7 @@ namespace Kekiri.Examples.NUnit
 
         void It_should_do_it()
         {
-            Assert.That(Context.Result, Is.EqualTo("data"));
+            Assert.Equal("data", Context.Result);
         }
     }
 

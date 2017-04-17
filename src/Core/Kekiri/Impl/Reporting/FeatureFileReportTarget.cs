@@ -30,7 +30,7 @@ namespace Kekiri.Impl.Reporting
                 using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
                 {
                     Write(scenario, fs);
-}
+                }
             }
             else
             {

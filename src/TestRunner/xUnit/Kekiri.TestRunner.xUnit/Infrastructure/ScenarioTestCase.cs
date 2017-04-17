@@ -7,8 +7,10 @@ namespace Kekiri.TestRunner.xUnit.Infrastructure
 {
     class ScenarioTestCase : XunitTestCase
     {
+        #pragma warning disable 0618
         //required for serialization by xunit framework
-        public  ScenarioTestCase() {}
+        public ScenarioTestCase() {}
+        #pragma warning restore 0618
 
         public ScenarioTestCase(IMessageSink diagnosticMessageSink, TestMethodDisplay defaultMethodDisplay, ITestMethod testMethod, object[] testMethodArguments = null) : base(diagnosticMessageSink, defaultMethodDisplay, testMethod, testMethodArguments)
         {
