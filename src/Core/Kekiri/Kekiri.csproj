@@ -9,9 +9,15 @@
     <RootNamespace>$(AssemblyName)</RootNamespace>
     <PackageId>Kekiri</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
-    <PackageReleaseNotes>Consolidate to Fluent style (drop attribute based Tests). Rename FluentTest =&gt; Scenario. Isolate NUnit dependencies in seperate package (Kekiri.NUnit). IoC (Container) is now baked into base Scenario. Drop support for SimpleInjector (might bring this back one IoC model is defined) Drop TestGen package</PackageReleaseNotes>
+    <PackageReleaseNotes>Consolidate to Fluent style (drop attribute based Tests). Rename FluentTest =&gt; Scenario. Isolate NUnit dependencies in seperate package (Kekiri.NUnit). IoC (Container) is now baked into base Scenario. Drop support for SimpleInjector (might bring this back one IoC model is defined) Drop TestGen package.  Add xUnit test runner (this is now the primary expected usage)</PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <Version>4.0.0-rc1</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Chris Peterson</Authors>
+    <Company />
+    <Product />
+    <Description>A .NET framework that supports writing low-ceremony BDD tests using Gherkin language.</Description>
   </PropertyGroup>
 
   <ItemGroup>

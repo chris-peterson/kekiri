@@ -9,9 +9,15 @@
     <RootNamespace>$(AssemblyName)</RootNamespace>
     <PackageId>Kekiri.TestRunner.NUnit</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
-    <PackageReleaseNotes>Test runners no longer require inheritance</PackageReleaseNotes>
+    <PackageReleaseNotes>Test runners no longer require inheritance, but rather, bootstrapping</PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <Version>1.0.0-rc1</Version>
+    <Authors>Chris Peterson</Authors>
+    <Company />
+    <Product />
+    <Description>NUnit test runner for Kekiri</Description>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

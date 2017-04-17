@@ -5,12 +5,18 @@
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.TestRunner.xUnit</AssemblyName>
     <RootNamespace>Kekiri.TestRunner.xUnit</RootNamespace>
-    <PackageId>Kekiri.TestRunner.Xunit</PackageId>
+    <PackageId>Kekiri.TestRunner.xUnit</PackageId>
     <Copyright>2012-2017</Copyright>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;xunit;specflow</PackageTags>
     <PackageReleaseNotes>Initial beta release</PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <Version>1.0.0-rc1</Version>
+    <Authors>Chris Peterson</Authors>
+    <Company />
+    <Product />
+    <Description>xUnit test runner for Kekiri</Description>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Kekiri\Kekiri.csproj" />
