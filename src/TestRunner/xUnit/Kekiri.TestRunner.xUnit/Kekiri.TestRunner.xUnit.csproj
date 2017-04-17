@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.5</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
     <VersionPrefix>1.0.0-beta1</VersionPrefix>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.TestRunner.xUnit</AssemblyName>
