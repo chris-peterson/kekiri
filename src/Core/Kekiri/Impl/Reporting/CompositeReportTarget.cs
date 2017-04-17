@@ -17,7 +17,8 @@ namespace Kekiri.Impl.Reporting
                 new[]
                 {
                     DebugReportTarget.GetInstance(),
-                    FeatureFileReportTarget.GetInstance()
+                    // cpeterson TODO: file-based target is not thread-safe, so it fails with xUnit's parallel test execution
+                    //FeatureFileReportTarget.GetInstance()
                 });
         }
 
