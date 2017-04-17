@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Ioc\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj" />
-    <ProjectReference Include="..\Kekiri.TestRunner.NUnit\Kekiri.TestRunner.NUnit.csproj" />
     <ProjectReference Include="..\..\..\Core\Kekiri\Kekiri.csproj" />
+    <ProjectReference Include="..\..\..\IoC\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj" />
+    <ProjectReference Include="..\Kekiri.TestRunner.NUnit\Kekiri.TestRunner.NUnit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
