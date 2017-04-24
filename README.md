@@ -1,12 +1,15 @@
 # Kekiri
 A .NET framework that supports writing low-ceremony BDD tests using Gherkin language.
 
-Kekiri honors the conventions of the [cucumber language](https://github.com/cucumber/cucumber/wiki/Feature-Introduction)
+Kekiri honors the conventions of the [cucumber language](https://github.com/cucumber/cucumber/wiki/Feature-Introduction).
 
 ## Setup
-Kekiri targets `netstandard1.5`.  To get started, be sure to have the latest [dotnet core](https://www.microsoft.com/net/core) tools.
+Kekiri targets `netstandard1.6`.  To get started, be sure to have the latest [dotnet core](https://www.microsoft.com/net/core) tools.
 
 ### Select Test Runner
+
+#### xUnit (recommended)
+`PM> Install-Package Kekiri.TestRunner.xUnit`  
 
 #### NUnit
 `PM> Install-Package Kekiri.TestRunner.NUnit`  
@@ -14,7 +17,9 @@ Kekiri targets `netstandard1.5`.  To get started, be sure to have the latest [do
 ### Select IoC Integration (optional)
 
 #### Autofac
-`PM> Install-Package Kekiri.IoC.Autofac`  
+`PM> Install-Package Kekiri.IoC.Autofac` 
+
+Be sure to call `AutofacBootstrapper.Initialize()` before your tests run.
 
 ## Why Kekiri?
 Unlike other BDD frameworks that impose process overhead (management of feature files, custom tooling, etc) Kekiri allows developers to write BDD scenarios just as quickly and easily as they would a "plain old" test.
