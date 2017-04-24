@@ -1,3 +1,4 @@
+.DS_Store
 [Oo]bj/
 [Bb]in/
 Packages
@@ -10,3 +11,8 @@ _ReSharper.*
 *.cache
 *.dotCover
 *.DotSettings
+project.lock.json
+.idea/
+.vs/
+TestResult.xml
+*.feature
