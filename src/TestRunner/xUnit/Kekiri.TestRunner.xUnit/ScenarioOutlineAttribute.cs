@@ -6,7 +6,7 @@ namespace Kekiri.TestRunner.xUnit
 {
     [XunitTestCaseDiscoverer("Kekiri.TestRunner.xUnit.Infrastructure.ScenarioOutlineDiscoverer", "Kekiri.TestRunner.xUnit")]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public class ScenarioOutlineAttribute : FactAttribute
+    public class ScenarioOutlineAttribute : TheoryAttribute
     {
     }
 }

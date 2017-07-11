@@ -18,7 +18,7 @@ namespace Kekiri.TestRunner.xUnit.Infrastructure
             IAttributeInfo factAttribute)
         {
 
-            if(!typeof(Scenarios).GetTypeInfo().IsAssignableFrom(testMethod.TestClass.Class.ToRuntimeType()))
+            if(!typeof(ScenarioBase).GetTypeInfo().IsAssignableFrom(testMethod.TestClass.Class.ToRuntimeType()))
                 throw new NotSupportedException("The Scenario attribute can only be placed on a class inheriting from Kekiri.TestRunner.xUnit.Scenarios");
 
             return new ScenarioTestCase(_diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod);
