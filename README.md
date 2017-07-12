@@ -3,6 +3,14 @@ A .NET framework that supports writing low-ceremony BDD tests using Gherkin lang
 
 Kekiri honors the conventions of the [cucumber language](https://github.com/cucumber/cucumber/wiki/Feature-Introduction).
 
+## Status
+Package | Build Status | Latest Release 
+:-------- | :------------ | :------------ 
+Kekiri | [![Build status](https://ci.appveyor.com/api/projects/status/yxt38w0wydc69xxr?svg=true)](https://ci.appveyor.com/project/chris-peterson/kekiri) | [![NuGet version](https://img.shields.io/nuget/vpre/Kekiri.svg)](https://badge.fury.io/nu/kekiri)
+Kekiri.IoC.Autofac | [![Build status](https://ci.appveyor.com/api/projects/status/yxt38w0wydc69xxr?svg=true)](https://ci.appveyor.com/project/chris-peterson/kekiri) | [![NuGet version](https://img.shields.io/nuget/vpre/Kekiri.IoC.Autofac.svg)](https://badge.fury.io/nu/kekiri.ioc.autofac)
+Kekiri.TestRunner.xUnit | [![Build status](https://ci.appveyor.com/api/projects/status/yxt38w0wydc69xxr?svg=true)](https://ci.appveyor.com/project/chris-peterson/kekiri) | [![NuGet version](https://img.shields.io/nuget/vpre/Kekiri.TestRunner.xUnit.svg)](https://badge.fury.io/nu/kekiri.testrunner.xunit)
+Kekiri.TestRunner.NUnit | [![Build status](https://ci.appveyor.com/api/projects/status/yxt38w0wydc69xxr?svg=true)](https://ci.appveyor.com/project/chris-peterson/kekiri) | [![NuGet version](https://img.shields.io/nuget/vpre/Kekiri.TestRunner.NUnit.svg)](https://badge.fury.io/nu/kekiri.testrunner.nunit)
+
 ## Setup
 Kekiri targets `netstandard1.6`.  To get started, be sure to have the latest [dotnet core](https://www.microsoft.com/net/core) tools.
 
