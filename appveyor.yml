@@ -9,4 +9,4 @@ test_script:
 
     dotnet run --project src/TestRunner/NUnit/Kekiri.Examples.NUnit/Kekiri.Examples.NUnit.csproj
 artifacts:
-- path: src\**\*.nupkg
+- path: src\**\bin\Release\*.nupkg
