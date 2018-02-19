@@ -1,0 +1,12 @@
+version: 4.0.{build}
+image: Visual Studio 2017
+build_script:
+- ps: >-
+    dotnet build -c Release
+test_script:
+- ps: >-
+    dotnet test src/TestRunner/xUnit/Kekiri.Examples.xUnit/Kekiri.Examples.xUnit.csproj
+
+    dotnet run --project src/TestRunner/NUnit/Kekiri.Examples.NUnit/Kekiri.Examples.NUnit.csproj
+artifacts:
+- path: src\**\*.nupkg
