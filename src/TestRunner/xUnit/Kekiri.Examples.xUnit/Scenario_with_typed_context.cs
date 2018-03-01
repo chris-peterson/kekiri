@@ -16,6 +16,17 @@ namespace Kekiri.Examples.xUnit
             Then(The_sum_is, 3);
         }
 
+        [ScenarioOutline]
+        [Example(1, 2, 3)]
+        [Example(2, 3, 5)]
+        public void Can_add_any_two_numbers(int a, int b, int expectedResult)
+        {
+            Given(a_number, a)
+                .And(another_number, b);
+            When(adding_them_up);
+            Then(The_sum_is, expectedResult);
+        }
+
         private void a_number(int a)
         {
             Context.Value1 = a;

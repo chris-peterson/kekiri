@@ -18,7 +18,7 @@ namespace Kekiri.TestRunner.xUnit.Infrastructure
         protected override IEnumerable<IXunitTestCase> CreateTestCasesForDataRow(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod,
             IAttributeInfo theoryAttribute, object[] dataRow)
         {
-            if(!typeof(Scenarios).GetTypeInfo().IsAssignableFrom(testMethod.TestClass.Class.ToRuntimeType()))
+            if(!typeof(ScenarioBase).GetTypeInfo().IsAssignableFrom(testMethod.TestClass.Class.ToRuntimeType()))
                 throw new NotSupportedException("The ScenarioOutline attribute can only be placed on a class inheriting from Kekiri.TestRunner.xUnit.Scenarios");
 
             return new IXunitTestCase[] {new ScenarioTestCase(_diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod, dataRow)};
