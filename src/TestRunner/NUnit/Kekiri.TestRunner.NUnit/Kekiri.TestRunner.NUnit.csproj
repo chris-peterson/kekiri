@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Copyright>2012-2017</Copyright>
-    <VersionPrefix>1.0.0-beta1</VersionPrefix>
+    <Copyright>2012-2018</Copyright>
     <TargetFramework>netstandard1.6</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.TestRunner.NUnit</AssemblyName>
@@ -12,7 +11,7 @@
     <PackageReleaseNotes>Test runners no longer require inheritance, but rather, bootstrapping</PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>1.0.0-rc1</Version>
+    <Version>1.0.0-rc2</Version>
     <Authors>Chris Peterson</Authors>
     <Company />
     <Product />

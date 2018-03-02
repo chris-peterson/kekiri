@@ -1,18 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Copyright>2012-2017</Copyright>
-    <VersionPrefix>4.0.0-beta1</VersionPrefix>
+    <Copyright>2012-2018</Copyright>
     <TargetFramework>netstandard1.6</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri</AssemblyName>
     <RootNamespace>$(AssemblyName)</RootNamespace>
     <PackageId>Kekiri</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
-    <PackageReleaseNotes>Consolidate to Fluent style (drop attribute based Tests). Rename FluentTest =&gt; Scenario. Isolate NUnit dependencies in seperate package (Kekiri.NUnit). IoC (Container) is now baked into base Scenario. Drop support for SimpleInjector (might bring this back one IoC model is defined) Drop TestGen package.  Add xUnit test runner (this is now the primary expected usage)</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      Consolidate to Fluent style (drop attribute based Tests).
+      Rename FluentTest =&gt; Scenario. Isolate test-runner dependencies into satellite assemblies (e.g. Kekiri.Xunit).
+      IoC (Container) is now baked into base Scenario.
+      Drop support for SimpleInjector (might bring this back one IoC model is defined)
+      Drop TestGen package.
+      Add xUnit support (this is first-class.  NUnit support maintained only for compatability reasons).</PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>4.0.0-rc1</Version>
+    <Version>4.0.0-rc2</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Chris Peterson</Authors>
     <Company />
