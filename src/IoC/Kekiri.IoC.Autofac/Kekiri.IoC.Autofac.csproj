@@ -12,7 +12,7 @@
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <Authors>Chris Peterson</Authors>
-    <Version>4.0.0-rc2/Version>
+    <Version>4.0.0-rc2</Version>
     <Company />
     <Product />
     <Description>Autofac IoC integration for Kekiri</Description>
