@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Kekiri.Impl
 {
@@ -27,9 +29,18 @@ namespace Kekiri.Impl
             SourceDescription = $"{method.DeclaringType?.FullName}.{method.Name}";
         }
 
-        public virtual void Invoke(ScenarioBase scenario)
+        public virtual Task InvokeAsync(ScenarioBase scenario)
         {
-            Method.Invoke(Method.IsStatic ? null : scenario, Parameters.Select(p => p.Value).ToArray());
+            var returnValue = Method.Invoke(Method.IsStatic ? null : scenario, Parameters.Select(p => p.Value).ToArray());
+
+            if (returnValue is Task returnTask)
+            {
+                return returnTask;
+            }
+            else
+            {
+                return Task.CompletedTask;
+            }
         }
     }
 }

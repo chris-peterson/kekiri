@@ -19,7 +19,7 @@ namespace Kekiri.Xunit.Infrastructure
 
             if (testClassInstance is ScenarioBase scenarioInstance)
             {
-                scenarioInstance.Run();
+                return scenarioInstance.RunAsync();
             }
 
             return null;

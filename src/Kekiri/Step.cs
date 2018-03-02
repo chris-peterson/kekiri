@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Kekiri.Impl;
 
 namespace Kekiri
@@ -26,7 +27,9 @@ namespace Kekiri
             _exceptionHandler = exceptionHandler;
         }
 
-        public abstract void Execute();
+        public abstract Task ExecuteAsync();
+
+        protected virtual void Execute() => ExecuteAsync().GetAwaiter().GetResult();
 
         public TException Catch<TException>() where TException : Exception
         {
