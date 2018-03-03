@@ -83,7 +83,7 @@ namespace Kekiri
                 return this;
             }
             
-            public NestedStepOptions And(Func<Task> action)
+            public NestedStepOptions AndAsync(Func<Task> action)
             {
                 Scenario.AddStepMethod(StepType, action);
                 return this;
@@ -95,7 +95,7 @@ namespace Kekiri
                 return this;
             }
             
-            public NestedStepOptions And<T>(Func<T, Task> action, T a)
+            public NestedStepOptions AndAsync<T>(Func<T, Task> action, T a)
             {
                 Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a);
                 return this;
@@ -107,7 +107,7 @@ namespace Kekiri
                 return this;
             }
             
-            public NestedStepOptions And<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
+            public NestedStepOptions AndAsync<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
             {
                 Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b);
                 return this;
@@ -119,7 +119,7 @@ namespace Kekiri
                 return this;
             }
             
-            public NestedStepOptions And<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
+            public NestedStepOptions AndAsync<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
             {
                 Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b, c);
                 return this;
@@ -139,7 +139,7 @@ namespace Kekiri
                 return this;
             }
             
-            public NestedStepOptions But(Func<Task> action)
+            public NestedStepOptions ButAsync(Func<Task> action)
             {
                 Scenario.AddStepMethod(StepType, action);
                 return this;
@@ -151,7 +151,7 @@ namespace Kekiri
                 return this;
             }
             
-            public NestedStepOptions But<T>(Func<T, Task> action, T a)
+            public NestedStepOptions ButAsync<T>(Func<T, Task> action, T a)
             {
                 Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a);
                 return this;
@@ -163,7 +163,7 @@ namespace Kekiri
                 return this;
             }
             
-            public NestedStepOptions But<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
+            public NestedStepOptions ButAsync<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
             {
                 Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b);
                 return this;
@@ -175,7 +175,7 @@ namespace Kekiri
                 return this;
             }
             
-            public NestedStepOptions But<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
+            public NestedStepOptions ButAsync<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
             {
                 Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b, c);
                 return this;
@@ -208,10 +208,10 @@ namespace Kekiri
             return given;
         }
         
-        protected GivenOptions Given(Func<Task> action)
+        protected GivenOptions GivenAsync(Func<Task> action)
         {
             var given = new GivenOptions(this);
-            given.And(action);
+            given.AndAsync(action);
             return given;
         }
 
@@ -222,10 +222,10 @@ namespace Kekiri
             return given;
         }
         
-        protected GivenOptions Given<T>(Func<T, Task> action, T a)
+        protected GivenOptions GivenAsync<T>(Func<T, Task> action, T a)
         {
             var given = new GivenOptions(this);
-            given.And(action, a);
+            given.AndAsync(action, a);
             return given;
         }
 
@@ -236,10 +236,10 @@ namespace Kekiri
             return given;
         }
         
-        protected GivenOptions Given<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
+        protected GivenOptions GivenAsync<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
         {
             var given = new GivenOptions(this);
-            given.And(action, a, b);
+            given.AndAsync(action, a, b);
             return given;
         }
 
@@ -250,10 +250,10 @@ namespace Kekiri
             return given;
         }
         
-        protected GivenOptions Given<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
+        protected GivenOptions GivenAsync<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
         {
             var given = new GivenOptions(this);
-            given.And(action, a, b, c);
+            given.AndAsync(action, a, b, c);
             return given;
         }
 
@@ -285,7 +285,7 @@ namespace Kekiri
                 return this;
             }
             
-            internal WhenOptions That(Func<Task> action)
+            internal WhenOptions ThatAsync(Func<Task> action)
             {
                 Scenario.AddStepMethod(StepType, action);
                 return this;
@@ -297,7 +297,7 @@ namespace Kekiri
                 return this;
             }
             
-            internal WhenOptions That<T>(Func<T, Task> action, T a)
+            internal WhenOptions ThatAsync<T>(Func<T, Task> action, T a)
             {
                 Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a);
                 return this;
@@ -309,7 +309,7 @@ namespace Kekiri
                 return this;
             }
             
-            internal WhenOptions That<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
+            internal WhenOptions ThatAsync<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
             {
                 Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b);
                 return this;
@@ -321,7 +321,7 @@ namespace Kekiri
                 return this;
             }
             
-            internal WhenOptions That<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
+            internal WhenOptions ThatAsync<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
             {
                 Scenario.AddStepMethod(StepType, action.GetMethodInfo(), a, b, c);
                 return this;
@@ -339,9 +339,9 @@ namespace Kekiri
             return new WhenOptions(this).That(action);
         }
         
-        protected WhenOptions When(Func<Task> action)
+        protected WhenOptions WhenAsync(Func<Task> action)
         {
-            return new WhenOptions(this).That(action);
+            return new WhenOptions(this).ThatAsync(action);
         }
 
         protected WhenOptions When<T>(Action<T> action, T a)
@@ -349,9 +349,9 @@ namespace Kekiri
             return new WhenOptions(this).That(action, a);
         }
         
-        protected WhenOptions When<T>(Func<T, Task> action, T a)
+        protected WhenOptions WhenAsync<T>(Func<T, Task> action, T a)
         {
-            return new WhenOptions(this).That(action, a);
+            return new WhenOptions(this).ThatAsync(action, a);
         }
 
         protected WhenOptions When<T1, T2>(Action<T1, T2> action, T1 a, T2 b)
@@ -359,9 +359,9 @@ namespace Kekiri
             return new WhenOptions(this).That(action, a, b);
         }
         
-        protected WhenOptions When<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
+        protected WhenOptions WhenAsync<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
         {
-            return new WhenOptions(this).That(action, a, b);
+            return new WhenOptions(this).ThatAsync(action, a, b);
         }
 
         protected WhenOptions When<T1, T2, T3>(Action<T1, T2, T3> action, T1 a, T2 b, T3 c)
@@ -369,9 +369,9 @@ namespace Kekiri
             return new WhenOptions(this).That(action, a, b, c);
         }
         
-        protected WhenOptions When<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
+        protected WhenOptions WhenAsync<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
         {
-            return new WhenOptions(this).That(action, a, b, c);
+            return new WhenOptions(this).ThatAsync(action, a, b, c);
         }
 
         protected WhenOptions When<TStep>(params object[] parameterValues) where TStep : Step
@@ -398,10 +398,10 @@ namespace Kekiri
             return then;
         }
         
-        protected ThenOptions Then(Func<Task> action)
+        protected ThenOptions ThenAsync(Func<Task> action)
         {
             var then = new ThenOptions(this);
-            then.And(action);
+            then.AndAsync(action);
             return then;
         }
 
@@ -412,10 +412,10 @@ namespace Kekiri
             return then;
         }
 
-        protected ThenOptions Then<T>(Func<T, Task> action, T a)
+        protected ThenOptions ThenAsync<T>(Func<T, Task> action, T a)
         {
             var then = new ThenOptions(this);
-            then.And(action, a);
+            then.AndAsync(action, a);
             return then;
         }
         
@@ -426,10 +426,10 @@ namespace Kekiri
             return then;
         }
         
-        protected ThenOptions Then<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
+        protected ThenOptions ThenAsync<T1, T2>(Func<T1, T2, Task> action, T1 a, T2 b)
         {
             var then = new ThenOptions(this);
-            then.And(action, a, b);
+            then.AndAsync(action, a, b);
             return then;
         }
 
@@ -440,10 +440,10 @@ namespace Kekiri
             return then;
         }
 
-        protected ThenOptions Then<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
+        protected ThenOptions ThenAsync<T1, T2, T3>(Func<T1, T2, T3, Task> action, T1 a, T2 b, T3 c)
         {
             var then = new ThenOptions(this);
-            then.And(action, a, b, c);
+            then.AndAsync(action, a, b, c);
             return then;
         }
         
