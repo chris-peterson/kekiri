@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace Kekiri.TestRunner.NUnit
+namespace Kekiri.NUnit
 {
     [TestFixture]
     public abstract class Scenario : ScenarioBase

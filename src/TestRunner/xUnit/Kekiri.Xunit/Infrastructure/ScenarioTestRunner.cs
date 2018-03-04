@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Kekiri.TestRunner.xUnit.Infrastructure
+namespace Kekiri.Xunit.Infrastructure
 {
     class ScenarioTestRunner : XunitTestRunner
     {

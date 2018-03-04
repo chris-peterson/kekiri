@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Kekiri.TestRunner.xUnit;
+using Kekiri.Xunit;
 using Xunit;
 
-namespace Kekiri.Examples.xUnit
+namespace Kekiri.Examples.Xunit
 {
     public class Scenario_with_typed_context : Scenarios<MyContext>
     {

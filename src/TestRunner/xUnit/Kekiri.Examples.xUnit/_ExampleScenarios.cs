@@ -1,7 +1,7 @@
 ﻿using Kekiri.IoC.Autofac;
-using Kekiri.TestRunner.xUnit;
+using Kekiri.Xunit;
 
-namespace Kekiri.Examples.xUnit
+namespace Kekiri.Examples.Xunit
 {
     public class ExampleScenarios : Scenarios
     {

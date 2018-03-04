@@ -2,15 +2,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
     <DebugType>portable</DebugType>
-    <AssemblyName>Kekiri.TestRunner.xUnit</AssemblyName>
-    <RootNamespace>Kekiri.TestRunner.xUnit</RootNamespace>
-    <PackageId>Kekiri.TestRunner.xUnit</PackageId>
+    <AssemblyName>Kekiri.Xunit</AssemblyName>
+    <RootNamespace>Kekiri.Xunit</RootNamespace>
+    <PackageId>Kekiri.Xunit</PackageId>
     <Copyright>2012-2018</Copyright>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;xunit;specflow</PackageTags>
-    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <PackageReleaseNotes>
+Initial release
+    </PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>1.0.0-rc3</Version>
+    <Version>1.0.0</Version>
     <Authors>Chris Peterson</Authors>
     <Company />
     <Product />
@@ -18,7 +20,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Kekiri\Kekiri.csproj" />
+    <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="xunit" Version="2.2.0" />

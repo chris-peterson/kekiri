@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Xunit.Sdk;
 
-namespace Kekiri.TestRunner.xUnit
+namespace Kekiri.Xunit
 {
     [DataDiscoverer("Xunit.Sdk.InlineDataDiscoverer", "xunit.core")]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]

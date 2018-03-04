@@ -1,4 +1,4 @@
-﻿namespace Kekiri.TestRunner.xUnit
+﻿namespace Kekiri.Xunit
 {
     public class Scenarios : ScenarioBase
     {

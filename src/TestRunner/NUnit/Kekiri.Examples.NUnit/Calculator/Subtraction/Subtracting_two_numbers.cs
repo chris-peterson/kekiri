@@ -1,4 +1,4 @@
-﻿using Kekiri.TestRunner.NUnit;
+﻿using Kekiri.NUnit;
 using NUnit.Framework;
 
 namespace Kekiri.Examples.NUnit.Calculator.Subtraction

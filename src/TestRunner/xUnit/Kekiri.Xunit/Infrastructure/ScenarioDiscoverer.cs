@@ -3,7 +3,7 @@ using System.Reflection;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Kekiri.TestRunner.xUnit.Infrastructure
+namespace Kekiri.Xunit.Infrastructure
 {
     public class ScenarioDiscoverer : FactDiscoverer
     {
@@ -19,7 +19,7 @@ namespace Kekiri.TestRunner.xUnit.Infrastructure
         {
 
             if(!typeof(ScenarioBase).GetTypeInfo().IsAssignableFrom(testMethod.TestClass.Class.ToRuntimeType()))
-                throw new NotSupportedException("The Scenario attribute can only be placed on a class inheriting from Kekiri.TestRunner.xUnit.Scenarios");
+                throw new NotSupportedException("The Scenario attribute can only be placed on a class inheriting from Kekiri.Xunit.Scenarios");
 
             return new ScenarioTestCase(_diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod);
         }

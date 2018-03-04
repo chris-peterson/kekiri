@@ -5,7 +5,7 @@ using System.Threading;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Kekiri.TestRunner.xUnit.Infrastructure
+namespace Kekiri.Xunit.Infrastructure
 {
     class ScenarioTestInvoker : XunitTestInvoker
     {

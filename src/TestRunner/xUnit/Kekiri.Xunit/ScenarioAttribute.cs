@@ -2,9 +2,9 @@
 using Xunit;
 using Xunit.Sdk;
 
-namespace Kekiri.TestRunner.xUnit
+namespace Kekiri.Xunit
 {
-    [XunitTestCaseDiscoverer("Kekiri.TestRunner.xUnit.Infrastructure.ScenarioDiscoverer", "Kekiri.TestRunner.xUnit")]
+    [XunitTestCaseDiscoverer("Kekiri.Xunit.Infrastructure.ScenarioDiscoverer", "Kekiri.Xunit")]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class ScenarioAttribute : FactAttribute
     {

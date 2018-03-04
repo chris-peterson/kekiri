@@ -5,8 +5,9 @@ build_script:
     dotnet build -c Release
 test_script:
 - ps: >-
-    dotnet test src/TestRunner/xUnit/Kekiri.Examples.xUnit/Kekiri.Examples.xUnit.csproj
+    dotnet test src/TestRunner/Xunit/Kekiri.Examples.Xunit/Kekiri.Examples.Xunit.csproj
 
     dotnet run --project src/TestRunner/NUnit/Kekiri.Examples.NUnit/Kekiri.Examples.NUnit.csproj
 artifacts:
 - path: src\**\bin\Release\*.nupkg
+skip_tags: true

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Kekiri.TestRunner.NUnit;
+using Kekiri.NUnit;
 using NUnit.Framework;
 
 namespace Kekiri.Examples.NUnit

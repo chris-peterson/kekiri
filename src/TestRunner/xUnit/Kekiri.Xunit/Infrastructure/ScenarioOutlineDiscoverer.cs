@@ -4,7 +4,7 @@ using System.Reflection;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Kekiri.TestRunner.xUnit.Infrastructure
+namespace Kekiri.Xunit.Infrastructure
 {
     public class ScenarioOutlineDiscoverer : TheoryDiscoverer
     {
@@ -19,7 +19,7 @@ namespace Kekiri.TestRunner.xUnit.Infrastructure
             IAttributeInfo theoryAttribute, object[] dataRow)
         {
             if(!typeof(ScenarioBase).GetTypeInfo().IsAssignableFrom(testMethod.TestClass.Class.ToRuntimeType()))
-                throw new NotSupportedException("The ScenarioOutline attribute can only be placed on a class inheriting from Kekiri.TestRunner.xUnit.Scenarios");
+                throw new NotSupportedException("The ScenarioOutline attribute can only be placed on a class inheriting from Kekiri.Xunit.Scenarios");
 
             return new IXunitTestCase[] {new ScenarioTestCase(_diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod, dataRow)};
         }

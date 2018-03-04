@@ -11,23 +11,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC", "IoC", "{DF16D56E-1B8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestRunner", "TestRunner", "{440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri", "src\Core\Kekiri\Kekiri.csproj", "{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri", "src\Kekiri\Kekiri.csproj", "{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.NUnit", "src\TestRunner\NUnit\Kekiri.Examples.NUnit\Kekiri.Examples.NUnit.csproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.IoC.Autofac", "src\IoC\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj", "{597BE251-91C3-407D-8FA5-BB2D51C3D98C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.TestRunner.NUnit", "src\TestRunner\NUnit\Kekiri.TestRunner.NUnit\Kekiri.TestRunner.NUnit.csproj", "{B50C8A20-A431-4866-9A2D-2FF28690FF38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.NUnit", "src\TestRunner\NUnit\Kekiri.NUnit\Kekiri.NUnit.csproj", "{B50C8A20-A431-4866-9A2D-2FF28690FF38}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.TestRunner.xUnit", "src\TestRunner\xUnit\Kekiri.TestRunner.xUnit\Kekiri.TestRunner.xUnit.csproj", "{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Xunit", "src\TestRunner\Xunit\Kekiri.Xunit\Kekiri.Xunit.csproj", "{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.xUnit", "src\TestRunner\xUnit\Kekiri.Examples.xUnit\Kekiri.Examples.xUnit.csproj", "{8173B052-D599-4A2B-94D2-D8B6775AE130}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.Xunit", "src\TestRunner\Xunit\Kekiri.Examples.Xunit\Kekiri.Examples.Xunit.csproj", "{8173B052-D599-4A2B-94D2-D8B6775AE130}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xUnit", "xUnit", "{ED57DA42-664B-4959-8E12-ECC4FA9ADA8F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xunit", "Xunit", "{ED57DA42-664B-4959-8E12-ECC4FA9ADA8F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NUnit", "NUnit", "{A645A651-AE4E-45AF-9D2E-0BBAAA3BA593}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B9240DA0-CB64-435E-8CAF-DC067E562F7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,7 +62,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3} = {B9240DA0-CB64-435E-8CAF-DC067E562F7F}
 		{BFB11BDE-9F07-4014-905D-33D94D10B7B1} = {A645A651-AE4E-45AF-9D2E-0BBAAA3BA593}
 		{597BE251-91C3-407D-8FA5-BB2D51C3D98C} = {DF16D56E-1B85-4B64-A128-C24EED22E633}
 		{B50C8A20-A431-4866-9A2D-2FF28690FF38} = {A645A651-AE4E-45AF-9D2E-0BBAAA3BA593}

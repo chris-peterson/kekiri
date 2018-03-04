@@ -8,11 +8,13 @@
     <RootNamespace>$(AssemblyName)</RootNamespace>
     <PackageId>Kekiri.IoC.Autofac</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
-    <PackageReleaseNotes>IoC providers no longer require inheritance, but rather, bootstrapping.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+IoC providers now require bootstrapping rather than inheritance
+    </PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <Authors>Chris Peterson</Authors>
-    <Version>4.0.0-rc2</Version>
+    <Version>4.0.0</Version>
     <Company />
     <Product />
     <Description>Autofac IoC integration for Kekiri</Description>
@@ -20,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Kekiri\Kekiri.csproj" />
+    <ProjectReference Include="..\..\Kekiri\Kekiri.csproj" />
   </ItemGroup>
 
   <ItemGroup>

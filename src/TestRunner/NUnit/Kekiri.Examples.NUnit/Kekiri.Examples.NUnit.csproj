@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <AssemblyName>Kekiri.Examples.NUnit</AssemblyName>
     <RootNamespace>$(AssemblyName)</RootNamespace>
@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Kekiri\Kekiri.csproj" />
+    <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
     <ProjectReference Include="..\..\..\IoC\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj" />
-    <ProjectReference Include="..\Kekiri.TestRunner.NUnit\Kekiri.TestRunner.NUnit.csproj" />
+    <ProjectReference Include="..\Kekiri.NUnit\Kekiri.NUnit.csproj" />
   </ItemGroup>
 
   <ItemGroup>

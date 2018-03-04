@@ -1,5 +1,5 @@
 ﻿using System;
-using Kekiri.TestRunner.NUnit;
+using Kekiri.NUnit;
 
 namespace Kekiri.Examples.NUnit.Calculator.Division
 {
