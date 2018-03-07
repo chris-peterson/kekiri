@@ -457,11 +457,7 @@ namespace Kekiri
 
         void AddStepMethod(StepType stepType, Action action)
         {
-            AddStepMethod(stepType, () =>
-            {
-                action();
-                return Task.CompletedTask;
-            });
+            _scenarioRunner.AddStep(new StepMethodInvoker(stepType, action.GetMethodInfo()));
         }
         
         void AddStepMethod(StepType stepType, Func<Task> action)
@@ -501,11 +497,7 @@ namespace Kekiri
 
         protected virtual Task BeforeAsync() => Task.CompletedTask;
 
-        protected virtual void Before() => BeforeAsync().GetAwaiter().GetResult();
-
         protected virtual Task AfterAsync() => Task.CompletedTask;
-
-        protected virtual void After() => AfterAsync().GetAwaiter().GetResult();
 
         protected virtual object CreateContextObject()
         {

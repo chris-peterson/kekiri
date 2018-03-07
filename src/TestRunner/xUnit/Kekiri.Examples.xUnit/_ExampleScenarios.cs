@@ -1,6 +1,7 @@
-﻿using Kekiri.IoC.Autofac;
+using Kekiri.IoC.Autofac;
 using Kekiri.Xunit;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Kekiri.Examples.Xunit
 {
@@ -9,7 +10,7 @@ namespace Kekiri.Examples.Xunit
         static readonly object _lockObject = new object();
         static bool _isInitialized = false;
 
-        protected override void Before()
+        protected override Task BeforeAsync()
         {
             if (!_isInitialized)
             {
@@ -24,6 +25,8 @@ namespace Kekiri.Examples.Xunit
                     }
                 }
             }
+
+            return Task.CompletedTask;
         }
     }
 }

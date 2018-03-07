@@ -28,7 +28,7 @@ namespace Kekiri.Examples.Xunit
             Then(The_sum_is, sum);
         }
 
-        protected override void Before()
+        public AdditionScenarios()
         {
             Context.Numbers = new List<int>();
         }
