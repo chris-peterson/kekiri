@@ -3,11 +3,11 @@ using System.Diagnostics;
 
 namespace Kekiri.Impl.Reporting
 {
-    class DebugReportTarget : IReportTarget
+    class TraceReportTarget : IReportTarget
     {
-        static readonly Lazy<DebugReportTarget> _target = new Lazy<DebugReportTarget>(() => new DebugReportTarget());
+        static readonly Lazy<TraceReportTarget> _target = new Lazy<TraceReportTarget>(() => new TraceReportTarget());
 
-        DebugReportTarget()
+        TraceReportTarget()
         {
         }
 
@@ -18,7 +18,7 @@ namespace Kekiri.Impl.Reporting
 
         public void Report(ScenarioReportingContext scenario)
         {
-            Debug.WriteLine(scenario.CreateReport());
+            Trace.WriteLine(scenario.CreateReport());
         }
     }
 }
