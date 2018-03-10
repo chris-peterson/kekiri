@@ -29,8 +29,6 @@ namespace Kekiri
 
         public abstract Task ExecuteAsync();
 
-        protected virtual void Execute() => ExecuteAsync().GetAwaiter().GetResult();
-
         public TException Catch<TException>() where TException : Exception
         {
             return _exceptionHandler.Catch<TException>();
