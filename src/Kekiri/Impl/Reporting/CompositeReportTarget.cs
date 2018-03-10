@@ -16,7 +16,7 @@ namespace Kekiri.Impl.Reporting
             return new CompositeReportTarget(
                 new[]
                 {
-                    DebugReportTarget.GetInstance(),
+                    TraceReportTarget.GetInstance(),
                     // cpeterson TODO: file-based target is not thread-safe, so it fails with xUnit's parallel test execution
                     //FeatureFileReportTarget.GetInstance()
                 });
