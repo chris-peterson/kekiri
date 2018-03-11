@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
+
 namespace Kekiri.Impl
 {
     interface IStepInvoker
     {
-        void Invoke(ScenarioBase scenario);
+        Task InvokeAsync(ScenarioBase scenario);
 
         bool ExceptionExpected { get; set; }
 

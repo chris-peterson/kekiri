@@ -7,9 +7,9 @@ namespace Kekiri.NUnit
     public abstract class Scenario : ScenarioBase
     {
         [Test]
-        public override void Run()
+        public void Run()
         {
-            base.Run();
+            RunAsync().GetAwaiter().GetResult();
         }
     }
 
@@ -17,9 +17,9 @@ namespace Kekiri.NUnit
     public abstract class Scenario<TContext> : ScenarioBase<TContext>
     {
         [Test]
-        public override void Run()
+        public void Run()
         {
-            base.Run();
+            RunAsync().GetAwaiter().GetResult();
         }
     }
 }

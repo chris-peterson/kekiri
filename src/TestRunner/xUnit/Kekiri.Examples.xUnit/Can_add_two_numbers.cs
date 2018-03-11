@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Kekiri.Xunit;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Kekiri.Examples.Xunit
@@ -11,7 +12,7 @@ namespace Kekiri.Examples.Xunit
         public void Can_add_one_plus_two()
         {
             Given(a_number, 1)
-            .And(another_number, 2);
+            .AndAsync(another_number, 2);
             When(adding_them_up);
             Then(The_sum_is, 3);
         }
@@ -22,12 +23,12 @@ namespace Kekiri.Examples.Xunit
         public void Can_add_two_numbers(int a, int b, int sum)
         {
             Given(a_number, a)
-                .And(another_number, b);
+                .AndAsync(another_number, b);
             When(adding_them_up);
             Then(The_sum_is, sum);
         }
 
-        protected override void Before()
+        public AdditionScenarios()
         {
             Context.Numbers = new List<int>();
         }
@@ -37,8 +38,9 @@ namespace Kekiri.Examples.Xunit
             Context.Numbers.Add(a);
         }
 
-        private void another_number(int b)
+        private async Task another_number(int b)
         {
+            await Task.Delay(50);
             Context.Numbers.Add(b);
         }
 

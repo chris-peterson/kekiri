@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Kekiri.Impl
 {
@@ -31,9 +32,9 @@ namespace Kekiri.Impl
 
         public string SourceDescription => _stepClass.FullName;
 
-        public void Invoke(ScenarioBase scenario)
+        public Task InvokeAsync(ScenarioBase scenario)
         {
-           Step.InstanceFor(scenario, _stepClass, Parameters, _exceptionHandler).Execute();
+           return Step.InstanceFor(scenario, _stepClass, Parameters, _exceptionHandler).ExecuteAsync();
         }
     }
 }

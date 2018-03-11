@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Kekiri.Impl.Exceptions;
 using Kekiri.Impl.Reporting;
 
@@ -70,12 +71,12 @@ namespace Kekiri.Impl
         }
         #endregion
 
-        public void Run()
+        public async Task RunAsync()
         {
             ReportScenario();
-            RunGivens();
-            RunWhen();
-            InvokeThens();
+            await RunGivensAsync();
+            await RunWhenAsync();
+            await InvokeThensAsync();
             AssertExceptionCompliance();
         }
 
@@ -90,13 +91,13 @@ namespace Kekiri.Impl
                 throw new FixtureShouldHaveThens(_scenario);
         }
 
-        public void RunGivens()
+        public async Task RunGivensAsync()
         {
             foreach (var given in _scenarioMetadata.GivenMethods)
             {
                 try
                 {
-                    given.Invoke(_scenario);
+                    await given.InvokeAsync(_scenario);
                 }
                 catch (TargetInvocationException ex)
                 {
@@ -105,7 +106,7 @@ namespace Kekiri.Impl
             }
         }
 
-        public void RunWhen()
+        public async Task RunWhenAsync()
         {
             var when = _scenarioMetadata.WhenMethod;
             if (when == null)
@@ -114,7 +115,7 @@ namespace Kekiri.Impl
             }
             try
             {
-                when.Invoke(_scenario);
+                await when.InvokeAsync(_scenario);
             }
             catch (Exception ex)
             {
@@ -134,7 +135,7 @@ namespace Kekiri.Impl
             }
         }
 
-        void InvokeThens()
+        async Task InvokeThensAsync()
         {
             EnsureAtLeastOneThenExists();
             
@@ -142,7 +143,7 @@ namespace Kekiri.Impl
             {
                 try
                 {
-                    given.Invoke(_scenario);
+                    await given.InvokeAsync(_scenario);
                 }
                 catch (TargetInvocationException ex)
                 {
