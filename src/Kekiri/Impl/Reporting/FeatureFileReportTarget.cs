@@ -12,6 +12,8 @@ namespace Kekiri.Impl.Reporting
 
         readonly Dictionary<string, dynamic> _featureState = new Dictionary<string, dynamic>();
 
+        readonly object _syncObject = new object();
+
         FeatureFileReportTarget()
         {
         }
@@ -23,26 +25,29 @@ namespace Kekiri.Impl.Reporting
 
         public void Report(ScenarioReportingContext scenario)
         {
-            var featureName = scenario.FeatureName;
+            lock (_syncObject)
+            {
+                var featureName = scenario.FeatureName;
 
-            if (_featureState.ContainsKey(featureName))
-            {
-                using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
+                if (_featureState.ContainsKey(featureName))
                 {
-                    Write(scenario, fs);
+                    using (var fs = File.Open(_featureState[featureName].Path, FileMode.Append, FileAccess.Write))
+                    {
+                        Write(scenario, fs);
+                    }
                 }
-            }
-            else
-            {
-                _featureState.Add(featureName, new
+                else
                 {
-                    Path = Path.Combine(
-                        AppContext.BaseDirectory,
-                        $"{CoerceValidFileName(featureName)}.feature")
-                });
-                using (var fs = File.Create(_featureState[featureName].Path))
-                {
-                    Write(scenario, fs);  
+                    _featureState.Add(featureName, new
+                    {
+                        Path = Path.Combine(
+                            AppContext.BaseDirectory,
+                            $"{CoerceValidFileName(featureName)}.feature")
+                    });
+                    using (var fs = File.Create(_featureState[featureName].Path))
+                    {
+                        Write(scenario, fs);
+                    }
                 }
             }
         }

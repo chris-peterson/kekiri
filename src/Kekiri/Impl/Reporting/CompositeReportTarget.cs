@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Kekiri.Impl.Reporting
 {
@@ -13,13 +16,25 @@ namespace Kekiri.Impl.Reporting
 
         public static IReportTarget GetInstance()
         {
-            return new CompositeReportTarget(
-                new[]
+            var targets = new List<IReportTarget>();
+            targets.Add(TraceReportTarget.GetInstance());
+
+            var outputConfig = Environment.GetEnvironmentVariable("KEKIRI_OUTPUT");
+            if (!string.IsNullOrWhiteSpace(outputConfig))
+            {
+                var split = outputConfig.Split(',')
+                    .Select(s => s.Trim().ToLower())
+                    .Distinct();
+                if (split.Contains("console"))
                 {
-                    TraceReportTarget.GetInstance(),
-                    // cpeterson TODO: file-based target is not thread-safe, so it fails with xUnit's parallel test execution
-                    //FeatureFileReportTarget.GetInstance()
-                });
+                    Trace.Listeners.Add(new TextWriterTraceListener(System.Console.Out));
+                }
+                if (split.Contains("files"))
+                {
+                    targets.Add(FeatureFileReportTarget.GetInstance());
+                }
+            }
+            return new CompositeReportTarget(targets);
         }
 
         public void Report(ScenarioReportingContext scenario)

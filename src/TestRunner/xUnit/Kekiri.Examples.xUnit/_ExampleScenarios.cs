@@ -1,6 +1,6 @@
+using System;
 using Kekiri.IoC.Autofac;
 using Kekiri.Xunit;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Kekiri.Examples.Xunit
@@ -14,8 +14,7 @@ namespace Kekiri.Examples.Xunit
         {
             if (!_isInitialized)
             {
-                System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(System.Console.Out));
-
+                Environment.SetEnvironmentVariable("KEKIRI_OUTPUT", "console,files");
                 lock (_lockObject)
                 {
                     if (!_isInitialized)
