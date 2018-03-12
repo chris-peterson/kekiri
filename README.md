@@ -30,7 +30,7 @@ Kekiri targets `netstandard1.6`.  To get started, be sure to have the latest [do
 
 `PM> Install-Package Kekiri.NUnit`
 
-### Select IoC Integration (optional)
+### IoC Integration (optional)
 
 #### Autofac
 
@@ -144,14 +144,14 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
 
 ## Supported Naming Conventions
 
-Kekiri supports both Pascal case conventions (e.g. `WhenDoingTheThing`) just as it does
+Kekiri supports both Pascal case conventions (e.g. `WhenDoingTheThing`) as it does
 underscore convention (e.g. `When_doing_the_thing`).
 
 ---
 
 ## Scenario Output
 
-Kekiri supports outputing the cucumber feature launguage.
+Kekiri supports outputing the cucumber text.
 The output settings are controlled via the `KEKIRI_OUTPUT` environment variable.
 
 Example:
@@ -264,20 +264,12 @@ Note: step method parameter names can be used as substitution macros by mentioni
 
 For more advanced topics, check out the [wiki](https://github.com/chris-peterson/kekiri/wiki).
 
-## Contributing
-
-1. Fork it
-2. Create your feature branch `git checkout -b my-new-feature`
-3. Commit your changes `git commit -am 'Added some feature'`
-4. Push to the branch `git push origin my-new-feature`
-5. Create new Pull Request
-
 ## Acknowledgements
 
 Kekiri uses and is influenced by the following open source projects:
 
-* [NUnit](<http://nunit.org>)
 * [Xunit](<https://xunit.github.io>)
+* [NUnit](<http://nunit.org>)
 * [Autofac](<https://github.com/autofac/Autofac>)
 * [xrepo](<https://github.com/andyalm/xrepo>)
 * [pickles](<https://github.com/picklesdoc/pickles#pickles>)
