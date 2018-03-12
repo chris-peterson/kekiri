@@ -10,20 +10,16 @@
     <PackageId>Kekiri</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
-Re-write for netstandard
+New features:
 
-- Consolidate to Fluent style (drop attribute-based Tests).
-- Rename FluentTest to Scenario. Isolate test-runner dependencies into satellite assemblies (e.g. Kekiri.Xunit).
-- IoC (Container) is now baked into base Scenario.
-- Drop support for SimpleInjector (might bring this back one IoC model is defined)
-- Drop TestGen package.
-- Add xUnit support (preferred). NUnit is secondary.
+- Async support (https://github.com/chris-peterson/kekiri/pull/25)
+- Scenario output control https://github.com/chris-peterson/kekiri#scenario-output
 
     </PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>4.0.0</Version>
+    <Version>4.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
