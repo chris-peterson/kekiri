@@ -31,7 +31,7 @@ namespace Kekiri.Impl
 
         public virtual Task InvokeAsync(ScenarioBase scenario)
         {
-            var returnValue = Method.Invoke(Method.IsStatic ? null : scenario, Parameters.Select(p => p.Value).ToArray());
+            var returnValue = Method.Invoke(Method.IsStatic ? null : scenario.StepsCallerInstance, Parameters.Select(p => p.Value).ToArray());
 
             if (returnValue is Task returnTask)
             {
