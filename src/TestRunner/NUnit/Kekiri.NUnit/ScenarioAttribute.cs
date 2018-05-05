@@ -9,14 +9,27 @@ namespace Kekiri.NUnit
     {
         public void BeforeTest(ITest test)
         {
-            (test.Fixture as FeatureBase).Initialize();
+            var scenario = test.Fixture as ScenarioBase;
+            if (scenario != null)
+            {
+                scenario.Initialize();
+            }
         }
 
         public void AfterTest(ITest test)
         {
-            (test.Fixture as FeatureBase).RunAsync().Wait();
+            var scenario = test.Fixture as ScenarioBase;
+            if (scenario != null)
+            {
+                scenario.RunAsync().Wait();
+            }
         }
 
         public ActionTargets Targets => ActionTargets.Test | ActionTargets.Suite;
+    }
+
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    public class ScenarioOutlineAttribute : ScenarioAttribute
+    {
     }
 }

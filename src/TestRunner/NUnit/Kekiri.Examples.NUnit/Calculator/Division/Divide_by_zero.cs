@@ -3,11 +3,12 @@ using Kekiri.NUnit;
 
 namespace Kekiri.Examples.NUnit.Calculator.Division
 {
-    class Divide_by_zero : Scenario
+    class Divide_by_zero : Scenarios
     {
         readonly Calculator _calculator = new Calculator();
 
-        public Divide_by_zero()
+        [Scenario]
+        public void If_divide_by_zero()
         {
             Given(a_denominator_of_0);
             When(dividing).Throws();

@@ -13,21 +13,20 @@ namespace Kekiri
 {
     public abstract class ScenarioBase
     {
-        readonly ScenarioRunner _scenarioRunner;
+        readonly IReportTarget _reportTarget;
+        ScenarioRunner _scenarioRunner;
 
         protected ScenarioBase()
         {
             // ReSharper disable once DoNotCallOverridableMethodsInConstructor
-            var reportTarget = CreateReportTarget();
-            _scenarioRunner = new ScenarioRunner(this, reportTarget);
-            StepsCallerInstance = this;
+            _reportTarget = CreateReportTarget();
+            Initialize();
         }
 
-        /// <summary>
-        /// Gets or sets the instance defining the steps methods.
-        /// </summary>
-        /// <value>The steps caller instance.</value>
-        public object StepsCallerInstance { get; set; }
+        public void Initialize()
+        {
+            _scenarioRunner = new ScenarioRunner(this, _reportTarget);
+        }
 
         public virtual async Task RunAsync()
         {

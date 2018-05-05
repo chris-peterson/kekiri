@@ -3,13 +3,14 @@ using NUnit.Framework;
 
 namespace Kekiri.Examples.NUnit.Calculator.Subtraction
 {
-    [Example(12, 5, 7)]
-    [Example(20, 5, 15)]
-    public class Subtracting_two_numbers : Scenario
+    public class Subtracting_two_numbers : Scenarios
     {
         readonly Calculator _calculator = new Calculator();
 
-        public Subtracting_two_numbers(double operand1, double operand2, double expectedResult)
+        [ScenarioOutline]
+        [Example(12, 5, 7)]
+        [Example(20, 5, 15)]
+        public void Can_subtract_two_numbers(double operand1, double operand2, double expectedResult)
         {
             Given(the_user_enters_OPERAND1, operand1)
                 .And(the_user_enters_OPERAND2, operand2);

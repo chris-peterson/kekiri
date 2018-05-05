@@ -5,10 +5,9 @@ using ScenarioAttribute = Kekiri.NUnit.ScenarioAttribute;
 
 namespace Kekiri.Examples.NUnit.Calculator
 {
-    [Feature]
-    public class Calculator : FeatureBase
+    public class Calculator_scenarios : Scenarios
     {
-        Calculator2 _calculator;
+        Calculator _calculator;
 
         [Scenario]
         public void Adding_two_numbers()
@@ -42,7 +41,7 @@ namespace Kekiri.Examples.NUnit.Calculator
 
         void a_calculator()
         {
-            _calculator = new Calculator2();
+            _calculator = new Calculator();
         }
 
         void the_user_enters_OPERAND1(decimal operand1)
@@ -81,7 +80,7 @@ namespace Kekiri.Examples.NUnit.Calculator
         }
     }
 
-    class Calculator2
+    class Calculator
     {
         public decimal Operand1 { get; set; }
         public decimal Operand2 { get; set; }
