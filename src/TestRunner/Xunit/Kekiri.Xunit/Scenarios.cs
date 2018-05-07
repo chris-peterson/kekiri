@@ -2,9 +2,11 @@
 {
     public class Scenarios : ScenarioBase
     {
+
     }
 
     public class Scenarios<TContext> : ScenarioBase<TContext>
     {
+
     }
 }
