@@ -12,14 +12,13 @@
     <PackageReleaseNotes>
 New features:
 
-- Async support (https://github.com/chris-peterson/kekiri/pull/25)
-- Scenario output control https://github.com/chris-peterson/kekiri#scenario-output
+- NUnit and Xunit now have identical usage models (support multiple [Scenario]s, etc).
 
     </PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>4.1.0</Version>
+    <Version>5.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

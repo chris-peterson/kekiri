@@ -1,7 +1,6 @@
 ﻿using System;
 using Kekiri.NUnit;
 using NUnit.Framework;
-using ScenarioAttribute = Kekiri.NUnit.ScenarioAttribute;
 
 namespace Kekiri.Examples.NUnit.Calculator
 {
