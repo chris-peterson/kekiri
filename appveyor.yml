@@ -1,13 +1,13 @@
-version: 4.0.{build}
+version: 5.0.{build}
 image: Visual Studio 2017
 build_script:
 - ps: >-
     dotnet build -c Release
 test_script:
 - ps: >-
-    dotnet test src/TestRunner/Xunit/Kekiri.Examples.Xunit/Kekiri.Examples.Xunit.csproj
+    dotnet test src/TestRunner/Xunit/Kekiri.Examples.Xunit
 
-    dotnet run --project src/TestRunner/NUnit/Kekiri.Examples.NUnit/Kekiri.Examples.NUnit.csproj
+    dotnet test src/TestRunner/NUnit/Kekiri.Examples.NUnit
 artifacts:
 - path: src\**\bin\Release\*.nupkg
 skip_tags: true

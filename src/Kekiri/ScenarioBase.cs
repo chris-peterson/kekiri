@@ -13,13 +13,19 @@ namespace Kekiri
 {
     public abstract class ScenarioBase
     {
-        readonly ScenarioRunner _scenarioRunner;
+        readonly IReportTarget _reportTarget;
+        ScenarioRunner _scenarioRunner;
 
         protected ScenarioBase()
         {
             // ReSharper disable once DoNotCallOverridableMethodsInConstructor
-            var reportTarget = CreateReportTarget();
-            _scenarioRunner = new ScenarioRunner(this, reportTarget);
+            _reportTarget = CreateReportTarget();
+            Initialize();
+        }
+
+        public void Initialize()
+        {
+            _scenarioRunner = new ScenarioRunner(this, _reportTarget);
         }
 
         public virtual async Task RunAsync()

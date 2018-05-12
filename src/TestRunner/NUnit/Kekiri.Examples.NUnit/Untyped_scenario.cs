@@ -3,9 +3,10 @@ using NUnit.Framework;
 
 namespace Kekiri.Examples.NUnit
 {
-    public class Untyped_scenario : Scenario
+    public class Untyped_scenario : Scenarios
     {
-        public Untyped_scenario()
+        [Scenario]
+        public void Can_use_untyped_scenario()
         {
             Given(Precondition_1);
             When(Doing_the_deed);

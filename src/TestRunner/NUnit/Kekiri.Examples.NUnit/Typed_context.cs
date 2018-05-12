@@ -5,9 +5,10 @@ using NUnit.Framework;
 
 namespace Kekiri.Examples.NUnit
 {
-    public class Typed_context : Scenario<CalculatorContext>
+    public class Typed_context : Scenarios<CalculatorContext>
     {
-        public Typed_context()
+        [Scenario]
+        public void Can_use_typed_context()
         {
             Given(Two_integers);
             When(Adding);

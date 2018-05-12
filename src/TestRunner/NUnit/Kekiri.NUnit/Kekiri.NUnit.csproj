@@ -11,12 +11,12 @@
     <PackageReleaseNotes>
 New features:
 
-- Async support (https://github.com/chris-peterson/kekiri/pull/25)
+- NUnit and Xunit now have identical usage models (support multiple [Scenario]s, etc).
 
     </PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>1.1.0</Version>
+    <Version>2.0.0</Version>
     <Authors>Chris Peterson</Authors>
     <Company />
     <Product />
@@ -26,7 +26,7 @@ New features:
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
-    <PackageReference Include="NUnit" Version="3.6.1" />
+    <PackageReference Include="NUnit" Version="3.10.1" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using Kekiri.IoC.Autofac;
+﻿using System;
+using Kekiri.IoC.Autofac;
 using NUnit.Framework;
 
 namespace Kekiri.Examples.NUnit
@@ -9,6 +10,8 @@ namespace Kekiri.Examples.NUnit
         [OneTimeSetUp]
         public void Setup()
         {
+            Environment.SetEnvironmentVariable("KEKIRI_OUTPUT", "console,files");
+
             AutofacBootstrapper.Initialize();
         }
     }

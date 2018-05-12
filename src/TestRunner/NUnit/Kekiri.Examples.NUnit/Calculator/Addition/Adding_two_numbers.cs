@@ -3,11 +3,12 @@ using NUnit.Framework;
 
 namespace Kekiri.Examples.NUnit.Calculator.Addition
 {
-    class Adding_two_numbers : Scenario
+    class Adding_two_numbers : Scenarios
     {
         Calculator _calculator;
 
-        public Adding_two_numbers()
+        [Scenario]
+        public void Can_add_two_numbers()
         {
             Given(a_calculator)
                .And(the_user_enters_50)
