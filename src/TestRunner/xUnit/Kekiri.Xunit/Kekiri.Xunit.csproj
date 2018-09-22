@@ -13,7 +13,9 @@ New features:
 - Async support (https://github.com/chris-peterson/kekiri/pull/25)
 
     </PackageReleaseNotes>
-    <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
+    <PackageProjectUrl>http://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
+    <RepositoryUrl>http://github.com/chris-peterson/kekiri</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <Version>1.1.0</Version>
     <Authors>Chris Peterson</Authors>
