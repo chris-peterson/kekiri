@@ -56,7 +56,7 @@ Implementing a basic calculator.
     class Calculator_tests : Scenarios
     {
         [Scenario]
-        Adding_two_numbers()
+        public void Adding_two_numbers()
         {
             Given(a_calculator)
                .And(the_user_enters_50)
@@ -94,7 +94,7 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
         Calculator _calculator;
 
         [Scenario]
-        Adding_two_numbers()
+        public void Adding_two_numbers()
         {
             Given(a_calculator)
                .And(the_user_enters_50)
