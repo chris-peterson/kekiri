@@ -23,6 +23,7 @@ New features:
     <Product />
     <Description>xUnit test runner for Kekiri</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />

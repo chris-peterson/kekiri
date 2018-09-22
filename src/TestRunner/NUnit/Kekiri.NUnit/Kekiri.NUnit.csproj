@@ -24,6 +24,7 @@ New features:
     <Product />
     <Description>NUnit test runner for Kekiri</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
