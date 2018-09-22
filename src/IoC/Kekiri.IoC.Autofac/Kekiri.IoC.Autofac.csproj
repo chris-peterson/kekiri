@@ -9,14 +9,17 @@
     <PackageId>Kekiri.IoC.Autofac</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
-IoC providers now require bootstrapping rather than inheritance
+New features:
+
+- Update dependencies
+
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#autofac</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <Authors>Chris Peterson</Authors>
-    <Version>4.0.0</Version>
+    <Version>4.1.0</Version>
     <Company />
     <Product />
     <Description>Autofac IoC integration for Kekiri</Description>
@@ -28,9 +31,8 @@ IoC providers now require bootstrapping rather than inheritance
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.5.0" />
-    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.0" />
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

@@ -10,14 +10,14 @@
     <PackageReleaseNotes>
 New features:
 
-- Async support (https://github.com/chris-peterson/kekiri/pull/25)
+- Update dependencies
 
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>Chris Peterson</Authors>
     <Company />
     <Product />
@@ -28,7 +28,6 @@ New features:
     <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.abstractions" Version="2.0.1" />
+    <PackageReference Include="xunit" Version="2.4.0" />
   </ItemGroup>
 </Project>

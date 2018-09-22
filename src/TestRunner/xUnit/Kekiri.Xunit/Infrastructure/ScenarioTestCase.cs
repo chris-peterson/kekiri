@@ -12,7 +12,7 @@ namespace Kekiri.Xunit.Infrastructure
         public ScenarioTestCase() {}
         #pragma warning restore 0618
 
-        public ScenarioTestCase(IMessageSink diagnosticMessageSink, TestMethodDisplay defaultMethodDisplay, ITestMethod testMethod, object[] testMethodArguments = null) : base(diagnosticMessageSink, defaultMethodDisplay, testMethod, testMethodArguments)
+        public ScenarioTestCase(IMessageSink diagnosticMessageSink, TestMethodDisplay defaultMethodDisplay, ITestMethod testMethod, object[] testMethodArguments = null) : base(diagnosticMessageSink, defaultMethodDisplay, TestMethodDisplayOptions.ReplaceUnderscoreWithSpace, testMethod, testMethodArguments)
         {
         }
 
