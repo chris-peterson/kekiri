@@ -1,11 +1,9 @@
 version: 5.0.{build}
 image: Visual Studio 2017
 build_script:
-- ps: >-
-    ./build.ps1
+- pwsh: ./build.ps1
 test_script:
-- ps: >-
-    ./test.ps1
+- pwsh: ./test.ps1
 artifacts:
 - path: src\**\bin\Release\*.nupkg
 skip_tags: true
