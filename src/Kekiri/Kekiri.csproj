@@ -15,8 +15,8 @@ New features:
 - NUnit and Xunit now have identical usage models (support multiple [Scenario]s, etc).
 
     </PackageReleaseNotes>
-    <PackageProjectUrl>http://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
-    <RepositoryUrl>http://github.com/chris-peterson/kekiri</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>

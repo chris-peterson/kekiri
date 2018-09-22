@@ -11,8 +11,8 @@
     <PackageReleaseNotes>
 IoC providers now require bootstrapping rather than inheritance
     </PackageReleaseNotes>
-    <PackageProjectUrl>http://github.com/chris-peterson/kekiri#autofac</PackageProjectUrl>
-    <RepositoryUrl>http://github.com/chris-peterson/kekiri</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/chris-peterson/kekiri#autofac</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <Authors>Chris Peterson</Authors>
