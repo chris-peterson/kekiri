@@ -14,7 +14,7 @@ namespace Kekiri.Impl.Reporting
             _targets = new List<IReportTarget>(targets);
         }
 
-        public static IReportTarget GetInstance()
+        readonly static Lazy<IReportTarget> _instance = new Lazy<IReportTarget>(() =>
         {
             var targets = new List<IReportTarget>();
             targets.Add(TraceReportTarget.GetInstance());
@@ -35,6 +35,11 @@ namespace Kekiri.Impl.Reporting
                 }
             }
             return new CompositeReportTarget(targets);
+        });
+
+        public static IReportTarget GetInstance()
+        {
+            return _instance.Value;
         }
 
         public void Report(ScenarioReportingContext scenario)
