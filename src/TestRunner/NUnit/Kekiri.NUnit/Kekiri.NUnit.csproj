@@ -10,15 +10,17 @@
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
 New features:
+- Update NUnit to latest available
 
-- NUnit and Xunit now have identical usage models (support multiple [Scenario]s, etc).
+Bug fixes:
 
+- Fix lifetime issue with Example
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#xunit-recommended</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <Authors>Chris Peterson</Authors>
     <Company />
     <Product />
@@ -29,7 +31,7 @@ New features:
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
-    <PackageReference Include="NUnit" Version="3.10.1" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
   </ItemGroup>
 
 </Project>
