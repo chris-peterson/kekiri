@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -26,6 +26,8 @@ namespace Kekiri
         public void Initialize()
         {
             _scenarioRunner = new ScenarioRunner(this, _reportTarget);
+            _context = null;
+            _container = null;
         }
 
         public virtual async Task RunAsync()

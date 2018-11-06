@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Kekiri.Examples.Xunit.Steps
 {
-    public class Orchestrator_scenarios : ExampleScenarios
+    public class Orchestrator_scenarios : ExampleScenariosTyped<Context>
     {
         [Scenario]
         public void Using_fakes_with_autofac()

@@ -10,10 +10,10 @@
     <PackageId>Kekiri</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
-New features:
+Bug fixes:
 
-- NUnit and Xunit now have identical usage models (support multiple [Scenario]s, etc).
-
+- Fix lifetime issue with Example (NUnit only)
+- Expose Container on step class
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
