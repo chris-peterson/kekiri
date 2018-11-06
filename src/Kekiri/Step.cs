@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Kekiri.Impl;
+using Kekiri.IoC;
 
 namespace Kekiri
 {
@@ -20,6 +21,7 @@ namespace Kekiri
         IExceptionHandler _exceptionHandler;
 
         protected dynamic Context => _scenario.Context;
+        protected Container Container => _scenario.Container;
 
         void SetScenario(ScenarioBase scenario, IExceptionHandler exceptionHandler)
         {
