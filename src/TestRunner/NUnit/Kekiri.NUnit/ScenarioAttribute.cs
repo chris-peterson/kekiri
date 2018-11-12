@@ -9,11 +9,6 @@ namespace Kekiri.NUnit
     {
         public void BeforeTest(ITest test)
         {
-            var scenario = test.Fixture as ScenarioBase;
-            if (scenario != null)
-            {
-                scenario.Initialize();
-            }
         }
 
         public void AfterTest(ITest test)
@@ -22,6 +17,8 @@ namespace Kekiri.NUnit
             if (scenario != null)
             {
                 scenario.RunAsync().Wait();
+
+                scenario.Initialize();
             }
         }
 

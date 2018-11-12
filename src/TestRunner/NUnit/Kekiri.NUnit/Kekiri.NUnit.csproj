@@ -9,18 +9,15 @@
     <PackageId>Kekiri.NUnit</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
-New features:
-- Update NUnit to latest available
-
 Bug fixes:
 
-- Fix lifetime issue with Example
+- If an Example resolved a service in it's constructor, it would be from a different container than context/steps
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#xunit-recommended</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>2.1.0</Version>
+    <Version>2.1.1</Version>
     <Authors>Chris Peterson</Authors>
     <Company />
     <Product />
