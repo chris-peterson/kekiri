@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Copyright>2012-2018</Copyright>
+    <Copyright>2012-2019</Copyright>
     <TargetFramework>netstandard1.6</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.IoC.Autofac</AssemblyName>
@@ -9,9 +9,9 @@
     <PackageId>Kekiri.IoC.Autofac</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
-New features:
+Bug fixes:
 
-- Update dependencies
+- Underlying Autofac IContainer instances were being built multiple times per test run.  Since container behavior configuration is a one-time action (and containers support scopes), there's no reason to create more than one IContainer  By moving to a singleton, large test suites will see a performance gain.
 
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#autofac</PackageProjectUrl>
@@ -19,7 +19,7 @@ New features:
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <Authors>Chris Peterson</Authors>
-    <Version>4.1.0</Version>
+    <Version>4.1.1</Version>
     <Company />
     <Product />
     <Description>Autofac IoC integration for Kekiri</Description>
