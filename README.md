@@ -13,6 +13,7 @@ Package | Latest Release |
 :-------- | :------------ |
 Kekiri | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.svg)](https://www.nuget.org/packages/kekiri)
 Kekiri.IoC.Autofac | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.IoC.Autofac.svg)](https://www.nuget.org/packages/kekiri.ioc.autofac)
+Kekiri.IoC.ServiceProvider | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.IoC.ServiceProvider.svg)](https://www.nuget.org/packages/kekiri.ioc.ServiceProvider)
 Kekiri.Xunit | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.Xunit.svg)](https://www.nuget.org/packages/kekiri.xunit)
 Kekiri.NUnit | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.NUnit.svg)](https://www.nuget.org/packages/kekiri.nunit)
 
@@ -37,6 +38,12 @@ Kekiri targets `netstandard1.6`.  To get started, be sure to have the latest [do
 `PM> Install-Package Kekiri.IoC.Autofac`
 
 Be sure to call `AutofacBootstrapper.Initialize()` before your tests run.
+
+#### Autofac
+
+`PM> Install-Package Kekiri.IoC.ServiceProvider`
+
+Be sure to call `ServiceProviderBootstrapper.Initialize(…)` before your tests run.
 
 ## Why Kekiri
 
