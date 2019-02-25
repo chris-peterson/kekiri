@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Kekiri.Examples.NUnit</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\IoC\Kekiri.IoC.ServiceProvider\Kekiri.IoC.ServiceProvider.csproj" />
+    <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
+    <ProjectReference Include="..\..\Kekiri.Examples.WebApp\Kekiri.Examples.WebApp.csproj" />
+    <ProjectReference Include="..\Kekiri.NUnit\Kekiri.NUnit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+  </ItemGroup>
+
+</Project>
