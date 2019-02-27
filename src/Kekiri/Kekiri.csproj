@@ -11,14 +11,15 @@
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
 Changes:
-Add support for System.IServiceProvider via Kekiri.IoC.ServiceProvider
+
+- Add support for System.IServiceProvider via Kekiri.IoC.ServiceProvider
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>5.0.2</Version>
+    <Version>5.1.0-alpha</Version>
   </PropertyGroup>
 
   <ItemGroup>
