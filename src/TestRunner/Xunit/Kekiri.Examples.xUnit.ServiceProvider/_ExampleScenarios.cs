@@ -34,12 +34,12 @@ namespace Kekiri.Examples.Xunit
                 {
                     if (!_isInitialized)
                     {
-                        var services = new ServiceProviderBoostrapper()
+                        var services = new ServiceProviderBootstrapper()
                             .OverrideServicesWithTypesFromAssemblyOf<Xunit.ExampleService>()
                             .ConfigureServices(x => x.AddSingleton<Xunit.ExampleService>())
                             .BuildServiceProvider();
 
-                        ServiceProviderBoostrapper.Initialize(services);
+                        ServiceProviderBootstrapper.Initialize(services);
                         _isInitialized = true;
                     }
                 }

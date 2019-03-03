@@ -33,12 +33,12 @@ namespace Kekiri.Examples.Xunit
                 {
                     if (!_isInitialized)
                     {
-                        var services = new ServiceProviderBoostrapper()
+                        var services = new ServiceProviderBootstrapper()
                             .UseStartup<WebApp.Startup>()
                             .OverrideServicesWithTypesFromAssemblyOf<ExampleScenarios>()
                             .BuildServiceProvider();
 
-                        ServiceProviderBoostrapper.Initialize(services);
+                        ServiceProviderBootstrapper.Initialize(services);
                         _isInitialized = true;
                     }
                 }

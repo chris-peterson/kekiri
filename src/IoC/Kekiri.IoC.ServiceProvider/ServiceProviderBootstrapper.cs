@@ -8,26 +8,26 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Kekiri.IoC
 {
-    public partial class ServiceProviderBoostrapper
+    public partial class ServiceProviderBootstrapper
     {
         Type _startupType;
         Action<IServiceCollection> _config;
 
-        public ServiceProviderBoostrapper()
+        public ServiceProviderBootstrapper()
         {
             _config = x => { };
         }
 
-        public ServiceProviderBoostrapper UseStartup<TStartup>() where TStartup : class
+        public ServiceProviderBootstrapper UseStartup<TStartup>() where TStartup : class
             => UseStartup(typeof(TStartup));
 
-        public ServiceProviderBoostrapper UseStartup(Type type)
+        public ServiceProviderBootstrapper UseStartup(Type type)
         {
             _startupType = type;
             return this;
         }
 
-        public ServiceProviderBoostrapper OverrideServicesWithTypesFromAssemblyOf<T>() =>
+        public ServiceProviderBootstrapper OverrideServicesWithTypesFromAssemblyOf<T>() =>
             ConfigureServicesPostStartup(x =>
                 typeof(T).Assembly.GetTypes()
                     .Where(y => !y.IsAbstract && !y.IsInterface)
@@ -53,7 +53,7 @@ namespace Kekiri.IoC
             }
         }
 
-        public ServiceProviderBoostrapper ConfigureServicesPostStartup(Action<IServiceCollection> config)
+        public ServiceProviderBootstrapper ConfigureServicesPostStartup(Action<IServiceCollection> config)
             => ConfigureServices(x =>
             {
                 if (_startupType == null)
@@ -67,7 +67,7 @@ namespace Kekiri.IoC
                 }
             });
 
-        public ServiceProviderBoostrapper ConfigureServices(Action<IServiceCollection> config)
+        public ServiceProviderBootstrapper ConfigureServices(Action<IServiceCollection> config)
         {
             _config += config;
             return this;
@@ -88,7 +88,7 @@ namespace Kekiri.IoC
             else
             {
                 // ReSharper disable once PossibleNullReferenceException
-                result = (IServiceProvider) typeof(ServiceProviderBoostrapper)
+                result = (IServiceProvider) typeof(ServiceProviderBootstrapper)
                     .GetMethod(nameof(BuildServiceProvider),
                         BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetGenericMethodDefinition().MakeGenericMethod(_startupType).Invoke(this, new object[0]);

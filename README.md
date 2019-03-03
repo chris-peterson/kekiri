@@ -39,7 +39,7 @@ Kekiri targets `netstandard1.6`.  To get started, be sure to have the latest [do
 
 Be sure to call `AutofacBootstrapper.Initialize()` before your tests run.
 
-#### ServiceProvider
+#### IServiceProvider
 
 `PM> Install-Package Kekiri.IoC.ServiceProvider`
 

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Kekiri.IoC
 {
-    public partial class ServiceProviderBoostrapper
+    public partial class ServiceProviderBootstrapper
     {
         private class PostStartupConfigureServicesFilter : IStartupConfigureServicesFilter
         {

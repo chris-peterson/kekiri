@@ -10,12 +10,12 @@ namespace Kekiri.Examples.NUnit
         [OneTimeSetUp]
         public void Setup()
         {
-            var services = new ServiceProviderBoostrapper()
+            var services = new ServiceProviderBootstrapper()
                 .OverrideServicesWithTypesFromAssemblyOf<_BeforeTestRun>()
                 .ConfigureServices(x => x.AddSingleton<NUnit.ExampleService>())
                 .BuildServiceProvider();
 
-            ServiceProviderBoostrapper.Initialize(services);
+            ServiceProviderBootstrapper.Initialize(services);
         }
     }
 }
