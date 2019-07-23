@@ -9,12 +9,14 @@
     <PackageId>Kekiri.IoC.Autofac</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
-IoC providers now require bootstrapping rather than inheritance
+    New features:
+
+        Underlying Autofac IContainer instances were being built multiple times per test run.  Since container behavior configuration is a one-time action (and containers support scopes), there's no reason to create more than one IContainer  By moving to a singleton, large test suites will see a performance gain.    
     </PackageReleaseNotes>
     <PackageProjectUrl>http://github.com/chris-peterson/kekiri</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <Authors>Chris Peterson</Authors>
-    <Version>4.0.0</Version>
+    <Version>4.0.1-beta01</Version>
     <Company />
     <Product />
     <Description>Autofac IoC integration for Kekiri</Description>

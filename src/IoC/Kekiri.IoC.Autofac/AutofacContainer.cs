@@ -10,7 +10,7 @@ namespace Kekiri.IoC.Autofac
 {
     class AutofacContainer : Container, IDisposable
     {
-        readonly CustomizeBehaviorApi _customizations;
+        static CustomizeBehaviorApi _customizations;
 
         public AutofacContainer(CustomizeBehaviorApi customizations)
         {
@@ -23,7 +23,7 @@ namespace Kekiri.IoC.Autofac
         {
             if (_lifetimeScope == null)
             {
-                _lifetimeScope = BuildContainer().BeginLifetimeScope(
+                _lifetimeScope = Container.BeginLifetimeScope(
                     builder =>
                     {
                         foreach (var obj in Fakes)
@@ -47,7 +47,7 @@ namespace Kekiri.IoC.Autofac
             }
         }
 
-        IContainer BuildContainer()
+        private static readonly Lazy<IContainer> _container = new Lazy<IContainer>(() =>
         {
             var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
                 .Select(f => Path.GetFileNameWithoutExtension(f))
@@ -65,11 +65,14 @@ namespace Kekiri.IoC.Autofac
                 {
                     containerBuilder.RegisterModule(module);
                 }
+
                 return containerBuilder.Build();
             }
 
             return _customizations.BuildContainer(assemblies);
-        }
+        });
+
+        private IContainer Container => _container.Value;
 
         // Adapted from http://www.michael-whelan.net/replacing-appdomain-in-dotnet-core/
         static IEnumerable<Assembly> GetReferencingAssemblies(string assemblyName)
