@@ -19,7 +19,7 @@ Changes:
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>5.1.0-rc2</Version>
+    <Version>5.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
