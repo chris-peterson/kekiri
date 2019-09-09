@@ -1,5 +1,5 @@
 version: 5.1.{build}
-image: Ubuntu
+image: Visual Studio 2019
 build_script:
 - pwsh: ./build.ps1
 test_script:
