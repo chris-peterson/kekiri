@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Copyright>2012-2018</Copyright>
+    <Copyright>2012-2019</Copyright>
     <Authors>Chris Peterson</Authors>
     <Description>A .NET framework that supports writing low-ceremony BDD tests using Gherkin language.</Description>
     <TargetFramework>netstandard1.6</TargetFramework>
@@ -10,17 +10,16 @@
     <PackageId>Kekiri</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
-Bug fixes:
+Changes:
 
-- Fix lifetime issue with Example (NUnit only)
-- Expose Container on step class
+- Add support for System.IServiceProvider via Kekiri.IoC.ServiceProvider
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>5.0.1</Version>
+    <Version>5.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
