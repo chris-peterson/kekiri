@@ -23,7 +23,7 @@ Kekiri targets `netstandard2.0`.  To get started, be sure to have the latest [do
 
 ### Select Test Runner
 
-#### xUnit (recommended)
+#### Xunit (recommended)
 
 `PM> Install-Package Kekiri.Xunit`
 

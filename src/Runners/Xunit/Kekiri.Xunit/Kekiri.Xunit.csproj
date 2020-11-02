@@ -20,7 +20,7 @@ Changes:
     <Authors>Chris Peterson</Authors>
     <Company />
     <Product />
-    <Description>xUnit test runner for Kekiri</Description>
+    <Description>Xunit test runner for Kekiri</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <IsPackable>True</IsPackable>
   </PropertyGroup>

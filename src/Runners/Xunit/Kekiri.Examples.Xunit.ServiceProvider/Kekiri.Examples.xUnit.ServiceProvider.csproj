@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Kekiri.Examples.xUnit</RootNamespace>
+    <RootNamespace>Kekiri.Examples.Xunit</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\IoC\Kekiri.IoC.ServiceProvider\Kekiri.IoC.ServiceProvider.csproj" />
