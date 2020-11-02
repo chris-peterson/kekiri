@@ -2,8 +2,8 @@
 
 A .NET framework that supports writing low-ceremony BDD tests using Gherkin language.
 
-Kekiri honors the conventions of the
-[cucumber language](https://github.com/cucumber/cucumber/wiki/Feature-Introduction).
+Kekiri honors the conventions of the Gherkin
+[cucumber language](https://cucumber.io/docs/gherkin/reference/).
 
 ## Status
 
@@ -49,7 +49,7 @@ Be sure to call `ServiceProviderBootstrapper.Initialize(…)` before your tests 
 
 Unlike other BDD frameworks that impose process overhead (management of feature files, custom tooling, etc) Kekiri allows developers to write BDD scenarios just as quickly and easily as they would a "plain old" test.
 
-The resulting scenario fixtures are concise, highly portable, and adhere to [Act, Arrange, and Assert](http://www.arrangeactassert.com/why-and-what-is-arrange-act-assert/).
+The resulting scenario fixtures are concise, highly portable, and adhere to [Act, Arrange, and Assert](https://automationpanda.com/2020/07/07/arrange-act-assert-a-pattern-for-writing-good-tests/).
 
 IoC is also a first-class citizen encouraging testing object interactions in collaboration rather than isolation.  More details [here](https://github.com/chris-peterson/kekiri/wiki/IoC-Support).
 
@@ -86,12 +86,14 @@ Implementing a basic calculator.
 
 If we were to run this test (even though it fails) we get a nice Cucumber-style feature output:
 
+```plaintext
         Scenario: Adding two numbers
         Given a calculator
             And the user enters 50
             And next the user enters 70
         When adding
         Then the result is 120
+```
 
 ### Add the implementation
 
@@ -262,10 +264,12 @@ be caught (using the templated method `Catch<>`).
     }
 ```
 
+```plaintext
         Given the user enters 12
           And the user enters 5
         When subtracting
         Then the result is 7
+```
 
 Note: step method parameter names can be used as substitution macros by mentioning them in CAPS.
 
