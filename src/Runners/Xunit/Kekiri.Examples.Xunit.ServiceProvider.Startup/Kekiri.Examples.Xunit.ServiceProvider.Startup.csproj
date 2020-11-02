@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\IoC\Kekiri.IoC.ServiceProvider\Kekiri.IoC.ServiceProvider.csproj" />
-    <ProjectReference Include="..\..\Kekiri.Examples.WebApp\Kekiri.Examples.WebApp.csproj" />
+    <ProjectReference Include="..\..\..\IoC\Kekiri.Examples.WebApp\Kekiri.Examples.WebApp.csproj" />
     <ProjectReference Include="..\Kekiri.Examples.Xunit\Kekiri.Examples.Xunit.csproj" />
   </ItemGroup>
 

@@ -2,26 +2,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43E5189D-BB90-4EBE-921A-01457419C7BB}"
-	ProjectSection(SolutionItems) = preProject
-		tests\README.md = tests\README.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC", "IoC", "{DF16D56E-1B85-4B64-A128-C24EED22E633}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestRunner", "TestRunner", "{440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runners", "Runners", "{440BCDAE-1390-4FE5-B2C3-3D6C45F52ABE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri", "src\Kekiri\Kekiri.csproj", "{CB75C1E7-45CE-4AEA-A1DA-4B1D489248C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.NUnit", "src\TestRunner\NUnit\Kekiri.Examples.NUnit\Kekiri.Examples.NUnit.csproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.NUnit", "src\Runners\NUnit\Kekiri.Examples.NUnit\Kekiri.Examples.NUnit.csproj", "{BFB11BDE-9F07-4014-905D-33D94D10B7B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.IoC.Autofac", "src\IoC\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj", "{597BE251-91C3-407D-8FA5-BB2D51C3D98C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.NUnit", "src\TestRunner\NUnit\Kekiri.NUnit\Kekiri.NUnit.csproj", "{B50C8A20-A431-4866-9A2D-2FF28690FF38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.NUnit", "src\Runners\NUnit\Kekiri.NUnit\Kekiri.NUnit.csproj", "{B50C8A20-A431-4866-9A2D-2FF28690FF38}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Xunit", "src\TestRunner\Xunit\Kekiri.Xunit\Kekiri.Xunit.csproj", "{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Xunit", "src\Runners\Xunit\Kekiri.Xunit\Kekiri.Xunit.csproj", "{2EC4FA85-2CAC-42DB-805C-AA9CBC5F8D50}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.Xunit", "src\TestRunner\Xunit\Kekiri.Examples.Xunit\Kekiri.Examples.Xunit.csproj", "{8173B052-D599-4A2B-94D2-D8B6775AE130}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.Xunit", "src\Runners\Xunit\Kekiri.Examples.Xunit\Kekiri.Examples.Xunit.csproj", "{8173B052-D599-4A2B-94D2-D8B6775AE130}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xunit", "Xunit", "{ED57DA42-664B-4959-8E12-ECC4FA9ADA8F}"
 EndProject
@@ -29,15 +24,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NUnit", "NUnit", "{A645A651
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.IoC.ServiceProvider", "src\IoC\Kekiri.IoC.ServiceProvider\Kekiri.IoC.ServiceProvider.csproj", "{17AD44BF-27FB-4D85-B750-133C617867A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.NUnit.ServiceProvider", "src\TestRunner\NUnit\Kekiri.Examples.NUnit.ServiceProvider\Kekiri.Examples.NUnit.ServiceProvider.csproj", "{5F0913F8-342D-4050-A251-461A5DDE0D5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.NUnit.ServiceProvider", "src\Runners\NUnit\Kekiri.Examples.NUnit.ServiceProvider\Kekiri.Examples.NUnit.ServiceProvider.csproj", "{5F0913F8-342D-4050-A251-461A5DDE0D5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.xUnit.ServiceProvider", "src\TestRunner\Xunit\Kekiri.Examples.xUnit.ServiceProvider\Kekiri.Examples.xUnit.ServiceProvider.csproj", "{E1C6E77D-17C5-4F6E-9C2D-1375548A368E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.Xunit.ServiceProvider", "src\Runners\Xunit\Kekiri.Examples.Xunit.ServiceProvider\Kekiri.Examples.Xunit.ServiceProvider.csproj", "{E1C6E77D-17C5-4F6E-9C2D-1375548A368E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.NUnit.ServiceProvider.Startup", "src\TestRunner\NUnit\Kekiri.Examples.NUnit.ServiceProvider.Startup\Kekiri.Examples.NUnit.ServiceProvider.Startup.csproj", "{CE6144CE-88C3-4A10-BF5C-72B2D6E44D90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.NUnit.ServiceProvider.Startup", "src\Runners\NUnit\Kekiri.Examples.NUnit.ServiceProvider.Startup\Kekiri.Examples.NUnit.ServiceProvider.Startup.csproj", "{CE6144CE-88C3-4A10-BF5C-72B2D6E44D90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.WebApp", "src\TestRunner\Kekiri.Examples.WebApp\Kekiri.Examples.WebApp.csproj", "{F4C3EFD3-6FC3-4C4A-8256-BC116ACC912E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kekiri.Examples.WebApp", "src\IoC\Kekiri.Examples.WebApp\Kekiri.Examples.WebApp.csproj", "{F4C3EFD3-6FC3-4C4A-8256-BC116ACC912E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples.Xunit.ServiceProvider.Startup", "src\TestRunner\Xunit\Kekiri.Examples.Xunit.ServiceProvider.Startup\Kekiri.Examples.Xunit.ServiceProvider.Startup.csproj", "{72AE63E3-14E1-443C-81DB-F2A35AF15556}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kekiri.Examples.Xunit.ServiceProvider.Startup", "src\Runners\Xunit\Kekiri.Examples.Xunit.ServiceProvider.Startup\Kekiri.Examples.Xunit.ServiceProvider.Startup.csproj", "{72AE63E3-14E1-443C-81DB-F2A35AF15556}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
