@@ -1,0 +1,36 @@
+image: mcr.microsoft.com/dotnet/core/sdk:3.1
+
+stages:
+- build
+- publish to nuget
+
+variables:
+  Configuration: Release
+  KEKIRI_OUTPUT: 'console,files'
+
+build:
+  stage: build
+  script:
+  - dotnet build -c Release
+  - dotnet test src/TestRunner/NUnit/Kekiri.Examples.NUnit
+  - dotnet test src/TestRunner/Xunit/Kekiri.Examples.NUnit.ServiceProvider
+  - dotnet test src/TestRunner/Xunit/Kekiri.Examples.NUnit.ServiceProvider.Startup
+  - dotnet test src/TestRunner/Xunit/Kekiri.Examples.Xunit
+  - dotnet test src/TestRunner/Xunit/Kekiri.Examples.Xunit.ServiceProvider
+  - dotnet test src/TestRunner/Xunit/Kekiri.Examples.Xunit.ServiceProvider.Startup
+  artifacts:
+    paths:
+      - "src/**/*.nupkg"
+  except:
+  - tags
+
+Kekiri:
+  stage: publish to nuget
+  script:
+  - dotnet nuget push $(ls src/Kekiri/bin/$Configuration/*.nupkg) -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json
+  environment:
+    name: Monitoring
+    url: https://nuget.org/packages/Kekiri/
+  when: manual
+  only:
+  - master

@@ -1,23 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.Xunit</AssemblyName>
     <RootNamespace>Kekiri.Xunit</RootNamespace>
     <PackageId>Kekiri.Xunit</PackageId>
-    <Copyright>2012-2018</Copyright>
+    <Copyright>2012-2020</Copyright>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;xunit;specflow</PackageTags>
     <PackageReleaseNotes>
-New features:
+Changes:
 
-- Update dependencies
-
+- Upgrade dependencies
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>1.2.0</Version>
+    <Version>2.0.0-rc1</Version>
     <Authors>Chris Peterson</Authors>
     <Company />
     <Product />
@@ -29,6 +28,6 @@ New features:
     <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit" Version="2.4.*" />
   </ItemGroup>
 </Project>

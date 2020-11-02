@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Authors>smarts</Authors>
-    <Copyright>2019</Copyright>
+    <Authors>smarts, Chris Peterson</Authors>
+    <Copyright>2019-2020</Copyright>
     <Description>Microsoft IoC integration for Kekiri</Description>
     <PackageId>Kekiri.IoC.ServiceProvider</PackageId>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
@@ -18,14 +18,16 @@
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
-    <Version>1.0.0</Version>
+    <Version>2.0.0-rc1</Version>
     <PackageReleaseNotes>
-Initial release
+Changes:
+
+- Upgrade dependencies
     </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.*" />
   </ItemGroup>
 
   <ItemGroup>

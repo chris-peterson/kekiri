@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Copyright>2012-2018</Copyright>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <Copyright>2012-2020</Copyright>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.NUnit</AssemblyName>
     <RootNamespace>$(AssemblyName)</RootNamespace>
     <PackageId>Kekiri.NUnit</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
     <PackageReleaseNotes>
-Bug fixes:
+Changes:
 
-- If an Example resolved a service in it's constructor, it would be from a different container than context/steps
+- Upgrade dependencies
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#xunit-recommended</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>2.1.1</Version>
+    <Version>3.0.0-rc1</Version>
     <Authors>Chris Peterson</Authors>
     <Company />
     <Product />
@@ -28,7 +28,7 @@ Bug fixes:
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
-    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit" Version="3.12.*" />
   </ItemGroup>
 
 </Project>

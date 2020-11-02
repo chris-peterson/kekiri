@@ -7,7 +7,7 @@ Kekiri honors the conventions of the
 
 ## Status
 
-[![Build status](https://ci.appveyor.com/api/projects/status/yxt38w0wydc69xxr?svg=true)](https://ci.appveyor.com/project/chris-peterson/kekiri)
+[![Build status](https://gitlab.com/chris-peterson/kekiri/badges/master/pipeline.svg)](https://gitlab.com/chris-peterson/kekiri/-/pipelines)
 
 Package | Latest Release |
 :-------- | :------------ |
@@ -19,7 +19,7 @@ Kekiri.NUnit | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.NUnit.sv
 
 ## Setup
 
-Kekiri targets `netstandard1.6`.  To get started, be sure to have the latest [dotnet core](https://www.microsoft.com/net/core) tools.
+Kekiri targets `netstandard2.0`.  To get started, be sure to have the latest [dotnet core](https://www.microsoft.com/net/core) tools.
 
 ### Select Test Runner
 
