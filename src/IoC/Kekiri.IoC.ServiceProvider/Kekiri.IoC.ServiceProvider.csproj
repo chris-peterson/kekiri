@@ -5,12 +5,12 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <LangVersion>7.2</LangVersion>
     <RootNamespace>Kekiri.IoC</RootNamespace>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net50</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup>
     <Authors>smarts, Chris Peterson</Authors>
-    <Copyright>2019-2020</Copyright>
+    <Copyright>2019-2021</Copyright>
     <Description>Microsoft IoC integration for Kekiri</Description>
     <PackageId>Kekiri.IoC.ServiceProvider</PackageId>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
@@ -27,7 +27,7 @@ Changes:
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.*" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.*" />
   </ItemGroup>
 
   <ItemGroup>
