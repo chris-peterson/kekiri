@@ -1,0 +1,33 @@
+name: Publish
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  publish:
+    if: github.repository == 'chris-peterson/kekiri'
+
+    runs-on: ubuntu-latest
+
+    env:
+      Configuration: Release
+      PackageReleaseNotes: ${{ github.event.release.body }}
+      PackageReleaseTag: ${{ github.event.release.tag_name }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Build
+        run: dotnet build
+        
+      - name: Publish to nuget.org
+        run: dotnet nuget push **/*.nupkg --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        
+    environment:
+      name: nuget.org
+      url: https://nuget.org/packages/Kekiri
