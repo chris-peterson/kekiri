@@ -1,36 +1,28 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <Copyright>2012-2020</Copyright>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <DebugType>portable</DebugType>
-    <AssemblyName>Kekiri.IoC.Autofac</AssemblyName>
-    <RootNamespace>$(AssemblyName)</RootNamespace>
-    <PackageId>Kekiri.IoC.Autofac</PackageId>
-    <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
-    <PackageReleaseNotes>
-Changes:
-
-- Upgrade dependencies
-    </PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/chris-peterson/kekiri#autofac</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Authors>Chris Peterson</Authors>
-    <Version>5.0.0-rc1</Version>
-    <Company />
-    <Product />
-    <Description>Autofac IoC integration for Kekiri</Description>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Kekiri\Kekiri.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Autofac" Version="5.2.*" />
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="3.1.*" />
-  </ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Copyright>2012-2022</Copyright>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<DebugType>portable</DebugType>
+		<AssemblyName>Kekiri.IoC.Autofac</AssemblyName>
+		<RootNamespace>$(AssemblyName)</RootNamespace>
+		<PackageId>Kekiri.IoC.Autofac</PackageId>
+		<PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
+		<PackageProjectUrl>https://github.com/chris-peterson/kekiri#autofac</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Authors>Chris Peterson</Authors>
+		<Version>5.0.0</Version>
+		<Company/>
+		<Product/>
+		<Description>Autofac IoC integration for Kekiri</Description>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Kekiri\Kekiri.csproj"/>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Autofac" Version="5.2.*"/>
+		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.*"/>
+	</ItemGroup>
 </Project>

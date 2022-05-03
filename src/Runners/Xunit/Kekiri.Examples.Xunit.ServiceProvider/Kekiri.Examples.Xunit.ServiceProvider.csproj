@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <RootNamespace>Kekiri.Examples.Xunit</RootNamespace>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\IoC\Kekiri.IoC.ServiceProvider\Kekiri.IoC.ServiceProvider.csproj" />
-    <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
-    <ProjectReference Include="..\Kekiri.Xunit\Kekiri.Xunit.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.*" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.*" />
-    <PackageReference Include="xunit" Version="2.4.*" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.*" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<RootNamespace>Kekiri.Examples.Xunit</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\IoC\Kekiri.IoC.ServiceProvider\Kekiri.IoC.ServiceProvider.csproj"/>
+		<ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj"/>
+		<ProjectReference Include="..\Kekiri.Xunit\Kekiri.Xunit.csproj"/>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.*"/>
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.*"/>
+		<PackageReference Include="xunit" Version="2.4.*"/>
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.*"/>
+	</ItemGroup>
 </Project>

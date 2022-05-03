@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Copyright>2012-2020</Copyright>
+    <Copyright>2012-2022</Copyright>
     <Authors>Chris Peterson</Authors>
     <Description>A .NET framework that supports writing low-ceremony BDD tests using Gherkin language.</Description>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -9,17 +9,12 @@
     <AssemblyName>Kekiri</AssemblyName>
     <PackageId>Kekiri</PackageId>
     <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
-    <PackageReleaseNotes>
-Changes:
-
-- Upgrade dependencies
-    </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>6.0.0-rc1</Version>
+    <Version>6.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

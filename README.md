@@ -7,7 +7,7 @@ Kekiri honors the conventions of the Gherkin
 
 ## Status
 
-[![Build status](https://gitlab.com/chris-peterson/kekiri/badges/master/pipeline.svg)](https://gitlab.com/chris-peterson/kekiri/-/pipelines)
+[![build](https://github.com/chris-peterson/kekiri/actions/workflows/ci.yml/badge.svg)](https://github.com/chris-peterson/kekiri/actions/workflows/ci.yml)
 
 Package | Latest Release |
 :-------- | :------------ |

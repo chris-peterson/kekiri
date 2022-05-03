@@ -1,20 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
-    <ProjectReference Include="..\..\..\IoC\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj" />
-    <ProjectReference Include="..\Kekiri.NUnit\Kekiri.NUnit.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.*" />
-    <PackageReference Include="NUnit" Version="3.12.*" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-  </ItemGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj"/>
+		<ProjectReference Include="..\..\..\IoC\Kekiri.IoC.Autofac\Kekiri.IoC.Autofac.csproj"/>
+		<ProjectReference Include="..\Kekiri.NUnit\Kekiri.NUnit.csproj"/>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.*"/>
+		<PackageReference Include="NUnit" Version="3.13.*"/>
+		<PackageReference Include="NUnit3TestAdapter" Version="4.2.*"/>
+	</ItemGroup>
 </Project>

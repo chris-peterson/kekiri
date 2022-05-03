@@ -1,37 +1,26 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <AssemblyName>Kekiri.IoC.ServiceProvider</AssemblyName>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <LangVersion>7.2</LangVersion>
-    <RootNamespace>Kekiri.IoC</RootNamespace>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <Authors>smarts, Chris Peterson</Authors>
-    <Copyright>2019-2020</Copyright>
-    <Description>Microsoft IoC integration for Kekiri</Description>
-    <PackageId>Kekiri.IoC.ServiceProvider</PackageId>
-    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/chris-peterson/kekiri</PackageProjectUrl>
-    <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
-    <Version>2.0.0-rc1</Version>
-    <PackageReleaseNotes>
-Changes:
-
-- Upgrade dependencies
-    </PackageReleaseNotes>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Kekiri\Kekiri.csproj" />
-  </ItemGroup>
-
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<AssemblyName>Kekiri.IoC.ServiceProvider</AssemblyName>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<RootNamespace>Kekiri.IoC</RootNamespace>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Authors>smarts, Chris Peterson</Authors>
+		<Copyright>2019-2022</Copyright>
+		<Description>Microsoft IoC integration for Kekiri</Description>
+		<PackageId>Kekiri.IoC.ServiceProvider</PackageId>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/chris-peterson/kekiri</PackageProjectUrl>
+		<PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
+		<Version>2.0.0</Version>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.*"/>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Kekiri\Kekiri.csproj"/>
+	</ItemGroup>
 </Project>
