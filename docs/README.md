@@ -1,4 +1,4 @@
-# kekiri
+# <img src="favicon.svg" alt="kekiri" width="64" height="64" style="vertical-align: middle"> kekiri
 
 A .NET framework that supports writing low-ceremony BDD tests using Gherkin language.
 
