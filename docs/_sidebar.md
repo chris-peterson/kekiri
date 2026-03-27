@@ -1,0 +1,3 @@
+- [Home](/)
+- [Setup](/setup)
+- [Examples](/examples)
