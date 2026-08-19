@@ -93,9 +93,14 @@ namespace Kekiri.IoC.Autofac
                         var assembly = Assembly.Load(new AssemblyName(library.Name));
                         assemblies.Add(assembly);
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) when (
+                        ex is FileNotFoundException ||
+                        ex is FileLoadException ||
+                        ex is BadImageFormatException)
                     {
-                        Console.WriteLine($"Error loading assembly {assemblyName}: {ex}");
+                        // A runtime library need not name a loadable managed assembly — xunit v3
+                        // ships several that don't. Such a library contributes no types to scan,
+                        // so there is nothing to report. Anything else still propagates.
                     }
                 }
             }
