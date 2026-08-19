@@ -150,7 +150,7 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
 
         void the_result_is_120()
         {
-            Assert.AreEqual(120m, _calculator.Result);
+            Assert.Equal(120m, _calculator.Result);
         }
     }
 
@@ -275,7 +275,7 @@ be caught (using the templated method `Catch<>`).
 
         void the_result_is_EXPECTED(double expected)
         {
-            Assert.AreEqual(expected, _calculator.Result);
+            Assert.Equal(expected, _calculator.Result);
         }
     }
 ```
@@ -295,7 +295,7 @@ For more advanced topics, check out the [wiki](https://github.com/chris-peterson
 
 Kekiri uses and is influenced by the following open source projects:
 
-* [Xunit](<https://xunit.github.io>)
+* [xUnit.net](<https://xunit.net>)
 * [NUnit](<http://nunit.org>)
 * [Autofac](<https://github.com/autofac/Autofac>)
 * [xrepo](<https://github.com/andyalm/xrepo>)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit.Sdk;
@@ -62,6 +63,17 @@ namespace Kekiri.Xunit.Infrastructure
                         cancellationTokenSource,
                         new[] { testCase },
                         ex.Message.Substring(DynamicSkipToken.Value.Length));
+                }
+
+                if (testCase.SkipExceptions != null && testCase.SkipExceptions.Contains(ex.GetType()))
+                {
+                    return XunitRunnerHelper.SkipTestCases(
+                        messageBus,
+                        cancellationTokenSource,
+                        new[] { testCase },
+                        string.IsNullOrEmpty(ex.Message)
+                            ? $"Exception of type '{ex.GetType().FullName}' was thrown"
+                            : ex.Message);
                 }
 
                 return XunitRunnerHelper.FailTestCases(
