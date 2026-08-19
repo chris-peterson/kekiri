@@ -19,13 +19,16 @@ Kekiri.NUnit | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.NUnit.sv
 
 ## Setup
 
-Kekiri targets `netstandard2.0`.  To get started, be sure to have the latest [dotnet core](https://www.microsoft.com/net/core) tools.
+Kekiri targets `net8.0`.  To get started, be sure to have the latest [dotnet](https://www.microsoft.com/net/core) tools.
 
 ### Select Test Runner
 
-#### Xunit (recommended)
+#### xUnit (recommended)
 
 `PM> Install-Package Kekiri.Xunit`
+
+Built on [xUnit.net v3](https://xunit.net/docs/getting-started/v3/migration), so the test project is
+a self-executing application (`<OutputType>Exe</OutputType>`).
 
 #### NUnit
 
@@ -37,13 +40,26 @@ Kekiri targets `netstandard2.0`.  To get started, be sure to have the latest [do
 
 `PM> Install-Package Kekiri.IoC.Autofac`
 
-Be sure to call `AutofacBootstrapper.Initialize()` before your tests run.
-
 #### IServiceProvider
 
 `PM> Install-Package Kekiri.IoC.ServiceProvider`
 
-Be sure to call `ServiceProviderBootstrapper.Initialize(…)` before your tests run.
+#### Bootstrapping
+
+The container is built once per assembly. Under xUnit that's an assembly fixture — scenario classes
+need no `[Collection]` attribute and no shared base class:
+
+```csharp
+[assembly: AssemblyFixture(typeof(Bootstrap))]
+
+public class Bootstrap
+{
+    public Bootstrap() => AutofacBootstrapper.Initialize();
+}
+```
+
+Under NUnit, use a `[SetUpFixture]` with `[OneTimeSetUp]`. See
+[setup](https://chris-peterson.github.io/kekiri/#/setup) for both in full.
 
 ## Why Kekiri
 

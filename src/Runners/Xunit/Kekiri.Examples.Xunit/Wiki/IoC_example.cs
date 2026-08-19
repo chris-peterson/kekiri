@@ -1,12 +1,12 @@
 // Supports https://github.com/chris-peterson/kekiri/wiki/IoC-Support
 using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Kekiri.Xunit;
 using Xunit;
 
 namespace Kekiri.Examples.Xunit
 {
-    public class Orchestrator_scenarios : ExampleScenarios
+    public class Orchestrator_scenarios : Scenarios
     {
         Orchestrator _orchestrator;
 

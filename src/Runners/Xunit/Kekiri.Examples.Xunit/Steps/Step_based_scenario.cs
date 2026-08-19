@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Kekiri.Xunit;
 using Xunit;
 
 namespace Kekiri.Examples.Xunit.Steps
 {
-    public class Orchestrator_scenarios : ExampleScenariosTyped<Context>
+    public class Orchestrator_scenarios : Scenarios<Context>
     {
         [Scenario]
         public void Using_fakes_with_autofac()

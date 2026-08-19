@@ -1,27 +1,38 @@
 ﻿using System;
-using System.Reflection;
-using Xunit.Abstractions;
 using Xunit.Sdk;
+using Xunit.v3;
 
 namespace Kekiri.Xunit.Infrastructure
 {
     public class ScenarioDiscoverer : FactDiscoverer
     {
-        private readonly IMessageSink _diagnosticMessageSink;
-
-        public ScenarioDiscoverer(IMessageSink diagnosticMessageSink) : base(diagnosticMessageSink)
+        protected override IXunitTestCase CreateTestCase(
+            ITestFrameworkDiscoveryOptions discoveryOptions,
+            IXunitTestMethod testMethod,
+            IFactAttribute factAttribute)
         {
-            _diagnosticMessageSink = diagnosticMessageSink;
-        }
+            ScenarioTestCaseFactory.GuardScenarioClass(testMethod, nameof(ScenarioAttribute));
 
-        protected override IXunitTestCase CreateTestCase(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod,
-            IAttributeInfo factAttribute)
-        {
+            var details = TestIntrospectionHelper.GetTestCaseDetails(
+                discoveryOptions,
+                testMethod,
+                factAttribute,
+                baseDisplayName: ScenarioTestCaseFactory.DisplayName(testMethod));
 
-            if(!typeof(ScenarioBase).GetTypeInfo().IsAssignableFrom(testMethod.TestClass.Class.ToRuntimeType()))
-                throw new NotSupportedException("The Scenario attribute can only be placed on a class inheriting from Kekiri.Xunit.Scenarios");
-
-            return new ScenarioTestCase(_diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod);
+            return new ScenarioTestCase(
+                details.ResolvedTestMethod,
+                details.TestCaseDisplayName,
+                details.UniqueID,
+                details.Explicit,
+                details.SkipExceptions,
+                details.SkipReason,
+                details.SkipType,
+                details.SkipUnless,
+                details.SkipWhen,
+                ScenarioTestCaseFactory.ToReadWrite(testMethod.Traits),
+                sourceFilePath: details.SourceFilePath,
+                sourceLineNumber: details.SourceLineNumber,
+                timeout: details.Timeout);
         }
     }
 }

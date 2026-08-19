@@ -12,14 +12,21 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      Configuration: Release 
+      Configuration: Release
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
-      
+          # 8.0.x supplies the runtime the projects target; 10.0.x supplies the SDK, whose
+          # Microsoft.Testing.Platform mode of `dotnet test` is what xUnit v3 requires.
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
       - name: Build
         run: dotnet build
+
+      - name: Test
+        run: dotnet test

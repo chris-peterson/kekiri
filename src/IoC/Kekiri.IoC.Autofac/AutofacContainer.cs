@@ -59,7 +59,12 @@ namespace Kekiri.IoC.Autofac
             if (_customizations.BuildContainer == null)
             {
                 var containerBuilder = new ContainerBuilder();
-                containerBuilder.RegisterAssemblyTypes(assemblies);
+
+                // A public type with no public constructor can never be reflection-activated, and
+                // registering one makes ContainerBuilder.Build() throw NoConstructorsFoundException
+                // for the whole container. Autofac ships such types itself (DecoratorContext).
+                containerBuilder.RegisterAssemblyTypes(assemblies)
+                    .Where(t => t.GetConstructors().Length > 0);
 
                 foreach (var module in _customizations.Modules)
                 {

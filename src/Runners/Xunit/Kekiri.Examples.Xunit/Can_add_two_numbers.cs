@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Kekiri.Examples.Xunit
 {
-    public class AdditionScenarios : ExampleScenarios
+    public class AdditionScenarios : Scenarios
     {
         [Scenario]
         public void Can_add_one_plus_two()

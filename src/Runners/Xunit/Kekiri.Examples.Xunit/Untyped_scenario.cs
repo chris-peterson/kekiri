@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Kekiri.Examples.Xunit
 {
-    public class Untyped_scenario : ExampleScenarios
+    public class Untyped_scenario : Scenarios
     {
         [Scenario]
         public void Can_resolve()

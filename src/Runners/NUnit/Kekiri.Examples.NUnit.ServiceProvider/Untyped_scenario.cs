@@ -22,7 +22,7 @@ namespace Kekiri.Examples.NUnit
         {
             var ex = Catch<Exception>();
 
-            Assert.AreEqual("ServiceProviderContainer does not allow just-in-time service registrations", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("ServiceProviderContainer does not allow just-in-time service registrations"));
         }
     }
 

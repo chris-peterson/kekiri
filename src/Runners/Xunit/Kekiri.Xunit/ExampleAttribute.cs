@@ -1,27 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
+using Xunit;
 using Xunit.Sdk;
+using Xunit.v3;
 
 namespace Kekiri.Xunit
 {
-    [DataDiscoverer("Xunit.Sdk.InlineDataDiscoverer", "xunit.core")]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class ExampleAttribute : DataAttribute
     {
-        private readonly object[] _data;
+        readonly object[] _data;
 
         public ExampleAttribute(params object[] data)
         {
-            _data = data;
+            _data = data ?? new object[] { null };
         }
 
-        public override IEnumerable<object[]> GetData(MethodInfo testMethod)
+        public override ValueTask<IReadOnlyCollection<ITheoryDataRow>> GetData(
+            MethodInfo testMethod,
+            DisposalTracker disposalTracker)
         {
-            return new object[1][]
+            IReadOnlyCollection<ITheoryDataRow> rows = new ITheoryDataRow[]
             {
-                _data
+                new TheoryDataRow(_data)
+                {
+                    Explicit = ExplicitAsNullable,
+                    Label = Label,
+                    Skip = Skip,
+                    TestDisplayName = TestDisplayName,
+                    Timeout = TimeoutAsNullable,
+                }
             };
+
+            return new ValueTask<IReadOnlyCollection<ITheoryDataRow>>(rows);
         }
+
+        public override bool SupportsDiscoveryEnumeration() => true;
     }
 }

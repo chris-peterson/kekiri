@@ -21,7 +21,7 @@ namespace Kekiri.Examples.Xunit
     }
 
 
-    public class ILifetimeScope_injection : ExampleScenariosTyped<LifetimeContext>
+    public class ILifetimeScope_injection : Scenarios<LifetimeContext>
     {
         [ScenarioOutline]
         [Example(1)]
