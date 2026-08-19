@@ -291,6 +291,52 @@ Note: step method parameter names can be used as substitution macros by mentioni
 
 For more advanced topics, check out the [wiki](https://github.com/chris-peterson/kekiri/wiki).
 
+## Native AOT
+
+Not supported, and not currently worth pursuing. Recorded here so it doesn't get re-investigated
+per-project.
+
+Three things block it independently, so fixing any one of them changes nothing on its own:
+
+1. **The untyped `Context` is `dynamic`.** Every `Context.Foo = ...` in a scenario compiles to a
+   call site on the C# runtime binder, which needs runtime code generation. This is the documented way
+   to write an untyped scenario, so removing it means removing a first-class feature (or reshaping
+   `Context` into an indexer, which breaks every existing untyped scenario).
+2. **`Kekiri.IoC.Autofac` is assembly scanning, by design.** It reads `DependencyContext.Default`,
+   loads assemblies by name, and hands them to Autofac's `RegisterAssemblyTypes`.
+   `DependencyContext.Default` is documented as returning null for an app published as a single file,
+   and Autofac's scanning entry points carry `[RequiresUnreferencedCode]` because the trimmer cannot
+   know which types to keep. Native AOT always trims, so the package cannot keep its behavior and be
+   AOT-safe.
+3. **xUnit v3 under AOT replaces reflection discovery with source generators.** It needs different
+   packages (`xunit.v3.aot`), .NET 9 or later, and a source generator for anything extending its
+   extensibility points. Kekiri is exactly such an extension: it ships custom discoverers, test cases,
+   and runners.
+
+Independently, `Moq` relies on `Reflection.Emit` through Castle DynamicProxy, so a test project using
+mocks is out regardless of what Kekiri does.
+
+An AOT-capable subset would be `Scenarios<TContext>` plus `Kekiri.IoC.ServiceProvider` without
+`UseStartup`, on xUnit v3 — that is, giving up untyped scenarios and Autofac. If that combination ever
+becomes worth supporting, start by setting `IsAotCompatible` on the libraries to get the real analyzer
+output rather than working from this list.
+
+Worth doing regardless of AOT, because they cost nothing and remove reflection from paths that don't
+need it:
+
+* `Kekiri.IoC.ServiceProvider`'s `UseStartup` reconstructs a generic call through
+  `MakeGenericMethod`; capturing a delegate while the type argument is still known statically removes
+  it, the same way `ConfigureTestContainer` already does.
+* `ScenarioBase<TContext>` resolves its context through `MakeGenericMethod` on `Container.Resolve`.
+  Constraining `TContext` to a reference type makes it a direct `Container.Resolve<TContext>()` call.
+* Two binder call sites on the *typed* path (the `Context` overrides in `ScenarioBase<TContext>` and
+  `Step<TContext>`) pull the runtime binder into scenarios that are otherwise fully typed. Casting
+  from an `object` backing field removes them with no public API change.
+* `FeatureFileReportTarget` keeps a `Dictionary<string, dynamic>` where a `string` value would do.
+
+None of the above has been checked against an actual `PublishAot` run; it comes from reading the code
+and the AOT and xUnit documentation.
+
 ## Acknowledgements
 
 Kekiri uses and is influenced by the following open source projects:

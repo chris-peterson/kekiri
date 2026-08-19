@@ -89,14 +89,20 @@ namespace Kekiri.IoC.Autofac
         {
             var names = new List<string>();
 
-            foreach (var library in DependencyContext.Default.RuntimeLibraries)
+            // Only the project-assembly default and the name predicates need the manifest. Reading it
+            // regardless would break a caller who named their assemblies precisely to avoid it:
+            // DependencyContext.Default is null for an app published as a single file.
+            if (_customizations.ScanProjectAssemblies || _customizations.AssemblyNamePredicates.Count > 0)
             {
-                var isProject = string.Equals(library.Type, ProjectLibraryType, StringComparison.OrdinalIgnoreCase);
-
-                if ((isProject && _customizations.ScanProjectAssemblies)
-                    || _customizations.AssemblyNamePredicates.Any(p => p(library.Name)))
+                foreach (var library in DependencyContext.Default.RuntimeLibraries)
                 {
-                    names.Add(library.Name);
+                    var isProject = string.Equals(library.Type, ProjectLibraryType, StringComparison.OrdinalIgnoreCase);
+
+                    if ((isProject && _customizations.ScanProjectAssemblies)
+                        || _customizations.AssemblyNamePredicates.Any(p => p(library.Name)))
+                    {
+                        names.Add(library.Name);
+                    }
                 }
             }
 
