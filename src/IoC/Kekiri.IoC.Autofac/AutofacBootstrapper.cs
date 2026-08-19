@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
@@ -37,9 +37,42 @@ namespace Kekiri.IoC.Autofac
         public List<Module> Modules { get; } = new List<Module>();
 
         /// <summary>
-        /// Can be used to blacklist certain assemblies (to avoid scanning them for auto-registration)
+        /// Auto-register types from the assemblies built by this solution — the ones the dependency
+        /// manifest reports as projects rather than as packages. Set to <see langword="false"/> to
+        /// register nothing except what <see cref="ScanAssembliesOf{T}"/>,
+        /// <see cref="ScanAssemblies"/>, and <see cref="ScanAssembliesMatching"/> name.
         /// </summary>
-        public Func<string, bool> CheckBlacklistedAssembly;
+        public bool ScanProjectAssemblies { get; set; } = true;
+
+        /// <summary>
+        /// Also scan the assembly containing <typeparamref name="T"/>. Needed when code you want
+        /// auto-registered arrives as a package rather than as a project in this solution.
+        /// </summary>
+        public CustomizeBehaviorApi ScanAssembliesOf<T>() =>
+            ScanAssemblies(typeof(T).Assembly);
+
+        /// <summary>
+        /// Also scan the given assemblies.
+        /// </summary>
+        public CustomizeBehaviorApi ScanAssemblies(params Assembly[] assemblies)
+        {
+            AdditionalAssemblies.AddRange(assemblies);
+            return this;
+        }
+
+        /// <summary>
+        /// Also scan every assembly whose name satisfies <paramref name="predicate"/>. Use this to
+        /// pull in a family of packages, e.g. <c>name =&gt; name.StartsWith("Contoso.")</c>.
+        /// </summary>
+        public CustomizeBehaviorApi ScanAssembliesMatching(Func<string, bool> predicate)
+        {
+            AssemblyNamePredicates.Add(predicate);
+            return this;
+        }
+
+        internal List<Assembly> AdditionalAssemblies { get; } = new List<Assembly>();
+
+        internal List<Func<string, bool>> AssemblyNamePredicates { get; } = new List<Func<string, bool>>();
 
         /// <summary>
         /// Controls which constructors auto-registered types are activated through. Autofac's default
@@ -57,11 +90,6 @@ namespace Kekiri.IoC.Autofac
         {
             ConstructorFinder = new NonStaticConstructorsFinder();
             return this;
-        }
-
-        public bool IsBlacklistedAssembly(string assembly)
-        {
-            return CheckBlacklistedAssembly != null && CheckBlacklistedAssembly(assembly);
         }
     }
 }

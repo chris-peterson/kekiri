@@ -54,9 +54,23 @@ no per-fixture attribute is needed.
 PM> Install-Package Kekiri.IoC.Autofac
 ```
 
-Auto-registration activates through public constructors, and skips a type it finds none on —
-registering such a type makes building the whole container throw. If your domain types keep their
-constructors internal, opt in:
+Every concrete type in the assemblies your solution builds is auto-registered, so scenarios can
+resolve real collaborators and fake only what they need. Package assemblies are left alone —
+registering their types put Autofac's own internals and every transitive dependency in the
+container, where one type Autofac couldn't activate failed the whole container.
+
+If the code under test ships as a package rather than as a project in the same solution, name it:
+
+```csharp
+AutofacBootstrapper.Initialize(x => x
+    .ScanAssembliesOf<SomeServiceType>()            // that type's assembly
+    .ScanAssembliesMatching(n => n.StartsWith("Contoso.")));   // a family of packages
+```
+
+`ScanProjectAssemblies = false` turns the default off, so only what you name is scanned.
+
+Auto-registration activates through public constructors, and skips a type it finds none on. If your
+domain types keep their constructors internal, opt in:
 
 ```csharp
 AutofacBootstrapper.Initialize(x => x.IncludeNonPublicConstructors());

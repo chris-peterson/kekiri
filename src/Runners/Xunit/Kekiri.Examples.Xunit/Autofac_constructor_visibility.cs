@@ -10,7 +10,7 @@ namespace Kekiri.Examples.Xunit
     /// only public constructors, and a type it finds none on is skipped — registering such a type
     /// makes building the whole container throw. Opt in with
     /// <c>AutofacBootstrapper.Initialize(x =&gt; x.IncludeNonPublicConstructors())</c>; see
-    /// Kekiri.Examples.Xunit.Autofac.NonPublicConstructors for that side.
+    /// Kekiri.Examples.Xunit.Autofac.Customized for that side.
     /// </summary>
     public class Autofac_constructor_visibility : Scenarios
     {

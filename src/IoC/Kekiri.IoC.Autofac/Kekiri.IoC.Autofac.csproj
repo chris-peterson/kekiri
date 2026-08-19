@@ -12,6 +12,11 @@
 Changes:
 
 - Upgrade to Autofac 9
+- Auto-registration now scans the assemblies the solution builds, not every assembly in the output
+  directory. Name package assemblies with ScanAssembliesOf/ScanAssembliesMatching.
+- BREAKING: CheckBlacklistedAssembly is removed; it filtered only seed names, so a listed assembly
+  could still be scanned as a dependent of one that wasn't
+- Add IncludeNonPublicConstructors/ConstructorFinder for types with non-public constructors
 - Target net8.0 (was netstandard2.0)
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#autofac</PackageProjectUrl>
