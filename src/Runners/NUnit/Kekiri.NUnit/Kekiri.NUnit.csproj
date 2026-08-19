@@ -18,7 +18,7 @@ Changes:
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>4.0.0</Version>
+    <Version>3.0.0</Version>
     <Authors>Chris Peterson</Authors>
     <Description>NUnit test runner for Kekiri</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>

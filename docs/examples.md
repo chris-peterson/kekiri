@@ -50,7 +50,7 @@ class Adding_two_numbers : Scenarios
            .And(the_user_enters_50)
            .And(the_user_enters_70);
         When(adding);
-        Then(the_screen_displays_a_result_of_120);
+        Then(the_result_is_120);
     }
 
     void a_calculator() { _calculator = new Calculator(); }
@@ -69,7 +69,7 @@ class Divide_by_zero : Scenarios
     readonly Calculator _calculator = new Calculator();
 
     [Scenario]
-    public Divide_by_zero()
+    public void Divide_by_zero()
     {
         Given(a_denominator_of_0);
         When(dividing).Throws();
@@ -94,7 +94,7 @@ public class Subtracting_two_numbers : Scenarios
     [Example(12, 5, 7)]
     [Example(20, 5, 15)]
     [ScenarioOutline]
-    public Subtracting_two_numbers(double operand1, double operand2, double expectedResult)
+    public void Subtracting_two_numbers(double operand1, double operand2, double expectedResult)
     {
         Given(the_user_enters_OPERAND1, operand1)
             .And(the_user_enters_OPERAND2, operand2);

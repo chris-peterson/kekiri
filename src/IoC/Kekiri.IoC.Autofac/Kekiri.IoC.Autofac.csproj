@@ -19,7 +19,7 @@ Changes:
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Chris Peterson</Authors>
-    <Version>6.0.0</Version>
+    <Version>5.0.0</Version>
     <Description>Autofac IoC integration for Kekiri</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>

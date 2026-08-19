@@ -20,7 +20,7 @@ project is a self-executing application:
 </PropertyGroup>
 
 <ItemGroup>
-  <PackageReference Include="Kekiri.Xunit" Version="3.0.0" />
+  <PackageReference Include="Kekiri.Xunit" Version="2.0.0" />
   <PackageReference Include="xunit.v3" Version="4.0.0" />
   <PackageReference Include="xunit.runner.visualstudio" Version="4.0.0" />
 </ItemGroup>
@@ -53,6 +53,18 @@ no per-fixture attribute is needed.
 ```bash
 PM> Install-Package Kekiri.IoC.Autofac
 ```
+
+Auto-registration activates through public constructors, and skips a type it finds none on —
+registering such a type makes building the whole container throw. If your domain types keep their
+constructors internal, opt in:
+
+```csharp
+AutofacBootstrapper.Initialize(x => x.IncludeNonPublicConstructors());
+```
+
+That finds every instance constructor, public or not. For finer control, set
+`ConstructorFinder` to any Autofac `IConstructorFinder`; Kekiri filters registrations through the
+same finder it activates with, so the two can't disagree.
 
 ### IServiceProvider
 

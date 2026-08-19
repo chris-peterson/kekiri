@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
+using Autofac.Core.Activators.Reflection;
 using Module = Autofac.Module;
 
 namespace Kekiri.IoC.Autofac
@@ -39,6 +40,24 @@ namespace Kekiri.IoC.Autofac
         /// Can be used to blacklist certain assemblies (to avoid scanning them for auto-registration)
         /// </summary>
         public Func<string, bool> CheckBlacklistedAssembly;
+
+        /// <summary>
+        /// Controls which constructors auto-registered types are activated through. Autofac's default
+        /// considers only public constructors; a type with none is skipped rather than registered,
+        /// because registering one makes building the container fail.
+        /// Ignored if <see cref="BuildContainer"/> is used.
+        /// </summary>
+        public IConstructorFinder ConstructorFinder { get; set; }
+
+        /// <summary>
+        /// Also activate through non-public instance constructors, for domain types that keep their
+        /// constructors internal. See <see cref="NonStaticConstructorsFinder"/>.
+        /// </summary>
+        public CustomizeBehaviorApi IncludeNonPublicConstructors()
+        {
+            ConstructorFinder = new NonStaticConstructorsFinder();
+            return this;
+        }
 
         public bool IsBlacklistedAssembly(string assembly)
         {

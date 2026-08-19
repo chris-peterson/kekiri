@@ -7,7 +7,7 @@ Kekiri honors the conventions of the Gherkin
 
 ## Status
 
-[![Build status](https://gitlab.com/chris-peterson/kekiri/badges/master/pipeline.svg)](https://gitlab.com/chris-peterson/kekiri/-/pipelines)
+[![build](https://github.com/chris-peterson/kekiri/actions/workflows/ci.yml/badge.svg)](https://github.com/chris-peterson/kekiri/actions/workflows/ci.yml)
 
 Package | Latest Release |
 :-------- | :------------ |
@@ -125,7 +125,7 @@ If we were to run this test (even though it fails) we get a nice Cucumber-style 
                .And(the_user_enters_50)
                .And(the_user_enters_70);
             When(adding);
-            Then(the_screen_displays_a_result_of_120);
+            Then(the_result_is_120);
         }
 
         void a_calculator()
@@ -212,7 +212,7 @@ More detailed documentation can be found on the [wiki](<https://github.com/chris
         readonly Calculator _calculator = new Calculator();
 
         [Scenario]
-        public Divide_by_zero()
+        public void Divide_by_zero()
         {
             Given(a_denominator_of_0);
             When(dividing).Throws();
@@ -250,7 +250,7 @@ be caught (using the templated method `Catch<>`).
         [Example(12, 5, 7)]
         [Example(20, 5, 15)]
         [ScenarioOutline]
-        public Subtracting_two_numbers(double operand1, double operand2, double expectedResult)
+        public void Subtracting_two_numbers(double operand1, double operand2, double expectedResult)
         {
             Given(the_user_enters_OPERAND1, operand1)
                 .And(the_user_enters_OPERAND2, operand2);

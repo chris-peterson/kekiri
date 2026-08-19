@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using Autofac.Core.Activators.Reflection;
 using Microsoft.Extensions.DependencyModel;
 
 namespace Kekiri.IoC.Autofac
@@ -60,11 +61,15 @@ namespace Kekiri.IoC.Autofac
             {
                 var containerBuilder = new ContainerBuilder();
 
-                // A public type with no public constructor can never be reflection-activated, and
+                // A type the finder can't find a constructor on can never be activated, and
                 // registering one makes ContainerBuilder.Build() throw NoConstructorsFoundException
                 // for the whole container. Autofac ships such types itself (DecoratorContext).
+                // Filtering through the same finder that activates keeps the two from disagreeing.
+                var constructorFinder = _customizations.ConstructorFinder ?? new DefaultConstructorFinder();
+
                 containerBuilder.RegisterAssemblyTypes(assemblies)
-                    .Where(t => t.GetConstructors().Length > 0);
+                    .Where(t => constructorFinder.FindConstructors(t).Length > 0)
+                    .FindConstructorsWith(constructorFinder);
 
                 foreach (var module in _customizations.Modules)
                 {
