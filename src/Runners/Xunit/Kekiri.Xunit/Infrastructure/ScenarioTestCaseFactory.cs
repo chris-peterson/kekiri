@@ -10,15 +10,6 @@ namespace Kekiri.Xunit.Infrastructure
 {
     static class ScenarioTestCaseFactory
     {
-        public static void GuardScenarioClass(IXunitTestMethod testMethod, string attributeName)
-        {
-            if (!typeof(ScenarioBase).IsAssignableFrom(testMethod.TestClass.Class))
-            {
-                throw new NotSupportedException(
-                    $"The {attributeName.Replace("Attribute", string.Empty)} attribute can only be placed on a class inheriting from Kekiri.Xunit.Scenarios");
-            }
-        }
-
         // v2 asked xunit for TestMethodDisplayOptions.ReplaceUnderscoreWithSpace per test case; v3 reads
         // that from runner config, so the name is built here to keep scenario titles readable by default.
         public static string DisplayName(IXunitTestMethod testMethod) =>

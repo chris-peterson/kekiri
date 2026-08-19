@@ -11,7 +11,6 @@ namespace Kekiri.Xunit.Infrastructure
             IXunitTestMethod testMethod,
             IFactAttribute factAttribute)
         {
-            ScenarioTestCaseFactory.GuardScenarioClass(testMethod, nameof(ScenarioAttribute));
 
             var details = TestIntrospectionHelper.GetTestCaseDetails(
                 discoveryOptions,

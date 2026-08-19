@@ -17,7 +17,6 @@ namespace Kekiri.Xunit.Infrastructure
             object[] testMethodArguments,
             string index)
         {
-            ScenarioTestCaseFactory.GuardScenarioClass(testMethod, nameof(ScenarioOutlineAttribute));
 
             var details = TestIntrospectionHelper.GetTestCaseDetailsForTheoryDataRow(
                 discoveryOptions, testMethod, theoryAttribute, dataRow, testMethodArguments, index);
@@ -53,7 +52,6 @@ namespace Kekiri.Xunit.Infrastructure
             IXunitTestMethod testMethod,
             ITheoryAttribute theoryAttribute)
         {
-            ScenarioTestCaseFactory.GuardScenarioClass(testMethod, nameof(ScenarioOutlineAttribute));
 
             var details = TestIntrospectionHelper.GetTestCaseDetails(
                 discoveryOptions,
