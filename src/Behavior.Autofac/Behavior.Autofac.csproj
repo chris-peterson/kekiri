@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Copyright>2012-2026</Copyright>
+    <TargetFramework>net8.0</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>Behavior.Autofac</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <PackageId>Behavior.Autofac</PackageId>
+    <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;specflow;testing-platform;mtp;autofac</PackageTags>
+    <PackageProjectUrl>https://github.com/chris-peterson/kekiri#autofac</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>Chris Peterson</Authors>
+    <Version>0.1.0</Version>
+    <Description>Autofac IoC integration for Behavior.</Description>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <!-- A library that references Behavior inherits the MSBuild package Behavior carries for
+         consumers, which would otherwise make this look like a test application to `dotnet test`. -->
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Behavior\Behavior.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="9.3.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="10.0.11" />
+  </ItemGroup>
+
+</Project>

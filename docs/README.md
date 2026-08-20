@@ -1,8 +1,11 @@
-# <img src="favicon.svg" alt="Kekiri" width="64" height="64" style="vertical-align: middle"> Kekiri
+# <img src="favicon.svg" alt="Behavior" width="64" height="64" style="vertical-align: middle"> Behavior
 
 A .NET framework that supports writing low-ceremony BDD tests using Gherkin language.
 
-Kekiri honors the conventions of the Gherkin [cucumber language](https://cucumber.io/docs/gherkin/reference/).
+Behavior honors the conventions of the Gherkin [cucumber language](https://cucumber.io/docs/gherkin/reference/).
+
+It is what [Kekiri](https://www.nuget.org/packages/kekiri) became; the [migration guide](/migrating)
+covers moving a suite over.
 
 ## Status
 
@@ -10,15 +13,13 @@ Kekiri honors the conventions of the Gherkin [cucumber language](https://cucumbe
 
 | Package | Latest Release |
 |:--------|:--------------|
-| `Kekiri` | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.svg)](https://www.nuget.org/packages/kekiri) |
-| `Kekiri.IoC.Autofac` | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.IoC.Autofac.svg)](https://www.nuget.org/packages/kekiri.ioc.autofac) |
-| `Kekiri.IoC.ServiceProvider` | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.IoC.ServiceProvider.svg)](https://www.nuget.org/packages/kekiri.ioc.ServiceProvider) |
-| `Kekiri.Xunit` | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.Xunit.svg)](https://www.nuget.org/packages/kekiri.xunit) |
-| `Kekiri.NUnit` | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.NUnit.svg)](https://www.nuget.org/packages/kekiri.nunit) |
+| `Behavior` | [![NuGet version](https://img.shields.io/nuget/dt/Behavior.svg)](https://www.nuget.org/packages/behavior) |
+| `Behavior.Autofac` | [![NuGet version](https://img.shields.io/nuget/dt/Behavior.Autofac.svg)](https://www.nuget.org/packages/behavior.autofac) |
+| `Behavior.ServiceProvider` | [![NuGet version](https://img.shields.io/nuget/dt/Behavior.ServiceProvider.svg)](https://www.nuget.org/packages/behavior.serviceprovider) |
 
-## Why Kekiri
+## Why Behavior
 
-Unlike other BDD frameworks that impose process overhead (management of feature files, custom tooling, etc) Kekiri allows developers to write BDD scenarios just as quickly and easily as they would a "plain old" test.
+Unlike other BDD frameworks that impose process overhead (management of feature files, custom tooling, etc) Behavior allows developers to write BDD scenarios just as quickly and easily as they would a "plain old" test.
 
 The resulting scenario fixtures are concise, highly portable, and adhere to [Arrange, Act, and Assert](https://automationpanda.com/2020/07/07/arrange-act-assert-a-pattern-for-writing-good-tests/).
 

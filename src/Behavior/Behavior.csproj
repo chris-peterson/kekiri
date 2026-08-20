@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Copyright>2012-2026</Copyright>
+    <Authors>Chris Peterson</Authors>
+    <Description>Low-ceremony BDD scenarios in C#, written as code and run directly on Microsoft.Testing.Platform.</Description>
+    <TargetFramework>net8.0</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>Behavior</AssemblyName>
+    <RootNamespace>Behavior</RootNamespace>
+    <PackageId>Behavior</PackageId>
+    <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;specflow;testing-platform;mtp</PackageTags>
+    <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <!-- The MSBuild package it carries for consumers would otherwise make this library itself
+         look like a test application to `dotnet test`. -->
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Testing.Platform" Version="2.3.3" />
+    <!-- PrivateAssets="none" so its build assets reach a consumer: they are what generates the
+         entry point that calls Behavior's hook. -->
+    <PackageReference Include="Microsoft.Testing.Platform.MSBuild" Version="2.3.3" PrivateAssets="none" />
+  </ItemGroup>
+
+  <!--
+    Registers the entry point hook with the consuming project, so a test project needs no Program.cs
+    of its own: the generated Main calls TestingPlatformBuilderHook.AddExtensions.
+  -->
+  <ItemGroup>
+    <None Include="build\Behavior.props" Pack="true" PackagePath="buildTransitive\Behavior.props" />
+  </ItemGroup>
+
+</Project>

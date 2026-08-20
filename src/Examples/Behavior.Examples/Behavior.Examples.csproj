@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Behavior.Examples</RootNamespace>
+    <!-- Microsoft.NET.Test.Sdk generates an entry point for VSTest; the platform's own is the one to keep. -->
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Rider shows nothing for this project without Microsoft.NET.Test.Sdk, the only thing here that
+      sets IsTestProject=true. The Testing Platform capabilities Rider talks over
+      (TestingPlatformServer, TestContainer) already arrive through the ProjectReference to
+      Behavior; JetBrains names this same package as the workaround in RIDER-129745. Neither
+      package brings a test framework or a VSTest adapter.
+    -->
+    <PackageReference Include="AwesomeAssertions" Version="9.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Behavior.Autofac\Behavior.Autofac.csproj" />
+    <ProjectReference Include="..\..\Behavior\Behavior.csproj" />
+  </ItemGroup>
+
+  <!-- A package reference would bring this in on its own; a project reference doesn't carry props. -->
+  <Import Project="..\..\Behavior\build\Behavior.props" />
+
+</Project>

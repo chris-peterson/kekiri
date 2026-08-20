@@ -1,0 +1,8 @@
+<Project>
+  <ItemGroup>
+    <TestingPlatformBuilderHook Include="B41B8B0E-3F2C-4E43-9D8E-1E0A0F5A7C11">
+      <DisplayName>Behavior</DisplayName>
+      <TypeFullName>Behavior.TestingPlatformBuilderHook</TypeFullName>
+    </TestingPlatformBuilderHook>
+  </ItemGroup>
+</Project>
