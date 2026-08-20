@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Kekiri.Examples.Mtp</RootNamespace>
+    <!-- No xunit, no NUnit, no Microsoft.NET.Test.Sdk, no runner adapter. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
+    <ProjectReference Include="..\Kekiri.Mtp\Kekiri.Mtp.csproj" />
+  </ItemGroup>
+
+</Project>

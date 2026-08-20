@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Kekiri.Mtp</AssemblyName>
+    <RootNamespace>Kekiri.Mtp</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <Description>SPIKE: Kekiri as a native Microsoft.Testing.Platform test framework, with no xUnit or NUnit host.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Testing.Platform" Version="2.3.3" />
+  </ItemGroup>
+
+</Project>
