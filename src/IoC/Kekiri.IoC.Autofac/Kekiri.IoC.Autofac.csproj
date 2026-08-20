@@ -18,7 +18,7 @@ Changes:
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <Authors>Chris Peterson</Authors>
-    <Version>5.0.0-rc1</Version>
+    <Version>4.1.1</Version>
     <Company />
     <Product />
     <Description>Autofac IoC integration for Kekiri</Description>

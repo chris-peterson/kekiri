@@ -19,13 +19,11 @@ Changes:
     <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>6.0.0-rc1</Version>
+    <Version>5.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.*" />
-    <PackageReference Include="System.Diagnostics.TextWriterTraceListener" Version="4.3.*" />
-    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.*" />
   </ItemGroup>
 
 </Project>

@@ -83,15 +83,8 @@ namespace Kekiri.IoC.Autofac
             {
                 if (IsCandidateLibrary(library, assemblyName))
                 {
-                    try
-                    {
-                        var assembly = Assembly.Load(new AssemblyName(library.Name));
-                        assemblies.Add(assembly);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error loading assembly {assemblyName}: {ex}");
-                    }
+                    var assembly = Assembly.Load(new AssemblyName(library.Name));
+                    assemblies.Add(assembly);
                 }
             }
             return assemblies;
