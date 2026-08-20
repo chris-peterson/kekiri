@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kekiri.Examples.WebApp
@@ -18,7 +19,14 @@ namespace Kekiri.Examples.WebApp
             services
                 .AddScoped<IFoo, DefaultFoo>()
                 .AddScoped<IBar, DefaultBar>()
-                .AddMvc();
+                .AddControllers();
+        }
+
+        // Required by StartupLoader whenever this type is passed to UseStartup.
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

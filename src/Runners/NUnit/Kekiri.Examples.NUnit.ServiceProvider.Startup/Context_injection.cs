@@ -30,7 +30,7 @@ namespace Kekiri.Examples.NUnit
         }
 
         void It_should_use_correct_types(int counter) {
-            Assert.IsInstanceOf<TestFoo>(Context.Foo);
+            Assert.That(Context.Foo, Is.InstanceOf<TestFoo>());
         }
     }
 }

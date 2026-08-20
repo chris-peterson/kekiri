@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNetCore.Hosting.Internal;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Kekiri.IoC
 {
@@ -14,6 +15,7 @@ namespace Kekiri.IoC
         Action<IServiceCollection> _config;
         Action<IServiceCollection> _postStartupServicesConfig;
         Action<object> _postStartupContainerBuilderConfig;
+        Action<IWebHostBuilder> _configureTestContainer;
         Type _containerType;
 
         public ServiceProviderBootstrapper()
@@ -57,18 +59,10 @@ namespace Kekiri.IoC
         }
 
         public ServiceProviderBootstrapper ConfigureServicesPostStartup(Action<IServiceCollection> config)
-            => ConfigureServices(x =>
-            {
-                if (_startupType == null)
-                {
-                    _postStartupServicesConfig += config;
-                }
-                else
-                {
-                    x.AddSingleton<IStartupConfigureServicesFilter>(y =>
-                        new PostStartupConfigureServicesFilter(config));
-                }
-            });
+        {
+            _postStartupServicesConfig += config;
+            return this;
+        }
 
         public ServiceProviderBootstrapper OverrideServicesWithTypesFromAssemblyUsingContainerBuilder<TContainerBuilder>(
             Assembly assembly,
@@ -92,19 +86,13 @@ namespace Kekiri.IoC
             Action<TContainerBuilder> config)
         {
             _containerType = typeof(TContainerBuilder);
+            _postStartupContainerBuilderConfig += y => config((TContainerBuilder) y);
 
-            return ConfigureServices(x =>
-            {
-                if (_startupType == null)
-                {
-                    _postStartupContainerBuilderConfig += y => config((TContainerBuilder) y);
-                }
-                else
-                {
-                    x.AddSingleton<IStartupConfigureContainerFilter<TContainerBuilder>>(y =>
-                        new PostStartupConfigureContainerFilter<TContainerBuilder>(config));
-                }
-            });
+            // Captured while TContainerBuilder is still known statically, so the UseStartup path
+            // doesn't have to reconstruct the generic ConfigureTestContainer call by reflection.
+            _configureTestContainer += builder => builder.ConfigureTestContainer(config);
+
+            return this;
         }
 
         public ServiceProviderBootstrapper ConfigureServices(Action<IServiceCollection> config)
@@ -175,9 +163,19 @@ namespace Kekiri.IoC
         }
 
         IServiceProvider BuildServiceProvider<TStartup>() where TStartup : class
-            => WebHostBuilderFactory
-                .CreateFromTypesAssemblyEntryPoint<TStartup>(new string[0])
-                .ConfigureServices(_config)
+            => new HostBuilder()
+                .ConfigureWebHost(builder =>
+                {
+                    builder
+                        .UseTestServer()
+                        .UseStartup<TStartup>()
+                        .ConfigureServices(_config)
+                        // ConfigureTestServices is what runs *after* Startup.ConfigureServices, so
+                        // test doubles registered here win over the app's own registrations.
+                        .ConfigureTestServices(_postStartupServicesConfig);
+
+                    _configureTestContainer?.Invoke(builder);
+                })
                 .Build()
                 .Services;
 

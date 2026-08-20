@@ -39,7 +39,7 @@ namespace Kekiri.Examples.NUnit.Calculator.Addition
 
         void the_result_is_120()
         {
-            Assert.AreEqual(120m, _calculator.Result);
+            Assert.That(_calculator.Result, Is.EqualTo(120m));
         }
     }
 

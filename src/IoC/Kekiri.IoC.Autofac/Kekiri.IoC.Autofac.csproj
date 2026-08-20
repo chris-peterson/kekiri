@@ -1,26 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Copyright>2012-2020</Copyright>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <Copyright>2012-2026</Copyright>
+    <TargetFramework>net8.0</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Kekiri.IoC.Autofac</AssemblyName>
     <RootNamespace>$(AssemblyName)</RootNamespace>
     <PackageId>Kekiri.IoC.Autofac</PackageId>
-    <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;specflow</PackageTags>
+    <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;nunit;xunit;specflow</PackageTags>
     <PackageReleaseNotes>
 Changes:
 
-- Upgrade dependencies
+- Upgrade to Autofac 9
+- Auto-registration now scans the assemblies the solution builds, not every assembly in the output
+  directory. Name package assemblies with ScanAssembliesOf/ScanAssembliesMatching.
+- BREAKING: CheckBlacklistedAssembly is removed; it filtered only seed names, so a listed assembly
+  could still be scanned as a dependent of one that wasn't
+- Add IncludeNonPublicConstructors/ConstructorFinder for types with non-public constructors
+- Target net8.0 (was netstandard2.0)
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/chris-peterson/kekiri#autofac</PackageProjectUrl>
     <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Chris Peterson</Authors>
-    <Version>5.0.0-rc1</Version>
-    <Company />
-    <Product />
+    <Version>5.0.0</Version>
     <Description>Autofac IoC integration for Kekiri</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
@@ -30,7 +34,7 @@ Changes:
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="5.2.*" />
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="3.1.*" />
+    <PackageReference Include="Autofac" Version="9.3.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="10.0.11" />
   </ItemGroup>
 </Project>

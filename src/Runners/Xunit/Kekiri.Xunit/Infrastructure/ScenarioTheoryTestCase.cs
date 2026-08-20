@@ -7,53 +7,30 @@ using Xunit.v3;
 
 namespace Kekiri.Xunit.Infrastructure
 {
-    public class ScenarioTestCase : XunitTestCase, ISelfExecutingXunitTestCase
+    public class ScenarioTheoryTestCase : XunitDelayEnumeratedTheoryTestCase, ISelfExecutingXunitTestCase
     {
         [Obsolete("Called by the de-serializer; should only be called by deriving classes for de-serialization purposes")]
-        public ScenarioTestCase()
+        public ScenarioTheoryTestCase()
         {
         }
 
-        public ScenarioTestCase(
+        public ScenarioTheoryTestCase(
             IXunitTestMethod testMethod,
             string testCaseDisplayName,
             string uniqueID,
             bool @explicit,
+            bool skipTestWithoutData,
             Type[] skipExceptions = null,
             string skipReason = null,
             Type skipType = null,
             string skipUnless = null,
             string skipWhen = null,
             Dictionary<string, HashSet<string>> traits = null,
-            object[] testMethodArguments = null,
             string sourceFilePath = null,
             int? sourceLineNumber = null,
             int? timeout = null)
-            : base(testMethod, testCaseDisplayName, uniqueID, @explicit, skipExceptions, skipReason, skipType,
-                skipUnless, skipWhen, traits, testMethodArguments, sourceFilePath, sourceLineNumber, timeout)
-        {
-        }
-
-        public ScenarioTestCase(
-            IXunitTestMethod testMethod,
-            string testCaseDisplayName,
-            string uniqueID,
-            bool @explicit,
-            string testLabel,
-            bool disableParallelization,
-            Type[] skipExceptions = null,
-            string skipReason = null,
-            Type skipType = null,
-            string skipUnless = null,
-            string skipWhen = null,
-            Dictionary<string, HashSet<string>> traits = null,
-            object[] testMethodArguments = null,
-            string sourceFilePath = null,
-            int? sourceLineNumber = null,
-            int? timeout = null)
-            : base(testMethod, testCaseDisplayName, uniqueID, @explicit, testLabel, disableParallelization,
-                skipExceptions, skipReason, skipType, skipUnless, skipWhen, traits, testMethodArguments,
-                sourceFilePath, sourceLineNumber, timeout)
+            : base(testMethod, testCaseDisplayName, uniqueID, @explicit, skipTestWithoutData, skipExceptions,
+                skipReason, skipType, skipUnless, skipWhen, traits, sourceFilePath, sourceLineNumber, timeout)
         {
         }
 

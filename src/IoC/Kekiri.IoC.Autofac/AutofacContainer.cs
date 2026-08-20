@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using Autofac.Core.Activators.Reflection;
 using Microsoft.Extensions.DependencyModel;
 
 namespace Kekiri.IoC.Autofac
@@ -49,17 +50,21 @@ namespace Kekiri.IoC.Autofac
 
         static readonly Lazy<IContainer> _container = new Lazy<IContainer>(() =>
         {
-            var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
-                .Select(f => Path.GetFileNameWithoutExtension(f))
-                .Where(n => !_customizations.IsBlacklistedAssembly(n))
-                .SelectMany(a => GetReferencingAssemblies(a))
-                .Distinct()
-                .ToArray();
+            var assemblies = AssembliesToScan().ToArray();
 
             if (_customizations.BuildContainer == null)
             {
                 var containerBuilder = new ContainerBuilder();
-                containerBuilder.RegisterAssemblyTypes(assemblies);
+
+                // A type the finder can't find a constructor on can never be activated, and
+                // registering one makes ContainerBuilder.Build() throw NoConstructorsFoundException
+                // for the whole container. Autofac ships such types itself (DecoratorContext).
+                // Filtering through the same finder that activates keeps the two from disagreeing.
+                var constructorFinder = _customizations.ConstructorFinder ?? new DefaultConstructorFinder();
+
+                containerBuilder.RegisterAssemblyTypes(assemblies)
+                    .Where(t => constructorFinder.FindConstructors(t).Length > 0)
+                    .FindConstructorsWith(constructorFinder);
 
                 foreach (var module in _customizations.Modules)
                 {
@@ -74,33 +79,58 @@ namespace Kekiri.IoC.Autofac
 
         private IContainer Container => _container.Value;
 
-        // Adapted from http://www.michael-whelan.net/replacing-appdomain-in-dotnet-core/
-        static IEnumerable<Assembly> GetReferencingAssemblies(string assemblyName)
+        /// <summary>
+        /// The assemblies whose types get auto-registered: by default the ones this solution builds,
+        /// which the dependency manifest distinguishes from packages by <see cref="Library.Type"/>.
+        /// Scanning packages instead registered every type in Autofac, the test platform, and every
+        /// transitive dependency — and a single type Autofac cannot activate fails the whole container.
+        /// </summary>
+        static IEnumerable<Assembly> AssembliesToScan()
         {
-            var assemblies = new List<Assembly>();
-            var dependencies = DependencyContext.Default.RuntimeLibraries;
-            foreach (var library in dependencies)
+            var names = new List<string>();
+
+            // Only the project-assembly default and the name predicates need the manifest. Reading it
+            // regardless would break a caller who named their assemblies precisely to avoid it:
+            // DependencyContext.Default is null for an app published as a single file.
+            if (_customizations.ScanProjectAssemblies || _customizations.AssemblyNamePredicates.Count > 0)
             {
-                if (IsCandidateLibrary(library, assemblyName))
+                foreach (var library in DependencyContext.Default.RuntimeLibraries)
                 {
-                    try
+                    var isProject = string.Equals(library.Type, ProjectLibraryType, StringComparison.OrdinalIgnoreCase);
+
+                    if ((isProject && _customizations.ScanProjectAssemblies)
+                        || _customizations.AssemblyNamePredicates.Any(p => p(library.Name)))
                     {
-                        var assembly = Assembly.Load(new AssemblyName(library.Name));
-                        assemblies.Add(assembly);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error loading assembly {assemblyName}: {ex}");
+                        names.Add(library.Name);
                     }
                 }
             }
-            return assemblies;
+
+            return names
+                .Select(Load)
+                .Concat(_customizations.AdditionalAssemblies)
+                .Where(a => a != null)
+                .Distinct();
         }
 
-        static bool IsCandidateLibrary(RuntimeLibrary library, string assemblyName)
+        const string ProjectLibraryType = "project";
+
+        static Assembly Load(string libraryName)
         {
-            return string.Compare(assemblyName, library.Name, ignoreCase:true) == 0
-                || library.Dependencies.Any(d => d.Name.StartsWith(assemblyName));
+            try
+            {
+                return Assembly.Load(new AssemblyName(libraryName));
+            }
+            catch (Exception ex) when (
+                ex is FileNotFoundException ||
+                ex is FileLoadException ||
+                ex is BadImageFormatException)
+            {
+                // A runtime library need not name an assembly that is present at run time. It
+                // contributes no types to scan, so there is nothing to report. Anything else
+                // (a genuinely broken assembly) still propagates.
+                return null;
+            }
         }
     }
 }

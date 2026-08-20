@@ -55,7 +55,7 @@ namespace Kekiri.Examples.NUnit.Calculator
 
         void the_result_is_EXPECTED(decimal expected)
         {
-            Assert.AreEqual(expected, _calculator.Result);
+            Assert.That(_calculator.Result, Is.EqualTo(expected));
         }
 
         void subtracting()

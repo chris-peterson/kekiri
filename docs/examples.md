@@ -50,14 +50,14 @@ class Adding_two_numbers : Scenarios
            .And(the_user_enters_50)
            .And(the_user_enters_70);
         When(adding);
-        Then(the_screen_displays_a_result_of_120);
+        Then(the_result_is_120);
     }
 
     void a_calculator() { _calculator = new Calculator(); }
     void the_user_enters_50() { _calculator.Operand1 = 50; }
     void the_user_enters_70() { _calculator.Operand2 = 70; }
     void adding() { _calculator.Add(); }
-    void the_result_is_120() { Assert.AreEqual(120m, _calculator.Result); }
+    void the_result_is_120() { Assert.Equal(120m, _calculator.Result); }
 }
 ```
 
@@ -69,7 +69,7 @@ class Divide_by_zero : Scenarios
     readonly Calculator _calculator = new Calculator();
 
     [Scenario]
-    public Divide_by_zero()
+    public void Divide_by_zero()
     {
         Given(a_denominator_of_0);
         When(dividing).Throws();
@@ -94,7 +94,7 @@ public class Subtracting_two_numbers : Scenarios
     [Example(12, 5, 7)]
     [Example(20, 5, 15)]
     [ScenarioOutline]
-    public Subtracting_two_numbers(double operand1, double operand2, double expectedResult)
+    public void Subtracting_two_numbers(double operand1, double operand2, double expectedResult)
     {
         Given(the_user_enters_OPERAND1, operand1)
             .And(the_user_enters_OPERAND2, operand2);
@@ -105,7 +105,7 @@ public class Subtracting_two_numbers : Scenarios
     void the_user_enters_OPERAND1(double operand1) { _calculator.Operand1 = operand1; }
     void the_user_enters_OPERAND2(double operand2) { _calculator.Operand2 = operand2; }
     void subtracting() { _calculator.Subtract(); }
-    void the_result_is_EXPECTED(double expected) { Assert.AreEqual(expected, _calculator.Result); }
+    void the_result_is_EXPECTED(double expected) { Assert.Equal(expected, _calculator.Result); }
 }
 ```
 

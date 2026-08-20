@@ -14,7 +14,7 @@ namespace Kekiri.Examples.Xunit
         public IFoo Foo { get; }
     }
 
-    public class Context_injection : ExampleScenariosTyped<Context>
+    public class Context_injection : Scenarios<Context>
     {
         [ScenarioOutline]
         [Example(1)]
