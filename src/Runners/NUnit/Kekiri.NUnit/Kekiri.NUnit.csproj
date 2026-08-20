@@ -28,7 +28,7 @@ Changes:
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kekiri\Kekiri.csproj" />
-    <PackageReference Include="NUnit" Version="3.12.*" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
   </ItemGroup>
 
 </Project>
