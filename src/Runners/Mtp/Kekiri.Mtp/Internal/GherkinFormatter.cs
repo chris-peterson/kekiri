@@ -30,10 +30,14 @@ namespace Kekiri.Mtp.Internal
             if (_currentFeature != scenario.FeatureName)
             {
                 _currentFeature = scenario.FeatureName;
-                await WriteAsync($"{Environment.NewLine}Feature: {scenario.FeatureName}", cancellationToken);
+                // The blank separator is written on its own so a colour code doesn't end up
+                // attached to an empty line.
+                await WriteAsync(string.Empty, cancellationToken);
+                await WriteAsync($"Feature: {scenario.FeatureName}", cancellationToken, Cyan);
             }
 
-            await WriteAsync($"{Environment.NewLine}  Scenario: {scenario.Title}", cancellationToken);
+            await WriteAsync(string.Empty, cancellationToken);
+            await WriteAsync($"  Scenario: {scenario.Title}", cancellationToken);
 
             var failingStep = FailingStepOf(outcome.Failure);
 
@@ -43,8 +47,8 @@ namespace Kekiri.Mtp.Internal
                 // step broke and why, at the point in the scenario where it happened.
                 if (failingStep != null && Names(step, failingStep))
                 {
-                    await WriteAsync($"  {Failed} {step.TrimStart()}", cancellationToken);
-                    await WriteAsync($"      {Because(outcome.Failure)}", cancellationToken);
+                    await WriteAsync($"  {Failed} {step.TrimStart()}", cancellationToken, Red);
+                    await WriteAsync($"      {Because(outcome.Failure)}", cancellationToken, Red);
                 }
                 else
                 {
@@ -61,17 +65,23 @@ namespace Kekiri.Mtp.Internal
 
             if (outcome.Failure is null)
             {
-                await WriteAsync($"    {Passed} passed ({elapsed.TotalMilliseconds:0}ms)", cancellationToken);
+                await WriteAsync($"    {Passed} passed ({elapsed.TotalMilliseconds:0}ms)", cancellationToken, Green);
             }
             else if (failingStep is null)
             {
                 // Failed before or after any step — nothing to mark, so report it on its own line.
-                await WriteAsync($"    {Failed} {Because(outcome.Failure)}", cancellationToken);
+                await WriteAsync($"    {Failed} {Because(outcome.Failure)}", cancellationToken, Red);
             }
         }
 
         const string Passed = "✓";
         const string Failed = "✗";
+
+        // Colour goes through the platform's abstraction rather than raw ANSI, so --no-ansi, a
+        // redirected stream and CI all still do the right thing without this code knowing.
+        static readonly IColor Green = new SystemConsoleColor { ConsoleColor = ConsoleColor.Green };
+        static readonly IColor Red = new SystemConsoleColor { ConsoleColor = ConsoleColor.Red };
+        static readonly IColor Cyan = new SystemConsoleColor { ConsoleColor = ConsoleColor.Cyan };
 
         /// <summary>
         /// Kekiri names the step it was running when a Given, When or Then threw. Reading that
@@ -126,7 +136,10 @@ namespace Kekiri.Mtp.Internal
             return exception;
         }
 
-        Task WriteAsync(string text, CancellationToken cancellationToken) =>
-            _output.DisplayAsync(_producer, new FormattedTextOutputDeviceData(text), cancellationToken);
+        Task WriteAsync(string text, CancellationToken cancellationToken, IColor foregroundColor = null) =>
+            _output.DisplayAsync(
+                _producer,
+                new FormattedTextOutputDeviceData(text) { ForegroundColor = foregroundColor },
+                cancellationToken);
     }
 }

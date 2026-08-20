@@ -53,9 +53,16 @@ Feature: Addition
     ✓ passed (2ms)
 ```
 
+Feature headers are cyan, a passing verdict green, a failing step and its cause red.
+
 This works because the platform's own reporter prints nothing per test at default verbosity, so the
 Gherkin is the output rather than competing with it. It goes through `IOutputDevice`, the service
 extensions use to write to the terminal — not `Console.Write`.
+
+Colour is set as `FormattedTextOutputDeviceData.ForegroundColor` rather than by writing ANSI, which
+is what lets the platform decide when colour is wanted: piping the run emits no escape codes at all,
+and `--no-ansi` and CI are handled without this code knowing about either. Checking it therefore
+needs a terminal — `script -q /dev/null <exe>` if you want to see the codes in a captured run.
 
 **`dotnet test` swallows it.** The same run under `dotnet test` shows only the platform summary; MTP
 substitutes a passthrough output device there, and `--output Detailed` doesn't bring it back (that
