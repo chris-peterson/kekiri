@@ -5,7 +5,7 @@ namespace Kekiri.Impl.Exceptions
     class GivenFailed : ScenarioException
     {
         public GivenFailed(ScenarioBase scenario, string stepName, Exception innerException) :
-            base(scenario, $"'{stepName}' failed", innerException)
+            base(scenario, stepName, $"'{stepName}' failed", innerException)
         {
         }
     }

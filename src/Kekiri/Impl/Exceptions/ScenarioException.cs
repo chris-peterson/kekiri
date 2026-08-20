@@ -6,6 +6,12 @@ namespace Kekiri.Impl.Exceptions
     {
         public ScenarioBase Scenario { get; private set; }
 
+        /// <summary>
+        /// The step whose failure caused this, when there was one. A runner can point at the step
+        /// rather than leaving a reader to find it inside the message text.
+        /// </summary>
+        public string StepName { get; private set; }
+
         public ScenarioException(ScenarioBase scenario, string message) :
             this(scenario, message, null)
         {
@@ -15,6 +21,12 @@ namespace Kekiri.Impl.Exceptions
             this(scenario.GetType(), message, innerException)
         {
             Scenario = scenario;
+        }
+
+        protected ScenarioException(ScenarioBase scenario, string stepName, string message, Exception innerException) :
+            this(scenario, message, innerException)
+        {
+            StepName = stepName;
         }
 
 

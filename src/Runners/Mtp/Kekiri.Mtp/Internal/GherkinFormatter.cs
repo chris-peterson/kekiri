@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Kekiri.Impl.Exceptions;
 using Microsoft.Testing.Platform.Extensions.OutputDevice;
 using Microsoft.Testing.Platform.OutputDevice;
 
@@ -34,9 +35,21 @@ namespace Kekiri.Mtp.Internal
 
             await WriteAsync($"{Environment.NewLine}  Scenario: {scenario.Title}", cancellationToken);
 
+            var failingStep = FailingStepOf(outcome.Failure);
+
             foreach (var step in outcome.Steps)
             {
-                await WriteAsync($"    {step}", cancellationToken);
+                // Marking the step in place is what makes the failure readable: the reader sees which
+                // step broke and why, at the point in the scenario where it happened.
+                if (failingStep != null && Names(step, failingStep))
+                {
+                    await WriteAsync($"  {Failed} {step.TrimStart()}", cancellationToken);
+                    await WriteAsync($"      {Because(outcome.Failure)}", cancellationToken);
+                }
+                else
+                {
+                    await WriteAsync($"    {step}", cancellationToken);
+                }
             }
 
             // A scenario whose Given/When/Then never ran has nothing to show, so say why rather than
@@ -46,38 +59,71 @@ namespace Kekiri.Mtp.Internal
                 await WriteAsync("    (no steps recorded)", cancellationToken);
             }
 
-            await WriteAsync(
-                outcome.Failure is null
-                    ? $"    {Passed} passed ({elapsed.TotalMilliseconds:0}ms)"
-                    : $"    {Failed} {FirstLineOf(outcome.Failure)}",
-                cancellationToken);
+            if (outcome.Failure is null)
+            {
+                await WriteAsync($"    {Passed} passed ({elapsed.TotalMilliseconds:0}ms)", cancellationToken);
+            }
+            else if (failingStep is null)
+            {
+                // Failed before or after any step — nothing to mark, so report it on its own line.
+                await WriteAsync($"    {Failed} {Because(outcome.Failure)}", cancellationToken);
+            }
         }
 
         const string Passed = "✓";
         const string Failed = "✗";
 
         /// <summary>
-        /// Kekiri wraps a step failure in its own exception whose first line names the scenario, so
-        /// taking the outer message's first line reports what failed and not why. The innermost
-        /// exception is the one the reader wants on a single line.
+        /// Kekiri names the step it was running when a Given, When or Then threw. Reading that
+        /// beats matching on the message text, which exists to be read rather than parsed.
         /// </summary>
-        static string FirstLineOf(Exception exception)
+        static string FailingStepOf(Exception failure)
+        {
+            for (var current = failure; current != null; current = current.InnerException)
+            {
+                if (current is ScenarioException scenario && !string.IsNullOrEmpty(scenario.StepName))
+                {
+                    return scenario.StepName;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// The step report is Gherkin ("Then the result is 120"); the step name is the method's
+        /// prose ("the result is 120"). Compare on the tail so the keyword doesn't matter.
+        /// </summary>
+        static bool Names(string reportedStep, string stepName) =>
+            reportedStep.TrimEnd().EndsWith(stepName.TrimEnd(), StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// The innermost exception is the why. Kekiri's wrappers name the scenario and the step,
+        /// both of which the surrounding output already shows.
+        /// </summary>
+        static string Because(Exception failure)
+        {
+            var innermost = Innermost(failure);
+            var message = innermost.Message;
+
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                return innermost.GetType().Name;
+            }
+
+            var newline = message.IndexOfAny(new[] { '\r', '\n' });
+
+            return newline < 0 ? message : message.Substring(0, newline);
+        }
+
+        public static Exception Innermost(Exception exception)
         {
             while (exception.InnerException != null)
             {
                 exception = exception.InnerException;
             }
 
-            var message = exception.Message;
-
-            if (string.IsNullOrWhiteSpace(message))
-            {
-                return exception.GetType().Name;
-            }
-
-            var newline = message.IndexOfAny(new[] { '\r', '\n' });
-
-            return newline < 0 ? message : message.Substring(0, newline);
+            return exception;
         }
 
         Task WriteAsync(string text, CancellationToken cancellationToken) =>

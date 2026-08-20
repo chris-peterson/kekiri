@@ -41,8 +41,8 @@ Feature: Addition
     Given a calculator
       And the user enters 50
     When adding
-    Then the result is 120
-    ✗ Expected 120 but got 50
+  ✗ Then the result is 120
+      Expected 120 but got 50
 
   Scenario: Adding 50 and 70
     Given a calculator
@@ -63,6 +63,27 @@ flag also collides with `dotnet test`'s own `--output`). So this format is avail
 and a watch loop, not to CI through `dotnet test` as it stands. Whether an IDE shows it is a separate
 question: IDEs read the protocol's nodes, not this console stream, which is why the step text is also
 attached as `StandardOutputProperty`.
+
+## Unwrapping the failure
+
+Kekiri wraps a step failure twice over: `ThenFailed` names the step, and `ScenarioException` prefixes
+the scenario. Reported as-is, a reader met the wrapper's message and five frames of Kekiri internals
+before the `--->` that led to the actual cause.
+
+The runner reports the **innermost** exception instead, and marks the step in place. The scenario and
+step names are already on screen, so the exception only has to carry the why:
+
+```
+failed A failing scenario reports which step failed (15ms)
+  Expected 120 but got 50
+    at Kekiri.Examples.Mtp.Addition.Adding_two_numbers.the_result_is_120() in …/Adding_two_numbers.cs:38
+```
+
+Finding which step failed needed a small change in the core: the step name existed only inside the
+message text, so `ScenarioException` now carries it as `StepName`. Matching on message text would
+have worked until someone reworded a message. Both types are internal, so this adds no public
+surface — but it is a change outside the spike directory, and it belongs on the migration branch
+rather than here if it's kept.
 
 ## What the protocol will and won't do
 

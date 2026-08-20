@@ -97,9 +97,13 @@ namespace Kekiri.Mtp
 
                 await _formatter.ScenarioAsync(scenario, outcome, stopwatch.Elapsed, context.CancellationToken);
 
+                // The innermost exception, not Kekiri's wrapper. The wrapper's message names the
+                // scenario and the step, which the output already shows, and its stack is five
+                // frames of Kekiri internals before reaching the step the reader wrote. Unwrapping
+                // puts the cause on the first line and the reader's own code at the top of the stack.
                 var state = outcome.Failure is null
                     ? (IProperty)PassedTestNodeStateProperty.CachedInstance
-                    : new FailedTestNodeStateProperty(outcome.Failure);
+                    : new FailedTestNodeStateProperty(GherkinFormatter.Innermost(outcome.Failure));
 
                 var properties = Describe(scenario, state);
 
