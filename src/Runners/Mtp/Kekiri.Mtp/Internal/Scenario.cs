@@ -41,9 +41,10 @@ namespace Kekiri.Mtp
         /// Kekiri already derives a feature from the containing namespace for .feature output; the
         /// same grouping is what a reader wants in a navigation tree.
         /// </summary>
-        public string FeatureName => _class.Namespace?.Split('.').Last() ?? _class.Name;
+        public string FeatureName =>
+            Internal.Names.Sentence(_class.Namespace?.Split('.').Last() ?? _class.Name);
 
-        public string Title => Humanize(_method.Name);
+        public string Title => Internal.Names.Sentence(_method.Name);
 
         /// <summary>
         /// What an IDE needs to put "go to source" on the scenario. Null when the compiler didn't
@@ -65,10 +66,17 @@ namespace Kekiri.Mtp
             }
         }
 
+        /// <summary>
+        /// What an IDE builds its tree from. Gherkin has two levels, Feature and Scenario, so the
+        /// feature goes in as the type and the namespace is left empty: the fixture a scenario
+        /// happens to be declared on is a C# artifact, not part of the spec. Identity travels in
+        /// Uid and navigation in TestFileLocationProperty, so neither depends on this being the
+        /// real namespace and type.
+        /// </summary>
         public TestMethodIdentifierProperty MethodIdentifier => new TestMethodIdentifierProperty(
             _class.Assembly.FullName,
-            _class.Namespace ?? string.Empty,
-            _class.Name,
+            string.Empty,
+            FeatureName,
             _method.Name,
             // Method arity. The docs' signature omits it; the assembly requires it.
             _method.IsGenericMethodDefinition ? _method.GetGenericArguments().Length : 0,
@@ -108,8 +116,6 @@ namespace Kekiri.Mtp
                             ? captured.Steps
                             : new string[0],
             };
-
-        static string Humanize(string methodName) => methodName.Replace('_', ' ');
 
         internal sealed class Outcome
         {

@@ -1,7 +1,7 @@
 # SPIKE: Kekiri as its own test runner
 
 Not for merge. A working `ITestFramework` on Microsoft.Testing.Platform, so there is no xUnit or
-NUnit underneath — the test project references `Kekiri.Mtp` and nothing else.
+NUnit underneath — the test project's only framework reference is `Kekiri.Mtp`.
 
 Deliberately outside `Kekiri.slnx`, so a solution-wide `dotnet test` stays green: the example
 includes a scenario that fails on purpose, because terminal reporters only print a test's output
@@ -10,7 +10,7 @@ when it fails, and that output is the thing worth looking at.
 ```bash
 dotnet test src/Runners/Mtp/Kekiri.Examples.Mtp/Kekiri.Examples.Mtp.csproj
 # or run the executable directly
-src/Runners/Mtp/Kekiri.Examples.Mtp/bin/Debug/net8.0/Kekiri.Examples.Mtp --list-tests
+src/Runners/Mtp/Kekiri.Examples.Mtp/bin/Debug/net10.0/Kekiri.Examples.Mtp --list-tests
 ```
 
 ## What it does
@@ -25,9 +25,11 @@ reaches the runner, the reports, and the IDE as *data* instead of as console tex
 * `TestMetadataProperty("Feature", …)` is a trait, which is what IDEs group a tree by
 * `TestFileLocationProperty` comes from `[CallerFilePath]`/`[CallerLineNumber]` on `[Scenario]`, the
   same trick xUnit v3's `FactAttribute` uses, so navigation needs no PDB reading
+* names are rendered as prose, so an `Adding_two_numbers` fixture and an `AddingTwoNumbers` one both
+  read `Adding two numbers`
 
-The whole runner is four files. `Kekiri.Examples.Mtp` has no `xunit`, no `NUnit`, and no
-`Microsoft.NET.Test.Sdk`.
+The whole runner is five files. `Kekiri.Examples.Mtp` references no test framework and no VSTest
+adapter; it does reference `Microsoft.NET.Test.Sdk`, for the reason under Rider below.
 
 ## RSpec-style output
 
@@ -86,6 +88,12 @@ failed A failing scenario reports which step failed (15ms)
     at Kekiri.Examples.Mtp.Addition.Adding_two_numbers.the_result_is_120() in …/Adding_two_numbers.cs:38
 ```
 
+Frames underneath the step are dropped as well — `System.Reflection.MethodBaseInvoker` and friends,
+which are how Kekiri reached the step method rather than anything the reader wrote. xUnit and NUnit
+both ship a filter of this shape. It has to be done by handing the reporter a substitute exception
+that overrides `StackTrace`, because `FailedTestNodeStateProperty` carries an `Exception` and takes
+the trace from it.
+
 Finding which step failed needed a small change in the core: the step name existed only inside the
 message text, so `ScenarioException` now carries it as `StepName`. Matching on message text would
 have worked until someone reworded a message. Both types are internal, so this adds no public
@@ -107,12 +115,37 @@ capability without a consumer yet.
 **`DisplayName` can't hold multiple lines.** Newlines come out as literal `␊`. Multi-line content
 belongs in `StandardOutputProperty`.
 
+## Rider
+
+Rider discovers and runs the scenarios, renders the namespace/fixture/scenario tree, and shows the
+Gherkin and the filtered trace in the output pane. Getting there took one non-obvious package.
+
+**Rider shows nothing for the project without `Microsoft.NET.Test.Sdk`.** That package is the only
+thing in the graph that sets `IsTestProject=true`. The Testing Platform capabilities Rider talks
+over — `TestingPlatformServer`, `TestContainer`, declared by `Microsoft.Testing.Platform`'s own
+targets — already arrive through the `ProjectReference` to `Kekiri.Mtp`, so they were never what was
+missing; a two-project probe confirms `IsTestingPlatformApplication` is already `true` without it.
+JetBrains names the same package as the workaround in
+[RIDER-129745](https://youtrack.jetbrains.com/issue/RIDER-129745).
+
+Referencing it means setting `GenerateProgramFile=false`, since `Program.cs` writes its own `Main`.
+
+The tree comes from the namespace and type, not from the `Feature` trait and not from
+`ParentTestNodeUid`. Since those are the only grouping levers an IDE offers, the runner spends them
+on Gherkin's own two levels: the feature goes in as the type and the namespace is left empty, so the
+tree reads `Addition` → `Adding 50 and 70` and the declaring fixture doesn't appear. A fixture is a
+C# artifact rather than part of the spec, and one feature's scenarios are usually spread across
+several of them.
+
+Which field Rider reads that from is untested — `TestMethodIdentifierProperty` and `Uid` spell out
+the same type, so only one of them has to be right. The tree is the test: `Addition` at the top
+means Rider reads the property, and a full `Kekiri.Examples.Mtp.Addition.Adding_two_numbers` path
+means it parses the `Uid` and the change belongs there instead.
+
 ## Not verified
 
-**IDE behavior.** Everything above was checked through the terminal reporter and `--list-tests`. Rider,
-Visual Studio, and VS Code each render MTP nodes their own way, and whether they group by the
-`Feature` trait or honour the file location is exactly what a spike can't answer from a shell. Open
-`Kekiri.Examples.Mtp` in each and look at the test tree.
+**Visual Studio and VS Code.** Everything else was checked through Rider, the terminal reporter, and
+`--list-tests`. Each IDE renders MTP nodes its own way.
 
 ## What a fuller version needs
 

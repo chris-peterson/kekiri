@@ -100,10 +100,12 @@ namespace Kekiri.Mtp
                 // The innermost exception, not Kekiri's wrapper. The wrapper's message names the
                 // scenario and the step, which the output already shows, and its stack is five
                 // frames of Kekiri internals before reaching the step the reader wrote. Unwrapping
-                // puts the cause on the first line and the reader's own code at the top of the stack.
+                // puts the cause on the first line and the reader's own code at the top of the
+                // stack; filtering removes the reflection frames that got there from underneath it.
                 var state = outcome.Failure is null
                     ? (IProperty)PassedTestNodeStateProperty.CachedInstance
-                    : new FailedTestNodeStateProperty(GherkinFormatter.Innermost(outcome.Failure));
+                    : new FailedTestNodeStateProperty(
+                        StackTraceFilter.Clean(GherkinFormatter.Innermost(outcome.Failure)));
 
                 var properties = Describe(scenario, state);
 
