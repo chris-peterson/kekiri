@@ -3,6 +3,7 @@ using System.Reflection;
 using Microsoft.Testing.Platform.Builder;
 using Microsoft.Testing.Platform.Capabilities;
 using Microsoft.Testing.Platform.Capabilities.TestFramework;
+using Microsoft.Testing.Platform.Services;
 
 namespace Kekiri.Mtp
 {
@@ -20,7 +21,9 @@ namespace Kekiri.Mtp
 
             builder.RegisterTestFramework(
                 _ => new KekiriCapabilities(),
-                (_, __) => new KekiriTestFramework(assembly));
+                (_, serviceProvider) => new KekiriTestFramework(
+                    assembly,
+                    serviceProvider.GetOutputDevice()));
 
             return builder;
         }

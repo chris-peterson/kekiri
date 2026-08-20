@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
+using Kekiri.Mtp.Internal;
 using Microsoft.Testing.Platform.Extensions.Messages;
+using Microsoft.Testing.Platform.Extensions.OutputDevice;
 using Microsoft.Testing.Platform.Extensions.TestFramework;
+using Microsoft.Testing.Platform.OutputDevice;
 using Microsoft.Testing.Platform.Requests;
 
 namespace Kekiri.Mtp
@@ -15,11 +18,16 @@ namespace Kekiri.Mtp
     /// a host framework's extensibility points. What owning the TestNode adds is that a scenario's
     /// Gherkin shape reaches the runner, the IDE, and the reports as data rather than as console text.
     /// </summary>
-    sealed class KekiriTestFramework : ITestFramework, IDataProducer
+    sealed class KekiriTestFramework : ITestFramework, IDataProducer, IOutputDeviceDataProducer
     {
         readonly Assembly _testAssembly;
+        readonly GherkinFormatter _formatter;
 
-        public KekiriTestFramework(Assembly testAssembly) => _testAssembly = testAssembly;
+        public KekiriTestFramework(Assembly testAssembly, IOutputDevice outputDevice)
+        {
+            _testAssembly = testAssembly;
+            _formatter = new GherkinFormatter(outputDevice, this);
+        }
 
         public string Uid => nameof(KekiriTestFramework);
 
@@ -86,6 +94,8 @@ namespace Kekiri.Mtp
                 var stopwatch = Stopwatch.StartNew();
                 var outcome = await scenario.RunAsync();
                 stopwatch.Stop();
+
+                await _formatter.ScenarioAsync(scenario, outcome, stopwatch.Elapsed, context.CancellationToken);
 
                 var state = outcome.Failure is null
                     ? (IProperty)PassedTestNodeStateProperty.CachedInstance

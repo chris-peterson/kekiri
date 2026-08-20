@@ -29,6 +29,41 @@ reaches the runner, the reports, and the IDE as *data* instead of as console tex
 The whole runner is four files. `Kekiri.Examples.Mtp` has no `xunit`, no `NUnit`, and no
 `Microsoft.NET.Test.Sdk`.
 
+## RSpec-style output
+
+Running the executable directly emits the run as Gherkin, the way RSpec's documentation formatter
+emits the spec text:
+
+```
+Feature: Addition
+
+  Scenario: A failing scenario reports which step failed
+    Given a calculator
+      And the user enters 50
+    When adding
+    Then the result is 120
+    ✗ Expected 120 but got 50
+
+  Scenario: Adding 50 and 70
+    Given a calculator
+      And the user enters 50
+      And the user enters 70
+    When adding
+    Then the result is 120
+    ✓ passed (2ms)
+```
+
+This works because the platform's own reporter prints nothing per test at default verbosity, so the
+Gherkin is the output rather than competing with it. It goes through `IOutputDevice`, the service
+extensions use to write to the terminal — not `Console.Write`.
+
+**`dotnet test` swallows it.** The same run under `dotnet test` shows only the platform summary; MTP
+substitutes a passthrough output device there, and `--output Detailed` doesn't bring it back (that
+flag also collides with `dotnet test`'s own `--output`). So this format is available to a direct run
+and a watch loop, not to CI through `dotnet test` as it stands. Whether an IDE shows it is a separate
+question: IDEs read the protocol's nodes, not this console stream, which is why the step text is also
+attached as `StandardOutputProperty`.
+
 ## What the protocol will and won't do
 
 Three findings that shape how far the tree can go, each one learned by trying it:
