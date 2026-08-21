@@ -26,8 +26,16 @@ jobs:
         run: dotnet build
         
       - name: Publish to nuget.org
-        run: dotnet nuget push **/*.nupkg --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-        
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if [ -z "$NUGET_API_KEY" ]; then
+            echo "::error::NUGET_API_KEY is not set on the nuget.org environment"
+            exit 1
+          fi
+          # Quoted so NuGet expands the pattern; bash leaves ** unexpanded without globstar
+          dotnet nuget push "**/*.nupkg" --skip-duplicate --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+
     environment:
       name: nuget.org
       url: https://nuget.org/packages/Kekiri
