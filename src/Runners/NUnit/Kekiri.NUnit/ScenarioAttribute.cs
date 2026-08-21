@@ -16,9 +16,18 @@ namespace Kekiri.NUnit
             var scenario = test.Fixture as ScenarioBase;
             if (scenario != null)
             {
-                scenario.RunAsync().Wait();
-
-                scenario.Initialize();
+                try
+                {
+                    scenario.RunAsync().Wait();
+                }
+                finally
+                {
+                    // NUnit reuses one fixture instance for every case in the class, so a
+                    // failed run still has to hand the next case an empty scenario.  This
+                    // runs after RunAsync rather than in BeforeTest so it can't discard a
+                    // container the fixture has already resolved from.
+                    scenario.Initialize();
+                }
             }
         }
 
