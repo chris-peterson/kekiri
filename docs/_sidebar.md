@@ -1,3 +1,4 @@
 - [Home](/)
 - [Setup](/setup)
 - [Examples](/examples)
+- [Migrating](/migrating)

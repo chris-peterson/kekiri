@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Behavior.Examples.ServiceProvider</RootNamespace>
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Present for the same reason as in Behavior.Examples: Rider needs IsTestProject=true. -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
+    <PackageReference Include="AwesomeAssertions" Version="9.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Behavior.ServiceProvider\Behavior.ServiceProvider.csproj" />
+    <ProjectReference Include="..\..\Behavior\Behavior.csproj" />
+    <ProjectReference Include="..\Behavior.Examples.WebApp\Behavior.Examples.WebApp.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\..\Behavior\build\Behavior.props" />
+
+</Project>

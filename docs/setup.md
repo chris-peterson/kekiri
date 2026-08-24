@@ -1,18 +1,18 @@
 # Setup
 
-Kekiri targets `net8.0`. To get started, be sure to have the latest [dotnet](https://www.microsoft.com/net/core) tools.
+Behavior targets `net8.0`. To get started, be sure to have the latest [dotnet](https://www.microsoft.com/net/core) tools.
 
-## Select Test Runner
-
-### xUnit (recommended)
+## Install
 
 ```bash
-PM> Install-Package Kekiri.Xunit
+PM> Install-Package Behavior
 ```
 
-`Kekiri.Xunit` builds on [xUnit.net v3](https://xunit.net/docs/getting-started/v3/migration). It
-brings in `xunit.v3.extensibility.core`; reference `xunit.v3` alongside it for `Assert`. A v3 test
-project is a self-executing application:
+`Behavior` discovers and runs scenarios directly on
+[Microsoft.Testing.Platform](https://learn.microsoft.com/dotnet/core/testing/microsoft-testing-platform-intro).
+It is the only framework reference a scenario project needs — it depends on `Behavior` itself, which
+holds `Given`/`When`/`Then`, steps, contexts, and the Gherkin reporting — and the project is a
+self-executing application:
 
 ```xml
 <PropertyGroup>
@@ -20,14 +20,42 @@ project is a self-executing application:
 </PropertyGroup>
 
 <ItemGroup>
-  <PackageReference Include="Kekiri.Xunit" Version="2.0.0" />
-  <PackageReference Include="xunit.v3" Version="4.0.0" />
-  <PackageReference Include="xunit.runner.visualstudio" Version="4.0.0" />
+  <PackageReference Include="Behavior" Version="0.1.0" />
 </ItemGroup>
 ```
 
-`dotnet test` drives xUnit v3 through Microsoft.Testing.Platform, which the .NET 10 SDK enables from
-`global.json`:
+The entry point is generated, so the project needs no `Program.cs`. To write your own, call
+`AddBehavior` on the builder:
+
+```csharp
+var builder = await TestApplication.CreateBuilderAsync(args);
+
+builder.AddBehavior(Assembly.GetExecutingAssembly());
+
+using var app = await builder.BuildAsync();
+return await app.RunAsync();
+```
+
+Assertions come from whichever library you prefer — the examples use
+[AwesomeAssertions](https://awesomeassertions.org).
+
+A *library* that references `Behavior` — shared steps, test helpers — inherits the MSBuild package
+that generates the entry point, so `dotnet test` treats it as a test application of its own and fails
+on it. Tell it otherwise:
+
+```xml
+<IsTestingPlatformApplication>false</IsTestingPlatformApplication>
+```
+
+### Rider
+
+Rider builds its test tree from `IsTestProject`, and a scenario project shows nothing there until
+something sets it. Adding `Microsoft.NET.Test.Sdk` is the workaround JetBrains names in
+[RIDER-129745](https://youtrack.jetbrains.com/issue/RIDER-129745), and it is what the example
+projects here do. It brings no test framework of its own, and running doesn't need it: `dotnet run`
+and `dotnet test` both work without it.
+
+`dotnet test` drives the platform directly, which the .NET 10 SDK enables from `global.json`:
 
 ```json
 {
@@ -37,21 +65,29 @@ project is a self-executing application:
 }
 ```
 
-### NUnit
+Running the executable itself prints the run as Gherkin, in the style of RSpec's documentation
+formatter:
 
-```bash
-PM> Install-Package Kekiri.NUnit
+```plaintext
+Feature: Addition
+
+  Scenario: Adding 50 and 70
+    Given a calculator
+      And the user enters 50
+      And the user enters 70
+    When adding
+    Then the result is 120
+    ✓ passed (2ms)
 ```
 
 ## IoC Integration (optional)
 
-The container has to be built once before any scenario runs. Both runners have a hook for that, so
-no per-fixture attribute is needed.
+The container has to be built once before any scenario runs, which is what `IBeforeTestRun` is for.
 
 ### Autofac
 
 ```bash
-PM> Install-Package Kekiri.IoC.Autofac
+PM> Install-Package Behavior.Autofac
 ```
 
 Every concrete type in the assemblies your solution builds is auto-registered, so scenarios can
@@ -77,26 +113,24 @@ AutofacBootstrapper.Initialize(x => x.IncludeNonPublicConstructors());
 ```
 
 That finds every instance constructor, public or not. For finer control, set
-`ConstructorFinder` to any Autofac `IConstructorFinder`; Kekiri filters registrations through the
+`ConstructorFinder` to any Autofac `IConstructorFinder`; Behavior filters registrations through the
 same finder it activates with, so the two can't disagree.
 
 ### IServiceProvider
 
 ```bash
-PM> Install-Package Kekiri.IoC.ServiceProvider
+PM> Install-Package Behavior.ServiceProvider
 ```
 
-### Bootstrapping under xUnit
+### Bootstrapping
 
-Declare an assembly fixture once. xUnit builds it before the first test in the assembly and disposes
-it after the last:
+Implement `IBeforeTestRun` on any public class with a parameterless constructor. The runner calls it
+once, before the first scenario:
 
 ```csharp
-[assembly: AssemblyFixture(typeof(Bootstrap))]
-
-public class Bootstrap
+public class Bootstrap : IBeforeTestRun
 {
-    public Bootstrap()
+    public void Setup()
     {
         AutofacBootstrapper.Initialize();
         // ...or ServiceProviderBootstrapper.Initialize(services);
@@ -104,63 +138,29 @@ public class Bootstrap
 }
 ```
 
-Scenario classes then derive from `Scenarios` (or `Scenarios<TContext>`) directly — they need no
-`[Collection]` attribute and no shared base class.
-
-If the container must exist before *discovery* as well as execution, implement
-[`ITestPipelineStartup`](https://xunit.net/docs/getting-started/v3/whats-new) instead, which runs
-earlier in the pipeline:
-
-```csharp
-[assembly: TestPipelineStartup(typeof(Bootstrap))]
-
-public class Bootstrap : ITestPipelineStartup
-{
-    public ValueTask StartAsync(IMessageSink sink)
-    {
-        AutofacBootstrapper.Initialize();
-        return default;
-    }
-
-    public ValueTask StopAsync() => default;
-}
-```
-
-### Bootstrapping under NUnit
-
-Use a `[SetUpFixture]` with `[OneTimeSetUp]` outside any namespace, which NUnit runs once per
-assembly:
-
-```csharp
-[SetUpFixture]
-public class Bootstrap
-{
-    [OneTimeSetUp]
-    public void Setup() => AutofacBootstrapper.Initialize();
-}
-```
+Scenario classes then derive from `Scenarios` (or `Scenarios<TContext>`) directly.
 
 ## Naming Conventions
 
-Kekiri supports both Pascal case conventions (e.g. `WhenDoingTheThing`) as it does
+Behavior supports both Pascal case conventions (e.g. `WhenDoingTheThing`) as it does
 underscore convention (e.g. `When_doing_the_thing`).
 
 ## Scenario Output
 
-Kekiri supports outputting the cucumber text.
-The output settings are controlled via the `KEKIRI_OUTPUT` environment variable.
+Behavior supports outputting the cucumber text.
+The output settings are controlled via the `BEHAVIOR_OUTPUT` environment variable.
 
 ```powershell
-$env:KEKIRI_OUTPUT='console,files'
+$env:BEHAVIOR_OUTPUT='console,files'
 ```
 
 ### Output to Console
 
-To output to the console, ensure that `KEKIRI_OUTPUT` contains `console`.
+To output to the console, ensure that `BEHAVIOR_OUTPUT` contains `console`.
 
 ### Output to Files
 
-To output to `.feature` files in the test execution directory, ensure that `KEKIRI_OUTPUT` contains `files`.
+To output to `.feature` files in the test execution directory, ensure that `BEHAVIOR_OUTPUT` contains `files`.
 
 The name of the feature file is based on the containing namespace of the scenario.
 For example, if `Adding_two_numbers` was defined in `UnitTests.Features.Addition.Adding_two_numbers`, the output would be written to `Addition.feature`.

@@ -1,0 +1,16 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Examples/">
+    <Project Path="src/Examples/Behavior.Examples/Behavior.Examples.csproj" />
+    <Project Path="src/Examples/Behavior.Examples.ServiceProvider/Behavior.Examples.ServiceProvider.csproj" />
+    <Project Path="src/Examples/Behavior.Examples.WebApp/Behavior.Examples.WebApp.csproj" />
+  </Folder>
+  <Project Path="src/Behavior/Behavior.csproj" />
+  <Project Path="src/Behavior.Autofac/Behavior.Autofac.csproj" />
+  <Project Path="src/Behavior.ServiceProvider/Behavior.ServiceProvider.csproj" />
+  <Project Path="src/Behavior.Tests/Behavior.Tests.csproj" />
+</Solution>

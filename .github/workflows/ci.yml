@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-dotnet@v6
         with:
           # 8.0.x supplies the runtime the projects target; 10.0.x supplies the SDK, whose
-          # Microsoft.Testing.Platform mode of `dotnet test` is what xUnit v3 requires.
+          # Microsoft.Testing.Platform mode of `dotnet test` is what the scenario projects run under.
           dotnet-version: |
             8.0.x
             10.0.x

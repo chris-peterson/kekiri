@@ -15,4 +15,5 @@ project.lock.json
 .idea/
 .vs/
 TestResult.xml
+TestResults/
 *.feature

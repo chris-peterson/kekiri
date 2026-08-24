@@ -1,0 +1,11 @@
+using System;
+
+namespace Behavior.Internal.Exceptions;
+
+class ThenFailed : ScenarioException
+{
+    public ThenFailed(ScenarioBase scenario, string stepName, Exception innerException) :
+        base(scenario, stepName, $"'{stepName}' failed", innerException)
+    {
+    }
+}

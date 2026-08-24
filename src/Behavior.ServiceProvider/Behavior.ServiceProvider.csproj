@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Copyright>2019-2026</Copyright>
+    <Authors>smarts, Chris Peterson</Authors>
+    <TargetFramework>net8.0</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>Behavior.ServiceProvider</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <PackageId>Behavior.ServiceProvider</PackageId>
+    <PackageTags>bdd;scenario;test;gherkin;cucumber;pickles;specflow;testing-platform;mtp;dependency-injection</PackageTags>
+    <PackageProjectUrl>https://github.com/chris-peterson/kekiri</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/chris-peterson/kekiri</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>0.1.0</Version>
+    <Description>Microsoft.Extensions.DependencyInjection integration for Behavior.</Description>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <!-- A library that references Behavior inherits the MSBuild package Behavior carries for
+         consumers, which would otherwise make this look like a test application to `dotnet test`. -->
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="8.0.21" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Behavior\Behavior.csproj" />
+  </ItemGroup>
+
+</Project>
