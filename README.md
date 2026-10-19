@@ -1,286 +1,146 @@
-# Overview
+# Kekiri
 
-A .NET framework that supports writing low-ceremony BDD tests using Gherkin language.
+Low-ceremony BDD scenarios in C#, written as ordinary code and run directly on
+[Microsoft.Testing.Platform](https://learn.microsoft.com/dotnet/core/testing/microsoft-testing-platform-intro).
+Scenarios follow the conventions of the Gherkin
+[cucumber language](https://cucumber.io/docs/gherkin/reference/), with no feature files or custom
+tooling to maintain.
 
-Kekiri honors the conventions of the Gherkin
-[cucumber language](https://cucumber.io/docs/gherkin/reference/).
+[![build](https://github.com/chris-peterson/kekiri/actions/workflows/ci.yml/badge.svg)](https://github.com/chris-peterson/kekiri/actions/workflows/ci.yml)
+[![line coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fchris-peterson.github.io%2Fkekiri%2Fcoverage%2Flines.json)](https://chris-peterson.github.io/kekiri/#/coverage)
+[![branch coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fchris-peterson.github.io%2Fkekiri%2Fcoverage%2Fbranches.json)](https://chris-peterson.github.io/kekiri/#/coverage)
 
-## Status
+| Package | Latest release |
+|:--|:--|
+| `Kekiri` | [![NuGet](https://img.shields.io/nuget/v/Kekiri.svg)](https://www.nuget.org/packages/Kekiri) |
+| `Kekiri.Mtp` | [![NuGet](https://img.shields.io/nuget/v/Kekiri.Mtp.svg)](https://www.nuget.org/packages/Kekiri.Mtp) |
+| `Kekiri.IoC.Autofac` | [![NuGet](https://img.shields.io/nuget/v/Kekiri.IoC.Autofac.svg)](https://www.nuget.org/packages/Kekiri.IoC.Autofac) |
+| `Kekiri.IoC.ServiceProvider` | [![NuGet](https://img.shields.io/nuget/v/Kekiri.IoC.ServiceProvider.svg)](https://www.nuget.org/packages/Kekiri.IoC.ServiceProvider) |
 
-[![Build status](https://gitlab.com/chris-peterson/kekiri/badges/master/pipeline.svg)](https://gitlab.com/chris-peterson/kekiri/-/pipelines)
+## A scenario
 
-Package | Latest Release |
-:-------- | :------------ |
-Kekiri | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.svg)](https://www.nuget.org/packages/kekiri)
-Kekiri.IoC.Autofac | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.IoC.Autofac.svg)](https://www.nuget.org/packages/kekiri.ioc.autofac)
-Kekiri.IoC.ServiceProvider | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.IoC.ServiceProvider.svg)](https://www.nuget.org/packages/kekiri.ioc.ServiceProvider)
-Kekiri.Xunit | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.Xunit.svg)](https://www.nuget.org/packages/kekiri.xunit)
-Kekiri.NUnit | [![NuGet version](https://img.shields.io/nuget/dt/Kekiri.NUnit.svg)](https://www.nuget.org/packages/kekiri.nunit)
+```csharp
+namespace Addition;
 
-## Setup
+public class Adding_two_numbers : TestFixture
+{
+    readonly Calculator _calculator = new Calculator();
 
-Kekiri targets `netstandard2.0`.  To get started, be sure to have the latest [dotnet core](https://www.microsoft.com/net/core) tools.
-
-### Select Test Runner
-
-#### Xunit (recommended)
-
-`PM> Install-Package Kekiri.Xunit`
-
-#### NUnit
-
-`PM> Install-Package Kekiri.NUnit`
-
-### IoC Integration (optional)
-
-#### Autofac
-
-`PM> Install-Package Kekiri.IoC.Autofac`
-
-Be sure to call `AutofacBootstrapper.Initialize()` before your tests run.
-
-#### IServiceProvider
-
-`PM> Install-Package Kekiri.IoC.ServiceProvider`
-
-Be sure to call `ServiceProviderBootstrapper.Initialize(…)` before your tests run.
-
-## Why Kekiri
-
-Unlike other BDD frameworks that impose process overhead (management of feature files, custom tooling, etc) Kekiri allows developers to write BDD scenarios just as quickly and easily as they would a "plain old" test.
-
-The resulting scenario fixtures are concise, highly portable, and adhere to [Act, Arrange, and Assert](https://automationpanda.com/2020/07/07/arrange-act-assert-a-pattern-for-writing-good-tests/).
-
-IoC is also a first-class citizen encouraging testing object interactions in collaboration rather than isolation.  More details [here](https://github.com/chris-peterson/kekiri/wiki/IoC-Support).
-
-## Example
-
-Implementing a basic calculator.
-
-### Start with the test
-
-```c#
-    class Calculator_tests : Scenarios
+    [Scenario]
+    public void Adding_50_and_70()
     {
-        [Scenario]
-        public void Adding_two_numbers()
-        {
-            Given(a_calculator)
-               .And(the_user_enters_50)
-               .And(the_user_enters_70);
-            When(adding);
-            Then(the_result_is_120);
-        }
-
-        void a_calculator() {}
-
-        void the_user_enters_50() {}
-
-        void the_user_enters_70() {}
-
-        void adding() { throw new NotImplementedException(); }
-
-        void the_result_is_120() {}
+        Given(the_first_number_is, 50m)
+            .And(the_second_number_is, 70m);
+        When(adding);
+        Then(the_result_is, 120m);
     }
+
+    void the_first_number_is(decimal number) => _calculator.Operand1 = number;
+    void the_second_number_is(decimal number) => _calculator.Operand2 = number;
+    void adding() => _calculator.Add();
+    void the_result_is(decimal expected) => _calculator.Result.Should().Be(expected);
+}
 ```
 
-If we were to run this test (even though it fails) we get a nice Cucumber-style feature output:
+A scenario project references `Kekiri.Mtp` and builds into an executable, so `dotnet test`,
+`dotnet run`, and the built binary all run it and print the run as Gherkin:
 
 ```plaintext
-        Scenario: Adding two numbers
-        Given a calculator
-            And the user enters 50
-            And next the user enters 70
-        When adding
-        Then the result is 120
+Feature: Addition
+
+  Scenario: Adding 50 and 70
+    Given the first number is 50
+      And the second number is 70
+    When adding
+    Then the result is 120
+    ✓ passed (2ms)
 ```
 
-### Add the implementation
+## Documentation
 
-```c#
-    class Adding_two_numbers : Scenarios
-    {
-        Calculator _calculator;
+The [docs site](https://chris-peterson.github.io/kekiri/) covers using Kekiri:
 
-        [Scenario]
-        public void Adding_two_numbers()
-        {
-            Given(a_calculator)
-               .And(the_user_enters_50)
-               .And(the_user_enters_70);
-            When(adding);
-            Then(the_screen_displays_a_result_of_120);
-        }
+* [Setup](https://chris-peterson.github.io/kekiri/#/setup): installing, IDEs, IoC integration, output
+* [Examples](https://chris-peterson.github.io/kekiri/#/examples): expected exceptions, scenario outlines, tags
+* [Migrating to Kekiri 6](https://chris-peterson.github.io/kekiri/#/migrating): from `Kekiri.Xunit` or `Kekiri.NUnit`
+* [Coverage](https://chris-peterson.github.io/kekiri/#/coverage): the current report
 
-        void a_calculator()
-        {
-            _calculator = new Calculator();
-        }
+## Development
 
-        void the_user_enters_50()
-        {
-            _calculator.Operand1 = 50;
-        }
+Building needs the .NET 10 SDK and the .NET 8 runtime the packages target.
 
-        void the_user_enters_70()
-        {
-            _calculator.Operand2 = 70;
-        }
-
-        void adding()
-        {
-            _calculator.Add();
-        }
-
-        void the_result_is_120()
-        {
-            Assert.AreEqual(120m, _calculator.Result);
-        }
-    }
-
-    class Calculator
-    {
-        public decimal Operand1 { get; set; }
-        public decimal Operand2 { get; set; }
-
-        public decimal Result { get; set; }
-
-        public void Add() { Result = Operand1 + Operand2; }
-    }
+```bash
+dotnet build
+dotnet test
+python3 scripts/coverage.py    # tests with coverage, and the 90% gate CI enforces
 ```
 
----
+| Path | Holds |
+|:--|:--|
+| `src/Packages/Kekiri` | The engine: `Given`/`When`/`Then`, steps, contexts, reporting |
+| `src/Packages/Kekiri.Mtp` | The runner on Microsoft.Testing.Platform; its [README](src/Packages/Kekiri.Mtp/README.md) has the design notes |
+| `src/Packages/Kekiri.IoC.*` | Autofac and `IServiceProvider` integration |
+| `tests/UnitTests` | The TUnit suite coverage is measured from |
+| `tests/WebApp` | An ASP.NET Core startup the `IServiceProvider` tests host |
 
-## Supported Naming Conventions
+Kekiri is tested with TUnit rather than with itself, so a defect in the runner can't hide the
+failures that would reveal it.
 
-Kekiri supports both Pascal case conventions (e.g. `WhenDoingTheThing`) as it does
-underscore convention (e.g. `When_doing_the_thing`).
+Every C# block in this README, `docs/`, and the package READMEs is compiled against the current
+packages by `DocSnippetTests`, and the scenarios in it run. A block that is a fragment, or code from
+a previous version, carries `<!-- snippet: skip -->` on the line above its fence; one whose scenario
+fails on purpose carries `<!-- snippet: compile-only -->`.
 
----
+## Native AOT
 
-## Scenario Output
+Not supported, and not currently worth pursuing. Recorded here so it doesn't get re-investigated
+per-project.
 
-Kekiri supports outputing the cucumber text.
-The output settings are controlled via the `KEKIRI_OUTPUT` environment variable.
+Three things block it independently, so fixing any one of them changes nothing on its own:
 
-Example:
+1. **The untyped `Context` is `dynamic`.** Every `Context.Foo = ...` in a scenario compiles to a
+   call site on the C# runtime binder, which needs runtime code generation. This is the documented way
+   to write an untyped scenario, so removing it means removing a first-class feature (or reshaping
+   `Context` into an indexer, which breaks every existing untyped scenario).
+2. **`Kekiri.IoC.Autofac` is assembly scanning, by design.** It reads `DependencyContext.Default`,
+   loads assemblies by name, and hands them to Autofac's `RegisterAssemblyTypes`.
+   `DependencyContext.Default` is documented as returning null for an app published as a single file,
+   and Autofac's scanning entry points carry `[RequiresUnreferencedCode]` because the trimmer cannot
+   know which types to keep. Native AOT always trims, so the package cannot keep its behavior and be
+   AOT-safe.
+3. **Discovery and step invocation are reflection.** The runner enumerates the test assembly's
+   types, reads attributes, and calls step methods through `MethodInfo.Invoke`. Under AOT the trimmer
+   cannot know which of those to keep, so discovery would have to move to a source generator.
 
-```ps1
-   $env:KEKIRI_OUTPUT='console,files'
-```
+Independently, `Moq` relies on `Reflection.Emit` through Castle DynamicProxy, so a test project using
+mocks is out regardless of what Kekiri does.
 
-### Output to Console
+An AOT-capable subset would be `TestFixture<TContext>` plus `Kekiri.IoC.ServiceProvider` without
+`UseStartup`, behind a source generator for discovery — that is, giving up untyped scenarios and
+Autofac. If that combination ever becomes worth supporting, start by setting `IsAotCompatible` on the
+libraries to get the real analyzer output rather than working from this list.
 
-To output to the console, ensure that `KEKIRI_OUTPUT` contains `console`.
+Worth doing regardless of AOT, because they cost nothing and remove reflection from paths that don't
+need it:
 
-### Output to Files
+* `Kekiri.IoC.ServiceProvider`'s `UseStartup` reconstructs a generic call through
+  `MakeGenericMethod`; capturing a delegate while the type argument is still known statically removes
+  it, the same way `ConfigureTestContainer` already does.
+* `ScenarioBase<TContext>` resolves its context through `MakeGenericMethod` on `Container.Resolve`.
+  Constraining `TContext` to a reference type makes it a direct `Container.Resolve<TContext>()` call.
+* Two binder call sites on the *typed* path (the `Context` overrides in `ScenarioBase<TContext>` and
+  `Step<TContext>`) pull the runtime binder into scenarios that are otherwise fully typed. Casting
+  from an `object` backing field removes them with no public API change.
+* `FeatureFileReportTarget` keeps a `Dictionary<string, dynamic>` where a `string` value would do.
 
-To output to .feature files in the test execution directory, ensure that `KEKIRI_OUTPUT` contains `files`.
+None of the above has been checked against an actual `PublishAot` run; it comes from reading the code
+and the AOT documentation.
 
-The name of the feature file is based on the containing namespace of the scenario.
-For example, if `Adding_two_numbers` was defined in `UnitTests.Features.Addition.Adding_two_numbers`, the output would be written to `Addition.feature`.
+## References
 
----
+Kekiri runs on Microsoft.Testing.Platform:
 
-## Wiki
-
-More detailed documentation can be found on the [wiki](<https://github.com/chris-peterson/kekiri/wiki>).
-
-## Other common use cases
-
-### Expected Exceptions
-
-```c#
-    class Divide_by_zero : Scenarios
-    {
-        readonly Calculator _calculator = new Calculator();
-
-        [Scenario]
-        public Divide_by_zero()
-        {
-            Given(a_denominator_of_0);
-            When(dividing).Throws();
-            Then(an_exception_is_raised);
-        }
-
-        void a_denominator_of_0()
-        {
-            _calculator.Operand2 = 0;
-        }
-
-        void dividing()
-        {
-            _calculator.Divide();
-        }
-
-        void an_exception_is_raised()
-        {
-            Catch<DivideByZeroException>();
-        }
-    }
-```
-
-Notice, here we've used the `Throws()` method to inform that throwing an
-exception is the expected behavior.  In 1 or more `Then` methods, the thrown type of exception must
-be caught (using the templated method `Catch<>`).
-
-### Examples (aka tabular tests)
-
-```c#
-    public class Subtracting_two_numbers : Scenarios
-    {
-        readonly Calculator _calculator = new Calculator();
-
-        [Example(12, 5, 7)]
-        [Example(20, 5, 15)]
-        [ScenarioOutline]
-        public Subtracting_two_numbers(double operand1, double operand2, double expectedResult)
-        {
-            Given(the_user_enters_OPERAND1, operand1)
-                .And(the_user_enters_OPERAND2, operand2);
-            When(subtracting);
-            Then(the_result_is_EXPECTED, expectedResult);
-        }
-
-        void the_user_enters_OPERAND1(double operand1)
-        {
-            _calculator.Operand1 = operand1;
-        }
-
-        void the_user_enters_OPERAND2(double operand2)
-        {
-            _calculator.Operand2 = operand2;
-        }
-
-        void subtracting()
-        {
-            _calculator.Subtract();
-        }
-
-        void the_result_is_EXPECTED(double expected)
-        {
-            Assert.AreEqual(expected, _calculator.Result);
-        }
-    }
-```
-
-```plaintext
-        Given the user enters 12
-          And the user enters 5
-        When subtracting
-        Then the result is 7
-```
-
-Note: step method parameter names can be used as substitution macros by mentioning them in CAPS.
-
-For more advanced topics, check out the [wiki](https://github.com/chris-peterson/kekiri/wiki).
-
-## Acknowledgements
-
-Kekiri uses and is influenced by the following open source projects:
-
-* [Xunit](<https://xunit.github.io>)
-* [NUnit](<http://nunit.org>)
-* [Autofac](<https://github.com/autofac/Autofac>)
-* [xrepo](<https://github.com/andyalm/xrepo>)
-* [pickles](<https://github.com/picklesdoc/pickles#pickles>)
+* [Overview](<https://learn.microsoft.com/dotnet/core/testing/microsoft-testing-platform-intro>) — what the platform is and how a test project runs on it
+* [Build a test framework](<https://learn.microsoft.com/dotnet/core/testing/microsoft-testing-platform-architecture-test-framework>) — the `ITestFramework` surface Kekiri implements to own discovery and execution
+* [Build extensions](<https://learn.microsoft.com/dotnet/core/testing/microsoft-testing-platform-architecture-extensions>) — the extension points the platform hands a framework
+* [CLI options](<https://learn.microsoft.com/dotnet/core/testing/microsoft-testing-platform-cli-options>) — `--treenode-filter`, `--filter-uid`, and the rest of what a run accepts

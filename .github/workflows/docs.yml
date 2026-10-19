@@ -1,10 +1,10 @@
 name: Deploy docs
 
+# Every push to main, not only docs changes: the coverage page and badges are generated here from
+# the code as it stands.
 on:
   push:
     branches: [main]
-    paths:
-      - 'docs/**'
 
 permissions:
   pages: write
@@ -19,6 +19,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Coverage report
+        run: |
+          pip install pycobertura==4.1.0
+          python3 scripts/coverage.py --out docs/coverage --html
 
       - uses: actions/upload-pages-artifact@v4
         with:

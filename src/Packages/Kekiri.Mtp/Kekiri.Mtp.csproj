@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Runs Kekiri scenarios directly on Microsoft.Testing.Platform, with no xUnit, NUnit, or VSTest underneath.</Description>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Kekiri.Mtp</AssemblyName>
+    <RootNamespace>Kekiri.Mtp</RootNamespace>
+    <PackageId>Kekiri.Mtp</PackageId>
+    <PackageTags>$(PackageTags);testing-platform;mtp</PackageTags>
+    <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+    <!-- The MSBuild package it carries for consumers would otherwise make this library itself
+         look like a test application to `dotnet test`. -->
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kekiri\Kekiri.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Testing.Platform" Version="2.3.3" />
+    <!-- PrivateAssets="none" so its build assets reach a consumer: they are what generates the
+         entry point that calls Kekiri.Mtp's hook. -->
+    <PackageReference Include="Microsoft.Testing.Platform.MSBuild" Version="2.3.3" PrivateAssets="none" />
+  </ItemGroup>
+
+  <!--
+    Registers the entry point hook with the consuming project, so a test project needs no Program.cs
+    of its own: the generated Main calls TestingPlatformBuilderHook.AddExtensions.
+  -->
+  <ItemGroup>
+    <None Include="build\Kekiri.Mtp.props" Pack="true" PackagePath="buildTransitive\Kekiri.Mtp.props" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    The application a ServiceProviderBootstrapper.UseStartup test hosts: a Startup that registers
+    services the tests then override. A project of its own so its assembly holds nothing but these
+    types when a test registers everything in it.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>Kekiri.Tests.WebApp</AssemblyName>
+    <RootNamespace>Kekiri.Tests.WebApp</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+</Project>
