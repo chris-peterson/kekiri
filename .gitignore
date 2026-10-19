@@ -1,7 +1,7 @@
 .DS_Store
 [Oo]bj/
 [Bb]in/
-Packages
+/Packages/
 
 _ReSharper.*
 *crunch*
@@ -15,4 +15,7 @@ project.lock.json
 .idea/
 .vs/
 TestResult.xml
+TestResults/
 *.feature
+artifacts/
+docs/coverage/

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Low-ceremony BDD scenarios in C#, written as code. Run them with Kekiri.Mtp.</Description>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Kekiri</AssemblyName>
+    <RootNamespace>Kekiri</RootNamespace>
+    <PackageId>Kekiri</PackageId>
+    <PackageProjectUrl>https://github.com/chris-peterson/kekiri#overview</PackageProjectUrl>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>6.0.0</Version>
+  </PropertyGroup>
+
+</Project>

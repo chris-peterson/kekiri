@@ -1,0 +1,17 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Packages/">
+    <Project Path="src/Packages/Kekiri/Kekiri.csproj" />
+    <Project Path="src/Packages/Kekiri.Mtp/Kekiri.Mtp.csproj" />
+    <Project Path="src/Packages/Kekiri.IoC.Autofac/Kekiri.IoC.Autofac.csproj" />
+    <Project Path="src/Packages/Kekiri.IoC.ServiceProvider/Kekiri.IoC.ServiceProvider.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/UnitTests/UnitTests.csproj" />
+    <Project Path="tests/WebApp/WebApp.csproj" />
+  </Folder>
+</Solution>

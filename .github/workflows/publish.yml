@@ -1,8 +1,12 @@
 name: Publish
 
 on:
-  release:
-    types: [ published ]
+  workflow_dispatch:
+    inputs:
+      notes:
+        description: What changed in this release
+        required: false
+        type: string
 
 jobs:
   publish:
@@ -10,21 +14,48 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     env:
-      Configuration: Release
-      PackageReleaseNotes: ${{ github.event.release.body }}
-      PackageReleaseTag: ${{ github.event.release.tag_name }}
+      PackageReleaseNotes: ${{ inputs.notes }}
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v2
+      - uses: actions/checkout@v7
         with:
-          dotnet-version: 6.0.x
+          # The release name is derived from the tags already in the repo.
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
 
       - name: Build
-        run: dotnet build
-        
+        run: dotnet build -c Release
+
+      - name: Test
+        run: dotnet test -c Release --no-build
+
+      # Each package carries its own <Version>, so a release names the day it shipped. A second
+      # release on the same day takes a .2, a third a .3.
+      - name: Name the release
+        id: name
+        run: |
+          base=$(date -u +%Y-%m-%d)
+          tag=$base
+          n=1
+          while git rev-parse -q --verify "refs/tags/$tag" >/dev/null; do
+            n=$((n + 1))
+            tag="$base.$n"
+          done
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Pack
+        run: dotnet pack -c Release --no-build --output artifacts
+
       - name: Publish to nuget.org
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
@@ -33,8 +64,15 @@ jobs:
             echo "::error::NUGET_API_KEY is not set on the nuget.org environment"
             exit 1
           fi
-          # Quoted so NuGet expands the pattern; bash leaves ** unexpanded without globstar
-          dotnet nuget push "**/*.nupkg" --skip-duplicate --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+          dotnet nuget push 'artifacts/*.nupkg' --skip-duplicate --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+
+      # After the push, so a tag exists only for packages that reached nuget.org.
+      - name: Tag what shipped
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.name.outputs.tag }}
+          NOTES: ${{ inputs.notes }}
+        run: gh release create "$TAG" artifacts/*.nupkg --target "$GITHUB_SHA" --title "$TAG" --notes "$NOTES"
 
     environment:
       name: nuget.org
